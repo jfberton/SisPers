@@ -454,6 +454,15 @@ namespace SisPer.Aplicativo {
         protected global::System.Web.UI.WebControls.Panel PanelSolicitarFranco;
         
         /// <summary>
+        /// ddl_tipo_solicitud_franco control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_tipo_solicitud_franco;
+        
+        /// <summary>
         /// tb_FechaFranco control.
         /// </summary>
         /// <remarks>

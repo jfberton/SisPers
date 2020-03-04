@@ -311,7 +311,7 @@
             <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Francos compensatorios del mes</h3>
+                        <h3 class="panel-title">Francos compensatorios/Art. 51 del mes</h3>
                     </div>
                     <div class="panel-body">
                         <asp:ValidationSummary ID="ValidationSummary3" runat="server" DisplayMode="BulletList"
@@ -325,9 +325,18 @@
 
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h5>Solicitud de franco compensatorio</h5>
+                                    <h5>Solicitud de franco compensatorio / Art. 51</h5>
                                 </div>
                                 <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-2">Tipo de solicitud </div>
+                                        <div class="col-md-10">
+                                            <asp:DropDownList runat="server" CssClass="form-control" ID="ddl_tipo_solicitud_franco">
+                                                <asp:ListItem Text="Franco compensatorio" />
+                                                <asp:ListItem Text="Art. 51" />
+                                            </asp:DropDownList>
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col-md-2">
                                             <h5>Para el </h5>
