@@ -1,0 +1,80 @@
+﻿
+
+/* ------------------------------ CSS Grilla ------------------------------*/
+
+.footerMaster
+{
+    width: 100%; 
+    height:30px;
+    color: #FFFFFF;
+    font-family: Cambria; 
+    font-size: small; 
+    background-image: url("footerCurves.gif");
+    background-repeat: no-repeat; 
+    background-position: inherit center;
+    text-align:center;
+    background-color:#7B7D81;
+    }
+
+.mGrid { background-color: #fff; margin: 5px 0 10px 0; border: solid 1px #525252; border-collapse:collapse; font: 13px Tahoma; width:100%;}
+    .mGrid td { padding: 2px; border: solid 1px #c1c1c1; }
+    .mGrid th { padding: 4px 2px; color: #fff; background: #424242 url(grd_head.png) repeat-x top; border-left: solid 1px #525252; font-size: 1.1em; font-family:Calibri; }
+.mGrid .alt { background: #fcfcfc url(grd_alt.png) repeat-x top; }
+.mGrid .pgr {background: #424242 url(grd_pgr.png) repeat-x top; }
+    .mGrid .pgr table { margin: 5px 0; }
+    .mGrid .pgr td { border-width: 0; padding: 0 6px; border-left: solid 1px #666; font-weight: bold; color: #fff; line-height: 12px; }   
+    .mGrid .pgr a { color: #666; text-decoration: none; }
+    .mGrid .pgr a:hover { color: #000; text-decoration: none; }
+
+/*********************************************************/
+.editDDL {
+	font: 30px Tahoma;
+}
+/* ----- Validation and error messages class starts -----*/
+.validationsummary
+{
+    background: #FFECEC url(../Imagenes/error403.png) no-repeat 10px 50px;
+    padding: 0px 0px 13px 0px;
+    font-size: 12px;
+    min-height:130px;
+}
+
+.validationsummary ul
+{
+    padding-top: 5px;
+    padding-left: 100px;
+    list-style: none;
+    font-size: 11px;
+    color: #DF0000;
+    font-style: italic;
+}
+.validationsummary ul li {
+	padding: 2px 0px 0px 15px;
+	background-image:url(../Imagenes/Warning.gif);
+	background-position:0px 3px;
+	background-repeat:no-repeat;
+}
+
+/**************input file****************/
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  background: red;
+  cursor: inherit;
+  display: block;
+}
+input[readonly] {
+  background-color: white !important;
+  cursor: text !important;
+}

@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ClockCardModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ClockCardModelStoreContainer">
+    <EntitySet Name="FICHADA" EntityType="ClockCardModel.Store.FICHADA" store:Type="Tables" Schema="dbo" />
+  </EntityContainer>
+  <EntityType Name="FICHADA">
+    <Key>
+      <PropertyRef Name="FIC_ID" />
+    </Key>
+    <Property Name="FIC_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LEG_LEGAJO" Type="int" Nullable="true" />
+    <Property Name="FIC_TARJETA" Type="int" Nullable="false" />
+    <Property Name="FIC_FECHA" Type="datetime" Nullable="false" />
+    <Property Name="FIC_HORA" Type="char" Nullable="false" MaxLength="5" />
+    <Property Name="FIC_ENTSAL" Type="char" Nullable="false" MaxLength="1" />
+    <Property Name="FIC_RELOJ" Type="int" Nullable="true" />
+    <Property Name="FIC_ORIGEN" Type="char" Nullable="false" MaxLength="1" />
+    <Property Name="FIC_NOVEDAD" Type="int" Nullable="true" />
+    <Property Name="FIC_EQUIPO" Type="char" Nullable="true" MaxLength="10" />
+    <Property Name="FIC_NOTAS" Type="varchar" Nullable="true" MaxLength="50" />
+  </EntityType>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ClockCardModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ClockCardEntities" annotation:LazyLoadingEnabled="true" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+          <EntitySet Name="FICHADA" EntityType="ClockCardModel.FICHADA" />
+        </EntityContainer>
+        <EntityType Name="FICHADA">
+          <Key>
+            <PropertyRef Name="FIC_ID" />
+          </Key>
+          <Property Name="FIC_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="LEG_LEGAJO" Type="Int32" />
+          <Property Name="FIC_TARJETA" Type="Int32" Nullable="false" />
+          <Property Name="FIC_FECHA" Type="DateTime" Nullable="false" />
+          <Property Name="FIC_HORA" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="true" />
+          <Property Name="FIC_ENTSAL" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
+          <Property Name="FIC_RELOJ" Type="Int32" />
+          <Property Name="FIC_ORIGEN" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
+          <Property Name="FIC_NOVEDAD" Type="Int32" />
+          <Property Name="FIC_EQUIPO" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
+          <Property Name="FIC_NOTAS" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ClockCardModelStoreContainer" CdmEntityContainer="ClockCardEntities">
+    <EntitySetMapping Name="FICHADA">
+      <EntityTypeMapping TypeName="IsTypeOf(ClockCardModel.FICHADA)">
+        <MappingFragment StoreEntitySet="FICHADA">
+          <ScalarProperty Name="FIC_ID" ColumnName="FIC_ID" />
+          <ScalarProperty Name="LEG_LEGAJO" ColumnName="LEG_LEGAJO" />
+          <ScalarProperty Name="FIC_TARJETA" ColumnName="FIC_TARJETA" />
+          <ScalarProperty Name="FIC_FECHA" ColumnName="FIC_FECHA" />
+          <ScalarProperty Name="FIC_HORA" ColumnName="FIC_HORA" />
+          <ScalarProperty Name="FIC_ENTSAL" ColumnName="FIC_ENTSAL" />
+          <ScalarProperty Name="FIC_RELOJ" ColumnName="FIC_RELOJ" />
+          <ScalarProperty Name="FIC_ORIGEN" ColumnName="FIC_ORIGEN" />
+          <ScalarProperty Name="FIC_NOVEDAD" ColumnName="FIC_NOVEDAD" />
+          <ScalarProperty Name="FIC_EQUIPO" ColumnName="FIC_EQUIPO" />
+          <ScalarProperty Name="FIC_NOTAS" ColumnName="FIC_NOTAS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="HuellasModel">
+        <EntityTypeShape EntityType="ClockCardModel.FICHADA" Width="1.5" PointX="0.75" PointY="0.75" Height="3.1340950520833335" IsExpanded="true" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

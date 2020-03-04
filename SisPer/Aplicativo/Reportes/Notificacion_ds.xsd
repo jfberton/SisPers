@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Notificacion_ds" targetNamespace="http://tempuri.org/Notificacion_ds.xsd" xmlns:mstns="http://tempuri.org/Notificacion_ds.xsd" xmlns="http://tempuri.org/Notificacion_ds.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="Notificacion_ds" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="Notificacion_ds" msprop:Generator_UserDSName="Notificacion_ds">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Notificacion" msprop:Generator_TableClassName="NotificacionDataTable" msprop:Generator_TableVarName="tableNotificacion" msprop:Generator_TablePropName="Notificacion" msprop:Generator_RowDeletingName="NotificacionRowDeleting" msprop:Generator_RowChangingName="NotificacionRowChanging" msprop:Generator_RowEvHandlerName="NotificacionRowChangeEventHandler" msprop:Generator_RowDeletedName="NotificacionRowDeleted" msprop:Generator_UserTableName="Notificacion" msprop:Generator_RowChangedName="NotificacionRowChanged" msprop:Generator_RowEvArgName="NotificacionRowChangeEvent" msprop:Generator_RowClassName="NotificacionRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Id" msprop:Generator_ColumnVarNameInTable="columnId" msprop:Generator_ColumnPropNameInRow="Id" msprop:Generator_ColumnPropNameInTable="IdColumn" msprop:Generator_UserColumnName="Id" type="xs:string" minOccurs="0" />
+              <xs:element name="Tipo" msprop:Generator_ColumnVarNameInTable="columnTipo" msprop:Generator_ColumnPropNameInRow="Tipo" msprop:Generator_ColumnPropNameInTable="TipoColumn" msprop:Generator_UserColumnName="Tipo" type="xs:string" minOccurs="0" />
+              <xs:element name="De" msprop:Generator_ColumnVarNameInTable="columnDe" msprop:Generator_ColumnPropNameInRow="De" msprop:Generator_ColumnPropNameInTable="DeColumn" msprop:Generator_UserColumnName="De" type="xs:string" minOccurs="0" />
+              <xs:element name="Para" msprop:Generator_ColumnVarNameInTable="columnPara" msprop:Generator_ColumnPropNameInRow="Para" msprop:Generator_ColumnPropNameInTable="ParaColumn" msprop:Generator_UserColumnName="Para" type="xs:string" minOccurs="0" />
+              <xs:element name="FchGenerada" msprop:Generator_ColumnVarNameInTable="columnFchGenerada" msprop:Generator_ColumnPropNameInRow="FchGenerada" msprop:Generator_ColumnPropNameInTable="FchGeneradaColumn" msprop:Generator_UserColumnName="FchGenerada" type="xs:string" minOccurs="0" />
+              <xs:element name="FchNotificada" msprop:Generator_ColumnVarNameInTable="columnFchNotificada" msprop:Generator_ColumnPropNameInRow="FchNotificada" msprop:Generator_ColumnPropNameInTable="FchNotificadaColumn" msprop:Generator_UserColumnName="FchNotificada" type="xs:string" minOccurs="0" />
+              <xs:element name="FchEnviada" msprop:Generator_ColumnVarNameInTable="columnFchEnviada" msprop:Generator_ColumnPropNameInRow="FchEnviada" msprop:Generator_ColumnPropNameInTable="FchEnviadaColumn" msprop:Generator_UserColumnName="FchEnviada" type="xs:string" minOccurs="0" />
+              <xs:element name="FchObservada" msprop:Generator_ColumnVarNameInTable="columnFchObservada" msprop:Generator_ColumnPropNameInRow="FchObservada" msprop:Generator_ColumnPropNameInTable="FchObservadaColumn" msprop:Generator_UserColumnName="FchObservada" type="xs:string" minOccurs="0" />
+              <xs:element name="FchRecibida" msprop:Generator_ColumnVarNameInTable="columnFchRecibida" msprop:Generator_ColumnPropNameInRow="FchRecibida" msprop:Generator_ColumnPropNameInTable="FchRecibidaColumn" msprop:Generator_UserColumnName="FchRecibida" type="xs:string" minOccurs="0" />
+              <xs:element name="Descripcion" msprop:Generator_ColumnVarNameInTable="columnDescripcion" msprop:Generator_ColumnPropNameInRow="Descripcion" msprop:Generator_ColumnPropNameInTable="DescripcionColumn" msprop:Generator_UserColumnName="Descripcion" type="xs:string" minOccurs="0" />
+              <xs:element name="Observacion" msprop:Generator_ColumnVarNameInTable="columnObservacion" msprop:Generator_ColumnPropNameInRow="Observacion" msprop:Generator_ColumnPropNameInTable="ObservacionColumn" msprop:Generator_UserColumnName="Observacion" type="xs:string" minOccurs="0" />
+              <xs:element name="AgenteObservacion" msprop:Generator_ColumnVarNameInTable="columnAgenteObservacion" msprop:Generator_ColumnPropNameInRow="AgenteObservacion" msprop:Generator_ColumnPropNameInTable="AgenteObservacionColumn" msprop:Generator_UserColumnName="AgenteObservacion" type="xs:string" minOccurs="0" />
+              <xs:element name="Vencimiento" msprop:Generator_ColumnVarNameInTable="columnVencimiento" msprop:Generator_ColumnPropNameInRow="Vencimiento" msprop:Generator_ColumnPropNameInTable="VencimientoColumn" msprop:Generator_UserColumnName="Vencimiento" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

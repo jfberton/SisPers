@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="RegistroDeFichadas_DS" targetNamespace="http://tempuri.org/RegistroDeFichadas_DS.xsd" xmlns:mstns="http://tempuri.org/RegistroDeFichadas_DS.xsd" xmlns="http://tempuri.org/RegistroDeFichadas_DS.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="RegistroDeFichadas_DS" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="RegistroDeFichadas_DS" msprop:Generator_UserDSName="RegistroDeFichadas_DS">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="FichadasDia" msprop:Generator_TableClassName="FichadasDiaDataTable" msprop:Generator_TableVarName="tableFichadasDia" msprop:Generator_TablePropName="FichadasDia" msprop:Generator_RowDeletingName="FichadasDiaRowDeleting" msprop:Generator_RowChangingName="FichadasDiaRowChanging" msprop:Generator_RowEvHandlerName="FichadasDiaRowChangeEventHandler" msprop:Generator_RowDeletedName="FichadasDiaRowDeleted" msprop:Generator_UserTableName="FichadasDia" msprop:Generator_RowChangedName="FichadasDiaRowChanged" msprop:Generator_RowEvArgName="FichadasDiaRowChangeEvent" msprop:Generator_RowClassName="FichadasDiaRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Legajo" msprop:Generator_ColumnVarNameInTable="columnLegajo" msprop:Generator_ColumnPropNameInRow="Legajo" msprop:Generator_ColumnPropNameInTable="LegajoColumn" msprop:Generator_UserColumnName="Legajo" type="xs:string" minOccurs="0" />
+              <xs:element name="DiaNum" msprop:Generator_ColumnVarNameInTable="columnDiaNum" msprop:Generator_ColumnPropNameInRow="DiaNum" msprop:Generator_ColumnPropNameInTable="DiaNumColumn" msprop:Generator_UserColumnName="DiaNum" type="xs:string" minOccurs="0" />
+              <xs:element name="DiaNom" msprop:Generator_ColumnVarNameInTable="columnDiaNom" msprop:Generator_ColumnPropNameInRow="DiaNom" msprop:Generator_ColumnPropNameInTable="DiaNomColumn" msprop:Generator_UserColumnName="DiaNom" type="xs:string" minOccurs="0" />
+              <xs:element name="Ent1" msprop:Generator_ColumnVarNameInTable="columnEnt1" msprop:Generator_ColumnPropNameInRow="Ent1" msprop:Generator_ColumnPropNameInTable="Ent1Column" msprop:Generator_UserColumnName="Ent1" type="xs:string" minOccurs="0" />
+              <xs:element name="Sal1" msprop:Generator_ColumnVarNameInTable="columnSal1" msprop:Generator_ColumnPropNameInRow="Sal1" msprop:Generator_ColumnPropNameInTable="Sal1Column" msprop:Generator_UserColumnName="Sal1" type="xs:string" minOccurs="0" />
+              <xs:element name="Ent2" msprop:Generator_ColumnVarNameInTable="columnEnt2" msprop:Generator_ColumnPropNameInRow="Ent2" msprop:Generator_ColumnPropNameInTable="Ent2Column" msprop:Generator_UserColumnName="Ent2" type="xs:string" minOccurs="0" />
+              <xs:element name="Sal2" msprop:Generator_ColumnVarNameInTable="columnSal2" msprop:Generator_ColumnPropNameInRow="Sal2" msprop:Generator_ColumnPropNameInTable="Sal2Column" msprop:Generator_UserColumnName="Sal2" type="xs:string" minOccurs="0" />
+              <xs:element name="Ent3" msprop:Generator_ColumnVarNameInTable="columnEnt3" msprop:Generator_ColumnPropNameInRow="Ent3" msprop:Generator_ColumnPropNameInTable="Ent3Column" msprop:Generator_UserColumnName="Ent3" type="xs:string" minOccurs="0" />
+              <xs:element name="Sal3" msprop:Generator_ColumnVarNameInTable="columnSal3" msprop:Generator_ColumnPropNameInRow="Sal3" msprop:Generator_ColumnPropNameInTable="Sal3Column" msprop:Generator_UserColumnName="Sal3" type="xs:string" minOccurs="0" />
+              <xs:element name="Ent4" msprop:Generator_ColumnVarNameInTable="columnEnt4" msprop:Generator_ColumnPropNameInRow="Ent4" msprop:Generator_ColumnPropNameInTable="Ent4Column" msprop:Generator_UserColumnName="Ent4" type="xs:string" minOccurs="0" />
+              <xs:element name="Sal4" msprop:Generator_ColumnVarNameInTable="columnSal4" msprop:Generator_ColumnPropNameInRow="Sal4" msprop:Generator_ColumnPropNameInTable="Sal4Column" msprop:Generator_UserColumnName="Sal4" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

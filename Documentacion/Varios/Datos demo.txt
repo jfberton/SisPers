@@ -1,0 +1,12 @@
+Areas
+	una Direccion
+	un Departamento
+Agentes
+	director
+		Dire 123456
+	Jefe
+		Jefe 123456
+	agente
+		agente 123456
+	Personal
+		personal 123456

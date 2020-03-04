@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <Body>
+    <ReportItems>
+      <Tablix Name="Tablix1">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn>
+              <Width>14.4365cm</Width>
+            </TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <TablixRow>
+              <Height>0.6cm</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Subreport Name="Subreport1">
+                      <ReportName>HorarioIngresoEgresoMensual_r</ReportName>
+                      <Parameters>
+                        <Parameter Name="AgenteId">
+                          <Value>=Fields!Id.Value</Value>
+                        </Parameter>
+                        <Parameter Name="Area">
+                          <Value>=Fields!Area.Value</Value>
+                        </Parameter>
+                        <Parameter Name="Agente">
+                          <Value>=Fields!Nombre.Value</Value>
+                        </Parameter>
+                        <Parameter Name="Legajo">
+                          <Value>=Fields!Legajo.Value</Value>
+                        </Parameter>
+                        <Parameter Name="Mes">
+                          <Value>=First(Fields!Mes.Value, "ds_General")</Value>
+                        </Parameter>
+                        <Parameter Name="Anio">
+                          <Value>=First(Fields!Anio.Value, "ds_General")</Value>
+                        </Parameter>
+                        <Parameter Name="total_horas_trabajadas">
+                          <Value>=Fields!Total_horas_trabajadas.Value</Value>
+                        </Parameter>
+                        <Parameter Name="total_horas_mas">
+                          <Value>=Fields!Total_horas_mas.Value</Value>
+                        </Parameter>
+                        <Parameter Name="total_horas_menos">
+                          <Value>=Fields!Total_horas_menos.Value</Value>
+                        </Parameter>
+                        <Parameter Name="total_horas_tardanza">
+                          <Value>=Fields!Total_horas_tardanza.Value</Value>
+                        </Parameter>
+                        <Parameter Name="total_horas">
+                          <Value>=Fields!Total_horas.Value</Value>
+                        </Parameter>
+                      </Parameters>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                    </Subreport>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy>
+          <TablixMembers>
+            <TablixMember />
+          </TablixMembers>
+        </TablixColumnHierarchy>
+        <TablixRowHierarchy>
+          <TablixMembers>
+            <TablixMember>
+              <Group Name="Details" />
+            </TablixMember>
+          </TablixMembers>
+        </TablixRowHierarchy>
+        <DataSetName>ds_Agentes</DataSetName>
+        <Height>0.6cm</Height>
+        <Width>14.4365cm</Width>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Tablix>
+    </ReportItems>
+    <Height>0.23622in</Height>
+    <Style />
+  </Body>
+  <Width>5.68366in</Width>
+  <Page>
+    <PageHeight>29.7cm</PageHeight>
+    <PageWidth>21cm</PageWidth>
+    <LeftMargin>1cm</LeftMargin>
+    <RightMargin>1cm</RightMargin>
+    <TopMargin>0.5cm</TopMargin>
+    <BottomMargin>0.5cm</BottomMargin>
+    <ColumnSpacing>0.13cm</ColumnSpacing>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="HorarioIngresoEgresoMensual">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>1418e190-5dd9-4a85-b8c1-44303e3b0535</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="ds_General">
+      <Query>
+        <DataSourceName>HorarioIngresoEgresoMensual</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Mes">
+          <DataField>Mes</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Anio">
+          <DataField>Anio</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>HorarioIngresoEgresoMensual</rd:DataSetName>
+        <rd:SchemaPath>D:\Usuarios\jfberton\Mis Documentos\Desarrollo\SisPer\SisPer\Aplicativo\Reportes\HorarioIngresoEgresoMensual.xsd</rd:SchemaPath>
+        <rd:TableName>General</rd:TableName>
+        <rd:TableAdapterFillMethod />
+        <rd:TableAdapterGetDataMethod />
+        <rd:TableAdapterName />
+      </rd:DataSetInfo>
+    </DataSet>
+    <DataSet Name="ds_Agentes">
+      <Query>
+        <DataSourceName>HorarioIngresoEgresoMensual</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Id">
+          <DataField>Id</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Nombre">
+          <DataField>Nombre</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Legajo">
+          <DataField>Legajo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Area">
+          <DataField>Area</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Total_horas_trabajadas">
+          <DataField>Total_horas_trabajadas</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Total_horas_mas">
+          <DataField>Total_horas_mas</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Total_horas_menos">
+          <DataField>Total_horas_menos</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Total_horas">
+          <DataField>Total_horas</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Total_horas_tardanza">
+          <DataField>Total_horas_tardanza</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>HorarioIngresoEgresoMensual</rd:DataSetName>
+        <rd:SchemaPath>D:\Usuarios\jfberton\Mis Documentos\Desarrollo\SisPer\SisPer\Aplicativo\Reportes\HorarioIngresoEgresoMensual.xsd</rd:SchemaPath>
+        <rd:TableName>Agente</rd:TableName>
+        <rd:TableAdapterFillMethod />
+        <rd:TableAdapterGetDataMethod />
+        <rd:TableAdapterName />
+      </rd:DataSetInfo>
+    </DataSet>
+  </DataSets>
+  <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>4c94048b-a1e5-48e0-a59b-8614e7dd8d85</rd:ReportID>
+</Report>

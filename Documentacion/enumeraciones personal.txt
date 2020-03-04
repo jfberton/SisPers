@@ -1,0 +1,45 @@
+﻿Enumeraciones Personal
+
+Perfiles
+Ninguno	0
+Agente	1
+Personal	2
+Administrador	3
+Desarrollador	4
+Guardia	5
+
+
+Horarios vespertinos
+Solicitado	0
+Aprobado	1
+Terminado	2
+Cancelado	3
+CanceladoAutomatico	4
+
+Estados agente
+Activo	0
+Salida_Particular	1
+Salida_Oficial	2
+Indisposición	3
+Franco_Compensatorio	4
+
+Estados franco
+Solicitado	0
+AprobadoJefe	1
+AprobadoPersonal	2
+Aprobado	3
+Cancelado	4
+CanceladoAutomatico	5
+
+Estado solicitud de estado 
+Solicitado	0
+Aprobado	1
+Rechazado	2
+Cancelado	3
+
+Tipo de salida
+Ninguno	0
+Particular	1
+Oficial	2
+Indisposición	3
+

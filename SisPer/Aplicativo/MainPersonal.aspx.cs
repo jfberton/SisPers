@@ -1,0 +1,282 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace SisPer.Aplicativo
+{
+    public partial class MainPersonal : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!Page.IsPostBack)
+            {
+                Agente ag = Session["UsuarioLogueado"] as Agente;
+
+                if (ag == null)
+                {
+                    Response.Redirect("~/Default.aspx?mode=session_end");
+                }
+
+                if (ag.Perfil != PerfilUsuario.Personal)
+                {
+                    Response.Redirect("../default.aspx?mode=trucho");
+                }
+                else
+                {
+                    MenuPersonalJefe1.Visible = (ag.Jefe || ag.JefeTemporal);
+                    MenuPersonalAgente1.Visible = !(ag.Jefe || ag.JefeTemporal);
+                    CargarFrancos();
+                    CargarHVS();
+                    CargarSolicitudes();
+                    CargarCambiosPendientes();
+                    
+                    bool mostrarMensaje = Convert.ToBoolean(Session["MostrarMensageBienvenida"]);
+                    Session["MostrarMensageBienvenida"] = false;
+                    if (mostrarMensaje)
+                    {
+                        MensageBienvenida.Show();
+                    }
+                }
+            }
+        }
+
+        private void CargarFrancos()
+        {
+
+            Model1Container cxt = new Model1Container();
+
+            //Cargo la grilla con los francos a aprobar
+            var francosPorAprobar = (from fc in cxt.Francos
+                                     where fc.Estado == EstadosFrancos.AprobadoJefe
+                                     select new
+                                     {
+                                         Id = fc.Id,
+                                         Legajo = fc.Agente.Legajo,
+                                         Agente = fc.Agente.ApellidoYNombre,
+                                         Estado = fc.Estado,
+                                         Dia = fc.FechaSolicitud,
+                                         DiaInicial = (from d in fc.DiasFranco select d.Dia).Min(),
+                                         CantidadDias = fc.DiasFranco.Count,
+                                         Horas = fc.DiasFranco.Count * 7
+                                     }).OrderBy(l => l.Legajo).ToList();
+            GridViewFrancosPorAprobar.DataSource = francosPorAprobar;
+            GridViewFrancosPorAprobar.DataBind();
+
+            //Cargo la grilla con los francos aprobados
+            var francosAprobados = (from fc in cxt.Francos
+                                    where fc.Estado == EstadosFrancos.AprobadoPersonal
+                                    select new
+                                    {
+                                        Id = fc.Id,
+                                        Legajo = fc.Agente.Legajo,
+                                        Agente = fc.Agente.ApellidoYNombre,
+                                        Estado = fc.Estado,
+                                        Dia = fc.FechaSolicitud,
+                                        DiaInicial = (from d in fc.DiasFranco select d.Dia).Min(),
+                                        CantidadDias = fc.DiasFranco.Count,
+                                        Horas = fc.DiasFranco.Count * 7
+                                    }).OrderBy(l => l.Legajo).ToList();
+
+            GridViewFrancosAprobados.DataSource = francosAprobados;
+            GridViewFrancosAprobados.DataBind();
+        }
+
+        private void CargarHVS()
+        {
+            Model1Container cxt = new Model1Container();
+            List<HorarioVespertino> horariosVespertinosAprobados = new List<HorarioVespertino>();
+            foreach (var hv in cxt.HorariosVespertinos)
+            {
+                if (hv.Estado == EstadosHorarioVespertino.Aprobado)
+                {
+                    horariosVespertinosAprobados.Add(hv);
+                }
+            }
+
+            var hvsSolicitados = (from hv in horariosVespertinosAprobados
+                                  select new
+                                  {
+                                      Id = hv.Id,
+                                      Legajo = hv.Agente.Legajo,
+                                      Agente = hv.Agente.ApellidoYNombre,
+                                      Dia = hv.Dia,
+                                      Desde = hv.HoraInicio,
+                                      Hasta = hv.HoraFin,
+                                      Motivo = hv.Motivo,
+                                      Horas = HorasString.RestarHoras(hv.HoraFin, hv.HoraInicio)
+                                  }).OrderBy(l => l.Legajo).ToList();
+
+            GridViewHVPendientesAprobar.DataSource = hvsSolicitados;
+            GridViewHVPendientesAprobar.DataBind();
+        }
+
+        private void CargarCambiosPendientes()
+        {
+            Model1Container cxt = new Model1Container();
+            var cambios = (from c in cxt.CambiosPendientes.Include("Agente")
+                          select new
+                          {
+                              Usr = c.Agente.Usr,
+                              Agente = c.Agente.ApellidoYNombre,
+                              Legajo = c.Agente.Legajo
+                          }).ToList();
+            GridViewCambiosPendientes.DataSource = cambios;
+            GridViewCambiosPendientes.DataBind();
+        }
+
+        protected void gridViewHVPendientesAprobar_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridViewHVPendientesAprobar.PageIndex = e.NewPageIndex;
+            CargarHVS();
+        }
+
+        protected void btn_AprobarFrancoPorAprobar_Click(object sender, ImageClickEventArgs e)
+        {
+            int id = Convert.ToInt32(((ImageButton)sender).CommandArgument);
+            Session["IdFranco"] = id;
+            Response.Redirect("~/Aplicativo/Personal_AprobarFranco.aspx");
+        }
+
+        protected void btn_AprobarFranco_Click(object sender, ImageClickEventArgs e)
+        {
+            int id = Convert.ToInt32(((ImageButton)sender).CommandArgument);
+            ProcesosGlobales.ModificarEstadoFranco(id, EstadosFrancos.Aprobado, Session["UsuarioLogueado"] as Agente);
+            CargarFrancos();
+        }
+
+        protected void btn_RechazarFranco_Click(object sender, ImageClickEventArgs e)
+        {
+            int id = Convert.ToInt32(((ImageButton)sender).CommandArgument);
+            ProcesosGlobales.ModificarEstadoFranco(id, EstadosFrancos.Cancelado, Session["UsuarioLogueado"] as Agente);
+            CargarFrancos();
+        }
+
+        protected void GridViewFrancosPorAprobar_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridViewFrancosPorAprobar.PageIndex = e.NewPageIndex;
+            CargarFrancos();
+        }
+
+        protected void GridViewFrancosAprobados_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridViewFrancosAprobados.PageIndex = e.NewPageIndex;
+            CargarFrancos();
+        }
+
+        protected void gridViewCambiosPendientes_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridViewCambiosPendientes.PageIndex = e.NewPageIndex;
+            CargarCambiosPendientes();
+        }
+
+        protected void btn_AnalizarHV_Click(object sender, ImageClickEventArgs e)
+        {
+            Session["Id"] = ((ImageButton)sender).CommandArgument;
+
+            Response.Redirect("~/Aplicativo/Personal_TerminarHV.aspx");
+        }
+
+        protected void btn_AnalizarCambios_Click(object sender, ImageClickEventArgs e)
+        {
+            Session["Usr"] = ((ImageButton)sender).CommandArgument;
+
+            Response.Redirect("~/Aplicativo/Personal_AprobarCambiosDatosAgentes.aspx");
+        }
+
+        protected void CargarSolicitudes(int legajo = 0)
+        {
+            Model1Container cxt = new Model1Container();
+
+            var solicitudes = (from se in cxt.SolicitudesDeEstado
+                               where
+                                   se.Estado == EstadoSolicitudDeEstado.Solicitado &&
+                                   (se.Agente.Legajo == legajo || legajo == 0)
+                               select se).AsEnumerable().Select(x => new
+                               {
+                                   prioridadOrden = x.TipoEstadoAgente.OrdenPrioridad,
+                                   Id = x.Id,
+                                   Agente = x.Agente.ApellidoYNombre,
+                                   Legajo = x.Agente.Legajo,
+                                   Tipo = x.TipoEstadoAgente.Estado,
+                                   Desde = x.FechaDesde,
+                                   Hasta = x.FechaHasta,
+                                   Encuadre = ProcesosGlobales.ObtenerEncuadre(x),
+                                   Fechahora = x.FechaHoraSolicitud,
+                                   Familiar = x.Fam_NomyAp,
+                                   Parentesco = x.Fam_Parentesco,
+                                   Lugar = x.Lugar
+                               }).ToList();
+
+            gv_EstadosSolicitados.DataSource = solicitudes.OrderBy(d => d.prioridadOrden).ThenByDescending(d => d.Fechahora).ToList();
+            gv_EstadosSolicitados.DataBind();
+        }
+
+        protected void gv_EstadosSolicitados_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gv_EstadosSolicitados.PageIndex = e.NewPageIndex;
+            CargarSolicitudes();
+        }
+
+        protected void btn_Aprobar_Click(object sender, ImageClickEventArgs e)
+        {
+            int id = Convert.ToInt32(((ImageButton)sender).CommandArgument);
+
+            Model1Container cxt = new Model1Container();
+            SolicitudDeEstado se = cxt.SolicitudesDeEstado.FirstOrDefault(s => s.Id == id);
+
+            if (se != null)
+            {
+                int year = 0;
+                if (se.TipoEstadoAgente.Estado == "Licencia Anual" || se.TipoEstadoAgente.Estado == "Licencia Anual (Saldo)" || se.TipoEstadoAgente.Estado == "Licencia Anual (Anticipo)")
+                {
+                    year = Convert.ToInt32(se.TipoEnfermedad);
+                }
+
+                for (DateTime dia = se.FechaDesde; dia <= se.FechaHasta; dia = dia.AddDays(1))
+                {
+                    ProcesosGlobales.AgendarEstadoDiaAgente(se.SolicitadoPor, se.Agente, dia, se.TipoEstadoAgente, year);
+                }
+
+                se.Estado = EstadoSolicitudDeEstado.Aprobado;
+                cxt.SaveChanges();
+            }
+
+            CargarSolicitudes();
+        }
+
+        protected void btn_Rechazar_Click(object sender, ImageClickEventArgs e)
+        {
+            int id = Convert.ToInt32(((ImageButton)sender).CommandArgument);
+
+            Model1Container cxt = new Model1Container();
+            SolicitudDeEstado se = cxt.SolicitudesDeEstado.FirstOrDefault(s => s.Id == id);
+
+            if (se != null)
+            {
+                se.Estado = EstadoSolicitudDeEstado.Rechazado;
+                cxt.SaveChanges();
+            }
+
+            CargarSolicitudes();
+        }
+
+
+        protected void btn_filtrarSolicitudes_Click(object sender, EventArgs e)
+        {
+            int legajo = 0;
+            if (!int.TryParse(tb_LegajoBuscado.Value, out legajo))
+            {
+                if (tb_LegajoBuscado.Value != string.Empty)
+                {
+                    Controles.MessageBox.Show(this, "El legajo ingresado es inválido", Controles.MessageBox.Tipo_MessageBox.Warning);
+                }
+            }
+
+            CargarSolicitudes(legajo);
+            tb_LegajoBuscado.Value = string.Empty;
+        }
+    }
+}

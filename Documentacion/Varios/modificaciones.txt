@@ -1,0 +1,24 @@
+ACCESO VESPERTINO
+agentes habilitados a trabajar por la tarde-->propuesta agregar rango horario laboral editable por personal por defecto de 6:30 a 13 (me dieron el ok) (Listo)
+
+JEFES TRANSITORIOS 
+REVER 
+PERFIL DE JEFE
+
+corregir los horarios de bonificacion '000:00' por 000:00
+declare @malditocaracter as char = char(39)
+update Agentes set HorasBonificacionACubrir = '000:00' where  HorasBonificacionACubrir like '%' + @malditocaracter + '%'
+
+Agregar natalicios (Listo)
+
+Revisar una ves cerrado el mes que no se modifiquen valores (Listo)
+
+Informe de inasistencia diaria que cargaria el jefe 
+
+Quitar columnas de mas en perfil guardia (Listo)
+
+Que el guardia pueda agregar observacion o comentario sobre personas que entraron (Listo)
+
+cancelar de alta agente no debe hacer validacion (Listo)
+
+

@@ -1,0 +1,2 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Ddl_TipoEstadoAgente.ascx.cs" Inherits="SisPer.Aplicativo.Controles.Ddl_TipoEstadoAgente" %>
+<asp:DropDownList runat="server" CssClass="form-control" ID="ddlTipoEstado" AutoPostBack="True" OnSelectedIndexChanged="ddlTipoEstado_SelectedIndexChanged" />

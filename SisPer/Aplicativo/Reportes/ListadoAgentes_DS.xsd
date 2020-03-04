@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ListadoAgentes_DS" targetNamespace="http://tempuri.org/ListadoAgentes_DS.xsd" xmlns:mstns="http://tempuri.org/ListadoAgentes_DS.xsd" xmlns="http://tempuri.org/ListadoAgentes_DS.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="ListadoAgentes_DS" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="ListadoAgentes_DS" msprop:Generator_UserDSName="ListadoAgentes_DS">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Area" msprop:Generator_TableClassName="AreaDataTable" msprop:Generator_TableVarName="tableArea" msprop:Generator_TablePropName="Area" msprop:Generator_RowDeletingName="AreaRowDeleting" msprop:Generator_RowChangingName="AreaRowChanging" msprop:Generator_RowEvHandlerName="AreaRowChangeEventHandler" msprop:Generator_RowDeletedName="AreaRowDeleted" msprop:Generator_UserTableName="Area" msprop:Generator_RowChangedName="AreaRowChanged" msprop:Generator_RowEvArgName="AreaRowChangeEvent" msprop:Generator_RowClassName="AreaRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Nombre" msprop:Generator_ColumnVarNameInTable="columnNombre" msprop:Generator_ColumnPropNameInRow="Nombre" msprop:Generator_ColumnPropNameInTable="NombreColumn" msprop:Generator_UserColumnName="Nombre" type="xs:string" minOccurs="0" />
+              <xs:element name="Depende_de" msprop:Generator_ColumnVarNameInTable="columnDepende_de" msprop:Generator_ColumnPropNameInRow="Depende_de" msprop:Generator_ColumnPropNameInTable="Depende_deColumn" msprop:Generator_UserColumnName="Depende_de" type="xs:string" minOccurs="0" />
+              <xs:element name="CantidadAgentes" msprop:Generator_ColumnVarNameInTable="columnCantidadAgentes" msprop:Generator_ColumnPropNameInRow="CantidadAgentes" msprop:Generator_ColumnPropNameInTable="CantidadAgentesColumn" msprop:Generator_UserColumnName="CantidadAgentes" type="xs:int" minOccurs="0" />
+              <xs:element name="CantidadAreasSubordinadas" msprop:Generator_ColumnVarNameInTable="columnCantidadAreasSubordinadas" msprop:Generator_ColumnPropNameInRow="CantidadAreasSubordinadas" msprop:Generator_ColumnPropNameInTable="CantidadAreasSubordinadasColumn" msprop:Generator_UserColumnName="CantidadAreasSubordinadas" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Agentes" msprop:Generator_TableClassName="AgentesDataTable" msprop:Generator_TableVarName="tableAgentes" msprop:Generator_TablePropName="Agentes" msprop:Generator_RowDeletingName="AgentesRowDeleting" msprop:Generator_RowChangingName="AgentesRowChanging" msprop:Generator_RowEvHandlerName="AgentesRowChangeEventHandler" msprop:Generator_RowDeletedName="AgentesRowDeleted" msprop:Generator_UserTableName="Agentes" msprop:Generator_RowChangedName="AgentesRowChanged" msprop:Generator_RowEvArgName="AgentesRowChangeEvent" msprop:Generator_RowClassName="AgentesRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Area" msprop:Generator_ColumnVarNameInTable="columnArea" msprop:Generator_ColumnPropNameInRow="Area" msprop:Generator_ColumnPropNameInTable="AreaColumn" msprop:Generator_UserColumnName="Area" type="xs:string" minOccurs="0" />
+              <xs:element name="Legajo" msprop:Generator_ColumnVarNameInTable="columnLegajo" msprop:Generator_ColumnPropNameInRow="Legajo" msprop:Generator_ColumnPropNameInTable="LegajoColumn" msprop:Generator_UserColumnName="Legajo" type="xs:string" minOccurs="0" />
+              <xs:element name="Nombre" msprop:Generator_ColumnVarNameInTable="columnNombre" msprop:Generator_ColumnPropNameInRow="Nombre" msprop:Generator_ColumnPropNameInTable="NombreColumn" msprop:Generator_UserColumnName="Nombre" type="xs:string" minOccurs="0" />
+              <xs:element name="DNI" msprop:Generator_ColumnVarNameInTable="columnDNI" msprop:Generator_ColumnPropNameInRow="DNI" msprop:Generator_ColumnPropNameInTable="DNIColumn" msprop:Generator_UserColumnName="DNI" type="xs:string" minOccurs="0" />
+              <xs:element name="Jefe" msprop:Generator_ColumnVarNameInTable="columnJefe" msprop:Generator_ColumnPropNameInRow="Jefe" msprop:Generator_ColumnPropNameInTable="JefeColumn" msprop:Generator_UserColumnName="Jefe" type="xs:boolean" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="Area_Agentes" msdata:parent="Area" msdata:child="Agentes" msdata:parentkey="Nombre" msdata:childkey="Area" msprop:Generator_UserChildTable="Agentes" msprop:Generator_ChildPropName="GetAgentesRows" msprop:Generator_UserRelationName="Area_Agentes" msprop:Generator_ParentPropName="AreaRow" msprop:Generator_RelationVarName="relationArea_Agentes" msprop:Generator_UserParentTable="Area" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

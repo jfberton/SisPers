@@ -1,0 +1,1055 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <Body>
+    <ReportItems>
+      <Textbox Name="Textbox2">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value xml:space="preserve">                                                  </Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontFamily>Microsoft Sans Serif</FontFamily>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value xml:space="preserve"> </Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>=Fields!Fecha.Value</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>Underline</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>Underline</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Agente</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>Underline</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>: </Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>=Fields!NombreAgente.Value</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Departamento</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>Underline</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>: </Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Label>Departamento</Label>
+                <Value>=First(Fields!Departamento.Value, "DS")</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value xml:space="preserve">                                       </Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>Ref.</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontFamily>Microsoft Sans Serif</FontFamily>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>Underline</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>:    Clave para el ingreso a Sistema Personal</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontFamily>Microsoft Sans Serif</FontFamily>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontFamily>Microsoft Sans Serif</FontFamily>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontFamily>Microsoft Sans Serif</FontFamily>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>                                       El motivo de la presente es informarle que en el día de la fecha, el agente </Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>=Fields!AgentePersonal.Value</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>  ha habilitado su ingreso al sistema de personal, disponible en el siguiente sitio:</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value xml:space="preserve">                      </Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <LeftIndent>30.95pt</LeftIndent>
+            <RightIndent>34.6pt</RightIndent>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>                              Dirección desde casa central</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <LeftIndent>30.95pt</LeftIndent>
+            <RightIndent>34.6pt</RightIndent>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>                                                            http://intranet/sispersonal</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <LeftIndent>0cm</LeftIndent>
+            <RightIndent>0cm</RightIndent>
+            <Style>
+              <TextAlign>Left</TextAlign>
+              <LineHeight>8pt</LineHeight>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <LeftIndent>0cm</LeftIndent>
+            <RightIndent>0cm</RightIndent>
+            <Style>
+              <TextAlign>Left</TextAlign>
+              <LineHeight>8pt</LineHeight>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>                                        Dirección desde el interior - receptorias</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <LeftIndent>0cm</LeftIndent>
+            <RightIndent>0cm</RightIndent>
+            <Style>
+              <TextAlign>Left</TextAlign>
+              <LineHeight>8pt</LineHeight>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>                                                            http://dbatp.ecomchaco.com.ar/sispersonal</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <LeftIndent>0cm</LeftIndent>
+            <RightIndent>0cm</RightIndent>
+            <Style>
+              <TextAlign>Left</TextAlign>
+              <LineHeight>8pt</LineHeight>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value xml:space="preserve">                                                                    </Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <LeftIndent>0cm</LeftIndent>
+            <RightIndent>0cm</RightIndent>
+            <Style>
+              <TextAlign>Left</TextAlign>
+              <LineHeight>12pt</LineHeight>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <LeftIndent>0cm</LeftIndent>
+            <RightIndent>0cm</RightIndent>
+            <Style>
+              <TextAlign>Left</TextAlign>
+              <LineHeight>12pt</LineHeight>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>                                        Podrá modificar su clave desde la pantalla de ingreso al sistema.</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <LeftIndent>0cm</LeftIndent>
+            <RightIndent>0cm</RightIndent>
+            <Style>
+              <TextAlign>Left</TextAlign>
+              <LineHeight>12pt</LineHeight>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <LeftIndent>0cm</LeftIndent>
+            <RightIndent>0cm</RightIndent>
+            <Style>
+              <TextAlign>Left</TextAlign>
+              <LineHeight>12pt</LineHeight>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>                                        Recordamos  que  el  usuario  otorgado  es personal  y  todo registro que se haga a traves del mismo en el sistema quedará bajo su exclusiva responsabilidad. </Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <LeftIndent>0cm</LeftIndent>
+            <RightIndent>0cm</RightIndent>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <LeftIndent>0cm</LeftIndent>
+            <RightIndent>0cm</RightIndent>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>                                        Ante el olvido y/o pérdida de su usuario y clave asignados, deberá gestionar nuevamente los mismos ante este departamento.</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <LeftIndent>0cm</LeftIndent>
+            <RightIndent>0cm</RightIndent>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <LeftIndent>0cm</LeftIndent>
+            <RightIndent>0cm</RightIndent>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>                                        Para  acceder  a  dicho  sistema  deberá  utilizar  el  usuario  y  clave  que le proporcionamos a continuación:</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <LeftIndent>0cm</LeftIndent>
+            <RightIndent>0cm</RightIndent>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox2</rd:DefaultName>
+        <Top>0.17639cm</Top>
+        <Height>14.6134cm</Height>
+        <Width>17.45573cm</Width>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox3">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value xml:space="preserve">              </Value>
+                <Style />
+              </TextRun>
+              <TextRun>
+                <Value xml:space="preserve">   </Value>
+                <Style>
+                  <FontSize>12pt</FontSize>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>USUARIO:</Value>
+                <Style>
+                  <FontSize>12pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value xml:space="preserve">    </Value>
+                <Style>
+                  <FontSize>12pt</FontSize>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>=Fields!Usuario.Value</Value>
+                <Style>
+                  <FontSize>12pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style>
+                  <FontSize>12pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value xml:space="preserve">               </Value>
+                <Style>
+                  <FontSize>12pt</FontSize>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>CLAVE:</Value>
+                <Style>
+                  <FontSize>12pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value xml:space="preserve">        </Value>
+                <Style>
+                  <FontSize>12pt</FontSize>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>=Fields!Clave.Value</Value>
+                <Style>
+                  <FontSize>12pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox3</rd:DefaultName>
+        <Top>16.4123cm</Top>
+        <Left>4.15078cm</Left>
+        <Height>2.505cm</Height>
+        <Width>9.59083cm</Width>
+        <ZIndex>1</ZIndex>
+        <Style>
+          <Border>
+            <Style>Solid</Style>
+          </Border>
+          <TopBorder>
+            <Color>Black</Color>
+            <Style>Solid</Style>
+            <Width>1pt</Width>
+          </TopBorder>
+          <BottomBorder>
+            <Color>Black</Color>
+            <Style>Solid</Style>
+            <Width>1pt</Width>
+          </BottomBorder>
+          <LeftBorder>
+            <Color>Black</Color>
+            <Style>Solid</Style>
+            <Width>1pt</Width>
+          </LeftBorder>
+          <RightBorder>
+            <Color>Black</Color>
+            <Style>Solid</Style>
+            <Width>1pt</Width>
+          </RightBorder>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox4">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Notificación del agente</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox4</rd:DefaultName>
+        <Top>22.84166cm</Top>
+        <Left>0.84349cm</Left>
+        <Height>0.6cm</Height>
+        <Width>6.09833cm</Width>
+        <ZIndex>2</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <TopBorder>
+            <Color>Black</Color>
+            <Style>Dashed</Style>
+            <Width>1pt</Width>
+          </TopBorder>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox5">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Notificación Dpto. Personal</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox4</rd:DefaultName>
+        <Top>22.84166cm</Top>
+        <Left>10.77531cm</Left>
+        <Height>0.6cm</Height>
+        <Width>6.09833cm</Width>
+        <ZIndex>3</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <TopBorder>
+            <Color>Black</Color>
+            <Style>Dashed</Style>
+            <Width>1pt</Width>
+          </TopBorder>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Rectangle Name="Rectangle1">
+        <KeepTogether>true</KeepTogether>
+        <Top>6.33167cm</Top>
+        <Left>3.5687cm</Left>
+        <Height>2.97625cm</Height>
+        <Width>10.83437cm</Width>
+        <ZIndex>4</ZIndex>
+        <Style>
+          <Border>
+            <Style>Solid</Style>
+          </Border>
+          <TopBorder>
+            <Color>Black</Color>
+            <Style>Solid</Style>
+            <Width>1pt</Width>
+          </TopBorder>
+          <BottomBorder>
+            <Color>Black</Color>
+            <Style>Solid</Style>
+            <Width>1pt</Width>
+          </BottomBorder>
+          <LeftBorder>
+            <Color>Black</Color>
+            <Style>Solid</Style>
+            <Width>1pt</Width>
+          </LeftBorder>
+          <RightBorder>
+            <Color>Black</Color>
+            <Style>Solid</Style>
+            <Width>1pt</Width>
+          </RightBorder>
+        </Style>
+      </Rectangle>
+    </ReportItems>
+    <Height>9.57291in</Height>
+    <Style />
+  </Body>
+  <Width>6.87233in</Width>
+  <Page>
+    <PageHeader>
+      <Height>2.69063cm</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <ReportItems>
+        <Textbox Name="Textbox1">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>ENTREGA DE CLAVE SISTEMA PERSONAL</Value>
+                  <Style>
+                    <FontSize>16pt</FontSize>
+                    <FontWeight>Bold</FontWeight>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox1</rd:DefaultName>
+          <Top>0.85831cm</Top>
+          <Left>2.78446cm</Left>
+          <Height>0.78521cm</Height>
+          <Width>13.00396cm</Width>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Image Name="Image1">
+          <Source>Embedded</Source>
+          <Value>nuevologo</Value>
+          <Sizing>FitProportional</Sizing>
+          <Height>2.69063cm</Height>
+          <Width>2.61125cm</Width>
+          <ZIndex>1</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </Image>
+      </ReportItems>
+      <Style>
+        <Border>
+          <Style>None</Style>
+        </Border>
+      </Style>
+    </PageHeader>
+    <PageFooter>
+      <Height>1.61396cm</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <ReportItems>
+        <Line Name="Line1">
+          <Top>0.17639cm</Top>
+          <Height>0cm</Height>
+          <Width>17.45573cm</Width>
+          <Style>
+            <Border>
+              <Style>Solid</Style>
+            </Border>
+          </Style>
+        </Line>
+        <Textbox Name="Textbox6">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>Dpto. Personal</Value>
+                  <Style>
+                    <FontStyle>Normal</FontStyle>
+                    <FontFamily>Albertus Medium</FontFamily>
+                    <FontSize>11pt</FontSize>
+                    <FontWeight>Normal</FontWeight>
+                    <TextDecoration>None</TextDecoration>
+                    <Color>#000000</Color>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>Avda. Las Heras y Juan B. Justo</Value>
+                  <Style>
+                    <FontStyle>Normal</FontStyle>
+                    <FontFamily>Albertus Medium</FontFamily>
+                    <FontSize>11pt</FontSize>
+                    <FontWeight>Normal</FontWeight>
+                    <TextDecoration>None</TextDecoration>
+                    <Color>#000000</Color>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <LeftIndent>0cm</LeftIndent>
+              <RightIndent>0cm</RightIndent>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox6</rd:DefaultName>
+          <Top>0.24694cm</Top>
+          <Height>1.29646cm</Height>
+          <Width>6.94499cm</Width>
+          <ZIndex>1</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+      </ReportItems>
+      <Style>
+        <Border>
+          <Style>None</Style>
+        </Border>
+      </Style>
+    </PageFooter>
+    <PageHeight>29.7cm</PageHeight>
+    <PageWidth>21cm</PageWidth>
+    <LeftMargin>2.5cm</LeftMargin>
+    <RightMargin>0.5cm</RightMargin>
+    <TopMargin>0.5cm</TopMargin>
+    <BottomMargin>0cm</BottomMargin>
+    <ColumnSpacing>0.13cm</ColumnSpacing>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="OtorgoClave_DS">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>94d627ff-1e95-4f07-bf38-f6131e736e28</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DS">
+      <Query>
+        <DataSourceName>OtorgoClave_DS</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="NombreAgente">
+          <DataField>NombreAgente</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Fecha">
+          <DataField>Fecha</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Clave">
+          <DataField>Clave</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="AgentePersonal">
+          <DataField>AgentePersonal</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Usuario">
+          <DataField>Usuario</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Departamento">
+          <DataField>Departamento</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>OtorgoClave_DS</rd:DataSetName>
+        <rd:SchemaPath>D:\Usuarios\jfberton\Mis Documentos\Desarrollo\SisPer\SisPer\Aplicativo\Reportes\OtorgoClave_DS.xsd</rd:SchemaPath>
+        <rd:TableName>Datos</rd:TableName>
+        <rd:TableAdapterFillMethod />
+        <rd:TableAdapterGetDataMethod />
+        <rd:TableAdapterName />
+      </rd:DataSetInfo>
+    </DataSet>
+  </DataSets>
+  <EmbeddedImages>
+    <EmbeddedImage Name="LogoATPchiquito">
+      <MIMEType>image/png</MIMEType>
+      <ImageData>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
+D88+9AD8D9JkLusxZzvDAAAAAElFTkSuQmCC</ImageData>
+    </EmbeddedImage>
+    <EmbeddedImage Name="nuevologo">
+      <MIMEType>image/jpeg</MIMEType>
+      <ImageData>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</ImageData>
+    </EmbeddedImage>
+  </EmbeddedImages>
+  <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>f8a167aa-ded0-4094-a6b4-ebe26c6813ab</rd:ReportID>
+</Report>

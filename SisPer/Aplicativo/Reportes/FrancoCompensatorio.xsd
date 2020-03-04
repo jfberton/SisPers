@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="FrancoCompensatorio" targetNamespace="http://tempuri.org/FrancoCompensatorio.xsd" xmlns:mstns="http://tempuri.org/FrancoCompensatorio.xsd" xmlns="http://tempuri.org/FrancoCompensatorio.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="FrancoCompensatorio" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="FrancoCompensatorio" msprop:Generator_UserDSName="FrancoCompensatorio">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Datos" msprop:Generator_TableClassName="DatosDataTable" msprop:Generator_TableVarName="tableDatos" msprop:Generator_TablePropName="Datos" msprop:Generator_RowDeletingName="DatosRowDeleting" msprop:Generator_UserTableName="Datos" msprop:Generator_RowChangingName="DatosRowChanging" msprop:Generator_RowEvHandlerName="DatosRowChangeEventHandler" msprop:Generator_RowDeletedName="DatosRowDeleted" msprop:Generator_RowEvArgName="DatosRowChangeEvent" msprop:Generator_RowChangedName="DatosRowChanged" msprop:Generator_RowClassName="DatosRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Dias" msprop:Generator_ColumnVarNameInTable="columnDias" msprop:Generator_ColumnPropNameInRow="Dias" msprop:Generator_ColumnPropNameInTable="DiasColumn" msprop:Generator_UserColumnName="Dias" type="xs:string" minOccurs="0" />
+              <xs:element name="Mes" msprop:Generator_ColumnVarNameInTable="columnMes" msprop:Generator_ColumnPropNameInRow="Mes" msprop:Generator_ColumnPropNameInTable="MesColumn" msprop:Generator_UserColumnName="Mes" type="xs:string" minOccurs="0" />
+              <xs:element name="Anio" msprop:Generator_ColumnVarNameInTable="columnAnio" msprop:Generator_ColumnPropNameInRow="Anio" msprop:Generator_ColumnPropNameInTable="AnioColumn" msprop:Generator_UserColumnName="Anio" type="xs:string" minOccurs="0" />
+              <xs:element name="Legajo" msprop:Generator_ColumnVarNameInTable="columnLegajo" msprop:Generator_ColumnPropNameInRow="Legajo" msprop:Generator_ColumnPropNameInTable="LegajoColumn" msprop:Generator_UserColumnName="Legajo" type="xs:string" minOccurs="0" />
+              <xs:element name="ApellidoyNombre" msprop:Generator_ColumnVarNameInTable="columnApellidoyNombre" msprop:Generator_ColumnPropNameInRow="ApellidoyNombre" msprop:Generator_ColumnPropNameInTable="ApellidoyNombreColumn" msprop:Generator_UserColumnName="ApellidoyNombre" type="xs:string" minOccurs="0" />
+              <xs:element name="FirmaAgente" msprop:Generator_ColumnVarNameInTable="columnFirmaAgente" msprop:Generator_ColumnPropNameInRow="FirmaAgente" msprop:Generator_ColumnPropNameInTable="FirmaAgenteColumn" msprop:Generator_UserColumnName="FirmaAgente" type="xs:base64Binary" minOccurs="0" />
+              <xs:element name="FechaFirmaAgente" msprop:Generator_ColumnVarNameInTable="columnFechaFirmaAgente" msprop:Generator_ColumnPropNameInRow="FechaFirmaAgente" msprop:Generator_ColumnPropNameInTable="FechaFirmaAgenteColumn" msprop:Generator_UserColumnName="FechaFirmaAgente" type="xs:string" minOccurs="0" />
+              <xs:element name="DepartamentoAgente" msprop:Generator_ColumnVarNameInTable="columnDepartamentoAgente" msprop:Generator_ColumnPropNameInRow="DepartamentoAgente" msprop:Generator_ColumnPropNameInTable="DepartamentoAgenteColumn" msprop:Generator_UserColumnName="DepartamentoAgente" type="xs:string" minOccurs="0" />
+              <xs:element name="FirmaJefe" msprop:Generator_ColumnVarNameInTable="columnFirmaJefe" msprop:Generator_ColumnPropNameInRow="FirmaJefe" msprop:Generator_ColumnPropNameInTable="FirmaJefeColumn" msprop:Generator_UserColumnName="FirmaJefe" type="xs:base64Binary" minOccurs="0" />
+              <xs:element name="FechaFirmaJefe" msprop:Generator_ColumnVarNameInTable="columnFechaFirmaJefe" msprop:Generator_ColumnPropNameInRow="FechaFirmaJefe" msprop:Generator_ColumnPropNameInTable="FechaFirmaJefeColumn" msprop:Generator_UserColumnName="FechaFirmaJefe" type="xs:string" minOccurs="0" />
+              <xs:element name="HorasSaldoAnioAnterior" msprop:Generator_ColumnVarNameInTable="columnHorasSaldoAnioAnterior" msprop:Generator_ColumnPropNameInRow="HorasSaldoAnioAnterior" msprop:Generator_ColumnPropNameInTable="HorasSaldoAnioAnteriorColumn" msprop:Generator_UserColumnName="HorasSaldoAnioAnterior" type="xs:string" minOccurs="0" />
+              <xs:element name="HorasSaldoAnioCurso" msprop:Generator_ColumnVarNameInTable="columnHorasSaldoAnioCurso" msprop:Generator_ColumnPropNameInRow="HorasSaldoAnioCurso" msprop:Generator_ColumnPropNameInTable="HorasSaldoAnioCursoColumn" msprop:Generator_UserColumnName="HorasSaldoAnioCurso" type="xs:string" minOccurs="0" />
+              <xs:element name="CantidadFrancosAnio" msprop:Generator_ColumnVarNameInTable="columnCantidadFrancosAnio" msprop:Generator_ColumnPropNameInRow="CantidadFrancosAnio" msprop:Generator_ColumnPropNameInTable="CantidadFrancosAnioColumn" msprop:Generator_UserColumnName="CantidadFrancosAnio" type="xs:string" minOccurs="0" />
+              <xs:element name="FirmaPersonal" msprop:Generator_ColumnVarNameInTable="columnFirmaPersonal" msprop:Generator_ColumnPropNameInRow="FirmaPersonal" msprop:Generator_ColumnPropNameInTable="FirmaPersonalColumn" msprop:Generator_UserColumnName="FirmaPersonal" type="xs:base64Binary" minOccurs="0" />
+              <xs:element name="FechaFirmaPersonal" msprop:Generator_ColumnVarNameInTable="columnFechaFirmaPersonal" msprop:Generator_ColumnPropNameInRow="FechaFirmaPersonal" msprop:Generator_ColumnPropNameInTable="FechaFirmaPersonalColumn" msprop:Generator_UserColumnName="FechaFirmaPersonal" type="xs:string" minOccurs="0" />
+              <xs:element name="NomyApJefe" msprop:Generator_ColumnVarNameInTable="columnNomyApJefe" msprop:Generator_ColumnPropNameInRow="NomyApJefe" msprop:Generator_ColumnPropNameInTable="NomyApJefeColumn" msprop:Generator_UserColumnName="NomyApJefe" type="xs:string" minOccurs="0" />
+              <xs:element name="NomyApPersonal" msprop:Generator_ColumnVarNameInTable="columnNomyApPersonal" msprop:Generator_ColumnPropNameInRow="NomyApPersonal" msprop:Generator_ColumnPropNameInTable="NomyApPersonalColumn" msprop:Generator_UserColumnName="NomyApPersonal" type="xs:string" minOccurs="0" />
+              <xs:element name="LegajoJefe" msprop:Generator_ColumnVarNameInTable="columnLegajoJefe" msprop:Generator_ColumnPropNameInRow="LegajoJefe" msprop:Generator_ColumnPropNameInTable="LegajoJefeColumn" msprop:Generator_UserColumnName="LegajoJefe" type="xs:string" minOccurs="0" />
+              <xs:element name="LegajoPersonal" msprop:Generator_ColumnVarNameInTable="columnLegajoPersonal" msprop:Generator_ColumnPropNameInRow="LegajoPersonal" msprop:Generator_ColumnPropNameInTable="LegajoPersonalColumn" msprop:Generator_UserColumnName="LegajoPersonal" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
