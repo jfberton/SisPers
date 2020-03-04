@@ -311,7 +311,7 @@
             <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Francos compensatorios/Art. 51 del mes</h3>
+                        <h3 class="panel-title">Francos compensatorios del mes</h3>
                     </div>
                     <div class="panel-body">
                         <asp:ValidationSummary ID="ValidationSummary3" runat="server" DisplayMode="BulletList"
