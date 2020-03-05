@@ -15743,3 +15743,45 @@ STACKTRACE:    en System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnect
 
 
 ******************************************************************
+ 
+
+******************************************************************
+
+DATE: 05/03/2020 12:14:47 p.m.
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: El origen de datos no admite la paginación de datos del servidor.
+
+SOURCE: System.Web
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainAgente.aspx?Usr=222
+
+TARGETSITE: Void RaiseUnsupportedCapabilityError(System.Web.UI.DataSourceCapabilities)
+
+STACKTRACE:    en System.Web.UI.DataSourceView.RaiseUnsupportedCapabilityError(DataSourceCapabilities capability)
+   en System.Web.UI.DataSourceSelectArguments.RaiseUnsupportedCapabilitiesError(DataSourceView view)
+   en System.Web.UI.WebControls.ReadOnlyDataSourceView.ExecuteSelect(DataSourceSelectArguments arguments)
+   en System.Web.UI.DataSourceView.Select(DataSourceSelectArguments arguments, DataSourceViewSelectCallback callback)
+   en System.Web.UI.WebControls.GridView.CreateChildControls(IEnumerable dataSource, Boolean dataBinding)
+   en System.Web.UI.WebControls.CompositeDataBoundControl.PerformDataBinding(IEnumerable data)
+   en System.Web.UI.WebControls.GridView.PerformDataBinding(IEnumerable data)
+   en System.Web.UI.WebControls.DataBoundControl.OnDataSourceViewSelectCallback(IEnumerable data)
+   en System.Web.UI.DataSourceView.Select(DataSourceSelectArguments arguments, DataSourceViewSelectCallback callback)
+   en System.Web.UI.WebControls.DataBoundControl.PerformSelect()
+   en System.Web.UI.WebControls.BaseDataBoundControl.DataBind()
+   en System.Web.UI.WebControls.GridView.DataBind()
+   en SisPer.Aplicativo.MainAgente.CargarGrillaFrancos() en D:\Usuarios\jfberton\Mis Documentos\Desarrollo\SisPer\SisPer\Aplicativo\MainAgente.aspx.cs:línea 805
+   en SisPer.Aplicativo.MainAgente.RefrescarModuloFrancos() en D:\Usuarios\jfberton\Mis Documentos\Desarrollo\SisPer\SisPer\Aplicativo\MainAgente.aspx.cs:línea 561
+   en SisPer.Aplicativo.MainAgente.Page_Load(Object sender, EventArgs e) en D:\Usuarios\jfberton\Mis Documentos\Desarrollo\SisPer\SisPer\Aplicativo\MainAgente.aspx.cs:línea 64
+   en System.Web.Util.CalliEventHandlerDelegateProxy.Callback(Object sender, EventArgs e)
+   en System.Web.UI.Control.OnLoad(EventArgs e)
+   en System.Web.UI.Control.LoadRecursive()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************

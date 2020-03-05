@@ -607,53 +607,104 @@ namespace SisPer.Aplicativo
             }
         }
 
+        protected void btn_EliminarSolicitudArt_Click(object sender, ImageClickEventArgs e)
+        {
+            int id = Convert.ToInt32(((ImageButton)sender).CommandArgument);
+            Model1Container cxt = new Model1Container();
+            EstadoAgente ea = cxt.EstadosAgente.FirstOrDefault(x => x.Id == id);
+            Agente ag = Session["Agente"] as Agente;
+            if (ea != null && (cxt.Salidas.FirstOrDefault(ss => ss.Tipo == TipoSalida.Particular && ss.Dia == ea.Dia && ss.AgenteId == ea.AgenteId)) == null)
+            {
+                ProcesosGlobales.EliminarAgendaEstadoDiaAgente(ag, ea.Dia, ea.TipoEstado);
+                RefrescarModuloFrancos();
+            }
+            else
+            {
+                Controles.MessageBox.Show(this, "No se puede eliminar el Art. el mismo ya fue impactado ante la solicitud y ausencia del agente.", Controles.MessageBox.Tipo_MessageBox.Info, "Imposible eliminar");
+            }
+
+        }
+
         protected void btn_AceptarFranco_Click(object sender, EventArgs e)
         {
             if (Session["NuevoFC"].ToString() == "Si")
             {
-                Page.Validate("Francos");
-                if (Page.IsValid)
+                if (ddl_tipo_solicitud_franco.SelectedItem.Text == "Franco compensatorio")
                 {
-                    Agente ag = Session["Agente"] as Agente;
-                    Model1Container cxt = new Model1Container();
-                    Agente agCxt = cxt.Agentes.First(a => a.Id == ag.Id);
-
-                    Franco f = new Franco();
-                    f.AgenteId = ag.Id;
-                    f.FechaSolicitud = DateTime.Today;
-
-                    DiaFranco d = new DiaFranco();
-                    d.Dia = Convert.ToDateTime(tb_FechaFranco.Value);
-                    f.DiasFranco.Add(d);
-
-                    MovimientoFranco mf = new MovimientoFranco();
-                    mf.Estado = EstadosFrancos.Solicitado;
-                    mf.Fecha = DateTime.Today;
-                    mf.AgenteId = ag.Id;
-
-                    var otroFC = from fc in agCxt.Francos
-                                 where
-                                 fc.DiasFranco.Where(df => df.Dia == d.Dia).Count() > 0 &&
-                                 fc.Estado == mf.Estado
-                                 select fc;
-
-                    //si no existe otra solicitud ese día con estado solicitada lo agendo.
-                    if (otroFC.Count() == 0)
+                    Page.Validate("Francos");
+                    if (Page.IsValid)
                     {
-                        f.MovimientosFranco.Add(mf);
-
-                        cxt.Francos.AddObject(f);
-
-                        cxt.SaveChanges();
-
-                        TipoEstadoAgente tea = cxt.TiposEstadoAgente.First(t => t.Estado == "Franco compensatorio p/aprobar");
-
-                        ProcesosGlobales.AgendarEstadoDiaAgente(agCxt, agCxt, Convert.ToDateTime(tb_FechaFranco.Value), tea);
+                        AgendarSolicitudFranco();
+                        RefrescarModuloFrancos();
+                    }
+                }
+                else
+                {
+                    Page.Validate("articulo");
+                    if (Page.IsValid)
+                    {
+                        AgendarSolicitudArticulo();
+                        RefrescarModuloFrancos();
                     }
                 }
             }
+        }
 
-            RefrescarModuloFrancos();
+        private void AgendarSolicitudFranco()
+        {
+            Agente ag = Session["Agente"] as Agente;
+            Model1Container cxt = new Model1Container();
+            Agente agCxt = cxt.Agentes.First(a => a.Id == ag.Id);
+
+            Franco f = new Franco();
+            f.AgenteId = ag.Id;
+            f.FechaSolicitud = DateTime.Today;
+
+            DiaFranco d = new DiaFranco();
+            d.Dia = Convert.ToDateTime(tb_FechaFranco.Value);
+            f.DiasFranco.Add(d);
+
+            MovimientoFranco mf = new MovimientoFranco();
+            mf.Estado = EstadosFrancos.Solicitado;
+            mf.Fecha = DateTime.Today;
+            mf.AgenteId = ag.Id;
+
+            var otroFC = from fc in agCxt.Francos
+                         where
+                         fc.DiasFranco.Where(df => df.Dia == d.Dia).Count() > 0 &&
+                         fc.Estado == mf.Estado
+                         select fc;
+
+            //si no existe otra solicitud ese día con estado solicitada lo agendo.
+            if (otroFC.Count() == 0)
+            {
+                f.MovimientosFranco.Add(mf);
+
+                cxt.Francos.AddObject(f);
+
+                cxt.SaveChanges();
+
+                TipoEstadoAgente tea = cxt.TiposEstadoAgente.First(t => t.Estado == "Franco compensatorio p/aprobar");
+
+                ProcesosGlobales.AgendarEstadoDiaAgente(agCxt, agCxt, Convert.ToDateTime(tb_FechaFranco.Value), tea);
+            }
+        }
+
+        private void AgendarSolicitudArticulo()
+        {
+            Agente usuarioLogueado = Session["UsuarioLogueado"] as Agente;
+            Agente ag = Session["Agente"] as Agente;
+
+            Model1Container cxt = new Model1Container();
+            Agente agCxt = cxt.Agentes.First(a => a.Id == ag.Id);
+            Agente usuarioLogueadoCxt = cxt.Agentes.First(a => a.Id == usuarioLogueado.Id);
+
+            DateTime d;
+            d = Convert.ToDateTime(tb_FechaFranco.Value);
+
+            TipoEstadoAgente tea = cxt.TiposEstadoAgente.First(t => t.Estado == "Razones particulares");
+
+            ProcesosGlobales.AgendarEstadoDiaAgente(usuarioLogueadoCxt, agCxt, Convert.ToDateTime(tb_FechaFranco.Value), tea);
         }
 
         protected void btn_CancelarFranco_Click(object sender, EventArgs e)
@@ -672,6 +723,12 @@ namespace SisPer.Aplicativo
         protected void GridViewFrancos_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             GridViewFrancos.PageIndex = e.NewPageIndex;
+            CargarGrillaFrancos();
+        }
+
+        protected void GridViewArticulos_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridViewArticulos.PageIndex = e.NewPageIndex;
             CargarGrillaFrancos();
         }
 
@@ -730,6 +787,8 @@ namespace SisPer.Aplicativo
             Agente ag = Session["Agente"] as Agente;
             Model1Container cxt = new Model1Container();
             Agente agenteDelContexto = cxt.Agentes.First(a => a.Id == ag.Id);
+            TipoEstadoAgente tea = cxt.TiposEstadoAgente.FirstOrDefault(tt => tt.Estado == "Razones particulares");
+            
 
             var items = (from fc in agenteDelContexto.Francos
                          where ((fc.FechaSolicitud.Month == DateTime.Today.Month) && (fc.FechaSolicitud.Year == DateTime.Today.Year))
@@ -746,6 +805,23 @@ namespace SisPer.Aplicativo
 
             GridViewFrancos.DataSource = items;
             GridViewFrancos.DataBind();
+
+            List<EstadoAgente> estados_articulo_mes = (from ea in cxt.EstadosAgente
+                                                       where ea.AgenteId == ag.Id && ea.Dia.Month == DateTime.Today.Month && ea.Dia.Year == DateTime.Today.Year && ea.TipoEstadoAgenteId == tea.Id
+                                                       select ea
+                                                        ).ToList();
+
+            var items_grilla_articulo = (from ea in estados_articulo_mes
+                                         select new
+                                         {
+                                             Id = ea.Id,
+                                             DiaInicial = ea.Dia,
+                                             Estado = (cxt.Salidas.FirstOrDefault(ss => ss.Tipo == TipoSalida.Particular && ss.Dia == ea.Dia && ss.AgenteId == ag.Id)) != null ? "Aprobado/Impactado" : "Solicitado",
+                                             Horas = "06:30"
+                                         }).ToList();
+
+            GridViewArticulos.DataSource = items_grilla_articulo;
+            GridViewArticulos.DataBind();
         }
 
         protected void CustomValidator5_ServerValidate(object source, ServerValidateEventArgs args)
@@ -829,6 +905,11 @@ namespace SisPer.Aplicativo
             {
                 args.IsValid = false;
             }
+        }
+
+        protected void validator_articulo4_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = VerificarSiPuedeMarcarSalida();
         }
 
         #endregion
@@ -1057,7 +1138,7 @@ namespace SisPer.Aplicativo
                 using (var cxt = new Model1Container())
                 {
                     int id_rd = Convert.ToInt32(((ImageButton)sender).CommandArgument);
-                    ResumenDiario rd = cxt.ResumenesDiarios.FirstOrDefault(rrdd=> rrdd.Id == id_rd);
+                    ResumenDiario rd = cxt.ResumenesDiarios.FirstOrDefault(rrdd => rrdd.Id == id_rd);
 
                     VisualizarDiaAgente.LoadControl("~/Aplicativo/Controles/AdministrarDiaAgente.ascx");
 
@@ -1101,10 +1182,13 @@ namespace SisPer.Aplicativo
             }
         }
 
+
+
+
+
+
         #endregion
 
-
-
-
+       
     }
 }

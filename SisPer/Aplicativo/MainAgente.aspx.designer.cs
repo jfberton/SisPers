@@ -427,6 +427,15 @@ namespace SisPer.Aplicativo {
         protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary3;
         
         /// <summary>
+        /// ValidationSummary6 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary6;
+        
+        /// <summary>
         /// ValidationSummary4 control.
         /// </summary>
         /// <remarks>
@@ -499,6 +508,51 @@ namespace SisPer.Aplicativo {
         protected global::System.Web.UI.WebControls.CustomValidator CustomValidator9;
         
         /// <summary>
+        /// validator_articulo1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator validator_articulo1;
+        
+        /// <summary>
+        /// validator_articulo2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator validator_articulo2;
+        
+        /// <summary>
+        /// validator_articulo4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator validator_articulo4;
+        
+        /// <summary>
+        /// validator_articulo5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator validator_articulo5;
+        
+        /// <summary>
+        /// validator_articulo3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator validator_articulo3;
+        
+        /// <summary>
         /// CustomValidator6 control.
         /// </summary>
         /// <remarks>
@@ -542,6 +596,15 @@ namespace SisPer.Aplicativo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GridViewFrancos;
+        
+        /// <summary>
+        /// GridViewArticulos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridViewArticulos;
         
         /// <summary>
         /// modalHistMov control.

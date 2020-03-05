@@ -316,6 +316,8 @@
                     <div class="panel-body">
                         <asp:ValidationSummary ID="ValidationSummary3" runat="server" DisplayMode="BulletList"
                             ValidationGroup="Francos" CssClass="validationsummary panel panel-danger " HeaderText="<div class='panel-heading'>&nbsp;Corrija los siguientes errores antes de continuar:</div>" />
+                         <asp:ValidationSummary ID="ValidationSummary6" runat="server" DisplayMode="BulletList"
+                            ValidationGroup="articulo" CssClass="validationsummary panel panel-danger " HeaderText="<div class='panel-heading'>&nbsp;Corrija los siguientes errores antes de continuar:</div>" />
                         <asp:ValidationSummary ID="ValidationSummary4" runat="server" DisplayMode="BulletList"
                             ValidationGroup="AprobarFrancos" CssClass="validationsummary panel panel-danger" HeaderText="<div class='panel-heading'>&nbsp;Corrija los siguientes errores antes de continuar:</div>" />
                         <asp:Button ID="btn_SolicitarFranco" class="btn btn-primary" CausesValidation="false" Text="Nueva solicitud"
@@ -360,6 +362,26 @@
                                             <asp:CustomValidator ID="CustomValidator9" ValidationGroup="Francos" Text="<img src='../Imagenes/exclamation.gif' title='Imposible solicitar franco compensatorio esa fecha, ya tiene agendado franco o licencia.' />"
                                                 runat="server" ErrorMessage="Imposible solicitar franco compensatorio esa fecha, ya tiene agendado franco o licencia."
                                                 OnServerValidate="CustomValidator9_ServerValidate"></asp:CustomValidator>
+
+
+                                            <asp:RequiredFieldValidator ID="validator_articulo1" runat="server" ValidationGroup="articulo"
+                                                ControlToValidate="tb_FechaFranco" Text="<img src='../Imagenes/exclamation.gif' title='Debe ingresar el día en que va a tomarse el artículo' />"
+                                                ErrorMessage="Debe ingresar el día en que va a tomarse el artículo"></asp:RequiredFieldValidator>
+                                            <asp:CustomValidator ID="validator_articulo2" ValidationGroup="articulo" Text="<img src='../Imagenes/exclamation.gif' title='El día seleccionado debe ser igual o mayor al día actual' />"
+                                                runat="server" ErrorMessage="El día seleccionado debe ser igual o mayor al día actual"
+                                                OnServerValidate="CustomValidator5_ServerValidate"></asp:CustomValidator>
+                                            <asp:CustomValidator ID="validator_articulo4" ValidationGroup="articulo" Text="<img src='../Imagenes/exclamation.gif' title='Solicite la marcación del artículo a su jefe, superior o a personal.' />"
+                                                runat="server" ErrorMessage="Solicite la marcación del artículo a su jefe, superior o a personal."
+                                                OnServerValidate="validator_articulo4_ServerValidate"></asp:CustomValidator>
+                                            <asp:CustomValidator ID="validator_articulo5" ValidationGroup="articulo" Text="<img src='../Imagenes/exclamation.gif' title='No puede realizar la solicitud, el agente supero las 40 horas disponibles.' />"
+                                                runat="server" ErrorMessage="No puede realizar la solicitud, el agente supero las 40 horas disponibles."
+                                                OnServerValidate="CustomValidator10_ServerValidate"></asp:CustomValidator>
+                                            <asp:CustomValidator ID="validator_articulo3" ValidationGroup="articulo" Text="<img src='../Imagenes/exclamation.gif' title='Imposible solicitar artículo esa fecha, ya tiene agendado franco o licencia.' />"
+                                                runat="server" ErrorMessage="Imposible solicitar artículo esa fecha, ya tiene agendado franco o licencia."
+                                                OnServerValidate="CustomValidator9_ServerValidate"></asp:CustomValidator>
+
+
+
                                             <asp:CustomValidator ID="CustomValidator6" ValidationGroup="Francos" Text="<img src='../Imagenes/exclamation.gif' title='Imposible solicitar franco compensatorio esa fecha, ya tiene agendado franco o licencia.' />"
                                                 runat="server" ErrorMessage="Imposible solicitar franco compensatorio esa fecha, ya tiene 2 solicitudes realizadas."
                                                 OnServerValidate="CustomValidator6_ServerValidate"></asp:CustomValidator>
@@ -372,10 +394,8 @@
                                             <asp:Button ID="btn_AceptarFranco" class="btn btn-success" runat="server" Text="Solicitar!" OnClick="btn_AceptarFranco_Click"
                                                 ValidationGroup="AprobarFrancos" />
                                             <asp:CustomValidator ID="CustomValidator7" ValidationGroup="Francos" Text="<img src='../Imagenes/exclamation.gif' title='Usted no tiene horas disponibles para solicitar el franco.' />"
-                                                runat="server" ErrorMessage="Usted no tiene horas disponibles para solicitar el franco."
-                                                OnServerValidate="CustomValidator7_ServerValidate"></asp:CustomValidator>&nbsp;
-                                    <asp:Button ID="btn_CancelarFranco" class="btn btn-danger" runat="server" Text="Cancelar" OnClick="btn_CancelarFranco_Click"
-                                        CausesValidation="false" />
+                                                runat="server" ErrorMessage="Usted no tiene horas disponibles para solicitar el franco." OnServerValidate="CustomValidator7_ServerValidate"></asp:CustomValidator>&nbsp;
+                                            <asp:Button ID="btn_CancelarFranco" class="btn btn-danger" runat="server" Text="Cancelar" OnClick="btn_CancelarFranco_Click" CausesValidation="false" />
                                         </div>
                                     </div>
                                 </div>
@@ -407,6 +427,28 @@
                                                 <ItemTemplate>
                                                     <asp:ImageButton ID="btn_VerMovimientos" runat="server" CommandArgument='<%#Eval("Id")%>'
                                                         ToolTip="Ver historial de movimientos" ImageUrl="~/Imagenes/clock_go.png" OnClick="btn_VerMovimientos_Click" />
+                                                </ItemTemplate>
+                                                <ItemStyle HorizontalAlign="Center"></ItemStyle>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                    </asp:GridView>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="top">
+                                    <h4>Listado de Art 51</h4>
+                                    <asp:GridView ID="GridViewArticulos" runat="server" EmptyDataText="No existen francos por mostrar en el mes." ForeColor="#717171"
+                                        AutoGenerateColumns="False" GridLines="None" AllowPaging="true" OnPageIndexChanging="GridViewArticulos_PageIndexChanging"
+                                        CssClass="mGrid table-condensed" PagerStyle-CssClass="pgr" AlternatingRowStyle-CssClass="alt">
+                                        <Columns>
+                                            <asp:BoundField DataField="Estado" HeaderText="Estado" ReadOnly="true" SortExpression="Estado" />
+                                            <asp:BoundField DataField="DiaInicial" HeaderText="Fecha solicitada" ReadOnly="true" SortExpression="DiaInicial"
+                                                DataFormatString="{0:dd/MM/yyyy}" />
+                                            <asp:BoundField DataField="Horas" HeaderText="Horas" ReadOnly="true" SortExpression="Horas" />
+                                            <asp:TemplateField HeaderText="Eliminar" ItemStyle-HorizontalAlign="Center">
+                                                <ItemTemplate>
+                                                    <asp:ImageButton ID="btn_EliminarSolicitudArt" runat="server" CommandArgument='<%#Eval("Id")%>' OnClientClick="javascript:if (!confirm('¿Desea ELIMINAR esta solicitud?')) return false;"
+                                                        ToolTip="Eliminar solicitud" ImageUrl="~/Imagenes/delete.png" OnClick="btn_EliminarSolicitudArt_Click" />
                                                 </ItemTemplate>
                                                 <ItemStyle HorizontalAlign="Center"></ItemStyle>
                                             </asp:TemplateField>
@@ -676,10 +718,10 @@
 
             })
 
-            function checkTimeSalida(i) {
-                if (i < 10) { i = "0" + i };  // add zero in front of numbers < 10
-                return i;
-            }
+        function checkTimeSalida(i) {
+            if (i < 10) { i = "0" + i };  // add zero in front of numbers < 10
+            return i;
+        }
     </script>
 
     <script type="text/javascript">
