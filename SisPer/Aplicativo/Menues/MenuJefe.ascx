@@ -35,7 +35,8 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="../Aplicativo/MainJefe.aspx">Inicio</a></li>
+                        <li><a href="../Aplicativo/MainPandemia.aspx">Inicio</a></li>
+                        <%--<li><a href="../Aplicativo/MainJefe.aspx">Inicio</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Horas
                                 <span class="caret"></span>
@@ -59,7 +60,7 @@
                                 <li class="divider"></li>
                                 <li><a href="../Legislacion.aspx" target="_blank">Legislación</a></li>
                             </ul>
-                        </li>
+                        </li>--%>
 
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Form 1214
@@ -79,7 +80,7 @@
                             </ul>
                         </li>
 
-                        <li><a href="../Aplicativo/Ayuda_Jefe.aspx" target="_blank">Ayuda</a></li>
+                        <%--<li><a href="../Aplicativo/Ayuda_Jefe.aspx" target="_blank">Ayuda</a></li>--%>
                     </ul>
 
 

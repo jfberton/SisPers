@@ -35,7 +35,8 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="../Aplicativo/MainAgente.aspx">Inicio</a></li>
+                        <li><a href="../Aplicativo/MainPandemia.aspx">Inicio</a></li>
+                        <%--<li><a href="../Aplicativo/MainAgente.aspx">Inicio</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Mis horas
                                 <span class="caret"></span>
@@ -46,7 +47,7 @@
                             </ul>
                         </li>
                         <li><a href="../Aplicativo/Ag_Memo17.aspx">Memo 17</a></li>
-                        <li><a href="../Legislacion.aspx" target="_blank">Legislación</a></li>
+                        <li><a href="../Legislacion.aspx" target="_blank">Legislación</a></li>--%>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Form 1214
                                 <span class="caret"></span>
@@ -56,7 +57,7 @@
                                 <li><a href="../Aplicativo/Formulario1214_Generados.aspx">Generados</a></li>
                             </ul>
                         </li>
-                        <li><a href="../Aplicativo/Ayuda_Agente.aspx" target="_blank">Ayuda</a></li>
+                        <%--<li><a href="../Aplicativo/Ayuda_Agente.aspx" target="_blank">Ayuda</a></li>--%>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>

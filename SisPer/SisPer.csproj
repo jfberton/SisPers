@@ -125,6 +125,7 @@
     <Content Include="Aplicativo\Jefe_Ag_SolicitarEstado.aspx" />
     <Content Include="Aplicativo\Jefe_Memo17.aspx" />
     <Content Include="Aplicativo\MainGuardia.aspx" />
+    <Content Include="Aplicativo\MainPandemia.aspx" />
     <Content Include="Aplicativo\Mensajes.aspx" />
     <Content Include="Aplicativo\Menues\MenuGuardia.ascx" />
     <Content Include="Aplicativo\Menues\MenuPersonalAgente.ascx" />
@@ -1252,6 +1253,13 @@
     </Compile>
     <Compile Include="Aplicativo\MainGuardia.aspx.designer.cs">
       <DependentUpon>MainGuardia.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Aplicativo\MainPandemia.aspx.cs">
+      <DependentUpon>MainPandemia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Aplicativo\MainPandemia.aspx.designer.cs">
+      <DependentUpon>MainPandemia.aspx</DependentUpon>
     </Compile>
     <Compile Include="Aplicativo\Mensaje.cs" />
     <Compile Include="Aplicativo\Mensajes.aspx.cs">
