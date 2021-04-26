@@ -1318,6 +1318,7 @@
     <Compile Include="Aplicativo\Notificaciones_Inbox.aspx.designer.cs">
       <DependentUpon>Notificaciones_Inbox.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Aplicativo\Numalet.cs" />
     <Compile Include="Aplicativo\Personal_Ag_AgregarMovimientoDia.aspx.cs">
       <DependentUpon>Personal_Ag_AgregarMovimientoDia.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

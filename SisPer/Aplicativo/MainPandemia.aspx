@@ -29,7 +29,7 @@
         <uc1:MensageBienvenida runat="server" ID="MensageBienvenida" />
         <uc1:DatosAgente ID="DatosAgente1" runat="server" />
          <h1>Atención!</h1>
-         <p>Debido a razones de publico conocimiento el sistema quedará por el momento para uso exclusivo del sector Personal y funcionalidad para la solicitud y seguimiento de comisiones de servicio</p>
+         <p>Ante la situación de público conocimiento respecto al coronavirus (COVID-19), y de acuerdo con los lineamientos de asistencia, se torna inviable la carga y control de movimientos diarios generados fuera del sistema, por lo que el mismo se verá reducido en sus funcionalidades originales. </p>
     </div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="contentScripts" runat="server">

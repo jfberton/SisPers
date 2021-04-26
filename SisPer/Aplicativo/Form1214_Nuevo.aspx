@@ -27,6 +27,7 @@
                 CssClass="validationsummary panel panel-danger " HeaderText="<div class='panel-heading'>&nbsp;Corrija los siguientes errores antes de continuar:</div>" />
             <p />
 
+            <%--Días, destino y tareas--%>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">Días, destino y tareas</h4>
@@ -102,32 +103,39 @@
                     <p />
                     <div class="row">
                         <div class="col-md-1">Destino</div>
-                        <div class="col-md-11">
-                            <div class="col-md-11">
-                                <asp:TextBox runat="server" ID="tb_destino" CssClass="form-control" />
-                            </div>
-                            <div class="col-md-1">
-                                <asp:RequiredFieldValidator ControlToValidate="tb_destino" Text="<img src='../Imagenes/exclamation.gif' title='Debe ingresar destino' />"
-                                    ID="rv_destino" runat="server" ValidationGroup="general_214" ErrorMessage="Debe ingresar destino"></asp:RequiredFieldValidator>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <asp:DropDownList runat="server" ID="ddl_dentro_fuera_provincia" CssClass="form-control">
+                                    <asp:ListItem Text="Fuera de la provincia" Value="0" />
+                                    <asp:ListItem Text="Dentro de la provincia" Value="1" />
+                                </asp:DropDownList>
                             </div>
                         </div>
+                        <div class="col-md-7">
+                            <asp:TextBox runat="server" ID="tb_destino" CssClass="form-control" />
+                        </div>
+                        <div class="col-md-1">
+                            <asp:RequiredFieldValidator ControlToValidate="tb_destino" Text="<img src='../Imagenes/exclamation.gif' title='Debe ingresar destino' />"
+                                ID="rv_destino" runat="server" ValidationGroup="general_214" ErrorMessage="Debe ingresar destino"></asp:RequiredFieldValidator>
+                        </div>
+
                     </div>
                     <p />
                     <div class="row">
                         <div class="col-md-1">Tareas</div>
-                        <div class="col-md-11">
-                            <div class="col-md-11">
-                                <asp:TextBox runat="server" ID="tb_tareas" CssClass="form-control" />
-                            </div>
-                            <div class="col-md-1">
-                                <asp:RequiredFieldValidator ControlToValidate="tb_tareas" Text="<img src='../Imagenes/exclamation.gif' title='Debe ingresar las tareas a realizar' />"
-                                    ID="rv_tareas" runat="server" ValidationGroup="general_214" ErrorMessage="Debe ingresar las tareas a realizar"></asp:RequiredFieldValidator>
-                            </div>
+                        <div class="col-md-10">
+                            <asp:TextBox runat="server" TextMode="MultiLine" Rows="3" ID="tb_tareas" CssClass="form-control" />
+                        </div>
+                        <div class="col-md-1">
+                            <asp:RequiredFieldValidator ControlToValidate="tb_tareas" Text="<img src='../Imagenes/exclamation.gif' title='Debe ingresar las tareas a realizar' />"
+                                ID="rv_tareas" runat="server" ValidationGroup="general_214" ErrorMessage="Debe ingresar las tareas a realizar"></asp:RequiredFieldValidator>
                         </div>
                     </div>
                 </div>
             </div>
 
+
+            <%--Nómina de agentes--%>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">Nómina de agentes</h4>
@@ -193,7 +201,7 @@
                                                 Agregar agente
                                             </button>
                                             <div class="input-group" runat="server" visible="false" id="group_agente_3">
-                                                <asp:TextBox runat="server" ReadOnly="true" ID="txt_agente_3"/>
+                                                <asp:TextBox runat="server" ReadOnly="true" ID="txt_agente_3" />
                                                 <span class="input-group-btn">
                                                     <asp:Button Text="X" ID="btn_del_agente_3" OnClientClick="ConfirmarEliminacion()" CssClass="btn btn-danger" OnClick="btn_del_agente_x_ServerClick" runat="server" />
                                                 </span>
@@ -349,6 +357,8 @@
                 </div>
             </div>
 
+
+            <%--Movilidad y anticipos--%>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">Movilidad y anticipos</h4>
@@ -362,8 +372,8 @@
                             <asp:DropDownList runat="server" ID="ddl_movilidad" CssClass="form-control" onchange="ActualizarDestinoAnticipo()">
                                 <asp:ListItem Text="Seleccionar" Value="0" />
                                 <asp:ListItem Text="Vehículo oficial" Value="1" />
-                                <asp:ListItem Text="Vehículo oficial con chofer" Value="2" />
-                                <asp:ListItem Text="Sin vehículo" Value="3" />
+                                <asp:ListItem Text="Vehículo particular" Value="2" />
+                                <asp:ListItem Text="Transporte público" Value="3" />
                             </asp:DropDownList>
                         </div>
                         <asp:CustomValidator ID="cv_anticipo" runat="server" Style="margin-left: 5px; position: absolute;" Text="<img src='../Imagenes/exclamation.gif' title='Debe seleccionar un tipo de movilidad.' />"
@@ -381,8 +391,58 @@
                             </div>
                         </div>
                     </div>
+                    <br />
+                    <div class="row" id="fila_datos_vehiculo" style="display: none">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Datos vehiculo oficial
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Dominio</span>
+                                                <asp:textbox runat="server" id="txt_dominio_vehiculo_oficial" class="form-control" placeholder="Dominio" />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Agrega chofer?</span>
+                                                <asp:DropDownList runat="server" ID="ddl_con_chofer" CssClass="form-control" onchange="ActualizarDestinoAnticipo()">
+                                                    <asp:ListItem Text="Si" Value="0" />
+                                                    <asp:ListItem Text="No" Value="1" />
+                                                </asp:DropDownList>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" id="selecciona_chofer">
+                                            <div class="row">
+                                                <div class="col-md-4"></div>
+                                                <div class="col-md-8">
+                                                    <button type="button" class="btn btn-default" id="btn_chofer" runat="server" data-toggle="modal" data-target="#modal11">
+                                                        <asp:Image ImageUrl="~/Imagenes/user_add.png" runat="server" />
+                                                        Agregar chofer
+                                                    </button>
+                                                    <div class="input-group" runat="server" visible="false" id="group_chofer">
+                                                        <asp:TextBox runat="server" ReadOnly="true" ID="txt_chofer" />
+                                                        <span class="input-group-btn">
+                                                            <asp:Button Text="X" ID="btn_del_agente_chofer" OnClientClick="ConfirmarEliminacionChofer()" CssClass="btn btn-danger" OnClick="btn_del_agente_chofer_ServerClick" runat="server" />
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+
+
 
             <div class="row text-right">
                 <div class="col-md-12">
@@ -397,6 +457,7 @@
         </div>
     </div>
 
+    <%--Seleccione agente Jefe de comisión--%>
     <div class="modal fade" id="modal1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -432,6 +493,7 @@
         </div>
     </div>
 
+    <%--Seleccione agente puesto 2--%>
     <div class="modal fade" id="modal2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -467,6 +529,7 @@
         </div>
     </div>
 
+    <%--Seleccione agente puesto 3--%>
     <div class="modal fade" id="modal3" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -502,6 +565,7 @@
         </div>
     </div>
 
+    <%--Seleccione agente puesto 4--%>
     <div class="modal fade" id="modal4" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -537,6 +601,7 @@
         </div>
     </div>
 
+    <%--Seleccione agente puesto 5--%>
     <div class="modal fade" id="modal5" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -572,6 +637,7 @@
         </div>
     </div>
 
+    <%--Seleccione agente puesto 6--%>
     <div class="modal fade" id="modal6" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -607,6 +673,7 @@
         </div>
     </div>
 
+    <%--Seleccione agente puesto 7--%>
     <div class="modal fade" id="modal7" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -642,6 +709,7 @@
         </div>
     </div>
 
+    <%--Seleccione agente puesto 8--%>
     <div class="modal fade" id="modal8" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -677,6 +745,7 @@
         </div>
     </div>
 
+    <%--Seleccione agente puesto 9--%>
     <div class="modal fade" id="modal9" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -712,6 +781,7 @@
         </div>
     </div>
 
+    <%--Seleccione agente puesto 10--%>
     <div class="modal fade" id="modal10" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -733,7 +803,7 @@
                                 <asp:BoundField DataField="Area" HeaderText="Area" />
                                 <asp:TemplateField HeaderText="Seleccionar" ItemStyle-HorizontalAlign="Center">
                                     <ItemTemplate>
-                                        <asp:Button Text="Seleccionar" runat="server" CommandArgument='<%# Eval("IdAgente") %>' ID="btn_agente_10" OnClick="btn_agente_x_Click" />
+                                        <asp:Button Text="Seleccionar" runat="server" ID="btn_agente_chofer" OnClick="btn_agente_chofer_Click" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
@@ -746,25 +816,75 @@
             </div>
         </div>
     </div>
+
+    <%--Seleccione agente chofer--%>
+    <div class="modal fade" id="modal11" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Seleccione Chofer</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <span class="input-group-addon">Buscar</span>
+                        <input name="txtTerm" class="form-control" onkeyup="filter2(this, '<%=gv_agentes_para_chofer.ClientID %>')" placeholder="ingrese texto buscado" type="text">
+                    </div>
+                    <div style="height: 400px; overflow-y: scroll;">
+                        <asp:GridView ID="gv_agentes_para_chofer" runat="server" EmptyDataText="No existen registros para mostrar." ForeColor="#717171"
+                            AutoGenerateColumns="False" GridLines="None" CssClass="mGrid table-condensed" AlternatingRowStyle-CssClass="alt">
+                            <Columns>
+                                <asp:BoundField DataField="Legajo" HeaderText="Legajo" />
+                                <asp:BoundField DataField="Agente" HeaderText="Agente" />
+                                <asp:BoundField DataField="Area" HeaderText="Area" />
+                                <asp:TemplateField HeaderText="Seleccionar" ItemStyle-HorizontalAlign="Center">
+                                    <ItemTemplate>
+                                        <asp:Button Text="Seleccionar" runat="server" CommandArgument='<%# Eval("IdAgente") %>' ID="btn_agente_chofer" OnClick="btn_agente_chofer_Click" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                        </asp:GridView>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </asp:Content>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="contentScripts" runat="server">
 
     <script type="text/javascript">
+
+        var d = new Date;
+
         $(function () {
+            var d = new Date();
+            var e = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+
             $('#datetimepicker1').datetimepicker({
                 locale: 'es',
-                format: 'dddd[,] DD [de] MMMM [de] YYYY'
-            });
-        });
-    </script>
+                format: 'dddd[,] DD [de] MMMM [de] YYYY',
+                minDate: e
 
-    <script type="text/javascript">
-        $(function () {
+            });
+
             $('#datetimepicker2').datetimepicker({
                 locale: 'es',
-                format: 'dddd[,] DD [de] MMMM [de] YYYY'
+                format: 'dddd[,] DD [de] MMMM [de] YYYY',
+                useCurrent: false //Important! See issue #1075
             });
+            $("#datetimepicker1").on("dp.change", function (e) {
+                $('#datetimepicker2').data("DateTimePicker").minDate(e.date);
+            });
+            $("#datetimepicker2").on("dp.change", function (e) {
+                $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
+            });
+
+            ActualizarDestinoAnticipo();
         });
     </script>
 
@@ -780,10 +900,20 @@
             }
 
         }
+
+        function ConfirmarEliminacionChofer() {
+            var encabezado = document.getElementById('<%=lbl_encabezado1214.ClientID%>');
+            if (encabezado.textContent != "Nuevo formulario 1214") {
+                if (!confirm("Esta a punto de eliminar al chofer de la nomina ya confeccionada, esta seguro de continuar?"))
+                    event.preventDefault();
+            }
+
+        }
+
         function RechazarEliminacion() {
             var encabezado = document.getElementById('<%=lbl_encabezado1214.ClientID%>');
             if (encabezado.textContent != "Nuevo formulario 1214") {
-                alert("El jefe de comisiónn designado no puede eliminarce. Deberá anular el formulario y crear uno nuevo.-")
+                alert("El jefe de comisión designado no puede eliminarce. Deberá anular el formulario y crear uno nuevo.-")
                 event.preventDefault();
             }
 
@@ -794,20 +924,33 @@
             var anticipo = document.getElementById('<%=lbl_monto_anticipo.ClientID%>');
             var tb_monto = document.getElementById('<%=tb_monto_anticipo.ClientID%>');
 
+            var fila_datos_vehiculo = document.getElementById('fila_datos_vehiculo');
+            var chofer = document.getElementById('<%=ddl_con_chofer.ClientID%>');
+            var col_chofer = document.getElementById('selecciona_chofer');
+
             if (movil.value == "0") {
                 anticipo.textContent = "Debe seleccionar el tipo de mobilidad.";
                 tb_monto.disabled = true;
+                fila_datos_vehiculo.style = 'display: none';
             }
 
             if (movil.value == "1" || movil.value == "2") {
                 anticipo.textContent = "Gastos vehículo: nafta, otros.";
                 tb_monto.disabled = false;
+                fila_datos_vehiculo.style = 'display:normal';
+                if (chofer.value == "0") {
+                    col_chofer.style = 'display: normal';
+                }
+                else {
+                    col_chofer.style = 'display: none';
+                }
             }
 
             if (movil.value == "3") {
 
                 anticipo.textContent = "Pasajes";
                 tb_monto.disabled = false;
+                fila_datos_vehiculo.style = 'display: none';
             }
         }
 

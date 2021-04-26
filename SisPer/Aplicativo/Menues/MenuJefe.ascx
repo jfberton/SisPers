@@ -36,6 +36,7 @@
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a href="../Aplicativo/MainPandemia.aspx">Inicio</a></li>
+                        <li><a href="../Aplicativo/Jefe_Ag_EntradaSalida.aspx">Enviar entrada salida</a></li>
                         <%--<li><a href="../Aplicativo/MainJefe.aspx">Inicio</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Horas

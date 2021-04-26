@@ -19,6 +19,8 @@ namespace SisPer.Aplicativo
                 }
             }
 
+            ret = ret && Estado == Estado1214.Confeccionado;
+
             return ret;
         }
     }

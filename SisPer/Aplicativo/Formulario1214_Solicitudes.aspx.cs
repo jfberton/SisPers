@@ -382,7 +382,7 @@ namespace SisPer.Aplicativo
 
                 lbl_otra_solicitud_agente.Text = ag214.Agente.ApellidoYNombre;
 
-                if (ag214.FechaAprobacion != null)
+                if (ag214.FechaAprobacion != null && !ag214.Chofer)
                 {
                     lbl_otra_solicitud_aprobado_el.Text = ag214.FechaAprobacion.Value.ToShortDateString();
                     lbl_otra_solicitud_aprobado_por.Text = ag214.AprobadoPor.ApellidoYNombre;

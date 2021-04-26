@@ -52,6 +52,7 @@
           <Property Name="FechaAprobacion" Type="datetime" />
           <Property Name="FechaRechazo" Type="datetime" />
           <Property Name="JefeComicion" Type="bit" Nullable="false" />
+          <Property Name="Chofer" Type="bit" Nullable="false" />
           <Property Name="Aprobado_por_agente_id" Type="int" />
           <Property Name="Rechazado_por_agente_id" Type="int" />
         </EntityType>
@@ -238,6 +239,8 @@
           <Property Name="TareasACumplir" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Estado" Type="int" Nullable="false" />
           <Property Name="Movilidad" Type="int" Nullable="false" />
+          <Property Name="Fuera_provincia" Type="bit" Nullable="false" />
+          <Property Name="Usa_chofer" Type="bit" Nullable="false" />
           <Property Name="Anticipo" Type="int" Nullable="false" />
           <Property Name="MontoAnticipo" Type="decimal" Precision="9" Scale="2" Nullable="false" />
           <Property Name="AgenteId" Type="int" Nullable="false" />
@@ -3890,6 +3893,8 @@
           <NavigationProperty Name="GeneradoPor" Relationship="Model1.AgenteFormulario1214" FromRole="Formulario1214" ToRole="Agente" />
           <Property Name="AgenteId" Type="Int32" Nullable="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <NavigationProperty Name="Nomina" Relationship="Model1.Formulario1214Agente1214" FromRole="Formulario1214" ToRole="Agente1214" />
+          <Property Name="Fuera_provincia" Type="Boolean" Nullable="false" />
+          <Property Name="Usa_chofer" Type="Boolean" Nullable="false" />
         </EntityType>
         <EnumType Name="Estado1214">
           <Member Name="Confeccionado" Value="0" />
@@ -3898,9 +3903,9 @@
           <Member Name="Aprobada" Value="3" />
         </EnumType>
         <EnumType Name="Movilidad1214">
-          <Member Name="Vehiculo_oficial" Value="0" />
-          <Member Name="Vehiculo_oficial_con_chofer" Value="1" />
-          <Member Name="No_es_necesario" Value="3" />
+          <Member Name="Vehiculo_oficial" Value="1" />
+          <Member Name="Vehiculo_particular" Value="2" />
+          <Member Name="Transporte_publico" Value="3" />
         </EnumType>
         <EnumType Name="Anticipo1214">
           <Member Name="Gastos_vehiculo" Value="0" />
@@ -3937,6 +3942,7 @@
           <Property Name="Aprobado_por_agente_id" Type="Int32" Nullable="true" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <NavigationProperty Name="RechazadoPor" Relationship="Model1.AgenteAgente12143" FromRole="Agente1214" ToRole="Agente" />
           <Property Name="Rechazado_por_agente_id" Type="Int32" Nullable="true" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Chofer" Type="Boolean" Nullable="false" />
         </EntityType>
         <EnumType Name="EstadoAgente1214">
           <Member Name="Solicitado" Value="0" />
@@ -4480,845 +4486,914 @@
           <Property Type="Int32" Name="id_padre_area" Nullable="true" />
           <Property Type="Int32" Name="nivel" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="sp_obtener_agentes_cascada1_Result">
+          <Property Type="Int32" Name="id_agente" Nullable="true" />
+          <Property Type="String" Name="nombre_area" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="nivel_para_ordenar" Nullable="true" />
+          <Property Type="String" Name="nivel" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="nombre_agente" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="legajo" Nullable="true" />
+          <Property Type="String" Name="mail" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="horas_bonificacion" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="estado_agente" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="dias_por_cerrar" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_obtener_datos_agente1_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="ApellidoYNombre" Nullable="false" />
+          <Property Type="Int32" Name="Legajo" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="false" />
+          <Property Type="String" Name="Area" Nullable="false" />
+          <Property Type="Boolean" Name="HorarioFlexible" Nullable="true" />
+          <Property Type="Boolean" Name="PoseeBonificacion" Nullable="false" />
+          <Property Type="String" Name="horas_hf_acumuladas" Nullable="false" />
+          <Property Type="String" Name="Horas_bonificacion_resta_cumplir" Nullable="false" />
+          <Property Type="String" Name="HorasAcumuladasAnioAnterior" Nullable="false" />
+          <Property Type="String" Name="HorasAcumuladasAnioActual" Nullable="false" />
+          <Property Type="String" Name="Total_horas_disponible" Nullable="true" MaxLength="7" />
+          <Property Type="String" Name="Horas_tardanzas" Nullable="true" />
+          <Property Type="String" Name="Horas_HF_por_cumplir" Nullable="true" MaxLength="7" />
+        </ComplexType>
+        <ComplexType Name="sp_obtener_estado_agente_dia1_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="AgenteId" Nullable="false" />
+          <Property Type="Int32" Name="TipoEstadoAgenteId" Nullable="false" />
+          <Property Type="DateTime" Name="Dia" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="AgenteId1" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_obtener_resumenes_diarios_agente_mes1_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="DateTime" Name="Dia" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Horas" Nullable="false" />
+          <Property Type="Int32" Name="AgenteId" Nullable="false" />
+          <Property Type="String" Name="HEntrada" Nullable="false" />
+          <Property Type="String" Name="HSalida" Nullable="false" />
+          <Property Type="String" Name="HVEnt" Nullable="false" />
+          <Property Type="String" Name="HVSal" Nullable="false" />
+          <Property Type="Boolean" Name="MarcoTardanza" Nullable="false" />
+          <Property Type="Boolean" Name="MarcoProlongJornada" Nullable="false" />
+          <Property Type="Boolean" Name="Inconsistente" Nullable="false" />
+          <Property Type="String" Name="ObservacionInconsistente" Nullable="false" />
+          <Property Type="Boolean" Name="Cerrado" Nullable="true" />
+          <Property Type="String" Name="AcumuloHorasBonificacion" Nullable="true" />
+          <Property Type="String" Name="AcumuloHorasAnioActual" Nullable="true" />
+          <Property Type="String" Name="AcumuloHorasAnioAnterior" Nullable="true" />
+          <Property Type="String" Name="AcumuloHorasMes" Nullable="true" />
+          <Property Type="Int32" Name="AgenteId1" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_obtener_suborinados_directos1_Result">
+          <Property Type="Int32" Name="id_agente" Nullable="false" />
+          <Property Type="String" Name="nombre_agente" Nullable="false" />
+          <Property Type="Int32" Name="legajo_agente" Nullable="false" />
+          <Property Type="Int32" Name="jefe_agente" Nullable="false" />
+          <Property Type="Int32" Name="id_area" Nullable="false" />
+          <Property Type="String" Name="nombre_area" Nullable="false" />
+          <Property Type="Int32" Name="id_padre_area" Nullable="true" />
+          <Property Type="Int32" Name="nivel" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Model1StoreContainer" CdmEntityContainer="Model1Container">
-          <EntitySetMapping Name="Agentes">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Agente)">
-              <MappingFragment StoreEntitySet="Agentes">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ApellidoYNombre" ColumnName="ApellidoYNombre" />
-                <ScalarProperty Name="Usr" ColumnName="Usr" />
-                <ScalarProperty Name="Pass" ColumnName="Pass" />
-                <ScalarProperty Name="Legajo" ColumnName="Legajo" />
-                <ScalarProperty Name="Jefe" ColumnName="Jefe" />
-                <ScalarProperty Name="JefeTemporal" ColumnName="JefeTemporal" />
-                <ScalarProperty Name="Perfil" ColumnName="Perfil" />
-                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="HorasAcumuladasAnioActual" ColumnName="HorasAcumuladasAnioActual" />
-                <ScalarProperty Name="HorasAcumuladasAnioAnterior" ColumnName="HorasAcumuladasAnioAnterior" />
-                <ScalarProperty Name="PoseeBonificacion" ColumnName="PoseeBonificacion" />
-                <ScalarProperty Name="HorasBonificacionACubrir" ColumnName="HorasBonificacionACubrir" />
-                <ScalarProperty Name="FechaBaja" ColumnName="FechaBaja" />
-                <ScalarProperty Name="HoraEntrada" ColumnName="HoraEntrada" />
-                <ScalarProperty Name="HoraSalida" ColumnName="HoraSalida" />
-                <ScalarProperty Name="HorarioFlexible" ColumnName="HorarioFlexible" />
-                <ScalarProperty Name="JefeTemporalHasta" ColumnName="JefeTemporalHasta" />
-                <ScalarProperty Name="TipoHorariosFexibleId" ColumnName="TipoHorariosFexibleId" />
-                <ScalarProperty Name="TipoHorarioFlexibleDesde" ColumnName="TipoHorarioFlexibleDesde" />
-                <ScalarProperty Name="TipoHorarioFlexibleHasta" ColumnName="TipoHorarioFlexibleHasta" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Areas">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Area)">
-              <MappingFragment StoreEntitySet="Areas">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
-                <ScalarProperty Name="Interior" ColumnName="Interior" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ResumenesDiarios">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.ResumenDiario)">
-              <MappingFragment StoreEntitySet="ResumenesDiarios">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Dia" ColumnName="Dia" />
-                <ScalarProperty Name="Horas" ColumnName="Horas" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="HEntrada" ColumnName="HEntrada" />
-                <ScalarProperty Name="HSalida" ColumnName="HSalida" />
-                <ScalarProperty Name="HVEnt" ColumnName="HVEnt" />
-                <ScalarProperty Name="HVSal" ColumnName="HVSal" />
-                <ScalarProperty Name="MarcoTardanza" ColumnName="MarcoTardanza" />
-                <ScalarProperty Name="MarcoProlongJornada" ColumnName="MarcoProlongJornada" />
-                <ScalarProperty Name="Inconsistente" ColumnName="Inconsistente" />
-                <ScalarProperty Name="ObservacionInconsistente" ColumnName="ObservacionInconsistente" />
-                <ScalarProperty Name="Cerrado" ColumnName="Cerrado" />
-                <ScalarProperty Name="AcumuloHorasBonificacion" ColumnName="AcumuloHorasBonificacion" />
-                <ScalarProperty Name="AcumuloHorasAnioActual" ColumnName="AcumuloHorasAnioActual" />
-                <ScalarProperty Name="AcumuloHorasAnioAnterior" ColumnName="AcumuloHorasAnioAnterior" />
-                <ScalarProperty Name="AcumuloHorasMes" ColumnName="AcumuloHorasMes" />
-                <ScalarProperty Name="AgenteId1" ColumnName="AgenteId1" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MovimientosHoras">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.MovimientoHora)">
-              <MappingFragment StoreEntitySet="MovimientosHoras">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ResumenDiarioId" ColumnName="ResumenDiarioId" />
-                <ScalarProperty Name="Horas" ColumnName="Horas" />
-                <ScalarProperty Name="TipoMovimientoHoraId" ColumnName="TipoMovimientoHoraId" />
-                <ScalarProperty Name="DescontoDeAcumuladoAnioAnterior" ColumnName="DescontoDeAcumuladoAnioAnterior" />
-                <ScalarProperty Name="DescontoDeHorasBonificables" ColumnName="DescontoDeHorasBonificables" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="HorariosVespertinos">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.HorarioVespertino)">
-              <MappingFragment StoreEntitySet="HorariosVespertinos">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Dia" ColumnName="Dia" />
-                <ScalarProperty Name="HoraInicio" ColumnName="HoraInicio" />
-                <ScalarProperty Name="HoraFin" ColumnName="HoraFin" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="Motivo" ColumnName="Motivo" />
-                <ScalarProperty Name="AgenteId1" ColumnName="AgenteId1" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Salidas">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Salida)">
-              <MappingFragment StoreEntitySet="Salidas">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Dia" ColumnName="Dia" />
-                <ScalarProperty Name="HoraDesde" ColumnName="HoraDesde" />
-                <ScalarProperty Name="HoraHasta" ColumnName="HoraHasta" />
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="AgenteId1" ColumnName="AgenteId1" />
-                <ScalarProperty Name="Destino" ColumnName="Destino" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Francos">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Franco)">
-              <MappingFragment StoreEntitySet="Francos">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="InfPersSaldoAnioAnt" ColumnName="InfPersSaldoAnioAnt" />
-                <ScalarProperty Name="InfPersSaldoAnioEnCurso" ColumnName="InfPersSaldoAnioEnCurso" />
-                <ScalarProperty Name="FechaSolicitud" ColumnName="FechaSolicitud" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DiasFrancos">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.DiaFranco)">
-              <MappingFragment StoreEntitySet="DiasFrancos">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="FrancoId" ColumnName="FrancoId" />
-                <ScalarProperty Name="Dia" ColumnName="Dia" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MovimientosFrancos">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.MovimientoFranco)">
-              <MappingFragment StoreEntitySet="MovimientosFrancos">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="FrancoId" ColumnName="FrancoId" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TiposMovimientosHora">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.TipoMovimientoHora)">
-              <MappingFragment StoreEntitySet="TiposMovimientosHora">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-                <ScalarProperty Name="Suma" ColumnName="Suma" />
-                <ScalarProperty Name="Manual" ColumnName="Manual" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="VariablesGlobales">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.VariableGlobal)">
-              <MappingFragment StoreEntitySet="VariablesGlobales">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UltimaFechaConsulta" ColumnName="UltimaFechaConsulta" />
-                <ScalarProperty Name="EnMantenimiento" ColumnName="EnMantenimiento" />
-                <ScalarProperty Name="UltimoAnioHorasEliminadas" ColumnName="UltimoAnioHorasEliminadas" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CierreMensual">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.CierreMensual)">
-              <MappingFragment StoreEntitySet="CierreMensual">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="HorasAnioAnterior" ColumnName="HorasAnioAnterior" />
-                <ScalarProperty Name="HorasAnioActual" ColumnName="HorasAnioActual" />
-                <ScalarProperty Name="FechaCierre" ColumnName="FechaCierre" />
-                <ScalarProperty Name="Mes" ColumnName="Mes" />
-                <ScalarProperty Name="Anio" ColumnName="Anio" />
-                <ScalarProperty Name="Tiene_que_modificar" ColumnName="Tiene_que_modificar" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EstadosAgente">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.EstadoAgente)">
-              <MappingFragment StoreEntitySet="EstadosAgente">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="TipoEstadoAgenteId" ColumnName="TipoEstadoAgenteId" />
-                <ScalarProperty Name="Dia" ColumnName="Dia" />
-                <ScalarProperty Name="AgenteId1" ColumnName="AgenteId1" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TiposEstadoAgente">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.TipoEstadoAgente)">
-              <MappingFragment StoreEntitySet="TiposEstadoAgente">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Abreviatura" ColumnName="Abreviatura" />
-                <ScalarProperty Name="MarcaJefe" ColumnName="MarcaJefe" />
-                <ScalarProperty Name="MarcaPersonal" ColumnName="MarcaPersonal" />
-                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-                <ScalarProperty Name="OrdenPrioridad" ColumnName="OrdenPrioridad" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Feriados">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Feriado)">
-              <MappingFragment StoreEntitySet="Feriados">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Dia" ColumnName="Dia" />
-                <ScalarProperty Name="Motivo" ColumnName="Motivo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BonificacionesOtorgadas">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.BonificacionOtorgada)">
-              <MappingFragment StoreEntitySet="BonificacionesOtorgadas">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="Mes" ColumnName="Mes" />
-                <ScalarProperty Name="Anio" ColumnName="Anio" />
-                <ScalarProperty Name="HorasOtorgadas" ColumnName="HorasOtorgadas" />
-                <ScalarProperty Name="HorasAdeudadas" ColumnName="HorasAdeudadas" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CambiosPendientes">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.CambioPendiente)">
-              <MappingFragment StoreEntitySet="CambiosPendientes">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ApyNom" ColumnName="ApyNom" />
-                <ScalarProperty Name="DNI" ColumnName="DNI" />
-                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
-                <ScalarProperty Name="Mail" ColumnName="Mail" />
-                <ScalarProperty Name="CUIL" ColumnName="CUIL" />
-                <ScalarProperty Name="FichaMedica" ColumnName="FichaMedica" />
-                <ScalarProperty Name="Dom_direccion" ColumnName="Dom_direccion" />
-                <ScalarProperty Name="Dom_localidad" ColumnName="Dom_localidad" />
-                <ScalarProperty Name="Dom_aclaraciones" ColumnName="Dom_aclaraciones" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ObservacionesGuardia">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.ObservacionGuardia)">
-              <MappingFragment StoreEntitySet="ObservacionesGuardia">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EntradasSalidas">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.EntradaSalida)">
-              <MappingFragment StoreEntitySet="EntradasSalidas">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Entrada" ColumnName="Entrada" />
-                <ScalarProperty Name="Salida" ColumnName="Salida" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="AgenteId1" ColumnName="AgenteId1" />
-                <ScalarProperty Name="CerradoPersonal" ColumnName="CerradoPersonal" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="Enviado" ColumnName="Enviado" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Reasignaciones">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Reasignacion)">
-              <MappingFragment StoreEntitySet="Reasignaciones">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
-                <ScalarProperty Name="Desde" ColumnName="Desde" />
-                <ScalarProperty Name="Hasta" ColumnName="Hasta" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Marcaciones">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Marcacion)">
-              <MappingFragment StoreEntitySet="Marcaciones">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Hora" ColumnName="Hora" />
-                <ScalarProperty Name="Manual" ColumnName="Manual" />
-                <ScalarProperty Name="ResumenDiarioId" ColumnName="ResumenDiarioId" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="Anulada" ColumnName="Anulada" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DiasProcesados">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.DiaProcesado)">
-              <MappingFragment StoreEntitySet="DiasProcesados">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Dia" ColumnName="Dia" />
-                <ScalarProperty Name="Cerrado" ColumnName="Cerrado" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SolicitudesDeEstado">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.SolicitudDeEstado)">
-              <MappingFragment StoreEntitySet="SolicitudesDeEstado">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="AgenteId1" ColumnName="AgenteId1" />
-                <ScalarProperty Name="TipoEstadoAgenteId" ColumnName="TipoEstadoAgenteId" />
-                <ScalarProperty Name="FechaDesde" ColumnName="FechaDesde" />
-                <ScalarProperty Name="FechaHasta" ColumnName="FechaHasta" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="FechaHoraSolicitud" ColumnName="FechaHoraSolicitud" />
-                <ScalarProperty Name="TipoEnfermedad" ColumnName="TipoEnfermedad" />
-                <ScalarProperty Name="Lugar" ColumnName="Lugar" />
-                <ScalarProperty Name="Fam_NomyAp" ColumnName="Fam_NomyAp" />
-                <ScalarProperty Name="Fam_Parentesco" ColumnName="Fam_Parentesco" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="HAAnteriorEliminadasSet">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.HAAnteriorEliminadas)">
-              <MappingFragment StoreEntitySet="HAAnteriorEliminadasSet">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="Anio" ColumnName="Anio" />
-                <ScalarProperty Name="Horas" ColumnName="Horas" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Archivos">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Archivo)">
-              <MappingFragment StoreEntitySet="Archivos">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Path" ColumnName="Path" />
-                <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
-                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
-                <ScalarProperty Name="DirectorioId" ColumnName="DirectorioId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Directorios">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Directorio)">
-              <MappingFragment StoreEntitySet="Directorios">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Padre" ColumnName="Padre" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ImpresionReportes">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.ImpresionReporte)">
-              <MappingFragment StoreEntitySet="ImpresionReportes">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="IP" ColumnName="IP" />
-                <ScalarProperty Name="TipoReporte" ColumnName="TipoReporte" />
-                <ScalarProperty Name="FechaHora" ColumnName="FechaHora" />
-                <ScalarProperty Name="NombreMaquina" ColumnName="NombreMaquina" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="HorasMesHorarioFlexibles">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.HorasMesHorarioFlexible)">
-              <MappingFragment StoreEntitySet="HorasMesHorarioFlexibles">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="Mes" ColumnName="Mes" />
-                <ScalarProperty Name="Anio" ColumnName="Anio" />
-                <ScalarProperty Name="HorasAcumuladas" ColumnName="HorasAcumuladas" />
-                <ScalarProperty Name="AcumuladoEnTotalAnual" ColumnName="AcumuladoEnTotalAnual" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MovimientosSobreAgente">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.MovimientoSobreAgente)">
-              <MappingFragment StoreEntitySet="MovimientosSobreAgente">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="TipoMovimiento" ColumnName="TipoMovimiento" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="IP" ColumnName="IP" />
-                <ScalarProperty Name="NombreMaquina" ColumnName="NombreMaquina" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="AgenteId1" ColumnName="AgenteId1" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TiposDeLicencia">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.TipoLicencia)">
-              <MappingFragment StoreEntitySet="TiposDeLicencia">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="LicenciasAgentes">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.LicenciaAgente)">
-              <MappingFragment StoreEntitySet="LicenciasAgentes">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="TipoLicenciaId" ColumnName="TipoLicenciaId" />
-                <ScalarProperty Name="Anio" ColumnName="Anio" />
-                <ScalarProperty Name="DiasOtorgados" ColumnName="DiasOtorgados" />
-                <ScalarProperty Name="DiasUsufructuadosIniciales" ColumnName="DiasUsufructuadosIniciales" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DiasUsufructuados">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.DiaUsufructado)">
-              <MappingFragment StoreEntitySet="DiasUsufructuados">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Dia" ColumnName="Dia" />
-                <ScalarProperty Name="Anio" ColumnName="Anio" />
-                <ScalarProperty Name="TipoLicenciaId" ColumnName="TipoLicenciaId" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="AgentePersonalId" ColumnName="AgentePersonalId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Sesiones">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Sesion)">
-              <MappingFragment StoreEntitySet="Sesiones">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="FechaHoraInicio" ColumnName="FechaHoraInicio" />
-                <ScalarProperty Name="Maquina" ColumnName="Maquina" />
-                <ScalarProperty Name="Ip" ColumnName="Ip" />
-                <ScalarProperty Name="FechaHoraFin" ColumnName="FechaHoraFin" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Mensajes">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Mensaje)">
-              <MappingFragment StoreEntitySet="Mensajes">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="FechaEnvio" ColumnName="FechaEnvio" />
-                <ScalarProperty Name="Asunto" ColumnName="Asunto" />
-                <ScalarProperty Name="Cuerpo" ColumnName="Cuerpo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Destinatarios">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Destinatario)">
-              <MappingFragment StoreEntitySet="Destinatarios">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="MensajeId" ColumnName="MensajeId" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="FechaLeido" ColumnName="FechaLeido" />
-                <ScalarProperty Name="MarcoImportante" ColumnName="MarcoImportante" />
-                <ScalarProperty Name="Elimino" ColumnName="Elimino" />
-                <ScalarProperty Name="ConfirmoEliminacion" ColumnName="ConfirmoEliminacion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Notificaciones">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Notificacion)">
-              <MappingFragment StoreEntitySet="Notificaciones">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="TipoNotificacionId" ColumnName="TipoNotificacionId" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="Vencimiento" ColumnName="Vencimiento" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="ObservacionPendienteRecibir" ColumnName="ObservacionPendienteRecibir" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Notificacion_Tipos">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Notificacion_Tipo)">
-              <MappingFragment StoreEntitySet="Notificacion_Tipos">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Notificacion_Historiales">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Notificacion_Historial)">
-              <MappingFragment StoreEntitySet="Notificacion_Historiales">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="NotificacionId" ColumnName="NotificacionId" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="Notificacion_EstadoId" ColumnName="Notificacion_EstadoId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Notificacion_Estados">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Notificacion_Estado)">
-              <MappingFragment StoreEntitySet="Notificacion_Estados">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CorteLicencia">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.CorteLicenciaAnual)">
-              <MappingFragment StoreEntitySet="CorteLicencia">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-                <ScalarProperty Name="Anio" ColumnName="Anio" />
-                <ScalarProperty Name="Desde" ColumnName="Desde" />
-                <ScalarProperty Name="NumInstrumento" ColumnName="NumInstrumento" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="AgenteId1" ColumnName="AgenteId1" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AbrioDias">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.AbrioDia)">
-              <MappingFragment StoreEntitySet="AbrioDias">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ResumenDiarioId" ColumnName="ResumenDiarioId" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AsuetosParciales">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.AsuetoParcial)">
-              <MappingFragment StoreEntitySet="AsuetosParciales">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
-                <ScalarProperty Name="Dia" ColumnName="Dia" />
-                <ScalarProperty Name="HorarioQueModifica" ColumnName="HorarioQueModifica" />
-                <ScalarProperty Name="Hora" ColumnName="Hora" />
-                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Formularios1214">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Formulario1214)">
-              <MappingFragment StoreEntitySet="Formularios1214">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Desde" ColumnName="Desde" />
-                <ScalarProperty Name="Hasta" ColumnName="Hasta" />
-                <ScalarProperty Name="Destino" ColumnName="Destino" />
-                <ScalarProperty Name="TareasACumplir" ColumnName="TareasACumplir" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Movilidad" ColumnName="Movilidad" />
-                <ScalarProperty Name="Anticipo" ColumnName="Anticipo" />
-                <ScalarProperty Name="MontoAnticipo" ColumnName="MontoAnticipo" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Agentes1214">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Agente1214)">
-              <MappingFragment StoreEntitySet="Agentes1214">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Id_Agente" ColumnName="Id_Agente" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Formulario1214Id" ColumnName="Formulario1214Id" />
-                <ScalarProperty Name="Id_Jefe" ColumnName="Id_Jefe" />
-                <ScalarProperty Name="FechaAprobacion" ColumnName="FechaAprobacion" />
-                <ScalarProperty Name="FechaRechazo" ColumnName="FechaRechazo" />
-                <ScalarProperty Name="JefeComicion" ColumnName="JefeComicion" />
-                <ScalarProperty Name="Aprobado_por_agente_id" ColumnName="Aprobado_por_agente_id" />
-                <ScalarProperty Name="Rechazado_por_agente_id" ColumnName="Rechazado_por_agente_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Legajos_datos_laborales">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Legajo_datos_laborales)">
-              <MappingFragment StoreEntitySet="Legajos_datos_laborales">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="FechaIngresoAminPub" ColumnName="FechaIngresoAminPub" />
-                <ScalarProperty Name="FechaIngresoATP" ColumnName="FechaIngresoATP" />
-                <ScalarProperty Name="AniosAntiguedadReconicidosOtrasPartes" ColumnName="AniosAntiguedadReconicidosOtrasPartes" />
-                <ScalarProperty Name="MesesAntiguedadReconocidosOtrasPartes" ColumnName="MesesAntiguedadReconocidosOtrasPartes" />
-                <ScalarProperty Name="FichaMedica" ColumnName="FichaMedica" />
-                <ScalarProperty Name="CUIT" ColumnName="CUIT" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Grupo" ColumnName="Grupo" />
-                <ScalarProperty Name="Apartado" ColumnName="Apartado" />
-                <ScalarProperty Name="Cargo" ColumnName="Cargo" />
-                <ScalarProperty Name="Situacion_de_revista" ColumnName="Situacion_de_revista" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Legajos_datos_personales">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Legajo_datos_personales)">
-              <MappingFragment StoreEntitySet="Legajos_datos_personales">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="DNI" ColumnName="DNI" />
-                <ScalarProperty Name="Sexo" ColumnName="Sexo" />
-                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
-                <ScalarProperty Name="Domicilio" ColumnName="Domicilio" />
-                <ScalarProperty Name="DomicilioObservaciones" ColumnName="DomicilioObservaciones" />
-                <ScalarProperty Name="EstadoCivil" ColumnName="EstadoCivil" />
-                <ScalarProperty Name="Domicilio_localidad" ColumnName="Domicilio_localidad" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Legajo_historial_domicilios">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Legajo_historial_domicilio)">
-              <MappingFragment StoreEntitySet="Legajo_historial_domicilios">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Legajo_datos_personalesId" ColumnName="Legajo_datos_personalesId" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="Domicilio" ColumnName="Domicilio" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Legajos_conyuge">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Legajo_conyuge)">
-              <MappingFragment StoreEntitySet="Legajos_conyuge">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Apellido_y_nombre" ColumnName="Apellido_y_nombre" />
-                <ScalarProperty Name="DNI" ColumnName="DNI" />
-                <ScalarProperty Name="Fecha_de_nacimiento" ColumnName="Fecha_de_nacimiento" />
-                <ScalarProperty Name="Trabaja" ColumnName="Trabaja" />
-                <ScalarProperty Name="Lugar_de_trabajo" ColumnName="Lugar_de_trabajo" />
-                <ScalarProperty Name="Dependencia" ColumnName="Dependencia" />
-                <ScalarProperty Name="Asignacion_familiar" ColumnName="Asignacion_familiar" />
-                <ScalarProperty Name="Profesion" ColumnName="Profesion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Legajo_hijos">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Legajo_hijo)">
-              <MappingFragment StoreEntitySet="Legajo_hijos">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Apellido_y_nombre" ColumnName="Apellido_y_nombre" />
-                <ScalarProperty Name="DNI" ColumnName="DNI" />
-                <ScalarProperty Name="Fecha_de_nacimiento" ColumnName="Fecha_de_nacimiento" />
-                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
-                <ScalarProperty Name="Legajo_datos_personalesId" ColumnName="Legajo_datos_personalesId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Legajo_fojas_de_servicio">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Legajo_foja_de_servicio)">
-              <MappingFragment StoreEntitySet="Legajo_fojas_de_servicio">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Legajo_titulos_certificados">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Legajo_titulo_certificado)">
-              <MappingFragment StoreEntitySet="Legajo_titulos_certificados">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Legajo_datos_personalesId" ColumnName="Legajo_datos_personalesId" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Lugar_insticucion" ColumnName="Lugar_insticucion" />
-                <ScalarProperty Name="Duracion" ColumnName="Duracion" />
-                <ScalarProperty Name="Fecha_emision" ColumnName="Fecha_emision" />
-                <ScalarProperty Name="Tipo_certificado" ColumnName="Tipo_certificado" />
-                <ScalarProperty Name="Path_archivo" ColumnName="Path_archivo" />
-                <ScalarProperty Name="Nivel" ColumnName="Nivel" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Legajo_pagos_subrrogancia_bonificacion_antiguedad">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Legajo_pago_subrrogancia_bonificacion_antiguedad)">
-              <MappingFragment StoreEntitySet="Legajo_pagos_subrrogancia_bonificacion_antiguedad">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Instrumento_nro" ColumnName="Instrumento_nro" />
-                <ScalarProperty Name="Instrumento_tipo" ColumnName="Instrumento_tipo" />
-                <ScalarProperty Name="Instrumento_fecha" ColumnName="Instrumento_fecha" />
-                <ScalarProperty Name="Instrumento_vigencia" ColumnName="Instrumento_vigencia" />
-                <ScalarProperty Name="Path_archivo" ColumnName="Path_archivo" />
-                <ScalarProperty Name="Legajo_fojas_de_servicioId" ColumnName="Legajo_fojas_de_servicioId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Legajo_otros_eventos">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Legajo_otro_evento)">
-              <MappingFragment StoreEntitySet="Legajo_otros_eventos">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Lugar" ColumnName="Lugar" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="Legajo_fojas_de_servicioId" ColumnName="Legajo_fojas_de_servicioId" />
-                <ScalarProperty Name="Path_archivo" ColumnName="Path_archivo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Legajos_afectaciones_designaciones">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Legajo_afectacion_designacion)">
-              <MappingFragment StoreEntitySet="Legajos_afectaciones_designaciones">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Instrumento_tipo" ColumnName="Instrumento_tipo" />
-                <ScalarProperty Name="Instrumento_numero" ColumnName="Instrumento_numero" />
-                <ScalarProperty Name="Instrumento_fecha" ColumnName="Instrumento_fecha" />
-                <ScalarProperty Name="Legajo_foja_de_servicioId" ColumnName="Legajo_foja_de_servicioId" />
-                <ScalarProperty Name="Path_archivo" ColumnName="Path_archivo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Modificaciones_cierres_meses">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Modificacion_cierre_mes)">
-              <MappingFragment StoreEntitySet="Modificaciones_cierres_meses">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="AgenteId_modificacion" ColumnName="AgenteId_modificacion" />
-                <ScalarProperty Name="CierreMensualId" ColumnName="CierreMensualId" />
-                <ScalarProperty Name="HoraAnioAnterior" ColumnName="HoraAnioAnterior" />
-                <ScalarProperty Name="HoraAnioActual" ColumnName="HoraAnioActual" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Legajos_carreras_administrativas">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Legajo_carrera_administrativa)">
-              <MappingFragment StoreEntitySet="Legajos_carreras_administrativas">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Tipo_novedad" ColumnName="Tipo_novedad" />
-                <ScalarProperty Name="Nro_instrumento" ColumnName="Nro_instrumento" />
-                <ScalarProperty Name="Tipo_instrumento" ColumnName="Tipo_instrumento" />
-                <ScalarProperty Name="Fecha_instrumento" ColumnName="Fecha_instrumento" />
-                <ScalarProperty Name="Path_archivo" ColumnName="Path_archivo" />
-                <ScalarProperty Name="Legajo_foja_de_servicioId" ColumnName="Legajo_foja_de_servicioId" />
-                <ScalarProperty Name="Cargo" ColumnName="Cargo" />
-                <ScalarProperty Name="Grupo" ColumnName="Grupo" />
-                <ScalarProperty Name="Apartado" ColumnName="Apartado" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Validaciones_email">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Validacion_email)">
-              <MappingFragment StoreEntitySet="Validaciones_email">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="Clave" ColumnName="Clave" />
-                <ScalarProperty Name="Mail" ColumnName="Mail" />
-                <ScalarProperty Name="Fecha_envio" ColumnName="Fecha_envio" />
-                <ScalarProperty Name="Fecha_validado" ColumnName="Fecha_validado" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CambiosDeClave">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.CambioClave)">
-              <MappingFragment StoreEntitySet="CambiosDeClave">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="FechaSolicitud" ColumnName="FechaSolicitud" />
-                <ScalarProperty Name="FechaAceptacion" ColumnName="FechaAceptacion" />
-                <ScalarProperty Name="Guid" ColumnName="Guid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Memo_17_DDJJs">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Memo_17_DDJJ)">
-              <MappingFragment StoreEntitySet="Memo_17_DDJJs">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="fecha_modificacion" ColumnName="fecha_modificacion" />
-                <ScalarProperty Name="dp_apellido_y_nombre" ColumnName="dp_apellido_y_nombre" />
-                <ScalarProperty Name="dp_nacionalidad" ColumnName="dp_nacionalidad" />
-                <ScalarProperty Name="dp_nativo_naturalizado" ColumnName="dp_nativo_naturalizado" />
-                <ScalarProperty Name="dp_nacimiento_lugar" ColumnName="dp_nacimiento_lugar" />
-                <ScalarProperty Name="dp_nacimiento_fecha" ColumnName="dp_nacimiento_fecha" />
-                <ScalarProperty Name="dp_clase" ColumnName="dp_clase" />
-                <ScalarProperty Name="dp_dni" ColumnName="dp_dni" />
-                <ScalarProperty Name="dp_estado_civil" ColumnName="dp_estado_civil" />
-                <ScalarProperty Name="dp_domicilio_direccion" ColumnName="dp_domicilio_direccion" />
-                <ScalarProperty Name="dp_domicilio_barrio" ColumnName="dp_domicilio_barrio" />
-                <ScalarProperty Name="dp_domicilio_localidad" ColumnName="dp_domicilio_localidad" />
-                <ScalarProperty Name="dp_domicilio_provincia" ColumnName="dp_domicilio_provincia" />
-                <ScalarProperty Name="dp_domicilio_codpost" ColumnName="dp_domicilio_codpost" />
-                <ScalarProperty Name="dp_profesion" ColumnName="dp_profesion" />
-                <ScalarProperty Name="dp_instruccion" ColumnName="dp_instruccion" />
-                <ScalarProperty Name="dp_conyugue_apellido_y_nombre" ColumnName="dp_conyugue_apellido_y_nombre" />
-                <ScalarProperty Name="dp_conyugue_nacionalidad" ColumnName="dp_conyugue_nacionalidad" />
-                <ScalarProperty Name="dp_padre_apellido_y_nombre" ColumnName="dp_padre_apellido_y_nombre" />
-                <ScalarProperty Name="dp_padre_nacionalidad" ColumnName="dp_padre_nacionalidad" />
-                <ScalarProperty Name="dp_padre_vive" ColumnName="dp_padre_vive" />
-                <ScalarProperty Name="dp_madre_apellido_y_nombre" ColumnName="dp_madre_apellido_y_nombre" />
-                <ScalarProperty Name="dp_madre_nacionalidad" ColumnName="dp_madre_nacionalidad" />
-                <ScalarProperty Name="dp_madre_vive" ColumnName="dp_madre_vive" />
-                <ScalarProperty Name="aa_cargo" ColumnName="aa_cargo" />
-                <ScalarProperty Name="aa_contrato_obra_ingreso" ColumnName="aa_contrato_obra_ingreso" />
-                <ScalarProperty Name="aa_contrato_obra_instrumento" ColumnName="aa_contrato_obra_instrumento" />
-                <ScalarProperty Name="aa_contrato_serv_ingreso" ColumnName="aa_contrato_serv_ingreso" />
-                <ScalarProperty Name="aa_contrato_serv_instrumento" ColumnName="aa_contrato_serv_instrumento" />
-                <ScalarProperty Name="aa_nombramiento_ingreso" ColumnName="aa_nombramiento_ingreso" />
-                <ScalarProperty Name="aa_nombramiento_instrumento" ColumnName="aa_nombramiento_instrumento" />
-                <ScalarProperty Name="ca_en_admin_nacional" ColumnName="ca_en_admin_nacional" />
-                <ScalarProperty Name="ca_en_admin_provincial" ColumnName="ca_en_admin_provincial" />
-                <ScalarProperty Name="ca_privados" ColumnName="ca_privados" />
-                <ScalarProperty Name="ca_otros_antecedentes" ColumnName="ca_otros_antecedentes" />
-                <ScalarProperty Name="aa_funcion" ColumnName="aa_funcion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Memo_17_DDJJ_Hijos">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.Memo_17_DDJJ_Hijo)">
-              <MappingFragment StoreEntitySet="Memo_17_DDJJ_Hijos">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Memo_17_DDJJ_Id" ColumnName="Memo_17_DDJJ_Id" />
-                <ScalarProperty Name="dp_hijo_apellido_y_nombre" ColumnName="dp_hijo_apellido_y_nombre" />
-                <ScalarProperty Name="dp_hijo_fecha_nacimiento" ColumnName="dp_hijo_fecha_nacimiento" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TiposHorariosFexibles">
-            <EntityTypeMapping TypeName="IsTypeOf(Model1.TipoHorariosFexible)">
-              <MappingFragment StoreEntitySet="TiposHorariosFexibles">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-                <ScalarProperty Name="Hentrada" ColumnName="Hentrada" />
-                <ScalarProperty Name="Hsalida" ColumnName="Hsalida" />
-                <ScalarProperty Name="Hjornada" ColumnName="Hjornada" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="AgenteCambioPendiente" TypeName="Model1.AgenteCambioPendiente" StoreEntitySet="CambiosPendientes">
-            <EndProperty Name="Agente">
-              <ScalarProperty Name="Id" ColumnName="Agente_Id" />
-            </EndProperty>
-            <EndProperty Name="CambioPendiente">
-              <ScalarProperty Name="Id" ColumnName="Id" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="AgenteAgente_legajo_datos_laborales" TypeName="Model1.AgenteAgente_legajo_datos_laborales" StoreEntitySet="Legajos_datos_laborales">
-            <EndProperty Name="Agente">
-              <ScalarProperty Name="Id" ColumnName="Agente_Id" />
-            </EndProperty>
-            <EndProperty Name="Agente_legajo_datos_laborales">
-              <ScalarProperty Name="Id" ColumnName="Id" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="AgenteAgente_legajo_datos_personales" TypeName="Model1.AgenteAgente_legajo_datos_personales" StoreEntitySet="Legajos_datos_personales">
-            <EndProperty Name="Agente">
-              <ScalarProperty Name="Id" ColumnName="Agente_Id" />
-            </EndProperty>
-            <EndProperty Name="Agente_legajo_datos_personales">
-              <ScalarProperty Name="Id" ColumnName="Id" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="Legajo_datos_personalesLegajo_conyugue" TypeName="Model1.Legajo_datos_personalesLegajo_conyugue" StoreEntitySet="Legajos_conyuge">
-            <EndProperty Name="Legajo_datos_personales">
-              <ScalarProperty Name="Id" ColumnName="Legajo_datos_personales_Id" />
-            </EndProperty>
-            <EndProperty Name="Legajo_conyugue">
-              <ScalarProperty Name="Id" ColumnName="Id" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="AgenteLegajo_fojas_de_servicio" TypeName="Model1.AgenteLegajo_fojas_de_servicio" StoreEntitySet="Legajo_fojas_de_servicio">
-            <EndProperty Name="Agente">
-              <ScalarProperty Name="Id" ColumnName="Agente_Id" />
-            </EndProperty>
-            <EndProperty Name="Legajo_fojas_de_servicio">
-              <ScalarProperty Name="Id" ColumnName="Id" />
-            </EndProperty>
-          </AssociationSetMapping>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Model1StoreContainer" CdmEntityContainer="Model1Container">
+    <EntitySetMapping Name="Agentes">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Agente)">
+        <MappingFragment StoreEntitySet="Agentes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ApellidoYNombre" ColumnName="ApellidoYNombre" />
+          <ScalarProperty Name="Usr" ColumnName="Usr" />
+          <ScalarProperty Name="Pass" ColumnName="Pass" />
+          <ScalarProperty Name="Legajo" ColumnName="Legajo" />
+          <ScalarProperty Name="Jefe" ColumnName="Jefe" />
+          <ScalarProperty Name="JefeTemporal" ColumnName="JefeTemporal" />
+          <ScalarProperty Name="Perfil" ColumnName="Perfil" />
+          <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="HorasAcumuladasAnioActual" ColumnName="HorasAcumuladasAnioActual" />
+          <ScalarProperty Name="HorasAcumuladasAnioAnterior" ColumnName="HorasAcumuladasAnioAnterior" />
+          <ScalarProperty Name="PoseeBonificacion" ColumnName="PoseeBonificacion" />
+          <ScalarProperty Name="HorasBonificacionACubrir" ColumnName="HorasBonificacionACubrir" />
+          <ScalarProperty Name="FechaBaja" ColumnName="FechaBaja" />
+          <ScalarProperty Name="HoraEntrada" ColumnName="HoraEntrada" />
+          <ScalarProperty Name="HoraSalida" ColumnName="HoraSalida" />
+          <ScalarProperty Name="HorarioFlexible" ColumnName="HorarioFlexible" />
+          <ScalarProperty Name="JefeTemporalHasta" ColumnName="JefeTemporalHasta" />
+          <ScalarProperty Name="TipoHorariosFexibleId" ColumnName="TipoHorariosFexibleId" />
+          <ScalarProperty Name="TipoHorarioFlexibleDesde" ColumnName="TipoHorarioFlexibleDesde" />
+          <ScalarProperty Name="TipoHorarioFlexibleHasta" ColumnName="TipoHorarioFlexibleHasta" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Areas">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Area)">
+        <MappingFragment StoreEntitySet="Areas">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+          <ScalarProperty Name="Interior" ColumnName="Interior" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ResumenesDiarios">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.ResumenDiario)">
+        <MappingFragment StoreEntitySet="ResumenesDiarios">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Dia" ColumnName="Dia" />
+          <ScalarProperty Name="Horas" ColumnName="Horas" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="HEntrada" ColumnName="HEntrada" />
+          <ScalarProperty Name="HSalida" ColumnName="HSalida" />
+          <ScalarProperty Name="HVEnt" ColumnName="HVEnt" />
+          <ScalarProperty Name="HVSal" ColumnName="HVSal" />
+          <ScalarProperty Name="MarcoTardanza" ColumnName="MarcoTardanza" />
+          <ScalarProperty Name="MarcoProlongJornada" ColumnName="MarcoProlongJornada" />
+          <ScalarProperty Name="Inconsistente" ColumnName="Inconsistente" />
+          <ScalarProperty Name="ObservacionInconsistente" ColumnName="ObservacionInconsistente" />
+          <ScalarProperty Name="Cerrado" ColumnName="Cerrado" />
+          <ScalarProperty Name="AcumuloHorasBonificacion" ColumnName="AcumuloHorasBonificacion" />
+          <ScalarProperty Name="AcumuloHorasAnioActual" ColumnName="AcumuloHorasAnioActual" />
+          <ScalarProperty Name="AcumuloHorasAnioAnterior" ColumnName="AcumuloHorasAnioAnterior" />
+          <ScalarProperty Name="AcumuloHorasMes" ColumnName="AcumuloHorasMes" />
+          <ScalarProperty Name="AgenteId1" ColumnName="AgenteId1" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MovimientosHoras">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.MovimientoHora)">
+        <MappingFragment StoreEntitySet="MovimientosHoras">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ResumenDiarioId" ColumnName="ResumenDiarioId" />
+          <ScalarProperty Name="Horas" ColumnName="Horas" />
+          <ScalarProperty Name="TipoMovimientoHoraId" ColumnName="TipoMovimientoHoraId" />
+          <ScalarProperty Name="DescontoDeAcumuladoAnioAnterior" ColumnName="DescontoDeAcumuladoAnioAnterior" />
+          <ScalarProperty Name="DescontoDeHorasBonificables" ColumnName="DescontoDeHorasBonificables" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HorariosVespertinos">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.HorarioVespertino)">
+        <MappingFragment StoreEntitySet="HorariosVespertinos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Dia" ColumnName="Dia" />
+          <ScalarProperty Name="HoraInicio" ColumnName="HoraInicio" />
+          <ScalarProperty Name="HoraFin" ColumnName="HoraFin" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="Motivo" ColumnName="Motivo" />
+          <ScalarProperty Name="AgenteId1" ColumnName="AgenteId1" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Salidas">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Salida)">
+        <MappingFragment StoreEntitySet="Salidas">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Dia" ColumnName="Dia" />
+          <ScalarProperty Name="HoraDesde" ColumnName="HoraDesde" />
+          <ScalarProperty Name="HoraHasta" ColumnName="HoraHasta" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="AgenteId1" ColumnName="AgenteId1" />
+          <ScalarProperty Name="Destino" ColumnName="Destino" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Francos">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Franco)">
+        <MappingFragment StoreEntitySet="Francos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="InfPersSaldoAnioAnt" ColumnName="InfPersSaldoAnioAnt" />
+          <ScalarProperty Name="InfPersSaldoAnioEnCurso" ColumnName="InfPersSaldoAnioEnCurso" />
+          <ScalarProperty Name="FechaSolicitud" ColumnName="FechaSolicitud" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DiasFrancos">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.DiaFranco)">
+        <MappingFragment StoreEntitySet="DiasFrancos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FrancoId" ColumnName="FrancoId" />
+          <ScalarProperty Name="Dia" ColumnName="Dia" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MovimientosFrancos">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.MovimientoFranco)">
+        <MappingFragment StoreEntitySet="MovimientosFrancos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FrancoId" ColumnName="FrancoId" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TiposMovimientosHora">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.TipoMovimientoHora)">
+        <MappingFragment StoreEntitySet="TiposMovimientosHora">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="Suma" ColumnName="Suma" />
+          <ScalarProperty Name="Manual" ColumnName="Manual" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VariablesGlobales">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.VariableGlobal)">
+        <MappingFragment StoreEntitySet="VariablesGlobales">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UltimaFechaConsulta" ColumnName="UltimaFechaConsulta" />
+          <ScalarProperty Name="EnMantenimiento" ColumnName="EnMantenimiento" />
+          <ScalarProperty Name="UltimoAnioHorasEliminadas" ColumnName="UltimoAnioHorasEliminadas" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CierreMensual">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.CierreMensual)">
+        <MappingFragment StoreEntitySet="CierreMensual">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="HorasAnioAnterior" ColumnName="HorasAnioAnterior" />
+          <ScalarProperty Name="HorasAnioActual" ColumnName="HorasAnioActual" />
+          <ScalarProperty Name="FechaCierre" ColumnName="FechaCierre" />
+          <ScalarProperty Name="Mes" ColumnName="Mes" />
+          <ScalarProperty Name="Anio" ColumnName="Anio" />
+          <ScalarProperty Name="Tiene_que_modificar" ColumnName="Tiene_que_modificar" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EstadosAgente">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.EstadoAgente)">
+        <MappingFragment StoreEntitySet="EstadosAgente">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="TipoEstadoAgenteId" ColumnName="TipoEstadoAgenteId" />
+          <ScalarProperty Name="Dia" ColumnName="Dia" />
+          <ScalarProperty Name="AgenteId1" ColumnName="AgenteId1" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TiposEstadoAgente">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.TipoEstadoAgente)">
+        <MappingFragment StoreEntitySet="TiposEstadoAgente">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="Abreviatura" ColumnName="Abreviatura" />
+          <ScalarProperty Name="MarcaJefe" ColumnName="MarcaJefe" />
+          <ScalarProperty Name="MarcaPersonal" ColumnName="MarcaPersonal" />
+          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+          <ScalarProperty Name="OrdenPrioridad" ColumnName="OrdenPrioridad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Feriados">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Feriado)">
+        <MappingFragment StoreEntitySet="Feriados">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Dia" ColumnName="Dia" />
+          <ScalarProperty Name="Motivo" ColumnName="Motivo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BonificacionesOtorgadas">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.BonificacionOtorgada)">
+        <MappingFragment StoreEntitySet="BonificacionesOtorgadas">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="Mes" ColumnName="Mes" />
+          <ScalarProperty Name="Anio" ColumnName="Anio" />
+          <ScalarProperty Name="HorasOtorgadas" ColumnName="HorasOtorgadas" />
+          <ScalarProperty Name="HorasAdeudadas" ColumnName="HorasAdeudadas" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CambiosPendientes">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.CambioPendiente)">
+        <MappingFragment StoreEntitySet="CambiosPendientes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ApyNom" ColumnName="ApyNom" />
+          <ScalarProperty Name="DNI" ColumnName="DNI" />
+          <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+          <ScalarProperty Name="Mail" ColumnName="Mail" />
+          <ScalarProperty Name="CUIL" ColumnName="CUIL" />
+          <ScalarProperty Name="FichaMedica" ColumnName="FichaMedica" />
+          <ScalarProperty Name="Dom_direccion" ColumnName="Dom_direccion" />
+          <ScalarProperty Name="Dom_localidad" ColumnName="Dom_localidad" />
+          <ScalarProperty Name="Dom_aclaraciones" ColumnName="Dom_aclaraciones" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ObservacionesGuardia">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.ObservacionGuardia)">
+        <MappingFragment StoreEntitySet="ObservacionesGuardia">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EntradasSalidas">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.EntradaSalida)">
+        <MappingFragment StoreEntitySet="EntradasSalidas">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Entrada" ColumnName="Entrada" />
+          <ScalarProperty Name="Salida" ColumnName="Salida" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="AgenteId1" ColumnName="AgenteId1" />
+          <ScalarProperty Name="CerradoPersonal" ColumnName="CerradoPersonal" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="Enviado" ColumnName="Enviado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reasignaciones">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Reasignacion)">
+        <MappingFragment StoreEntitySet="Reasignaciones">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+          <ScalarProperty Name="Desde" ColumnName="Desde" />
+          <ScalarProperty Name="Hasta" ColumnName="Hasta" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Marcaciones">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Marcacion)">
+        <MappingFragment StoreEntitySet="Marcaciones">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Hora" ColumnName="Hora" />
+          <ScalarProperty Name="Manual" ColumnName="Manual" />
+          <ScalarProperty Name="ResumenDiarioId" ColumnName="ResumenDiarioId" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="Anulada" ColumnName="Anulada" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DiasProcesados">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.DiaProcesado)">
+        <MappingFragment StoreEntitySet="DiasProcesados">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Dia" ColumnName="Dia" />
+          <ScalarProperty Name="Cerrado" ColumnName="Cerrado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SolicitudesDeEstado">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.SolicitudDeEstado)">
+        <MappingFragment StoreEntitySet="SolicitudesDeEstado">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="AgenteId1" ColumnName="AgenteId1" />
+          <ScalarProperty Name="TipoEstadoAgenteId" ColumnName="TipoEstadoAgenteId" />
+          <ScalarProperty Name="FechaDesde" ColumnName="FechaDesde" />
+          <ScalarProperty Name="FechaHasta" ColumnName="FechaHasta" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="FechaHoraSolicitud" ColumnName="FechaHoraSolicitud" />
+          <ScalarProperty Name="TipoEnfermedad" ColumnName="TipoEnfermedad" />
+          <ScalarProperty Name="Lugar" ColumnName="Lugar" />
+          <ScalarProperty Name="Fam_NomyAp" ColumnName="Fam_NomyAp" />
+          <ScalarProperty Name="Fam_Parentesco" ColumnName="Fam_Parentesco" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HAAnteriorEliminadasSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.HAAnteriorEliminadas)">
+        <MappingFragment StoreEntitySet="HAAnteriorEliminadasSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="Anio" ColumnName="Anio" />
+          <ScalarProperty Name="Horas" ColumnName="Horas" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Archivos">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Archivo)">
+        <MappingFragment StoreEntitySet="Archivos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Path" ColumnName="Path" />
+          <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="DirectorioId" ColumnName="DirectorioId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Directorios">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Directorio)">
+        <MappingFragment StoreEntitySet="Directorios">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Padre" ColumnName="Padre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ImpresionReportes">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.ImpresionReporte)">
+        <MappingFragment StoreEntitySet="ImpresionReportes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="IP" ColumnName="IP" />
+          <ScalarProperty Name="TipoReporte" ColumnName="TipoReporte" />
+          <ScalarProperty Name="FechaHora" ColumnName="FechaHora" />
+          <ScalarProperty Name="NombreMaquina" ColumnName="NombreMaquina" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HorasMesHorarioFlexibles">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.HorasMesHorarioFlexible)">
+        <MappingFragment StoreEntitySet="HorasMesHorarioFlexibles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="Mes" ColumnName="Mes" />
+          <ScalarProperty Name="Anio" ColumnName="Anio" />
+          <ScalarProperty Name="HorasAcumuladas" ColumnName="HorasAcumuladas" />
+          <ScalarProperty Name="AcumuladoEnTotalAnual" ColumnName="AcumuladoEnTotalAnual" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MovimientosSobreAgente">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.MovimientoSobreAgente)">
+        <MappingFragment StoreEntitySet="MovimientosSobreAgente">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="TipoMovimiento" ColumnName="TipoMovimiento" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="IP" ColumnName="IP" />
+          <ScalarProperty Name="NombreMaquina" ColumnName="NombreMaquina" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="AgenteId1" ColumnName="AgenteId1" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TiposDeLicencia">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.TipoLicencia)">
+        <MappingFragment StoreEntitySet="TiposDeLicencia">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LicenciasAgentes">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.LicenciaAgente)">
+        <MappingFragment StoreEntitySet="LicenciasAgentes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="TipoLicenciaId" ColumnName="TipoLicenciaId" />
+          <ScalarProperty Name="Anio" ColumnName="Anio" />
+          <ScalarProperty Name="DiasOtorgados" ColumnName="DiasOtorgados" />
+          <ScalarProperty Name="DiasUsufructuadosIniciales" ColumnName="DiasUsufructuadosIniciales" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DiasUsufructuados">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.DiaUsufructado)">
+        <MappingFragment StoreEntitySet="DiasUsufructuados">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Dia" ColumnName="Dia" />
+          <ScalarProperty Name="Anio" ColumnName="Anio" />
+          <ScalarProperty Name="TipoLicenciaId" ColumnName="TipoLicenciaId" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="AgentePersonalId" ColumnName="AgentePersonalId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sesiones">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Sesion)">
+        <MappingFragment StoreEntitySet="Sesiones">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FechaHoraInicio" ColumnName="FechaHoraInicio" />
+          <ScalarProperty Name="Maquina" ColumnName="Maquina" />
+          <ScalarProperty Name="Ip" ColumnName="Ip" />
+          <ScalarProperty Name="FechaHoraFin" ColumnName="FechaHoraFin" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Mensajes">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Mensaje)">
+        <MappingFragment StoreEntitySet="Mensajes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="FechaEnvio" ColumnName="FechaEnvio" />
+          <ScalarProperty Name="Asunto" ColumnName="Asunto" />
+          <ScalarProperty Name="Cuerpo" ColumnName="Cuerpo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Destinatarios">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Destinatario)">
+        <MappingFragment StoreEntitySet="Destinatarios">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="MensajeId" ColumnName="MensajeId" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="FechaLeido" ColumnName="FechaLeido" />
+          <ScalarProperty Name="MarcoImportante" ColumnName="MarcoImportante" />
+          <ScalarProperty Name="Elimino" ColumnName="Elimino" />
+          <ScalarProperty Name="ConfirmoEliminacion" ColumnName="ConfirmoEliminacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Notificaciones">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Notificacion)">
+        <MappingFragment StoreEntitySet="Notificaciones">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="TipoNotificacionId" ColumnName="TipoNotificacionId" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="Vencimiento" ColumnName="Vencimiento" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="ObservacionPendienteRecibir" ColumnName="ObservacionPendienteRecibir" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Notificacion_Tipos">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Notificacion_Tipo)">
+        <MappingFragment StoreEntitySet="Notificacion_Tipos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Notificacion_Historiales">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Notificacion_Historial)">
+        <MappingFragment StoreEntitySet="Notificacion_Historiales">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="NotificacionId" ColumnName="NotificacionId" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="Notificacion_EstadoId" ColumnName="Notificacion_EstadoId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Notificacion_Estados">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Notificacion_Estado)">
+        <MappingFragment StoreEntitySet="Notificacion_Estados">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CorteLicencia">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.CorteLicenciaAnual)">
+        <MappingFragment StoreEntitySet="CorteLicencia">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="Anio" ColumnName="Anio" />
+          <ScalarProperty Name="Desde" ColumnName="Desde" />
+          <ScalarProperty Name="NumInstrumento" ColumnName="NumInstrumento" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="AgenteId1" ColumnName="AgenteId1" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AbrioDias">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.AbrioDia)">
+        <MappingFragment StoreEntitySet="AbrioDias">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ResumenDiarioId" ColumnName="ResumenDiarioId" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AsuetosParciales">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.AsuetoParcial)">
+        <MappingFragment StoreEntitySet="AsuetosParciales">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+          <ScalarProperty Name="Dia" ColumnName="Dia" />
+          <ScalarProperty Name="HorarioQueModifica" ColumnName="HorarioQueModifica" />
+          <ScalarProperty Name="Hora" ColumnName="Hora" />
+          <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Formularios1214">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Formulario1214)">
+        <MappingFragment StoreEntitySet="Formularios1214">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Desde" ColumnName="Desde" />
+          <ScalarProperty Name="Hasta" ColumnName="Hasta" />
+          <ScalarProperty Name="Destino" ColumnName="Destino" />
+          <ScalarProperty Name="TareasACumplir" ColumnName="TareasACumplir" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="Movilidad" ColumnName="Movilidad" />
+          <ScalarProperty Name="Anticipo" ColumnName="Anticipo" />
+          <ScalarProperty Name="MontoAnticipo" ColumnName="MontoAnticipo" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="Fuera_provincia" ColumnName="Fuera_provincia" />
+          <ScalarProperty Name="Usa_chofer" ColumnName="Usa_chofer" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Agentes1214">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Agente1214)">
+        <MappingFragment StoreEntitySet="Agentes1214">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Id_Agente" ColumnName="Id_Agente" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="Formulario1214Id" ColumnName="Formulario1214Id" />
+          <ScalarProperty Name="Id_Jefe" ColumnName="Id_Jefe" />
+          <ScalarProperty Name="FechaAprobacion" ColumnName="FechaAprobacion" />
+          <ScalarProperty Name="FechaRechazo" ColumnName="FechaRechazo" />
+          <ScalarProperty Name="JefeComicion" ColumnName="JefeComicion" />
+          <ScalarProperty Name="Aprobado_por_agente_id" ColumnName="Aprobado_por_agente_id" />
+          <ScalarProperty Name="Rechazado_por_agente_id" ColumnName="Rechazado_por_agente_id" />
+          <ScalarProperty Name="Chofer" ColumnName="Chofer" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Legajos_datos_laborales">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Legajo_datos_laborales)">
+        <MappingFragment StoreEntitySet="Legajos_datos_laborales">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FechaIngresoAminPub" ColumnName="FechaIngresoAminPub" />
+          <ScalarProperty Name="FechaIngresoATP" ColumnName="FechaIngresoATP" />
+          <ScalarProperty Name="AniosAntiguedadReconicidosOtrasPartes" ColumnName="AniosAntiguedadReconicidosOtrasPartes" />
+          <ScalarProperty Name="MesesAntiguedadReconocidosOtrasPartes" ColumnName="MesesAntiguedadReconocidosOtrasPartes" />
+          <ScalarProperty Name="FichaMedica" ColumnName="FichaMedica" />
+          <ScalarProperty Name="CUIT" ColumnName="CUIT" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Grupo" ColumnName="Grupo" />
+          <ScalarProperty Name="Apartado" ColumnName="Apartado" />
+          <ScalarProperty Name="Cargo" ColumnName="Cargo" />
+          <ScalarProperty Name="Situacion_de_revista" ColumnName="Situacion_de_revista" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Legajos_datos_personales">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Legajo_datos_personales)">
+        <MappingFragment StoreEntitySet="Legajos_datos_personales">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DNI" ColumnName="DNI" />
+          <ScalarProperty Name="Sexo" ColumnName="Sexo" />
+          <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+          <ScalarProperty Name="Domicilio" ColumnName="Domicilio" />
+          <ScalarProperty Name="DomicilioObservaciones" ColumnName="DomicilioObservaciones" />
+          <ScalarProperty Name="EstadoCivil" ColumnName="EstadoCivil" />
+          <ScalarProperty Name="Domicilio_localidad" ColumnName="Domicilio_localidad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Legajo_historial_domicilios">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Legajo_historial_domicilio)">
+        <MappingFragment StoreEntitySet="Legajo_historial_domicilios">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Legajo_datos_personalesId" ColumnName="Legajo_datos_personalesId" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="Domicilio" ColumnName="Domicilio" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Legajos_conyuge">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Legajo_conyuge)">
+        <MappingFragment StoreEntitySet="Legajos_conyuge">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Apellido_y_nombre" ColumnName="Apellido_y_nombre" />
+          <ScalarProperty Name="DNI" ColumnName="DNI" />
+          <ScalarProperty Name="Fecha_de_nacimiento" ColumnName="Fecha_de_nacimiento" />
+          <ScalarProperty Name="Trabaja" ColumnName="Trabaja" />
+          <ScalarProperty Name="Lugar_de_trabajo" ColumnName="Lugar_de_trabajo" />
+          <ScalarProperty Name="Dependencia" ColumnName="Dependencia" />
+          <ScalarProperty Name="Asignacion_familiar" ColumnName="Asignacion_familiar" />
+          <ScalarProperty Name="Profesion" ColumnName="Profesion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Legajo_hijos">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Legajo_hijo)">
+        <MappingFragment StoreEntitySet="Legajo_hijos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Apellido_y_nombre" ColumnName="Apellido_y_nombre" />
+          <ScalarProperty Name="DNI" ColumnName="DNI" />
+          <ScalarProperty Name="Fecha_de_nacimiento" ColumnName="Fecha_de_nacimiento" />
+          <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+          <ScalarProperty Name="Legajo_datos_personalesId" ColumnName="Legajo_datos_personalesId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Legajo_fojas_de_servicio">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Legajo_foja_de_servicio)">
+        <MappingFragment StoreEntitySet="Legajo_fojas_de_servicio">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Legajo_titulos_certificados">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Legajo_titulo_certificado)">
+        <MappingFragment StoreEntitySet="Legajo_titulos_certificados">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Legajo_datos_personalesId" ColumnName="Legajo_datos_personalesId" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Lugar_insticucion" ColumnName="Lugar_insticucion" />
+          <ScalarProperty Name="Duracion" ColumnName="Duracion" />
+          <ScalarProperty Name="Fecha_emision" ColumnName="Fecha_emision" />
+          <ScalarProperty Name="Tipo_certificado" ColumnName="Tipo_certificado" />
+          <ScalarProperty Name="Path_archivo" ColumnName="Path_archivo" />
+          <ScalarProperty Name="Nivel" ColumnName="Nivel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Legajo_pagos_subrrogancia_bonificacion_antiguedad">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Legajo_pago_subrrogancia_bonificacion_antiguedad)">
+        <MappingFragment StoreEntitySet="Legajo_pagos_subrrogancia_bonificacion_antiguedad">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Instrumento_nro" ColumnName="Instrumento_nro" />
+          <ScalarProperty Name="Instrumento_tipo" ColumnName="Instrumento_tipo" />
+          <ScalarProperty Name="Instrumento_fecha" ColumnName="Instrumento_fecha" />
+          <ScalarProperty Name="Instrumento_vigencia" ColumnName="Instrumento_vigencia" />
+          <ScalarProperty Name="Path_archivo" ColumnName="Path_archivo" />
+          <ScalarProperty Name="Legajo_fojas_de_servicioId" ColumnName="Legajo_fojas_de_servicioId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Legajo_otros_eventos">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Legajo_otro_evento)">
+        <MappingFragment StoreEntitySet="Legajo_otros_eventos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Lugar" ColumnName="Lugar" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="Legajo_fojas_de_servicioId" ColumnName="Legajo_fojas_de_servicioId" />
+          <ScalarProperty Name="Path_archivo" ColumnName="Path_archivo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Legajos_afectaciones_designaciones">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Legajo_afectacion_designacion)">
+        <MappingFragment StoreEntitySet="Legajos_afectaciones_designaciones">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Instrumento_tipo" ColumnName="Instrumento_tipo" />
+          <ScalarProperty Name="Instrumento_numero" ColumnName="Instrumento_numero" />
+          <ScalarProperty Name="Instrumento_fecha" ColumnName="Instrumento_fecha" />
+          <ScalarProperty Name="Legajo_foja_de_servicioId" ColumnName="Legajo_foja_de_servicioId" />
+          <ScalarProperty Name="Path_archivo" ColumnName="Path_archivo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Modificaciones_cierres_meses">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Modificacion_cierre_mes)">
+        <MappingFragment StoreEntitySet="Modificaciones_cierres_meses">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="AgenteId_modificacion" ColumnName="AgenteId_modificacion" />
+          <ScalarProperty Name="CierreMensualId" ColumnName="CierreMensualId" />
+          <ScalarProperty Name="HoraAnioAnterior" ColumnName="HoraAnioAnterior" />
+          <ScalarProperty Name="HoraAnioActual" ColumnName="HoraAnioActual" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Legajos_carreras_administrativas">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Legajo_carrera_administrativa)">
+        <MappingFragment StoreEntitySet="Legajos_carreras_administrativas">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Tipo_novedad" ColumnName="Tipo_novedad" />
+          <ScalarProperty Name="Nro_instrumento" ColumnName="Nro_instrumento" />
+          <ScalarProperty Name="Tipo_instrumento" ColumnName="Tipo_instrumento" />
+          <ScalarProperty Name="Fecha_instrumento" ColumnName="Fecha_instrumento" />
+          <ScalarProperty Name="Path_archivo" ColumnName="Path_archivo" />
+          <ScalarProperty Name="Legajo_foja_de_servicioId" ColumnName="Legajo_foja_de_servicioId" />
+          <ScalarProperty Name="Cargo" ColumnName="Cargo" />
+          <ScalarProperty Name="Grupo" ColumnName="Grupo" />
+          <ScalarProperty Name="Apartado" ColumnName="Apartado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Validaciones_email">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Validacion_email)">
+        <MappingFragment StoreEntitySet="Validaciones_email">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="Clave" ColumnName="Clave" />
+          <ScalarProperty Name="Mail" ColumnName="Mail" />
+          <ScalarProperty Name="Fecha_envio" ColumnName="Fecha_envio" />
+          <ScalarProperty Name="Fecha_validado" ColumnName="Fecha_validado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CambiosDeClave">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.CambioClave)">
+        <MappingFragment StoreEntitySet="CambiosDeClave">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="FechaSolicitud" ColumnName="FechaSolicitud" />
+          <ScalarProperty Name="FechaAceptacion" ColumnName="FechaAceptacion" />
+          <ScalarProperty Name="Guid" ColumnName="Guid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Memo_17_DDJJs">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Memo_17_DDJJ)">
+        <MappingFragment StoreEntitySet="Memo_17_DDJJs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="fecha_modificacion" ColumnName="fecha_modificacion" />
+          <ScalarProperty Name="dp_apellido_y_nombre" ColumnName="dp_apellido_y_nombre" />
+          <ScalarProperty Name="dp_nacionalidad" ColumnName="dp_nacionalidad" />
+          <ScalarProperty Name="dp_nativo_naturalizado" ColumnName="dp_nativo_naturalizado" />
+          <ScalarProperty Name="dp_nacimiento_lugar" ColumnName="dp_nacimiento_lugar" />
+          <ScalarProperty Name="dp_nacimiento_fecha" ColumnName="dp_nacimiento_fecha" />
+          <ScalarProperty Name="dp_clase" ColumnName="dp_clase" />
+          <ScalarProperty Name="dp_dni" ColumnName="dp_dni" />
+          <ScalarProperty Name="dp_estado_civil" ColumnName="dp_estado_civil" />
+          <ScalarProperty Name="dp_domicilio_direccion" ColumnName="dp_domicilio_direccion" />
+          <ScalarProperty Name="dp_domicilio_barrio" ColumnName="dp_domicilio_barrio" />
+          <ScalarProperty Name="dp_domicilio_localidad" ColumnName="dp_domicilio_localidad" />
+          <ScalarProperty Name="dp_domicilio_provincia" ColumnName="dp_domicilio_provincia" />
+          <ScalarProperty Name="dp_domicilio_codpost" ColumnName="dp_domicilio_codpost" />
+          <ScalarProperty Name="dp_profesion" ColumnName="dp_profesion" />
+          <ScalarProperty Name="dp_instruccion" ColumnName="dp_instruccion" />
+          <ScalarProperty Name="dp_conyugue_apellido_y_nombre" ColumnName="dp_conyugue_apellido_y_nombre" />
+          <ScalarProperty Name="dp_conyugue_nacionalidad" ColumnName="dp_conyugue_nacionalidad" />
+          <ScalarProperty Name="dp_padre_apellido_y_nombre" ColumnName="dp_padre_apellido_y_nombre" />
+          <ScalarProperty Name="dp_padre_nacionalidad" ColumnName="dp_padre_nacionalidad" />
+          <ScalarProperty Name="dp_padre_vive" ColumnName="dp_padre_vive" />
+          <ScalarProperty Name="dp_madre_apellido_y_nombre" ColumnName="dp_madre_apellido_y_nombre" />
+          <ScalarProperty Name="dp_madre_nacionalidad" ColumnName="dp_madre_nacionalidad" />
+          <ScalarProperty Name="dp_madre_vive" ColumnName="dp_madre_vive" />
+          <ScalarProperty Name="aa_cargo" ColumnName="aa_cargo" />
+          <ScalarProperty Name="aa_contrato_obra_ingreso" ColumnName="aa_contrato_obra_ingreso" />
+          <ScalarProperty Name="aa_contrato_obra_instrumento" ColumnName="aa_contrato_obra_instrumento" />
+          <ScalarProperty Name="aa_contrato_serv_ingreso" ColumnName="aa_contrato_serv_ingreso" />
+          <ScalarProperty Name="aa_contrato_serv_instrumento" ColumnName="aa_contrato_serv_instrumento" />
+          <ScalarProperty Name="aa_nombramiento_ingreso" ColumnName="aa_nombramiento_ingreso" />
+          <ScalarProperty Name="aa_nombramiento_instrumento" ColumnName="aa_nombramiento_instrumento" />
+          <ScalarProperty Name="ca_en_admin_nacional" ColumnName="ca_en_admin_nacional" />
+          <ScalarProperty Name="ca_en_admin_provincial" ColumnName="ca_en_admin_provincial" />
+          <ScalarProperty Name="ca_privados" ColumnName="ca_privados" />
+          <ScalarProperty Name="ca_otros_antecedentes" ColumnName="ca_otros_antecedentes" />
+          <ScalarProperty Name="aa_funcion" ColumnName="aa_funcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Memo_17_DDJJ_Hijos">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Memo_17_DDJJ_Hijo)">
+        <MappingFragment StoreEntitySet="Memo_17_DDJJ_Hijos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Memo_17_DDJJ_Id" ColumnName="Memo_17_DDJJ_Id" />
+          <ScalarProperty Name="dp_hijo_apellido_y_nombre" ColumnName="dp_hijo_apellido_y_nombre" />
+          <ScalarProperty Name="dp_hijo_fecha_nacimiento" ColumnName="dp_hijo_fecha_nacimiento" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TiposHorariosFexibles">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.TipoHorariosFexible)">
+        <MappingFragment StoreEntitySet="TiposHorariosFexibles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="Hentrada" ColumnName="Hentrada" />
+          <ScalarProperty Name="Hsalida" ColumnName="Hsalida" />
+          <ScalarProperty Name="Hjornada" ColumnName="Hjornada" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AgenteCambioPendiente" TypeName="Model1.AgenteCambioPendiente" StoreEntitySet="CambiosPendientes">
+      <EndProperty Name="Agente">
+        <ScalarProperty Name="Id" ColumnName="Agente_Id" />
+      </EndProperty>
+      <EndProperty Name="CambioPendiente">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="AgenteAgente_legajo_datos_laborales" TypeName="Model1.AgenteAgente_legajo_datos_laborales" StoreEntitySet="Legajos_datos_laborales">
+      <EndProperty Name="Agente">
+        <ScalarProperty Name="Id" ColumnName="Agente_Id" />
+      </EndProperty>
+      <EndProperty Name="Agente_legajo_datos_laborales">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="AgenteAgente_legajo_datos_personales" TypeName="Model1.AgenteAgente_legajo_datos_personales" StoreEntitySet="Legajos_datos_personales">
+      <EndProperty Name="Agente">
+        <ScalarProperty Name="Id" ColumnName="Agente_Id" />
+      </EndProperty>
+      <EndProperty Name="Agente_legajo_datos_personales">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="Legajo_datos_personalesLegajo_conyugue" TypeName="Model1.Legajo_datos_personalesLegajo_conyugue" StoreEntitySet="Legajos_conyuge">
+      <EndProperty Name="Legajo_datos_personales">
+        <ScalarProperty Name="Id" ColumnName="Legajo_datos_personales_Id" />
+      </EndProperty>
+      <EndProperty Name="Legajo_conyugue">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="AgenteLegajo_fojas_de_servicio" TypeName="Model1.AgenteLegajo_fojas_de_servicio" StoreEntitySet="Legajo_fojas_de_servicio">
+      <EndProperty Name="Agente">
+        <ScalarProperty Name="Id" ColumnName="Agente_Id" />
+      </EndProperty>
+      <EndProperty Name="Legajo_fojas_de_servicio">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="Estado_agente" FunctionName="Model1.Store.Estado_agente" />
           <FunctionImportMapping FunctionImportName="sp_obtener_agentes_cascada" FunctionName="Model1.Store.sp_obtener_agentes_cascada">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Model1.sp_obtener_agentes_cascada_Result">
@@ -5338,123 +5413,26 @@
           <FunctionImportMapping FunctionImportName="sp_obtener_datos_agente" FunctionName="Model1.Store.sp_obtener_datos_agente">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Model1.sp_obtener_datos_agente_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ApellidoYNombre" ColumnName="ApellidoYNombre" />
+                <ScalarProperty Name="HorarioFlexible" ColumnName="HorarioFlexible" />
+                <ScalarProperty Name="PoseeBonificacion" ColumnName="PoseeBonificacion" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="Legajo" ColumnName="Legajo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="horas_hf_acumuladas" ColumnName="horas_hf_acumuladas" />
+                <ScalarProperty Name="Horas_bonificacion_resta_cumplir" ColumnName="Horas_bonificacion_resta_cumplir" />
+                <ScalarProperty Name="HorasAcumuladasAnioAnterior" ColumnName="HorasAcumuladasAnioAnterior" />
+                <ScalarProperty Name="HorasAcumuladasAnioActual" ColumnName="HorasAcumuladasAnioActual" />
+                <ScalarProperty Name="Total_horas_disponible" ColumnName="Total_horas_disponible" />
+                <ScalarProperty Name="Horas_tardanzas" ColumnName="Horas_tardanzas" />
+                <ScalarProperty Name="Horas_HF_por_cumplir" ColumnName="Horas_HF_por_cumplir" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_obtener_estado_agente_dia" FunctionName="Model1.Store.sp_obtener_estado_agente_dia">
-            <ResultMapping>
-              <EntityTypeMapping TypeName ="Model1.EstadoAgente">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="TipoEstadoAgenteId" ColumnName="TipoEstadoAgenteId" />
-                <ScalarProperty Name="Dia" ColumnName="Dia" />
-                <ScalarProperty Name="AgenteId1" ColumnName="AgenteId1" />
-              </EntityTypeMapping>
-            </ResultMapping>
-            <ResultMapping>
-              <EntityTypeMapping TypeName="Model1.TipoEstadoAgente">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Abreviatura" ColumnName="Abreviatura" />
-                <ScalarProperty Name="MarcaJefe" ColumnName="MarcaJefe" />
-                <ScalarProperty Name="MarcaPersonal" ColumnName="MarcaPersonal" />
-                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-                <ScalarProperty Name="OrdenPrioridad" ColumnName="OrdenPrioridad" />
-              </EntityTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_obtener_resumen_diario_agente_fecha" FunctionName="Model1.Store.sp_obtener_resumen_diario_agente_fecha">
-            <ResultMapping>
-              <EntityTypeMapping TypeName ="Model1.ResumenDiario">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Dia" ColumnName="Dia" />
-                <ScalarProperty Name="Horas" ColumnName="Horas" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="HEntrada" ColumnName="HEntrada" />
-                <ScalarProperty Name="HSalida" ColumnName="HSalida" />
-                <ScalarProperty Name="HVEnt" ColumnName="HVEnt" />
-                <ScalarProperty Name="HVSal" ColumnName="HVSal" />
-                <ScalarProperty Name="MarcoTardanza" ColumnName="MarcoTardanza" />
-                <ScalarProperty Name="MarcoProlongJornada" ColumnName="MarcoProlongJornada" />
-                <ScalarProperty Name="Inconsistente" ColumnName="Inconsistente" />
-                <ScalarProperty Name="ObservacionInconsistente" ColumnName="ObservacionInconsistente" />
-                <ScalarProperty Name="Cerrado" ColumnName="Cerrado" />
-                <ScalarProperty Name="AcumuloHorasBonificacion" ColumnName="AcumuloHorasBonificacion" />
-                <ScalarProperty Name="AcumuloHorasAnioActual" ColumnName="AcumuloHorasAnioActual" />
-                <ScalarProperty Name="AcumuloHorasAnioAnterior" ColumnName="AcumuloHorasAnioAnterior" />
-                <ScalarProperty Name="AcumuloHorasMes" ColumnName="AcumuloHorasMes" />
-                <ScalarProperty Name="AgenteId1" ColumnName="AgenteId1" />
-              </EntityTypeMapping>
-            </ResultMapping>
-            <ResultMapping>
-              <EntityTypeMapping TypeName ="Model1.MovimientoHora">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ResumenDiarioId" ColumnName="ResumenDiarioId" />
-                <ScalarProperty Name="Horas" ColumnName="Horas" />
-                <ScalarProperty Name="TipoMovimientoHoraId" ColumnName="TipoMovimientoHoraId" />
-                <ScalarProperty Name="DescontoDeAcumuladoAnioAnterior" ColumnName="DescontoDeAcumuladoAnioAnterior" />
-                <ScalarProperty Name="DescontoDeHorasBonificables" ColumnName="DescontoDeHorasBonificables" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-              </EntityTypeMapping>
-            </ResultMapping>
-            <ResultMapping>
-              <EntityTypeMapping TypeName="Model1.Marcacion">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Hora" ColumnName="Hora" />
-                <ScalarProperty Name="Manual" ColumnName="Manual" />
-                <ScalarProperty Name="ResumenDiarioId" ColumnName="ResumenDiarioId" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="Anulada" ColumnName="Anulada" />
-              </EntityTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_obtener_resumenes_diarios_agente_mes" FunctionName="Model1.Store.sp_obtener_resumenes_diarios_agente_mes">
-            <ResultMapping>
-              <EntityTypeMapping TypeName ="Model1.ResumenDiario">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Dia" ColumnName="Dia" />
-                <ScalarProperty Name="Horas" ColumnName="Horas" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="HEntrada" ColumnName="HEntrada" />
-                <ScalarProperty Name="HSalida" ColumnName="HSalida" />
-                <ScalarProperty Name="HVEnt" ColumnName="HVEnt" />
-                <ScalarProperty Name="HVSal" ColumnName="HVSal" />
-                <ScalarProperty Name="MarcoTardanza" ColumnName="MarcoTardanza" />
-                <ScalarProperty Name="MarcoProlongJornada" ColumnName="MarcoProlongJornada" />
-                <ScalarProperty Name="Inconsistente" ColumnName="Inconsistente" />
-                <ScalarProperty Name="ObservacionInconsistente" ColumnName="ObservacionInconsistente" />
-                <ScalarProperty Name="Cerrado" ColumnName="Cerrado" />
-                <ScalarProperty Name="AcumuloHorasBonificacion" ColumnName="AcumuloHorasBonificacion" />
-                <ScalarProperty Name="AcumuloHorasAnioActual" ColumnName="AcumuloHorasAnioActual" />
-                <ScalarProperty Name="AcumuloHorasAnioAnterior" ColumnName="AcumuloHorasAnioAnterior" />
-                <ScalarProperty Name="AcumuloHorasMes" ColumnName="AcumuloHorasMes" />
-                <ScalarProperty Name="AgenteId1" ColumnName="AgenteId1" />
-              </EntityTypeMapping>
-            </ResultMapping>
-            <ResultMapping>
-              <EntityTypeMapping TypeName ="Model1.MovimientoHora">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ResumenDiarioId" ColumnName="ResumenDiarioId" />
-                <ScalarProperty Name="Horas" ColumnName="Horas" />
-                <ScalarProperty Name="TipoMovimientoHoraId" ColumnName="TipoMovimientoHoraId" />
-                <ScalarProperty Name="DescontoDeAcumuladoAnioAnterior" ColumnName="DescontoDeAcumuladoAnioAnterior" />
-                <ScalarProperty Name="DescontoDeHorasBonificables" ColumnName="DescontoDeHorasBonificables" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-              </EntityTypeMapping>
-            </ResultMapping>
-            <ResultMapping>
-              <EntityTypeMapping TypeName="Model1.Marcacion">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Hora" ColumnName="Hora" />
-                <ScalarProperty Name="Manual" ColumnName="Manual" />
-                <ScalarProperty Name="ResumenDiarioId" ColumnName="ResumenDiarioId" />
-                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-                <ScalarProperty Name="Anulada" ColumnName="Anulada" />
-              </EntityTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_obtener_estado_agente_dia" FunctionName="Model1.Store.sp_obtener_estado_agente_dia" />
+          <FunctionImportMapping FunctionImportName="sp_obtener_resumen_diario_agente_fecha" FunctionName="Model1.Store.sp_obtener_resumen_diario_agente_fecha" />
+          <FunctionImportMapping FunctionImportName="sp_obtener_resumenes_diarios_agente_mes" FunctionName="Model1.Store.sp_obtener_resumenes_diarios_agente_mes" />
           <FunctionImportMapping FunctionImportName="sp_obtener_suborinados_directos" FunctionName="Model1.Store.sp_obtener_suborinados_directos">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Model1.sp_obtener_suborinados_directos_Result">
@@ -5469,10 +5447,8 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Estado_agente" FunctionName="Model1.Store.Estado_agente" />
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <edmx:Designer>
@@ -5649,7 +5625,7 @@
         <AssociationConnector Association="Model1.AreaAsuetoParcial" />
         <EntityTypeShape EntityType="Model1.Formulario1214" Width="1.5" PointX="4" PointY="6.375" />
         <AssociationConnector Association="Model1.AgenteFormulario1214" />
-        <EntityTypeShape EntityType="Model1.Agente1214" Width="2" PointX="0.5" PointY="6.375" />
+        <EntityTypeShape EntityType="Model1.Agente1214" Width="2.375" PointX="0.5" PointY="6.375" />
         <AssociationConnector Association="Model1.AgenteAgente1214" />
         <AssociationConnector Association="Model1.Formulario1214Agente1214" />
         <AssociationConnector Association="Model1.AgenteAgente12141" />
