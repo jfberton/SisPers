@@ -231,15 +231,6 @@ namespace SisPer.Aplicativo
         protected global::System.Web.UI.WebControls.HiddenField dentro_fuera;
 
         /// <summary>
-        /// Control input_group_destino.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl input_group_destino;
-
-        /// <summary>
         /// Control tb_destino.
         /// </summary>
         /// <remarks>
@@ -247,6 +238,15 @@ namespace SisPer.Aplicativo
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tb_destino;
+
+        /// <summary>
+        /// Control btn_action.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btn_action;
 
         /// <summary>
         /// Control rv_destino.
@@ -283,6 +283,15 @@ namespace SisPer.Aplicativo
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rv_tareas;
+
+        /// <summary>
+        /// Control panel_nomina.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl panel_nomina;
 
         /// <summary>
         /// Control cv_agentes_rechazados.
@@ -483,6 +492,24 @@ namespace SisPer.Aplicativo
         protected global::System.Web.UI.WebControls.Button btn_del_agente_5;
 
         /// <summary>
+        /// Control ddl_estrato.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_estrato;
+
+        /// <summary>
+        /// Control cv_estrato.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cv_estrato;
+
+        /// <summary>
         /// Control btn_agente_6.
         /// </summary>
         /// <remarks>
@@ -627,40 +654,13 @@ namespace SisPer.Aplicativo
         protected global::System.Web.UI.WebControls.Button btn_del_agente_9;
 
         /// <summary>
-        /// Control btn_agente_10.
+        /// Control panel_movilidad.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btn_agente_10;
-
-        /// <summary>
-        /// Control group_agente_10.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl group_agente_10;
-
-        /// <summary>
-        /// Control txt_agente_10.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_agente_10;
-
-        /// <summary>
-        /// Control btn_del_agente_10.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_del_agente_10;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl panel_movilidad;
 
         /// <summary>
         /// Control ddl_movilidad.
@@ -895,15 +895,6 @@ namespace SisPer.Aplicativo
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gv_agentes_para_9;
-
-        /// <summary>
-        /// Control gv_agentes_para_10.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gv_agentes_para_10;
 
         /// <summary>
         /// Control gv_agentes_para_chofer.

@@ -107,10 +107,10 @@
                         <div class="col-md-10">
                             <asp:HiddenField ID="dentro_fuera" runat="server" />
 
-                            <div class="input-group" runat="server" id="input_group_destino">
+                            <div class="input-group">
                                 <asp:TextBox runat="server" ID="tb_destino" CssClass="form-control" />
                                 <div class="input-group-btn">
-                                    <button type="button" class="btn btn-default dropdown-toggle" id="btn_action" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Seleccionar <span class="caret"></span></button>
+                                    <button type="button" class="btn btn-default dropdown-toggle" runat="server" id="btn_action" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Seleccionar <span class="caret"></span></button>
                                     <ul class="dropdown-menu dropdown-menu-right">
                                         <li><a href="#" onclick="SeleccionDentroFuera(0);return false;">Seleccionar</a></li>
                                         <li><a href="#" onclick="SeleccionDentroFuera(1);return false;">Dentro de la provincia</a></li>
@@ -148,7 +148,7 @@
 
 
             <%--Nómina de agentes--%>
-            <div class="panel panel-default">
+            <div class="panel panel-default" id="panel_nomina" runat="server">
                 <div class="panel-heading">
                     <h4 class="panel-title">Nómina de agentes</h4>
                     <asp:CustomValidator ID="cv_agentes_rechazados" runat="server" Style="margin-left: 5px; position: absolute;" Text="<img src='../Imagenes/exclamation.gif' title='Debe eliminar los agentes rechazados de la nómina.' />"
@@ -181,6 +181,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <p />
                             <div class="row">
                                 <div class="col-md-1">2)</div>
                                 <div class="col-md-11">
@@ -265,6 +266,21 @@
                         </div>
                         <div class="col-md-6">
                             <div class="row">
+                                <div class="col-md-11">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Estrato del jefe de comisión:</span>
+                                        <asp:DropDownList runat="server" ID="ddl_estrato" CssClass="form-control">
+                                        </asp:DropDownList>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <asp:CustomValidator ID="cv_estrato" runat="server" Style="margin-left: 5px; position: absolute;" Text="<img src='../Imagenes/exclamation.gif' title='Debe seleccionar el estrato del jefe de comisión.' />"
+                                        ErrorMessage="Debe seleccionar el estrato del jefe de comisión." ForeColor="Red" ValidationGroup="general_214" OnServerValidate="cv_estrato_ServerValidate" />
+                                </div>
+                            </div>
+
+                            <p />
+                            <div class="row">
                                 <div class="col-md-1">6)</div>
                                 <div class="col-md-11">
                                     <div class="row">
@@ -344,26 +360,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-1">10)</div>
-                                <div class="col-md-11">
-                                    <div class="row">
-                                        <div class="col-md-4"></div>
-                                        <div class="col-md-8">
-                                            <button type="button" class="btn btn-default" id="btn_agente_10" runat="server" data-toggle="modal" data-target="#modal10">
-                                                <asp:Image ImageUrl="~/Imagenes/user_add.png" runat="server" />
-                                                Agregar agente
-                                            </button>
-                                            <div class="input-group" runat="server" visible="false" id="group_agente_10">
-                                                <asp:TextBox runat="server" ReadOnly="true" ID="txt_agente_10" />
-                                                <span class="input-group-btn">
-                                                    <asp:Button Text="X" ID="btn_del_agente_10" OnClientClick="ConfirmarEliminacion()" CssClass="btn btn-danger" OnClick="btn_del_agente_x_ServerClick" runat="server" />
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -371,7 +367,7 @@
 
 
             <%--Movilidad y anticipos--%>
-            <div class="panel panel-default">
+            <div class="panel panel-default" id="panel_movilidad" runat="server">
                 <div class="panel-heading">
                     <h4 class="panel-title">Movilidad y anticipos</h4>
                 </div>
@@ -453,8 +449,8 @@
                 </div>
             </div>
 
-            
-            
+
+
             <div class="row text-right">
                 <div class="col-md-12">
                     <asp:Button Text="Confeccionar" CssClass="btn btn-lg btn-primary" OnClick="btn_Confeccionar_Click" runat="server" ID="btn_Confeccionar" />
@@ -793,7 +789,7 @@
     </div>
 
     <%--Seleccione agente puesto 10--%>
-    <div class="modal fade" id="modal10" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <%--<div class="modal fade" id="modal10" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -826,7 +822,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--%>
 
     <%--Seleccione agente chofer--%>
     <div class="modal fade" id="modal11" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -938,7 +934,7 @@
 
         function SeleccionDentroFuera(seleccion) {
             let valorSeleccionado = document.getElementById('<%=dentro_fuera.ClientID %>');
-            let btn = document.getElementById('btn_action');
+            let btn = document.getElementById('<%=btn_action.ClientID %>');
 
             if (seleccion == "0") {
                 btn.innerText = 'Seleccionar '

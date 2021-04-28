@@ -68,6 +68,8 @@ namespace SisPer.Aplicativo
 
                 }
 
+                CargarEstratos();
+
                 #endregion
 
                 if (Session["Form214"] != null)
@@ -76,6 +78,23 @@ namespace SisPer.Aplicativo
                 }
 
                 CargarAgentesDisponibles();
+            }
+        }
+
+        private void CargarEstratos()
+        {
+            using (var cxt = new Model1Container())
+            {
+                var estratos = cxt.Estratos1214.ToList();
+
+                ddl_estrato.Items.Clear();
+
+                ddl_estrato.Items.Add(new ListItem() { Text = "Seleccionar estrato", Value = "0" });
+
+                foreach (Estrato1214 estrato in estratos)
+                {
+                    ddl_estrato.Items.Add(new ListItem() { Text = estrato.Estrato, Value = estrato.Id.ToString() });
+                }
             }
         }
 
@@ -171,12 +190,23 @@ namespace SisPer.Aplicativo
             tb_destino.Text = f1214.Destino;
             dentro_fuera.Value = f1214.Fuera_provincia ? "2" : "1";
             tb_tareas.Text = f1214.TareasACumplir;
-            tb_destino.Enabled = tb_tareas.Enabled = ddl_con_chofer.Enabled = ddl_movilidad.Enabled = txt_dominio_vehiculo_oficial.Enabled = f1214.Id == 0;
-            input_group_destino.Disabled = f1214.Id != 0;
-
+            tb_destino.Enabled = tb_tareas.Enabled = ddl_con_chofer.Enabled = ddl_movilidad.Enabled = txt_dominio_vehiculo_oficial.Enabled = ddl_estrato.Enabled = f1214.Id == 0;
+            if (f1214.Id != 0)
+            {
+                btn_action.Attributes["disabled"] = "disabled";
+            }
             #endregion
 
             #region Nomina
+
+            if (f1214.Desde == DateTime.MinValue)
+            {
+                panel_nomina.Attributes["Style"] = "display:none";
+            }
+            else
+            {
+                panel_nomina.Attributes["Style"] = "display:normal";
+            }
 
             int lugar = 2;
 
@@ -210,6 +240,8 @@ namespace SisPer.Aplicativo
                 }
             }
 
+            ddl_estrato.Items.FindByValue(f1214.Estrato1214Id.ToString()).Selected = true;
+
             MostrarNomina(nomina);
 
             Agente1214 chofer = f1214.Nomina.FirstOrDefault(aa => aa.Chofer && aa.Estado != EstadoAgente1214.Cancelado);
@@ -219,6 +251,16 @@ namespace SisPer.Aplicativo
             #endregion
 
             #region gastos
+
+            if (f1214.Desde == DateTime.MinValue)
+            {
+                panel_movilidad.Attributes["Style"] = "display:none";
+            }
+            else
+            {
+                panel_movilidad.Attributes["Style"] = "display:normal";
+            }
+
             if (f1214.Id > 0)
             {
                 ddl_movilidad.SelectedIndex = Convert.ToInt32(f1214.Movilidad);
@@ -299,7 +341,7 @@ namespace SisPer.Aplicativo
         {
             Formulario1214 f1214 = Session["Form214"] as Formulario1214;
 
-            for (int i = 1; i <= 10; i++)
+            for (int i = 1; i <= 9; i++)
             {
                 TextBox txt_agente = (TextBox)ControlExtensions.FindControlRecursive(this, "txt_agente_" + i.ToString());
                 HtmlButton btn_agente = (HtmlButton)ControlExtensions.FindControlRecursive(this, "btn_agente_" + i.ToString());
@@ -405,9 +447,9 @@ namespace SisPer.Aplicativo
                     gv_agentes_para_1.DataBind();
                 }
 
-                for (int i = 2; i <= 11; i++)
+                for (int i = 2; i <= 10; i++)
                 {
-                    if (i < 11)
+                    if (i < 10)
                     {
                         //cargar gridviews para agentes de la nomina
                         GridView gv_agentes_para = (GridView)ControlExtensions.FindControlRecursive(this, "gv_agentes_para_" + i.ToString());
@@ -866,6 +908,7 @@ namespace SisPer.Aplicativo
                 using (var cxt = new Model1Container())
                 {
                     f1214.Estado = Estado1214.Confeccionado;
+                    f1214.Estrato1214Id = Convert.ToInt32(ddl_estrato.SelectedValue);
                     f1214.Movilidad = ((Movilidad1214)(Convert.ToInt32(ddl_movilidad.SelectedValue)));
                     f1214.Anticipo = f1214.Movilidad == Movilidad1214.Transporte_publico ? Anticipo1214.Pasajes : Anticipo1214.Gastos_vehiculo;
                     f1214.MontoAnticipo = Convert.ToDecimal(tb_monto_anticipo.Value);
@@ -1188,9 +1231,15 @@ namespace SisPer.Aplicativo
             args.IsValid = ret;
         }
 
+        protected void cv_estrato_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = ddl_estrato.SelectedValue != "0";
+        }
+
+
         #endregion
 
-       
+
     }
 }
 
