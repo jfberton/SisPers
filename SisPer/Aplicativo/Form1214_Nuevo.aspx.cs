@@ -82,7 +82,7 @@ namespace SisPer.Aplicativo
         private void ActualizarF1214ConDatosDeControles(Formulario1214 f1214)
         {
             f1214.Destino = tb_destino.Text;
-            f1214.Fuera_provincia = ddl_dentro_fuera_provincia.SelectedValue == "0";
+            f1214.Fuera_provincia = dentro_fuera.Value == "2";
             f1214.Usa_chofer = ddl_con_chofer.SelectedValue == "0";
             f1214.TareasACumplir = tb_tareas.Text;
         }
@@ -169,8 +169,10 @@ namespace SisPer.Aplicativo
             tb_hasta.Value = f1214.Hasta.ToShortDateString();
 
             tb_destino.Text = f1214.Destino;
+            dentro_fuera.Value = f1214.Fuera_provincia ? "2" : "1";
             tb_tareas.Text = f1214.TareasACumplir;
-            tb_destino.Enabled = tb_tareas.Enabled = ddl_dentro_fuera_provincia.Enabled = ddl_con_chofer.Enabled = ddl_movilidad.Enabled = txt_dominio_vehiculo_oficial.Enabled = f1214.Id == 0;
+            tb_destino.Enabled = tb_tareas.Enabled = ddl_con_chofer.Enabled = ddl_movilidad.Enabled = txt_dominio_vehiculo_oficial.Enabled = f1214.Id == 0;
+            input_group_destino.Disabled = f1214.Id != 0;
 
             #endregion
 
@@ -1113,6 +1115,11 @@ namespace SisPer.Aplicativo
             args.IsValid = DateTime.TryParse(tb_desde.Value, out desde) && desde >= DateTime.Today;
         }
 
+        protected void cv_dentro_fuera_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = dentro_fuera.Value != "0";
+        }
+
         protected void cv_fechas_ServerValidate(object source, ServerValidateEventArgs args)
         {
             DateTime desde;
@@ -1183,6 +1190,7 @@ namespace SisPer.Aplicativo
 
         #endregion
 
+       
     }
 }
 

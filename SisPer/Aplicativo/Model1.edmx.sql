@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/26/2021 11:20:08
+-- Date Created: 04/28/2021 09:31:56
 -- Generated from EDMX file: d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Model1.edmx
 -- --------------------------------------------------
 
@@ -938,7 +938,10 @@ CREATE TABLE [dbo].[Formularios1214] (
     [MontoAnticipo] decimal(9,2)  NOT NULL,
     [AgenteId] int  NOT NULL,
     [Fuera_provincia] bit  NOT NULL,
-    [Usa_chofer] bit  NOT NULL
+    [Usa_chofer] bit  NOT NULL,
+    [Estrato1214Id] int  NOT NULL,
+    [AnticipoViaticos] decimal(9,2)  NOT NULL,
+    [AnticipoMovilidad] decimal(9,2)  NOT NULL
 );
 GO
 
@@ -1187,6 +1190,15 @@ CREATE TABLE [dbo].[TiposHorariosFexibles] (
     [Hentrada] nvarchar(5)  NULL,
     [Hsalida] nvarchar(5)  NULL,
     [Hjornada] nvarchar(max)  NOT NULL
+);
+GO
+
+-- Creating table 'Estratos1214'
+CREATE TABLE [dbo].[Estratos1214] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Estrato] nvarchar(max)  NOT NULL,
+    [ImpDentroProv] decimal(9,2)  NOT NULL,
+    [ImpFueraProv] decimal(9,2)  NOT NULL
 );
 GO
 
@@ -1557,6 +1569,12 @@ GO
 -- Creating primary key on [Id] in table 'TiposHorariosFexibles'
 ALTER TABLE [dbo].[TiposHorariosFexibles]
 ADD CONSTRAINT [PK_TiposHorariosFexibles]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Estratos1214'
+ALTER TABLE [dbo].[Estratos1214]
+ADD CONSTRAINT [PK_Estratos1214]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -2762,6 +2780,21 @@ GO
 CREATE INDEX [IX_FK_TipoHorariosFexibleAgente]
 ON [dbo].[Agentes]
     ([TipoHorariosFexibleId]);
+GO
+
+-- Creating foreign key on [Estrato1214Id] in table 'Formularios1214'
+ALTER TABLE [dbo].[Formularios1214]
+ADD CONSTRAINT [FK_Estrato1214Formulario1214]
+    FOREIGN KEY ([Estrato1214Id])
+    REFERENCES [dbo].[Estratos1214]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_Estrato1214Formulario1214'
+CREATE INDEX [IX_FK_Estrato1214Formulario1214]
+ON [dbo].[Formularios1214]
+    ([Estrato1214Id]);
 GO
 
 -- --------------------------------------------------

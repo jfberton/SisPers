@@ -99,6 +99,7 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("Model1", "AgenteMemo_17_DDJJ", "Agente", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SisPer.Aplicativo.Agente), "Memo_17_DDJJ", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SisPer.Aplicativo.Memo_17_DDJJ), true)]
 [assembly: EdmRelationshipAttribute("Model1", "Memo_17_DDJJMemo_17_DDJJ_Hijo", "Memo_17_DDJJ", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SisPer.Aplicativo.Memo_17_DDJJ), "Memo_17_DDJJ_Hijo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SisPer.Aplicativo.Memo_17_DDJJ_Hijo), true)]
 [assembly: EdmRelationshipAttribute("Model1", "TipoHorariosFexibleAgente", "TipoHorariosFexible", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SisPer.Aplicativo.TipoHorariosFexible), "Agente", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SisPer.Aplicativo.Agente), true)]
+[assembly: EdmRelationshipAttribute("Model1", "Estrato1214Formulario1214", "Estrato1214", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SisPer.Aplicativo.Estrato1214), "Formulario1214", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SisPer.Aplicativo.Formulario1214), true)]
 
 #endregion
 
@@ -1125,6 +1126,22 @@ namespace SisPer.Aplicativo
             }
         }
         private ObjectSet<TipoHorariosFexible> _TiposHorariosFexibles;
+    
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        public ObjectSet<Estrato1214> Estratos1214
+        {
+            get
+            {
+                if ((_Estratos1214 == null))
+                {
+                    _Estratos1214 = base.CreateObjectSet<Estrato1214>("Estratos1214");
+                }
+                return _Estratos1214;
+            }
+        }
+        private ObjectSet<Estrato1214> _Estratos1214;
 
         #endregion
 
@@ -1616,6 +1633,14 @@ namespace SisPer.Aplicativo
         public void AddToTiposHorariosFexibles(TipoHorariosFexible tipoHorariosFexible)
         {
             base.AddObject("TiposHorariosFexibles", tipoHorariosFexible);
+        }
+    
+        /// <summary>
+        /// Método desusado para agregar un nuevo objeto al EntitySet Estratos1214. Considere la posibilidad de usar el método .Add de la propiedad ObjectSet&lt;T&gt; asociada.
+        /// </summary>
+        public void AddToEstratos1214(Estrato1214 estrato1214)
+        {
+            base.AddObject("Estratos1214", estrato1214);
         }
 
         #endregion
@@ -7892,6 +7917,166 @@ namespace SisPer.Aplicativo
     /// <summary>
     /// No hay documentación de metadatos disponible.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="Model1", Name="Estrato1214")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Estrato1214 : EntityObject
+    {
+        #region Método de generador
+    
+        /// <summary>
+        /// Crear un nuevo objeto Estrato1214.
+        /// </summary>
+        /// <param name="id">Valor inicial de la propiedad Id.</param>
+        /// <param name="estrato">Valor inicial de la propiedad Estrato.</param>
+        /// <param name="impDentroProv">Valor inicial de la propiedad ImpDentroProv.</param>
+        /// <param name="impFueraProv">Valor inicial de la propiedad ImpFueraProv.</param>
+        public static Estrato1214 CreateEstrato1214(global::System.Int32 id, global::System.String estrato, global::System.Decimal impDentroProv, global::System.Decimal impFueraProv)
+        {
+            Estrato1214 estrato1214 = new Estrato1214();
+            estrato1214.Id = id;
+            estrato1214.Estrato = estrato;
+            estrato1214.ImpDentroProv = impDentroProv;
+            estrato1214.ImpFueraProv = impFueraProv;
+            return estrato1214;
+        }
+
+        #endregion
+
+        #region Propiedades simples
+    
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value, "Id");
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Estrato
+        {
+            get
+            {
+                return _Estrato;
+            }
+            set
+            {
+                OnEstratoChanging(value);
+                ReportPropertyChanging("Estrato");
+                _Estrato = StructuralObject.SetValidValue(value, false, "Estrato");
+                ReportPropertyChanged("Estrato");
+                OnEstratoChanged();
+            }
+        }
+        private global::System.String _Estrato;
+        partial void OnEstratoChanging(global::System.String value);
+        partial void OnEstratoChanged();
+    
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal ImpDentroProv
+        {
+            get
+            {
+                return _ImpDentroProv;
+            }
+            set
+            {
+                OnImpDentroProvChanging(value);
+                ReportPropertyChanging("ImpDentroProv");
+                _ImpDentroProv = StructuralObject.SetValidValue(value, "ImpDentroProv");
+                ReportPropertyChanged("ImpDentroProv");
+                OnImpDentroProvChanged();
+            }
+        }
+        private global::System.Decimal _ImpDentroProv;
+        partial void OnImpDentroProvChanging(global::System.Decimal value);
+        partial void OnImpDentroProvChanged();
+    
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal ImpFueraProv
+        {
+            get
+            {
+                return _ImpFueraProv;
+            }
+            set
+            {
+                OnImpFueraProvChanging(value);
+                ReportPropertyChanging("ImpFueraProv");
+                _ImpFueraProv = StructuralObject.SetValidValue(value, "ImpFueraProv");
+                ReportPropertyChanged("ImpFueraProv");
+                OnImpFueraProvChanged();
+            }
+        }
+        private global::System.Decimal _ImpFueraProv;
+        partial void OnImpFueraProvChanging(global::System.Decimal value);
+        partial void OnImpFueraProvChanged();
+
+        #endregion
+
+        #region Propiedades de navegación
+    
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Model1", "Estrato1214Formulario1214", "Formulario1214")]
+        public EntityCollection<Formulario1214> Formularios1214
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Formulario1214>("Model1.Estrato1214Formulario1214", "Formulario1214");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Formulario1214>("Model1.Estrato1214Formulario1214", "Formulario1214", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No hay documentación de metadatos disponible.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="Model1", Name="Feriado")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -8022,7 +8207,10 @@ namespace SisPer.Aplicativo
         /// <param name="agenteId">Valor inicial de la propiedad AgenteId.</param>
         /// <param name="fuera_provincia">Valor inicial de la propiedad Fuera_provincia.</param>
         /// <param name="usa_chofer">Valor inicial de la propiedad Usa_chofer.</param>
-        public static Formulario1214 CreateFormulario1214(global::System.Int32 id, global::System.DateTime desde, global::System.DateTime hasta, global::System.String destino, global::System.String tareasACumplir, Estado1214 estado, Movilidad1214 movilidad, Anticipo1214 anticipo, global::System.Decimal montoAnticipo, global::System.Int32 agenteId, global::System.Boolean fuera_provincia, global::System.Boolean usa_chofer)
+        /// <param name="estrato1214Id">Valor inicial de la propiedad Estrato1214Id.</param>
+        /// <param name="anticipoViaticos">Valor inicial de la propiedad AnticipoViaticos.</param>
+        /// <param name="anticipoMovilidad">Valor inicial de la propiedad AnticipoMovilidad.</param>
+        public static Formulario1214 CreateFormulario1214(global::System.Int32 id, global::System.DateTime desde, global::System.DateTime hasta, global::System.String destino, global::System.String tareasACumplir, Estado1214 estado, Movilidad1214 movilidad, Anticipo1214 anticipo, global::System.Decimal montoAnticipo, global::System.Int32 agenteId, global::System.Boolean fuera_provincia, global::System.Boolean usa_chofer, global::System.Int32 estrato1214Id, global::System.Decimal anticipoViaticos, global::System.Decimal anticipoMovilidad)
         {
             Formulario1214 formulario1214 = new Formulario1214();
             formulario1214.Id = id;
@@ -8037,6 +8225,9 @@ namespace SisPer.Aplicativo
             formulario1214.AgenteId = agenteId;
             formulario1214.Fuera_provincia = fuera_provincia;
             formulario1214.Usa_chofer = usa_chofer;
+            formulario1214.Estrato1214Id = estrato1214Id;
+            formulario1214.AnticipoViaticos = anticipoViaticos;
+            formulario1214.AnticipoMovilidad = anticipoMovilidad;
             return formulario1214;
         }
 
@@ -8334,6 +8525,78 @@ namespace SisPer.Aplicativo
         private global::System.Boolean _Usa_chofer;
         partial void OnUsa_choferChanging(global::System.Boolean value);
         partial void OnUsa_choferChanged();
+    
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Estrato1214Id
+        {
+            get
+            {
+                return _Estrato1214Id;
+            }
+            set
+            {
+                OnEstrato1214IdChanging(value);
+                ReportPropertyChanging("Estrato1214Id");
+                _Estrato1214Id = StructuralObject.SetValidValue(value, "Estrato1214Id");
+                ReportPropertyChanged("Estrato1214Id");
+                OnEstrato1214IdChanged();
+            }
+        }
+        private global::System.Int32 _Estrato1214Id;
+        partial void OnEstrato1214IdChanging(global::System.Int32 value);
+        partial void OnEstrato1214IdChanged();
+    
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal AnticipoViaticos
+        {
+            get
+            {
+                return _AnticipoViaticos;
+            }
+            set
+            {
+                OnAnticipoViaticosChanging(value);
+                ReportPropertyChanging("AnticipoViaticos");
+                _AnticipoViaticos = StructuralObject.SetValidValue(value, "AnticipoViaticos");
+                ReportPropertyChanged("AnticipoViaticos");
+                OnAnticipoViaticosChanged();
+            }
+        }
+        private global::System.Decimal _AnticipoViaticos;
+        partial void OnAnticipoViaticosChanging(global::System.Decimal value);
+        partial void OnAnticipoViaticosChanged();
+    
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal AnticipoMovilidad
+        {
+            get
+            {
+                return _AnticipoMovilidad;
+            }
+            set
+            {
+                OnAnticipoMovilidadChanging(value);
+                ReportPropertyChanging("AnticipoMovilidad");
+                _AnticipoMovilidad = StructuralObject.SetValidValue(value, "AnticipoMovilidad");
+                ReportPropertyChanged("AnticipoMovilidad");
+                OnAnticipoMovilidadChanged();
+            }
+        }
+        private global::System.Decimal _AnticipoMovilidad;
+        partial void OnAnticipoMovilidadChanging(global::System.Decimal value);
+        partial void OnAnticipoMovilidadChanged();
 
         #endregion
 
@@ -8395,6 +8658,44 @@ namespace SisPer.Aplicativo
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Agente1214>("Model1.Formulario1214Agente1214", "Agente1214", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Model1", "Estrato1214Formulario1214", "Estrato1214")]
+        public Estrato1214 Estrato1214
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Estrato1214>("Model1.Estrato1214Formulario1214", "Estrato1214").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Estrato1214>("Model1.Estrato1214Formulario1214", "Estrato1214").Value = value;
+            }
+        }
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Estrato1214> Estrato1214Reference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Estrato1214>("Model1.Estrato1214Formulario1214", "Estrato1214");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Estrato1214>("Model1.Estrato1214Formulario1214", "Estrato1214", value);
                 }
             }
         }

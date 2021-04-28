@@ -103,22 +103,34 @@
                     <p />
                     <div class="row">
                         <div class="col-md-1">Destino</div>
-                        <div class="col-md-3">
-                            <div class="input-group">
-                                <asp:DropDownList runat="server" ID="ddl_dentro_fuera_provincia" CssClass="form-control">
-                                    <asp:ListItem Text="Fuera de la provincia" Value="0" />
-                                    <asp:ListItem Text="Dentro de la provincia" Value="1" />
-                                </asp:DropDownList>
+
+                        <div class="col-md-10">
+                            <asp:HiddenField ID="dentro_fuera" runat="server" />
+
+                            <div class="input-group" runat="server" id="input_group_destino">
+                                <asp:TextBox runat="server" ID="tb_destino" CssClass="form-control" />
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-default dropdown-toggle" id="btn_action" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Seleccionar <span class="caret"></span></button>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li><a href="#" onclick="SeleccionDentroFuera(0);return false;">Seleccionar</a></li>
+                                        <li><a href="#" onclick="SeleccionDentroFuera(1);return false;">Dentro de la provincia</a></li>
+                                        <li><a href="#" onclick="SeleccionDentroFuera(2);return false;">Fuera de la provincia</a></li>
+                                    </ul>
+                                </div>
+                                <!-- /btn-group -->
                             </div>
+                            <!-- /input-group -->
                         </div>
-                        <div class="col-md-7">
-                            <asp:TextBox runat="server" ID="tb_destino" CssClass="form-control" />
-                        </div>
+                        <!-- /.col-lg-6 -->
+
+
                         <div class="col-md-1">
                             <asp:RequiredFieldValidator ControlToValidate="tb_destino" Text="<img src='../Imagenes/exclamation.gif' title='Debe ingresar destino' />"
                                 ID="rv_destino" runat="server" ValidationGroup="general_214" ErrorMessage="Debe ingresar destino"></asp:RequiredFieldValidator>
-                        </div>
 
+                            <asp:CustomValidator ID="cv_dentro_fuera" runat="server" Style="margin-left: 5px; position: absolute;" Text="<img src='../Imagenes/exclamation.gif' title='Debe seleccionar si el destino es dentro o fuera de la provincia.' />"
+                                ErrorMessage="Debe seleccionar si el destino es dentro o fuera de la provincia." ForeColor="Red" ValidationGroup="general_214" OnServerValidate="cv_dentro_fuera_ServerValidate" />
+                        </div>
                     </div>
                     <p />
                     <div class="row">
@@ -403,7 +415,7 @@
                                         <div class="col-md-3">
                                             <div class="input-group">
                                                 <span class="input-group-addon">Dominio</span>
-                                                <asp:textbox runat="server" id="txt_dominio_vehiculo_oficial" class="form-control" placeholder="Dominio" />
+                                                <asp:TextBox runat="server" ID="txt_dominio_vehiculo_oficial" class="form-control" placeholder="Dominio" />
 
                                             </div>
                                         </div>
@@ -441,9 +453,8 @@
                 </div>
             </div>
 
-
-
-
+            
+            
             <div class="row text-right">
                 <div class="col-md-12">
                     <asp:Button Text="Confeccionar" CssClass="btn btn-lg btn-primary" OnClick="btn_Confeccionar_Click" runat="server" ID="btn_Confeccionar" />
@@ -885,6 +896,11 @@
             });
 
             ActualizarDestinoAnticipo();
+
+            let hidden_seleccion = document.getElementById('<%=dentro_fuera.ClientID %>');
+
+            SeleccionDentroFuera(hidden_seleccion.value);
+
         });
     </script>
 
@@ -917,6 +933,31 @@
                 event.preventDefault();
             }
 
+
+        }
+
+        function SeleccionDentroFuera(seleccion) {
+            let valorSeleccionado = document.getElementById('<%=dentro_fuera.ClientID %>');
+            let btn = document.getElementById('btn_action');
+
+            if (seleccion == "0") {
+                btn.innerText = 'Seleccionar '
+            }
+
+            if (seleccion == "1") {
+                btn.innerText = 'Dentro de la provincia '
+            }
+
+            if (seleccion == "2") {
+                btn.innerText = 'Fuera de la provincia '
+            }
+
+            let span = document.createElement('span')
+            span.className = 'caret';
+
+            btn.append(span);
+
+            valorSeleccionado.value = seleccion;
         }
 
         function ActualizarDestinoAnticipo() {

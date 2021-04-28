@@ -222,13 +222,22 @@ namespace SisPer.Aplicativo
         protected global::System.Web.UI.WebControls.Button btn_cambiar_fechas;
 
         /// <summary>
-        /// Control ddl_dentro_fuera_provincia.
+        /// Control dentro_fuera.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl_dentro_fuera_provincia;
+        protected global::System.Web.UI.WebControls.HiddenField dentro_fuera;
+
+        /// <summary>
+        /// Control input_group_destino.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl input_group_destino;
 
         /// <summary>
         /// Control tb_destino.
@@ -247,6 +256,15 @@ namespace SisPer.Aplicativo
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rv_destino;
+
+        /// <summary>
+        /// Control cv_dentro_fuera.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cv_dentro_fuera;
 
         /// <summary>
         /// Control tb_tareas.
