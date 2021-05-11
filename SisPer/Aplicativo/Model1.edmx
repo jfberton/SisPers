@@ -256,6 +256,14 @@
           <Property Name="Estrato1214Id" Type="int" Nullable="false" />
           <Property Name="AnticipoViaticos" Type="decimal" Precision="9" Scale="2" Nullable="false" />
           <Property Name="AnticipoMovilidad" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="FechaAprobacion" Type="datetime" />
+          <Property Name="Fecha_confeccion" Type="datetime" />
+          <Property Name="Vehiculo_dominio" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Vehiculo_particular_titular" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Vehiculo_particular_tipo_combustible" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Vehiculo_particular_poliza_nro" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Vehiculo_particular_poliza_vigencia" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Vehiculo_particular_poliza_cobertura" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Francos">
           <Key>
@@ -3990,6 +3998,14 @@
           <Property Name="Estrato1214Id" Type="Int32" Nullable="false" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Name="AnticipoViaticos" Type="Decimal" Nullable="false" Scale="2" Precision="9" />
           <Property Name="AnticipoMovilidad" Type="Decimal" Nullable="false" Scale="2" Precision="9" />
+          <Property Name="FechaAprobacion" Type="DateTime" Nullable="true" Precision="3" />
+          <Property Name="Vehiculo_dominio" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Vehiculo_particular_titular" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Vehiculo_particular_tipo_combustible" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Vehiculo_particular_poliza_nro" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Vehiculo_particular_poliza_vigencia" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Vehiculo_particular_poliza_cobertura" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Fecha_confeccion" Type="DateTime" Nullable="true" Precision="3" />
         </EntityType>
         <EnumType Name="Estado1214">
           <Member Name="Confeccionado" Value="0" />
@@ -5208,6 +5224,14 @@
           <ScalarProperty Name="Estrato1214Id" ColumnName="Estrato1214Id" />
           <ScalarProperty Name="AnticipoViaticos" ColumnName="AnticipoViaticos" />
           <ScalarProperty Name="AnticipoMovilidad" ColumnName="AnticipoMovilidad" />
+          <ScalarProperty Name="FechaAprobacion" ColumnName="FechaAprobacion" />
+          <ScalarProperty Name="Vehiculo_dominio" ColumnName="Vehiculo_dominio" />
+          <ScalarProperty Name="Vehiculo_particular_titular" ColumnName="Vehiculo_particular_titular" />
+          <ScalarProperty Name="Vehiculo_particular_tipo_combustible" ColumnName="Vehiculo_particular_tipo_combustible" />
+          <ScalarProperty Name="Vehiculo_particular_poliza_nro" ColumnName="Vehiculo_particular_poliza_nro" />
+          <ScalarProperty Name="Vehiculo_particular_poliza_vigencia" ColumnName="Vehiculo_particular_poliza_vigencia" />
+          <ScalarProperty Name="Vehiculo_particular_poliza_cobertura" ColumnName="Vehiculo_particular_poliza_cobertura" />
+          <ScalarProperty Name="Fecha_confeccion" ColumnName="Fecha_confeccion" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -5597,7 +5621,7 @@
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram Name="Model1" ZoomLevel="64" xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+      <Diagram Name="Model1" ZoomLevel="72" xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
         <EntityTypeShape EntityType="Model1.Agente" Width="2.375" PointX="10" PointY="2.5" Height="7.1724251302083317" />
         <EntityTypeShape EntityType="Model1.Area" Width="2.125" PointX="3.375" PointY="25.5" Height="2.1725878906249996" />
         <EntityTypeShape EntityType="Model1.ResumenDiario" Width="2.25" PointX="0.75" PointY="29.75" Height="2.172587890625" />
@@ -5655,7 +5679,7 @@
           <ConnectorPoint PointX="7.5439453125" PointY="11.625" />
         </AssociationConnector>
         <EntityTypeShape EntityType="Model1.VariableGlobal" Width="2.25" PointX="3.625" PointY="4" Height="1.4033821614583326" />
-        <EntityTypeShape EntityType="Model1.CierreMensual" Width="2.375" PointX="5.75" PointY="10.625" Height="2.7494921874999996" />
+        <EntityTypeShape EntityType="Model1.CierreMensual" Width="2.375" PointX="7.25" PointY="10.625" Height="2.7494921874999996" />
         <AssociationConnector Association="Model1.AgenteCierreMensual">
           <ConnectorPoint PointX="8.875" PointY="4.28125" />
           <ConnectorPoint PointX="11.84375" PointY="4.28125" />
@@ -5680,7 +5704,7 @@
           <ConnectorPoint PointX="9.875" PointY="5.5607308997570843" />
         </AssociationConnector>
         <EntityTypeShape EntityType="Model1.Feriado" Width="1.5" PointX="6.625" PointY="4" Height="1.5956835937499996" />
-        <EntityTypeShape EntityType="Model1.BonificacionOtorgada" Width="2" PointX="6.25" PointY="8" Height="1.9802864583333317" />
+        <EntityTypeShape EntityType="Model1.BonificacionOtorgada" Width="2" PointX="7.375" PointY="7.5" Height="1.9802864583333317" />
         <AssociationConnector Association="Model1.AgenteBonificacionOtorgada">
           <ConnectorPoint PointX="8.3437495000000013" PointY="11.239726562499998" />
           <ConnectorPoint PointX="8.3437495000000013" PointY="15.1172900390625" />
@@ -5714,7 +5738,7 @@
         <AssociationConnector Association="Model1.DirectorioArchivo" />
         <EntityTypeShape EntityType="Model1.ImpresionReporte" Width="2" PointX="14.375" PointY="7.75" />
         <AssociationConnector Association="Model1.AgenteImpresionReporte" />
-        <EntityTypeShape EntityType="Model1.HorasMesHorarioFlexible" Width="2.375" PointX="5.875" PointY="13.75" />
+        <EntityTypeShape EntityType="Model1.HorasMesHorarioFlexible" Width="2.375" PointX="5.875" PointY="14" />
         <AssociationConnector Association="Model1.AgenteHorasMesHorarioFlexible" ManuallyRouted="false" >
         </AssociationConnector>
         <EntityTypeShape EntityType="Model1.MovimientoSobreAgente" Width="2.625" PointX="19.625" PointY="32.875" />
@@ -5753,7 +5777,7 @@
         <AssociationConnector Association="Model1.AgenteAbrioDia" />
         <EntityTypeShape EntityType="Model1.AsuetoParcial" Width="1.875" PointX="0.5" PointY="25.5" />
         <AssociationConnector Association="Model1.AreaAsuetoParcial" />
-        <EntityTypeShape EntityType="Model1.Formulario1214" Width="1.5" PointX="4" PointY="6.375" />
+        <EntityTypeShape EntityType="Model1.Formulario1214" Width="2.875" PointX="3.75" PointY="6.375" />
         <AssociationConnector Association="Model1.AgenteFormulario1214" />
         <EntityTypeShape EntityType="Model1.Agente1214" Width="2.375" PointX="0.5" PointY="6.375" />
         <AssociationConnector Association="Model1.AgenteAgente1214" />
@@ -5779,7 +5803,7 @@
         <AssociationConnector Association="Model1.Legajo_fojas_de_servicioLegajo_otro_evento" />
         <EntityTypeShape EntityType="Model1.Legajo_afectacion_designacion" Width="2.375" PointX="18.125" PointY="38.875" />
         <AssociationConnector Association="Model1.Legajo_foja_de_servicioLegajo_afectacion_designacion" />
-        <EntityTypeShape EntityType="Model1.Modificacion_cierre_mes" Width="2" PointX="2.75" PointY="10.75" />
+        <EntityTypeShape EntityType="Model1.Modificacion_cierre_mes" Width="2" PointX="0.5" PointY="11.75" />
         <AssociationConnector Association="Model1.AgenteModificacion_cierre_mes" />
         <AssociationConnector Association="Model1.CierreMensualModificacion_cierre_mes" />
         <EntityTypeShape EntityType="Model1.Legajo_carrera_administrativa" Width="3.875" PointX="21.375" PointY="43.25" />

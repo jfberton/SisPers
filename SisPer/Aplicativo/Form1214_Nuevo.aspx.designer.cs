@@ -663,13 +663,22 @@ namespace SisPer.Aplicativo
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl panel_movilidad;
 
         /// <summary>
-        /// Control ddl_movilidad.
+        /// Control hf_movilidad.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl_movilidad;
+        protected global::System.Web.UI.WebControls.HiddenField hf_movilidad;
+
+        /// <summary>
+        /// Control btn_seleccion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btn_seleccion;
 
         /// <summary>
         /// Control cv_anticipo.
@@ -696,7 +705,7 @@ namespace SisPer.Aplicativo
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText tb_monto_anticipo;
+        protected global::System.Web.UI.WebControls.TextBox tb_monto_anticipo;
 
         /// <summary>
         /// Control cv_monto_anticipo.
@@ -724,6 +733,15 @@ namespace SisPer.Aplicativo
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddl_con_chofer;
+
+        /// <summary>
+        /// Control cv_chofer.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cv_chofer;
 
         /// <summary>
         /// Control btn_chofer.
@@ -760,6 +778,132 @@ namespace SisPer.Aplicativo
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btn_del_agente_chofer;
+
+        /// <summary>
+        /// Control cv_chofer_requerido.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cv_chofer_requerido;
+
+        /// <summary>
+        /// Control tb_dominio_particular.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tb_dominio_particular;
+
+        /// <summary>
+        /// Control cv_dominio_particular.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cv_dominio_particular;
+
+        /// <summary>
+        /// Control tb_tipo_combustible_particular.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tb_tipo_combustible_particular;
+
+        /// <summary>
+        /// Control cv_tipo_combustible_vehiculo_particular.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cv_tipo_combustible_vehiculo_particular;
+
+        /// <summary>
+        /// Control tb_titular.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tb_titular;
+
+        /// <summary>
+        /// Control cv_titular_vehiculo_particular.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cv_titular_vehiculo_particular;
+
+        /// <summary>
+        /// Control tb_poliza_nro.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tb_poliza_nro;
+
+        /// <summary>
+        /// Control cv_poliza_nro.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cv_poliza_nro;
+
+        /// <summary>
+        /// Control tb_poliza_cobertura.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tb_poliza_cobertura;
+
+        /// <summary>
+        /// Control cv_poliza_cobertura.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cv_poliza_cobertura;
+
+        /// <summary>
+        /// Control hf_vigencia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hf_vigencia;
+
+        /// <summary>
+        /// Control tb_poliza_vigencia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tb_poliza_vigencia;
+
+        /// <summary>
+        /// Control cv_poliza_vigencia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cv_poliza_vigencia;
 
         /// <summary>
         /// Control btn_Confeccionar.

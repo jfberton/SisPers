@@ -37,12 +37,12 @@
                         CssClass="validationsummary panel panel-danger " HeaderText="<div class='panel-heading'>&nbsp;Corrija las fechas antes de continuar:</div>" />
                     <p />
                     <div class="row" runat="server" id="div_selecciona_fechas" visible="true">
-                        <div class="col-md-1">Desde</div>
-                        <div class="col-md-4">
+                        <div class="col-md-5">
                             <div class="row">
                                 <div class="col-md-11">
                                     <div class="form-group">
                                         <div class="input-group date" id="datetimepicker1">
+                                            <span class="input-group-addon">Desde</span>
                                             <input type="text" class="form-control" id="tb_desde" runat="server" />
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -62,11 +62,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-1">Hasta</div>
-                        <div class="col-md-4">
+                        <div class="col-md-5">
                             <div class="row">
                                 <div class="col-md-11">
                                     <div class="input-group date" id="datetimepicker2">
+                                         <span class="input-group-addon">Hasta</span>
                                         <input type="text" class="form-control" id="tb_hasta" runat="server" />
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
@@ -102,15 +102,16 @@
                     </div>
                     <p />
                     <div class="row">
-                        <div class="col-md-1">Destino</div>
+                        
 
-                        <div class="col-md-10">
+                        <div class="col-md-11">
                             <asp:HiddenField ID="dentro_fuera" runat="server" />
 
                             <div class="input-group">
+                                <span class="input-group-addon">Destino</span>
                                 <asp:TextBox runat="server" ID="tb_destino" CssClass="form-control" />
                                 <div class="input-group-btn">
-                                    <button type="button" class="btn btn-default dropdown-toggle" runat="server" id="btn_action" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Seleccionar <span class="caret"></span></button>
+                                    <button type="button" class="btn btn-default dropdown-toggle" runat="server" id="btn_action" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Seleccionar <span class="caret"></span></button>
                                     <ul class="dropdown-menu dropdown-menu-right">
                                         <li><a href="#" onclick="SeleccionDentroFuera(0);return false;">Seleccionar</a></li>
                                         <li><a href="#" onclick="SeleccionDentroFuera(1);return false;">Dentro de la provincia</a></li>
@@ -134,9 +135,13 @@
                     </div>
                     <p />
                     <div class="row">
-                        <div class="col-md-1">Tareas</div>
-                        <div class="col-md-10">
-                            <asp:TextBox runat="server" TextMode="MultiLine" Rows="3" ID="tb_tareas" CssClass="form-control" />
+                        <div class="col-md-11">
+                             <div class="form-group">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Tareas</span>
+                                            <asp:TextBox runat="server" TextMode="MultiLine" Rows="3" ID="tb_tareas" CssClass="form-control" />
+                                        </div>
+                                    </div>
                         </div>
                         <div class="col-md-1">
                             <asp:RequiredFieldValidator ControlToValidate="tb_tareas" Text="<img src='../Imagenes/exclamation.gif' title='Debe ingresar las tareas a realizar' />"
@@ -269,7 +274,7 @@
                                 <div class="col-md-11">
                                     <div class="input-group">
                                         <span class="input-group-addon">Estrato del jefe de comisión:</span>
-                                        <asp:DropDownList runat="server" ID="ddl_estrato" CssClass="form-control">
+                                        <asp:DropDownList runat="server" ID="ddl_estrato" CssClass="form-control" OnSelectedIndexChanged="ddl_estrato_SelectedIndexChanged">
                                         </asp:DropDownList>
                                     </div>
                                 </div>
@@ -373,16 +378,22 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-1">
-                            Movilidad
-                        </div>
-                        <div class="col-md-4">
-                            <asp:DropDownList runat="server" ID="ddl_movilidad" CssClass="form-control" onchange="ActualizarDestinoAnticipo()">
-                                <asp:ListItem Text="Seleccionar" Value="0" />
-                                <asp:ListItem Text="Vehículo oficial" Value="1" />
-                                <asp:ListItem Text="Vehículo particular" Value="2" />
-                                <asp:ListItem Text="Transporte público" Value="3" />
-                            </asp:DropDownList>
+                        <div class="col-md-5">
+                             <asp:HiddenField ID="hf_movilidad" runat="server" />
+
+
+                            <div class="input-group">
+                                <span class="input-group-addon">Movilidad</span>
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-default dropdown-toggle" runat="server" id="btn_seleccion" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Seleccionar <span class="caret"></span></button>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li><a href="#" onclick="SeleccionMovilidad(0);return false;">Seleccionar</a></li>
+                                        <li><a href="#" onclick="SeleccionMovilidad(1);return false;">Vehículo oficial</a></li>
+                                        <li><a href="#" onclick="SeleccionMovilidad(2);return false;">Vehículo particular</a></li>
+                                        <li><a href="#" onclick="SeleccionMovilidad(3);return false;">Transporte público</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                         <asp:CustomValidator ID="cv_anticipo" runat="server" Style="margin-left: 5px; position: absolute;" Text="<img src='../Imagenes/exclamation.gif' title='Debe seleccionar un tipo de movilidad.' />"
                             ErrorMessage="Debe seleccionar un tipo de movilidad." ForeColor="Red" ValidationGroup="general_214" OnServerValidate="cv_anticipo_ServerValidate" />
@@ -393,14 +404,16 @@
                         <div class="col-md-3">
                             <div class="input-group">
                                 <span class="input-group-addon">$</span>
-                                <input type="text" runat="server" id="tb_monto_anticipo" class="form-control" placeholder="Monto anticipo.">
+                                <%--<input type="text" runat="server" id="tb_monto_anticipo" class="form-control" placeholder="Monto anticipo.">--%>
+                                <asp:TextBox runat="server" CssClass="form-control" ID="tb_monto_anticipo" placeholder="Monto anticipo." />
                                 <asp:CustomValidator ID="cv_monto_anticipo" runat="server" Style="margin-left: 5px; position: absolute;" Text="<img src='../Imagenes/exclamation.gif' title='El monto del anticipo debe ser numérico.' />"
                                     ErrorMessage="El monto del anticipo debe ser numérico." ForeColor="Red" ValidationGroup="general_214" OnServerValidate="cv_monto_anticipo_ServerValidate" />
                             </div>
                         </div>
                     </div>
                     <br />
-                    <div class="row" id="fila_datos_vehiculo" style="display: none">
+                    <%--VEHICULO OFICIAL--%>
+                    <div class="row" id="fila_datos_vehiculo_oficial" style="display: none">
                         <div class="col-md-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
@@ -419,9 +432,12 @@
                                             <div class="input-group">
                                                 <span class="input-group-addon">Agrega chofer?</span>
                                                 <asp:DropDownList runat="server" ID="ddl_con_chofer" CssClass="form-control" onchange="ActualizarDestinoAnticipo()">
-                                                    <asp:ListItem Text="Si" Value="0" />
-                                                    <asp:ListItem Text="No" Value="1" />
+                                                    <asp:ListItem Text="Seleccionar" Value="0" />
+                                                    <asp:ListItem Text="Si" Value="1" />
+                                                    <asp:ListItem Text="No" Value="2" />
                                                 </asp:DropDownList>
+                                                <asp:CustomValidator ID="cv_chofer" runat="server" Style="margin-left: 5px; position: absolute;" Text="<img src='../Imagenes/exclamation.gif' title='Debe seleccionar si necesita o no chofer para la comisión.' />"
+                                                    ErrorMessage="Debe seleccionar si necesita o no chofer para la comisión." ForeColor="Red" ValidationGroup="general_214" OnServerValidate="cv_chofer_ServerValidate" />
                                             </div>
                                         </div>
                                         <div class="col-md-6" id="selecciona_chofer">
@@ -438,6 +454,119 @@
                                                             <asp:Button Text="X" ID="btn_del_agente_chofer" OnClientClick="ConfirmarEliminacionChofer()" CssClass="btn btn-danger" OnClick="btn_del_agente_chofer_ServerClick" runat="server" />
                                                         </span>
                                                     </div>
+                                                    <asp:CustomValidator ID="cv_chofer_requerido" runat="server" Style="margin-left: 5px; position: absolute;" Text="<img src='../Imagenes/exclamation.gif' title='Necesita seleccionar el chofer.' />"
+                                                        ErrorMessage="Necesita seleccionar el chofer." ForeColor="Red" ValidationGroup="general_214" OnServerValidate="cv_chofer_requerido_ServerValidate" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <%--VEHICULO PARTICULAR--%>
+                    <div class="row" id="fila_datos_vehiculo_particular" style="display: none">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Datos vehiculo particular
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="row">
+                                                <div class="col-md-11">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">Dominio</span>
+                                                        <asp:TextBox runat="server" ID="tb_dominio_particular" class="form-control" placeholder="Dominio" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <asp:CustomValidator ID="cv_dominio_particular" runat="server" Style="margin-left: 5px; position: absolute;" Text="<img src='../Imagenes/exclamation.gif' title='Debe ingresar el dominio del vehículo particular.' />"
+                                                        ErrorMessage="Debe ingresar el dominio del vehículo particular." ForeColor="Red" ValidationGroup="general_214" OnServerValidate="cv_dominio_particular_ServerValidate" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="row">
+                                                <div class="col-md-11">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">Combustible</span>
+                                                        <asp:TextBox runat="server" ID="tb_tipo_combustible_particular" class="form-control" placeholder="Nafta/Diesel" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <asp:CustomValidator ID="cv_tipo_combustible_vehiculo_particular" runat="server" Style="margin-left: 5px; position: absolute;" Text="<img src='../Imagenes/exclamation.gif' title='Debe ingresar el tipo de combustible del vehículo particular.' />"
+                                                        ErrorMessage="Debe ingresar el tipo de combustible del vehículo particular." ForeColor="Red" ValidationGroup="general_214" OnServerValidate="cv_tipo_combustible_vehiculo_particular_ServerValidate" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-11">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">Titular</span>
+                                                        <asp:TextBox runat="server" ID="tb_titular" CssClass="form-control" placeholder="Titular" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <asp:CustomValidator ID="cv_titular_vehiculo_particular" runat="server" Style="margin-left: 5px; position: absolute;" Text="<img src='../Imagenes/exclamation.gif' title='Debe ingresar el titular del vehículo particular.' />"
+                                                        ErrorMessage="Debe ingresar el titular del vehículo particular." ForeColor="Red" ValidationGroup="general_214" OnServerValidate="cv_titular_vehiculo_particular_ServerValidate" />
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="row">
+                                                <div class="col-md-11">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">Póliza Nro:</span>
+                                                        <asp:TextBox runat="server" ID="tb_poliza_nro" CssClass="form-control" placeholder="Nro Póliza" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <asp:CustomValidator ID="cv_poliza_nro" runat="server" Style="margin-left: 5px; position: absolute;" Text="<img src='../Imagenes/exclamation.gif' title='Debe ingresar el número de seguro del vehículo.' />"
+                                                        ErrorMessage="Debe ingresar el número de seguro del vehículo." ForeColor="Red" ValidationGroup="general_214" OnServerValidate="cv_poliza_nro_ServerValidate" />
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="row">
+                                                <div class="col-md-11">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">Cobertura:</span>
+                                                        <asp:TextBox runat="server" ID="tb_poliza_cobertura" CssClass="form-control" placeholder="Cobertura" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <asp:CustomValidator ID="cv_poliza_cobertura" runat="server" Style="margin-left: 5px; position: absolute;" Text="<img src='../Imagenes/exclamation.gif' title='Debe ingresar el tipo de cobertura de la póliza.' />"
+                                                        ErrorMessage="Debe ingresar el tipo de cobertura de la póliza." ForeColor="Red" ValidationGroup="general_214" OnServerValidate="cv_poliza_cobertura_ServerValidate" />
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="row">
+                                                <div class="col-md-11">
+                                                    <asp:HiddenField runat="server" ID="hf_vigencia" />
+                                                    <div class="input-group date" id="datetimepicker3">
+                                                        <span class="input-group-addon">Vigencia</span>
+                                                        <asp:TextBox runat="server" ID="tb_poliza_vigencia" CssClass="form-control" placeholder="Vigencia" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <asp:CustomValidator ID="cv_poliza_vigencia" runat="server" Style="margin-left: 5px; position: absolute;" Text="<img src='../Imagenes/exclamation.gif' title='Debe ingresar la vigencia del seguro del vehículo.' />"
+                                                        ErrorMessage="Debe ingresar la vigencia del seguro del vehículo." ForeColor="Red" ValidationGroup="general_214" OnServerValidate="cv_poliza_vigencia_ServerValidate" />
                                                 </div>
                                             </div>
                                         </div>
@@ -871,6 +1000,8 @@
         $(function () {
             var d = new Date();
             var e = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+            var hidden_dtp = document.getElementById('<%=hf_vigencia.ClientID %>');
+
 
             $('#datetimepicker1').datetimepicker({
                 locale: 'es',
@@ -891,11 +1022,24 @@
                 $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
             });
 
+            $('#datetimepicker3').datetimepicker({
+                locale: 'es',
+                format: 'DD[/]MM[/]YYYY',
+                minDate: e
+
+            });
+
+            if (hidden_dtp.value == "deshabilitar") {
+                $('#datetimepicker3').data("DateTimePicker").disable();
+            }
+
             ActualizarDestinoAnticipo();
 
             let hidden_seleccion = document.getElementById('<%=dentro_fuera.ClientID %>');
+            let hidden_seleccion_movilidad = document.getElementById('<%=hf_movilidad.ClientID %>');
 
             SeleccionDentroFuera(hidden_seleccion.value);
+            SeleccionMovilidad(hidden_seleccion_movilidad);
 
         });
     </script>
@@ -933,6 +1077,7 @@
         }
 
         function SeleccionDentroFuera(seleccion) {
+
             let valorSeleccionado = document.getElementById('<%=dentro_fuera.ClientID %>');
             let btn = document.getElementById('<%=btn_action.ClientID %>');
 
@@ -954,28 +1099,71 @@
             btn.append(span);
 
             valorSeleccionado.value = seleccion;
+
+        }
+
+        function SeleccionMovilidad(seleccion) {
+            let valorSeleccionado = document.getElementById('<%=hf_movilidad.ClientID %>');
+            let btn = document.getElementById('<%=btn_seleccion.ClientID %>');
+            btn = document.createElement('span')
+
+            if (seleccion == "0") {
+                btn.innerText = 'Seleccionar '
+            }
+
+            if (seleccion == "1") {
+                btn.innerText = 'Vehículo oficial '
+            }
+
+            if (seleccion == "2") {
+                btn.innerText = 'Vehículo particular '
+            }
+            if (seleccion == "3") {
+                btn.innerText = 'Transporte público '
+            }
+
+            let span = document.createElement('span')
+            span.className = 'caret';
+
+            btn.append(span);
+
+            valorSeleccionado.value = seleccion;
+
+            ActualizarDestinoAnticipo();
         }
 
         function ActualizarDestinoAnticipo() {
-            var movil = document.getElementById('<%=ddl_movilidad.ClientID %>');
+            var movil = document.getElementById('<%=hf_movilidad.ClientID %>');
             var anticipo = document.getElementById('<%=lbl_monto_anticipo.ClientID%>');
             var tb_monto = document.getElementById('<%=tb_monto_anticipo.ClientID%>');
 
-            var fila_datos_vehiculo = document.getElementById('fila_datos_vehiculo');
+            var fila_datos_vehiculo_oficial = document.getElementById('fila_datos_vehiculo_oficial');
+            var fila_datos_vehiculo_particular = document.getElementById('fila_datos_vehiculo_particular');
             var chofer = document.getElementById('<%=ddl_con_chofer.ClientID%>');
             var col_chofer = document.getElementById('selecciona_chofer');
 
             if (movil.value == "0") {
                 anticipo.textContent = "Debe seleccionar el tipo de mobilidad.";
-                tb_monto.disabled = true;
-                fila_datos_vehiculo.style = 'display: none';
+                tb_monto.style = 'display: none';
+                fila_datos_vehiculo_oficial.style = 'display: none';
+                fila_datos_vehiculo_particular.style = 'display: none';
             }
 
             if (movil.value == "1" || movil.value == "2") {
                 anticipo.textContent = "Gastos vehículo: nafta, otros.";
-                tb_monto.disabled = false;
-                fila_datos_vehiculo.style = 'display:normal';
-                if (chofer.value == "0") {
+                tb_monto.style = 'display: normal';
+
+                fila_datos_vehiculo_oficial.style = 'display: none';
+                fila_datos_vehiculo_particular.style = 'display: none';
+
+                if (movil.value == "1") {
+                    fila_datos_vehiculo_oficial.style = 'display:normal';
+                }
+                else {
+                    fila_datos_vehiculo_particular.style = 'display:normal';
+                }
+
+                if (chofer.value == "1") {
                     col_chofer.style = 'display: normal';
                 }
                 else {
@@ -987,7 +1175,8 @@
 
                 anticipo.textContent = "Pasajes";
                 tb_monto.disabled = false;
-                fila_datos_vehiculo.style = 'display: none';
+                fila_datos_vehiculo_oficial.style = 'display: none';
+                fila_datos_vehiculo_particular.style = 'display: none';
             }
         }
 

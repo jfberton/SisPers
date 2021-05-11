@@ -8210,7 +8210,13 @@ namespace SisPer.Aplicativo
         /// <param name="estrato1214Id">Valor inicial de la propiedad Estrato1214Id.</param>
         /// <param name="anticipoViaticos">Valor inicial de la propiedad AnticipoViaticos.</param>
         /// <param name="anticipoMovilidad">Valor inicial de la propiedad AnticipoMovilidad.</param>
-        public static Formulario1214 CreateFormulario1214(global::System.Int32 id, global::System.DateTime desde, global::System.DateTime hasta, global::System.String destino, global::System.String tareasACumplir, Estado1214 estado, Movilidad1214 movilidad, Anticipo1214 anticipo, global::System.Decimal montoAnticipo, global::System.Int32 agenteId, global::System.Boolean fuera_provincia, global::System.Boolean usa_chofer, global::System.Int32 estrato1214Id, global::System.Decimal anticipoViaticos, global::System.Decimal anticipoMovilidad)
+        /// <param name="vehiculo_dominio">Valor inicial de la propiedad Vehiculo_dominio.</param>
+        /// <param name="vehiculo_particular_titular">Valor inicial de la propiedad Vehiculo_particular_titular.</param>
+        /// <param name="vehiculo_particular_tipo_combustible">Valor inicial de la propiedad Vehiculo_particular_tipo_combustible.</param>
+        /// <param name="vehiculo_particular_poliza_nro">Valor inicial de la propiedad Vehiculo_particular_poliza_nro.</param>
+        /// <param name="vehiculo_particular_poliza_vigencia">Valor inicial de la propiedad Vehiculo_particular_poliza_vigencia.</param>
+        /// <param name="vehiculo_particular_poliza_cobertura">Valor inicial de la propiedad Vehiculo_particular_poliza_cobertura.</param>
+        public static Formulario1214 CreateFormulario1214(global::System.Int32 id, global::System.DateTime desde, global::System.DateTime hasta, global::System.String destino, global::System.String tareasACumplir, Estado1214 estado, Movilidad1214 movilidad, Anticipo1214 anticipo, global::System.Decimal montoAnticipo, global::System.Int32 agenteId, global::System.Boolean fuera_provincia, global::System.Boolean usa_chofer, global::System.Int32 estrato1214Id, global::System.Decimal anticipoViaticos, global::System.Decimal anticipoMovilidad, global::System.String vehiculo_dominio, global::System.String vehiculo_particular_titular, global::System.String vehiculo_particular_tipo_combustible, global::System.String vehiculo_particular_poliza_nro, global::System.String vehiculo_particular_poliza_vigencia, global::System.String vehiculo_particular_poliza_cobertura)
         {
             Formulario1214 formulario1214 = new Formulario1214();
             formulario1214.Id = id;
@@ -8228,6 +8234,12 @@ namespace SisPer.Aplicativo
             formulario1214.Estrato1214Id = estrato1214Id;
             formulario1214.AnticipoViaticos = anticipoViaticos;
             formulario1214.AnticipoMovilidad = anticipoMovilidad;
+            formulario1214.Vehiculo_dominio = vehiculo_dominio;
+            formulario1214.Vehiculo_particular_titular = vehiculo_particular_titular;
+            formulario1214.Vehiculo_particular_tipo_combustible = vehiculo_particular_tipo_combustible;
+            formulario1214.Vehiculo_particular_poliza_nro = vehiculo_particular_poliza_nro;
+            formulario1214.Vehiculo_particular_poliza_vigencia = vehiculo_particular_poliza_vigencia;
+            formulario1214.Vehiculo_particular_poliza_cobertura = vehiculo_particular_poliza_cobertura;
             return formulario1214;
         }
 
@@ -8597,6 +8609,198 @@ namespace SisPer.Aplicativo
         private global::System.Decimal _AnticipoMovilidad;
         partial void OnAnticipoMovilidadChanging(global::System.Decimal value);
         partial void OnAnticipoMovilidadChanged();
+    
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> FechaAprobacion
+        {
+            get
+            {
+                return _FechaAprobacion;
+            }
+            set
+            {
+                OnFechaAprobacionChanging(value);
+                ReportPropertyChanging("FechaAprobacion");
+                _FechaAprobacion = StructuralObject.SetValidValue(value, "FechaAprobacion");
+                ReportPropertyChanged("FechaAprobacion");
+                OnFechaAprobacionChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _FechaAprobacion;
+        partial void OnFechaAprobacionChanging(Nullable<global::System.DateTime> value);
+        partial void OnFechaAprobacionChanged();
+    
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Vehiculo_dominio
+        {
+            get
+            {
+                return _Vehiculo_dominio;
+            }
+            set
+            {
+                OnVehiculo_dominioChanging(value);
+                ReportPropertyChanging("Vehiculo_dominio");
+                _Vehiculo_dominio = StructuralObject.SetValidValue(value, false, "Vehiculo_dominio");
+                ReportPropertyChanged("Vehiculo_dominio");
+                OnVehiculo_dominioChanged();
+            }
+        }
+        private global::System.String _Vehiculo_dominio;
+        partial void OnVehiculo_dominioChanging(global::System.String value);
+        partial void OnVehiculo_dominioChanged();
+    
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Vehiculo_particular_titular
+        {
+            get
+            {
+                return _Vehiculo_particular_titular;
+            }
+            set
+            {
+                OnVehiculo_particular_titularChanging(value);
+                ReportPropertyChanging("Vehiculo_particular_titular");
+                _Vehiculo_particular_titular = StructuralObject.SetValidValue(value, false, "Vehiculo_particular_titular");
+                ReportPropertyChanged("Vehiculo_particular_titular");
+                OnVehiculo_particular_titularChanged();
+            }
+        }
+        private global::System.String _Vehiculo_particular_titular;
+        partial void OnVehiculo_particular_titularChanging(global::System.String value);
+        partial void OnVehiculo_particular_titularChanged();
+    
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Vehiculo_particular_tipo_combustible
+        {
+            get
+            {
+                return _Vehiculo_particular_tipo_combustible;
+            }
+            set
+            {
+                OnVehiculo_particular_tipo_combustibleChanging(value);
+                ReportPropertyChanging("Vehiculo_particular_tipo_combustible");
+                _Vehiculo_particular_tipo_combustible = StructuralObject.SetValidValue(value, false, "Vehiculo_particular_tipo_combustible");
+                ReportPropertyChanged("Vehiculo_particular_tipo_combustible");
+                OnVehiculo_particular_tipo_combustibleChanged();
+            }
+        }
+        private global::System.String _Vehiculo_particular_tipo_combustible;
+        partial void OnVehiculo_particular_tipo_combustibleChanging(global::System.String value);
+        partial void OnVehiculo_particular_tipo_combustibleChanged();
+    
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Vehiculo_particular_poliza_nro
+        {
+            get
+            {
+                return _Vehiculo_particular_poliza_nro;
+            }
+            set
+            {
+                OnVehiculo_particular_poliza_nroChanging(value);
+                ReportPropertyChanging("Vehiculo_particular_poliza_nro");
+                _Vehiculo_particular_poliza_nro = StructuralObject.SetValidValue(value, false, "Vehiculo_particular_poliza_nro");
+                ReportPropertyChanged("Vehiculo_particular_poliza_nro");
+                OnVehiculo_particular_poliza_nroChanged();
+            }
+        }
+        private global::System.String _Vehiculo_particular_poliza_nro;
+        partial void OnVehiculo_particular_poliza_nroChanging(global::System.String value);
+        partial void OnVehiculo_particular_poliza_nroChanged();
+    
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Vehiculo_particular_poliza_vigencia
+        {
+            get
+            {
+                return _Vehiculo_particular_poliza_vigencia;
+            }
+            set
+            {
+                OnVehiculo_particular_poliza_vigenciaChanging(value);
+                ReportPropertyChanging("Vehiculo_particular_poliza_vigencia");
+                _Vehiculo_particular_poliza_vigencia = StructuralObject.SetValidValue(value, false, "Vehiculo_particular_poliza_vigencia");
+                ReportPropertyChanged("Vehiculo_particular_poliza_vigencia");
+                OnVehiculo_particular_poliza_vigenciaChanged();
+            }
+        }
+        private global::System.String _Vehiculo_particular_poliza_vigencia;
+        partial void OnVehiculo_particular_poliza_vigenciaChanging(global::System.String value);
+        partial void OnVehiculo_particular_poliza_vigenciaChanged();
+    
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Vehiculo_particular_poliza_cobertura
+        {
+            get
+            {
+                return _Vehiculo_particular_poliza_cobertura;
+            }
+            set
+            {
+                OnVehiculo_particular_poliza_coberturaChanging(value);
+                ReportPropertyChanging("Vehiculo_particular_poliza_cobertura");
+                _Vehiculo_particular_poliza_cobertura = StructuralObject.SetValidValue(value, false, "Vehiculo_particular_poliza_cobertura");
+                ReportPropertyChanged("Vehiculo_particular_poliza_cobertura");
+                OnVehiculo_particular_poliza_coberturaChanged();
+            }
+        }
+        private global::System.String _Vehiculo_particular_poliza_cobertura;
+        partial void OnVehiculo_particular_poliza_coberturaChanging(global::System.String value);
+        partial void OnVehiculo_particular_poliza_coberturaChanged();
+    
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> Fecha_confeccion
+        {
+            get
+            {
+                return _Fecha_confeccion;
+            }
+            set
+            {
+                OnFecha_confeccionChanging(value);
+                ReportPropertyChanging("Fecha_confeccion");
+                _Fecha_confeccion = StructuralObject.SetValidValue(value, "Fecha_confeccion");
+                ReportPropertyChanged("Fecha_confeccion");
+                OnFecha_confeccionChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _Fecha_confeccion;
+        partial void OnFecha_confeccionChanging(Nullable<global::System.DateTime> value);
+        partial void OnFecha_confeccionChanged();
 
         #endregion
 

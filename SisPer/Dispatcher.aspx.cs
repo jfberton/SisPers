@@ -17,9 +17,12 @@ namespace SisPer
             {
                 Agente u = ((Agente)Session["UsuarioLogueado"]);
                 bool cambiar_clave_al_inicio = Convert.ToBoolean(Session["Cambiar_clave_al_ingresar"]);
-                
-                Session["MostrarMensageBienvenida"] = true;
-                
+
+                if (!Convert.ToBoolean(Session["RedireccionarAPantallaPrincipal"]))
+                {
+                    Session["MostrarMensageBienvenida"] = true;
+                }
+
                 if (cambiar_clave_al_inicio)
                 {
                     Session["AgentePantallaPropia"] = u.Usr;
