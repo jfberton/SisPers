@@ -56,14 +56,50 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Referencias\AjaxControlToolkit.dll</HintPath>
     </Reference>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
+      <HintPath>..\packages\Portable.BouncyCastle.1.8.9\lib\net40\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
     <Reference Include="CKEditor.NET">
       <HintPath>..\..\Referencias\CKEditor.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.3.4.1\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.Core.3.4.1\lib\net40\Common.Logging.Core.dll</HintPath>
     </Reference>
     <Reference Include="EditableDropDownList">
       <HintPath>..\..\Referencias\EditableDropDownList.dll</HintPath>
     </Reference>
     <Reference Include="EPPlus">
       <HintPath>..\..\Referencias\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.barcodes, Version=7.1.15.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itext7.7.1.15\lib\net45\itext.barcodes.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.forms, Version=7.1.15.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itext7.7.1.15\lib\net45\itext.forms.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.io, Version=7.1.15.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itext7.7.1.15\lib\net45\itext.io.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.kernel, Version=7.1.15.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itext7.7.1.15\lib\net45\itext.kernel.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.layout, Version=7.1.15.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itext7.7.1.15\lib\net45\itext.layout.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.pdfa, Version=7.1.15.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itext7.7.1.15\lib\net45\itext.pdfa.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.sign, Version=7.1.15.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itext7.7.1.15\lib\net45\itext.sign.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.styledxmlparser, Version=7.1.15.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itext7.7.1.15\lib\net45\itext.styledxmlparser.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.svg, Version=7.1.15.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itext7.7.1.15\lib\net45\itext.svg.dll</HintPath>
     </Reference>
     <Reference Include="itextsharp">
       <HintPath>..\..\SircrebWeb\SircrebWeb\bin\itextsharp.dll</HintPath>
@@ -99,6 +135,7 @@
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -860,6 +897,7 @@
     <Content Include="Imagenes\LogoSisPer.png" />
     <Content Include="Imagenes\magnifier.png" />
     <Content Include="Imagenes\Mantenimiento.png" />
+    <Content Include="Imagenes\membrete.png" />
     <Content Include="Imagenes\money_add.png" />
     <Content Include="Imagenes\nuevo_logo.jpg" />
     <Content Include="Imagenes\ok.png" />
@@ -1617,16 +1655,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>detalle_movimientos_horas_mes_agente_ds.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Aplicativo\Reportes\Fcomision_ds.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Fcomision_ds.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Aplicativo\Reportes\Form1214_ds.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Form1214_ds.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Aplicativo\Reportes\FrancoCompensatorio.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1890,9 +1918,6 @@
     <Content Include="Aplicativo\Reportes\CumplimientoBonificacion_DS.xss">
       <DependentUpon>CumplimientoBonificacion_DS.xsd</DependentUpon>
     </Content>
-    <Content Include="Aplicativo\Reportes\Form1214_ds.xsc">
-      <DependentUpon>Form1214_ds.xsd</DependentUpon>
-    </Content>
     <Content Include="Aplicativo\Reportes\detalle_movimientos_horas_mes_agente_ds.xsc">
       <DependentUpon>detalle_movimientos_horas_mes_agente_ds.xsd</DependentUpon>
     </Content>
@@ -1903,25 +1928,6 @@
     </None>
     <Content Include="Aplicativo\Reportes\detalle_movimientos_horas_mes_agente_ds.xss">
       <DependentUpon>detalle_movimientos_horas_mes_agente_ds.xsd</DependentUpon>
-    </Content>
-    <Content Include="Aplicativo\Reportes\Fcomision_ds.xsc">
-      <DependentUpon>Fcomision_ds.xsd</DependentUpon>
-    </Content>
-    <None Include="Aplicativo\Reportes\Fcomision_ds.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>Fcomision_ds.Designer.cs</LastGenOutput>
-    </None>
-    <Content Include="Aplicativo\Reportes\Fcomision_ds.xss">
-      <DependentUpon>Fcomision_ds.xsd</DependentUpon>
-    </Content>
-    <None Include="Aplicativo\Reportes\Form1214_ds.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>Form1214_ds.Designer.cs</LastGenOutput>
-    </None>
-    <Content Include="Aplicativo\Reportes\Form1214_ds.xss">
-      <DependentUpon>Form1214_ds.xsd</DependentUpon>
     </Content>
     <None Include="Aplicativo\Reportes\FrancoCompensatorio.xsc">
       <DependentUpon>FrancoCompensatorio.xsd</DependentUpon>
@@ -2102,9 +2108,6 @@
     <EmbeddedResource Include="Aplicativo\Reportes\CumplimientoBonificacion_r.rdlc" />
     <EmbeddedResource Include="Aplicativo\Reportes\detalle_movimientos_horas_mes_agente_r.rdlc" />
     <EmbeddedResource Include="Aplicativo\Reportes\DiaCalendario.rdlc" />
-    <EmbeddedResource Include="Aplicativo\Reportes\FComision_principal.rdlc" />
-    <EmbeddedResource Include="Aplicativo\Reportes\Form1214_r.rdlc" />
-    <EmbeddedResource Include="Aplicativo\Reportes\Form1214_reverso_r.rdlc" />
     <EmbeddedResource Include="Aplicativo\Reportes\FrancoCompensatorio_r.rdlc" />
     <EmbeddedResource Include="Aplicativo\Reportes\HorarioIngresoEgresoMensual_r.rdlc" />
     <EmbeddedResource Include="Aplicativo\Reportes\HorariosMensualesAgentesArea.rdlc" />

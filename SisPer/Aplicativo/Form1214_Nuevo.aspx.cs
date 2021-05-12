@@ -1,12 +1,23 @@
-﻿using Microsoft.Reporting.WebForms;
+﻿
+using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
+using iText.Layout.Properties;
+using iText.Kernel.Geom;
+using iText.IO.Image;
+using Image = iText.Layout.Element.Image;
 
 namespace SisPer.Aplicativo
 {
@@ -90,11 +101,11 @@ namespace SisPer.Aplicativo
 
                 ddl_estrato.Items.Clear();
 
-                ddl_estrato.Items.Add(new ListItem() { Text = "Seleccionar estrato", Value = "0" });
+                ddl_estrato.Items.Add(new System.Web.UI.WebControls.ListItem() { Text = "Seleccionar estrato", Value = "0" });
 
                 foreach (Estrato1214 estrato in estratos)
                 {
-                    ddl_estrato.Items.Add(new ListItem() { Text = estrato.Estrato, Value = estrato.Id.ToString() });
+                    ddl_estrato.Items.Add(new System.Web.UI.WebControls.ListItem() { Text = estrato.Estrato, Value = estrato.Id.ToString() });
                 }
             }
         }
@@ -224,7 +235,7 @@ namespace SisPer.Aplicativo
             if (f1214.Id != 0)
             {
                 btn_action.Attributes["disabled"] = "disabled";
-               
+
             }
 
             #endregion
@@ -986,11 +997,15 @@ namespace SisPer.Aplicativo
 
                 using (var cxt = new Model1Container())
                 {
+                    int idEstrato = Convert.ToInt32(ddl_estrato.SelectedValue);
+                    Estrato1214 estrato = cxt.Estratos1214.First(x => x.Id == idEstrato);
                     f1214.Estado = Estado1214.Confeccionado;
-                    f1214.Estrato1214Id = Convert.ToInt32(ddl_estrato.SelectedValue);
+                    f1214.Estrato1214Id = estrato.Id;
                     f1214.Movilidad = ((Movilidad1214)(Convert.ToInt32(hf_movilidad.Value)));
                     f1214.Anticipo = f1214.Movilidad == Movilidad1214.Transporte_publico ? Anticipo1214.Pasajes : Anticipo1214.Gastos_vehiculo;
-                    f1214.MontoAnticipo = Convert.ToDecimal(tb_monto_anticipo.Text);
+                    f1214.AnticipoMovilidad = Convert.ToDecimal(tb_monto_anticipo.Text);
+                    int dias = ((f1214.Hasta - f1214.Desde).Days + 1);
+                    f1214.AnticipoViaticos = f1214.Fuera_provincia ? estrato.ImpFueraProv * dias : estrato.ImpDentroProv * dias;
                     f1214.Usa_chofer = ddl_con_chofer.SelectedValue == "1";
                     f1214.Fecha_confeccion = DateTime.Now;
                     cxt.Formularios1214.AddObject(f1214);
@@ -1119,218 +1134,343 @@ namespace SisPer.Aplicativo
 
         protected void btn_Imprimir_Click(object sender, EventArgs e)
         {
-            //RenderReport();
-            RenderReportComision();
-        }
+            #region Prueba de nuevo metodo de generacion de reportes a travez de html
 
-        private void RenderReport()
-        {
-            //Frente
-            ReportViewer viewer = new ReportViewer();
-            viewer.ProcessingMode = ProcessingMode.Local;
-            viewer.LocalReport.EnableExternalImages = true;
-            viewer.LocalReport.ReportPath = Server.MapPath("~/Aplicativo/Reportes/Form1214_r.rdlc");
-            Reportes.Form1214_ds ds = GenerarDSF1214();
-
-            ReportDataSource general = new ReportDataSource("F1214", ds.f214.Rows);
-            ReportDataSource detalle = new ReportDataSource("Nomina", ds.Nomina.Rows);
-
-            viewer.LocalReport.DataSources.Add(general);
-            viewer.LocalReport.DataSources.Add(detalle);
-
-            Microsoft.Reporting.WebForms.Warning[] warnings = null;
-            string[] streamids = null;
-            string mimeType = null;
-            string encoding = null;
-            string extension = null;
-            string deviceInfo = null;
-            byte[] bytes = null;
-            deviceInfo = "<DeviceInfo><SimplePageHeaders>True</SimplePageHeaders></DeviceInfo>";
-
-            //Render the report
-            bytes = viewer.LocalReport.Render("PDF", deviceInfo, out mimeType, out encoding, out extension, out streamids, out warnings);
-            Session["BytesFrente"] = bytes;
-
-
-            //Reverso
-            ReportViewer viewerreverso = new ReportViewer();
-            viewerreverso.ProcessingMode = ProcessingMode.Local;
-            viewerreverso.LocalReport.EnableExternalImages = true;
-            viewerreverso.LocalReport.ReportPath = Server.MapPath("~/Aplicativo/Reportes/Form1214_reverso_r.rdlc");
-
-            ReportDataSource general_reverso = new ReportDataSource("General", ds.f214.Rows);
-
-            viewerreverso.LocalReport.DataSources.Add(general_reverso);
-
-            bytes = viewerreverso.LocalReport.Render("PDF", deviceInfo, out mimeType, out encoding, out extension, out streamids, out warnings);
-            Session["BytesReverso"] = bytes;
-
-            string script = "<script type='text/javascript'>window.open('Reportes/ReportePDF_combinado.aspx');</script>";
-            Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "VentanaPadre", script);
-        }
-
-        private Reportes.Form1214_ds GenerarDSF1214()
-        {
-            var cxt = new Model1Container();
             Formulario1214 f1214 = Session["Form214"] as Formulario1214;
 
-            if (f1214.Id > 0)
+            using (var cxt = new Model1Container())
             {
-                f1214 = cxt.Formularios1214.First(ff => ff.Id == f1214.Id);
-            }
+                f1214 = cxt.Formularios1214.FirstOrDefault(x => x.Id == f1214.Id);
 
-            Reportes.Form1214_ds ret = new Reportes.Form1214_ds();
 
-            Reportes.Form1214_ds.f214Row drGeneral = ret.f214.Newf214Row();
-
-            drGeneral.Desde = f1214.Desde;
-            drGeneral.Hasta = f1214.Hasta;
-            drGeneral.Destino = f1214.Destino;
-            drGeneral.Dias = ((f1214.Hasta - f1214.Desde).Days + 1);
-            drGeneral.Anticipo = lbl_monto_anticipo.InnerText;
-            drGeneral.MontoAnticipo = f1214.MontoAnticipo;
-            drGeneral.Movilidad = f1214.Movilidad.ToString().Replace('_', ' ');
-            drGeneral.Numero = Cadena.CompletarConCeros(6, f1214.Id);
-            drGeneral.Tareas = f1214.TareasACumplir;
-
-            ret.f214.Rows.Add(drGeneral);
-
-            List<Agente1214> nomina = new List<Agente1214>();
-            nomina.Add(f1214.Nomina.First(aa => aa.JefeComicion && aa.Estado == EstadoAgente1214.Aprobado));
-            foreach (Agente1214 item in f1214.Nomina)
-            {
-                if (item.Estado == EstadoAgente1214.Aprobado && !item.JefeComicion)
+                Byte[] res = null;
+                using (MemoryStream ms = new MemoryStream())
                 {
-                    nomina.Add(item);
-                }
-            }
+                    //Genero el PDF en memoria para ir agregando las partes
+                    PdfWriter writer = new PdfWriter(ms);
+                    PdfDocument pdf = new PdfDocument(writer);
+                    Document document = new Document(pdf, PageSize.LEGAL);
 
-            for (int i = 1; i < 11; i++)
-            {
-                Reportes.Form1214_ds.NominaRow dr = ret.Nomina.NewNominaRow();
-                dr.Numero214 = Cadena.CompletarConCeros(6, f1214.Id);
-                dr.PosicionStr = Cadena.CompletarConCeros(2, i);
-                dr.Posicion = i;
 
-                if (nomina.Count() >= i)
-                {
-                    if (i == 1)
+                    //Creo la leyenda
+                    Text t_leyenda = new Text(ConfigurationManager.AppSettings["Leyenda"]);
+
+                    Paragraph leyenda = new Paragraph().Add(t_leyenda)
+                        .SetTextAlignment(TextAlignment.RIGHT)
+                        .SetFontSize(9);
+                    document.Add(leyenda);
+
+                    //Creo la imagen del membrete
+                    Image membrete = new Image(ImageDataFactory.Create(HttpContext.Current.Server.MapPath("../Imagenes/membrete.png"))).SetAutoScale(true);//.SetTextAlignment(TextAlignment.CENTER);
+                    document.Add(membrete);
+
+                    //Creo el titulo
+                    Paragraph titulo = new Paragraph("Formulario AT Nº 3168 Solicitud Comisión de Servicios")
+                       .SetTextAlignment(TextAlignment.CENTER)
+                       .SetBold()
+                       .SetFontSize(12)
+                       .SetMargins(
+                            /*top*/15
+                            ,/*right*/15
+                            , /*bottom*/10
+                            , /*left*/40);
+                    document.Add(titulo);
+
+                    //Creo lugar y fecha
+                    Text t_lugarYFecha = new Text(String.Format("Resistencia, {0}", f1214.Fecha_confeccion.Value.ToLongDateString()));
+                    Paragraph lugar_y_fecha = new Paragraph().Add(t_lugarYFecha)
+                       .SetTextAlignment(TextAlignment.RIGHT)
+                       .SetFontSize(12);
+                    document.Add(lugar_y_fecha);
+
+                    //Creo referencia
+                    Text t_referencia = new Text("Referencia: ").SetBold();
+                    Text t_referencia_valor = new Text("Autorización Comisión de Servicios");
+                    Paragraph referencia = new Paragraph()
+                        .Add(t_referencia)
+                        .Add(" ")
+                        .Add(t_referencia_valor)
+                        .SetMargins(
+                            /*top*/15
+                            ,/*right*/15
+                            , /*bottom*/10
+                            , /*left*/40)
+                        .SetFontSize(12);
+                    document.Add(referencia);
+
+                    //Creo el primer texto
+                    Text t_comunico = new Text(String.Format("Comunico al Señor Administrador General que ésta Dirección/Departamento tiene dispuesto una Comisión de Servicios por {0} ({1}) días a partir del día {2} al {3}, integrada por los agentes consignados a continuación: "
+                        , Numalet.ToCardinal(((f1214.Hasta - f1214.Desde).Days + 1))
+                        , ((f1214.Hasta - f1214.Desde).Days + 1).ToString()
+                        , f1214.Desde.ToLongDateString()
+                        , f1214.Hasta.ToLongDateString()
+                        ));
+
+                    Paragraph comunico = new Paragraph()
+                        .Add(t_comunico)
+                        .SetMargins(
+                            /*top*/15
+                            ,/*right*/15
+                            , /*bottom*/10
+                            , /*left*/40)
+                        .SetFontSize(12)
+                        .SetTextAlignment(TextAlignment.JUSTIFIED)
+                        .SetFontKerning(FontKerning.YES);
+                    document.Add(comunico);
+
+                    //Creo el jefe de comision
+                    Text t_jefe = new Text("Jefe de Comisión de Servicios").SetUnderline();
+                    Paragraph titulo_jefe = new Paragraph().Add("1. ").Add(t_jefe).Add(":")
+                         .SetMargins(
+                            /*top*/15
+                            ,/*right*/15
+                            , /*bottom*/5
+                            , /*left*/40)
+                        .SetFontSize(12)
+                        .SetBold();
+
+                    var nom_jefe = f1214.Nomina.First(x => x.JefeComicion && x.Estado == EstadoAgente1214.Aprobado).Agente;
+                    Paragraph jefe = new Paragraph().Add("    - ").Add(String.Format("{0} - Estrato:{3} - Legajo: {1} - CUIL: {2}", nom_jefe.ApellidoYNombre, nom_jefe.Legajo, nom_jefe.Legajo_datos_laborales.CUIT, f1214.Estrato1214.Estrato))
+                        .SetTextAlignment(TextAlignment.JUSTIFIED)
+                        .SetMargins(
+                            /*top*/0
+                            ,/*right*/15
+                            , /*bottom*/0
+                            , /*left*/55)
+                        .SetFontSize(12);
+                    document.Add(titulo_jefe);
+                    document.Add(jefe);
+
+                    //Trabajo con la nomina de agentes
+                    Text t_otros = new Text("Otros agentes afectados a la Comisión de Servicios").SetUnderline();
+                    Paragraph titulo_otros = new Paragraph().Add("2. ").Add(t_otros).Add(":")
+                         .SetMargins(
+                            /*top*/15
+                            ,/*right*/15
+                            , /*bottom*/5
+                            , /*left*/40)
+                        .SetFontSize(12)
+                        .SetBold();
+                    document.Add(titulo_otros);
+
+                    var nomina = f1214.Nomina.Where(x => !x.JefeComicion && !x.Chofer && x.Estado == EstadoAgente1214.Aprobado).ToList();
+
+                    foreach (Agente1214 item in nomina)
                     {
-                        dr.Agente = "Jefe de comisión: " + nomina[i - 1].Agente.ApellidoYNombre;
+                        Paragraph otro = new Paragraph().Add("    - ").Add(String.Format("{0} - Estrato:{3} - Legajo: {1} - CUIL: {2}", item.Agente.ApellidoYNombre, item.Agente.Legajo, item.Agente.Legajo_datos_laborales.CUIT, f1214.Estrato1214.Estrato))
+                            .SetTextAlignment(TextAlignment.JUSTIFIED)
+                            .SetMargins(
+                                /*top*/0
+                                ,/*right*/15
+                                , /*bottom*/0
+                                , /*left*/55)
+                            .SetFontSize(12);
+                        document.Add(otro);
                     }
-                    else
-                    {
-                        dr.Agente = nomina[i - 1].Agente.ApellidoYNombre;
-                    }
-                }
-                else
-                {
-                    dr.Agente = "/////////////////////////////";
-                }
 
-                ret.Nomina.Rows.Add(dr);
+                    Text t_destino = new Text(String.Format("{0}", f1214.Destino)).SetBold();
+
+                    Text t_tareas = new Text(String.Format("{0}", f1214.TareasACumplir)).SetBold();
+
+
+                    Paragraph destino = new Paragraph()
+                        .Add("La localidad donde se realizará la Comisión de servicio es ")
+                        .Add(t_destino)
+                        .Add(" y las tareas a realizar por orden de mi superior son: ")
+                        .Add(t_tareas)
+                        .SetMargins(
+                            /*top*/15
+                            ,/*right*/15
+                            , /*bottom*/10
+                            , /*left*/40)
+                        .SetFontSize(12)
+                        .SetTextAlignment(TextAlignment.JUSTIFIED)
+                        .SetFontKerning(FontKerning.YES);
+                    document.Add(destino);
+
+                    Paragraph p_para_la_presente = new Paragraph("Para la presente comisión estimaré disponer, por donde corresponda, se provea:")
+                        .SetMargins(
+                            /*top*/15
+                            ,/*right*/15
+                            , /*bottom*/0
+                            , /*left*/40);
+
+                    document.Add(p_para_la_presente);
+
+                    Text t_a = new Text("a. Medio de transporte utilizado:").SetBold();
+                    Paragraph p_a = new Paragraph().Add(t_a).Add(String.Format(" {0}", f1214.Movilidad.ToString()))
+                        .SetMargins(
+                            /*top*/0
+                            ,/*right*/15
+                            , /*bottom*/0
+                            , /*left*/40);
+                    document.Add(p_a);
+
+                    Text t_b = new Text("b. Anticipo de viáticos:").SetBold();
+                    Paragraph p_b = new Paragraph().Add(t_b).Add(String.Format(" {0}", f1214.AnticipoViaticos.ToString("C")))
+                        .SetMargins(
+                            /*top*/0
+                            ,/*right*/15
+                            , /*bottom*/0
+                            , /*left*/40);
+                    document.Add(p_b);
+
+                    Text t_c = new Text("c. Anticipo para otros gastos: ").SetBold();
+                    Paragraph p_c = new Paragraph().Add(t_c).Add(String.Format(" {0} {1}", f1214.Anticipo.ToString(), f1214.AnticipoMovilidad.ToString("C")))
+                        .SetMargins(
+                            /*top*/0
+                            ,/*right*/15
+                            , /*bottom*/0
+                            , /*left*/40);
+                    document.Add(p_c);
+
+
+                    Paragraph p_linea_firma = new Paragraph(".................................................                                              .................................................")
+                        .SetMargins(
+                            /*top*/70
+                            ,/*right*/15
+                            , /*bottom*/0
+                            , /*left*/40);
+                    document.Add(p_linea_firma);
+
+                    Paragraph p_firma = new Paragraph("Firma del Agente                                                                                                Autorización Superior inmediato")
+                        .SetFontSize(9)
+                        .SetMargins(
+                            /*top*/0
+                            ,/*right*/15
+                            , /*bottom*/0
+                            , /*left*/60);
+                    document.Add(p_firma);
+
+                    document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+
+                    
+                    Text t_medio = new Text("Medio de Transporte: ").SetBold();
+
+                    switch (f1214.Movilidad)
+                    {
+                        case Movilidad1214.Transporte_publico:
+                            Paragraph medio_transporte = new Paragraph().Add(t_medio).Add(String.Format(" Transporte público"))
+                                .SetFontSize(12)
+                                .SetMargins(
+                                    /*top*/40
+                                    ,/*right*/15
+                                    , /*bottom*/0
+                                    , /*left*/40);
+                            document.Add(medio_transporte);
+
+                            Paragraph p_medio_texto_publico = new Paragraph(String.Format("Para el cumplimiento de la comisión se dede proveer de Pesos {0} ({1}) en concepto de gastos de pasajes.-", Numalet.ToCardinal(f1214.AnticipoMovilidad), f1214.AnticipoMovilidad.ToString("C")))
+                                .SetFontSize(12)
+                                .SetTextAlignment(TextAlignment.JUSTIFIED)
+                                .SetMargins(
+                                    /*top*/0
+                                    ,/*right*/15
+                                    , /*bottom*/0
+                                    , /*left*/40);
+                            document.Add(p_medio_texto_publico);
+                            break;
+                        case Movilidad1214.Vehiculo_oficial:
+                            var chofer = f1214.Nomina.FirstOrDefault(x => x.JefeComicion && x.Estado == EstadoAgente1214.Aprobado);
+                            //f1214.Usa_chofer? String.Format("Agente: {0} - Estrato:{3} - Legajo: {1} - CUIL: {2}", chofer.Agente.ApellidoYNombre, chofer.Agente.Legajo, chofer.Agente.Legajo_datos_laborales.CUIT, f1214.Estrato1214.Estrato) : "No aplica";
+
+                            Paragraph medio_transporte_oficial = new Paragraph().Add(t_medio).Add(String.Format(" Vehículo oficial"))
+                                .SetFontSize(12)
+                                .SetMargins(
+                                    /*top*/40
+                                    ,/*right*/15
+                                    , /*bottom*/0
+                                    , /*left*/40);
+                            document.Add(medio_transporte_oficial);
+
+                            Text oficial_dominio = new Text(String.Format(" {0}", f1214.Vehiculo_dominio)).SetBold();
+
+                            Paragraph p_medio_oficial_texto = new Paragraph(String.Format("Para el cumplimiento de la comisión se dede proveer de Pesos {0} ({1}) en concepto de gastos de movilidad y afectar al vehículo oficial dominio ", Numalet.ToCardinal(f1214.AnticipoMovilidad), f1214.AnticipoMovilidad.ToString("C"))).Add(oficial_dominio);
+
+                            if (f1214.Usa_chofer)
+                            {
+                                Text t_chofer = new Text(String.Format(", conducido por {0}", String.Format("{0} - Estrato:{3} - Legajo: {1} - CUIL: {2}", chofer.Agente.ApellidoYNombre, chofer.Agente.Legajo, chofer.Agente.Legajo_datos_laborales.CUIT, f1214.Estrato1214.Estrato))).SetBold();
+                                p_medio_oficial_texto.Add(t_chofer);
+                            }
+
+                            p_medio_oficial_texto.SetFontSize(12)
+                            .SetTextAlignment(TextAlignment.JUSTIFIED)
+                            .SetMargins(
+                                /*top*/40
+                                ,/*right*/15
+                                , /*bottom*/0
+                                , /*left*/40);
+                            document.Add(p_medio_oficial_texto);
+                            break;
+                        case Movilidad1214.Vehiculo_particular:
+                            Paragraph medio_transporte_particular = new Paragraph().Add(t_medio).Add(String.Format(" Vehículo particular"))
+                                .SetFontSize(12)
+                                .SetMargins(
+                                    /*top*/40
+                                    ,/*right*/15
+                                    , /*bottom*/0
+                                    , /*left*/40);
+                            document.Add(medio_transporte_particular);
+
+                            Text particular_dominio = new Text(String.Format(" {0}", f1214.Vehiculo_dominio)).SetBold();
+                            Text particular_titular = new Text(String.Format(" {0}", f1214.Vehiculo_particular_titular)).SetBold();
+                            Text particular_tipo_combustible = new Text(String.Format(" {0}", f1214.Vehiculo_particular_tipo_combustible)).SetBold();
+                            Text particular_poliza = new Text(String.Format(" {0}", f1214.Vehiculo_particular_poliza_nro)).SetBold();
+                            Text particular_poliza_vigencia = new Text(String.Format(" {0}", f1214.Vehiculo_particular_poliza_vigencia)).SetBold();
+                            Text particular_poliza_cobertura = new Text(String.Format(" {0}", f1214.Vehiculo_particular_poliza_cobertura)).SetBold();
+
+                            Paragraph p_medio_particular_texto = new Paragraph(String.Format("Para el cumplimiento de la comisión se dede proveer de Pesos {0} ({1}) en concepto de gastos de movilidad. Datos del vehículo particular: dominio ", Numalet.ToCardinal(f1214.AnticipoMovilidad), f1214.AnticipoMovilidad.ToString("C"))).Add(particular_dominio);
+                            p_medio_particular_texto.Add(", perteneciente a ").Add(particular_titular).Add(", tipo de combustible ").Add(particular_tipo_combustible).Add(", número de póliza ").Add(particular_poliza).Add(" vigente hasta ").Add(particular_poliza_vigencia).Add(" tipo de cobertura ").Add(particular_poliza_cobertura);
+                            p_medio_particular_texto.SetFontSize(12)
+                            .SetTextAlignment(TextAlignment.JUSTIFIED)
+                            .SetMargins(
+                                /*top*/40
+                                ,/*right*/15
+                                , /*bottom*/0
+                                , /*left*/40);
+                            document.Add(p_medio_particular_texto);
+                            break;
+
+                    }
+
+                    Paragraph p_depto_manteminiento = new Paragraph(String.Format("Departamento de Mantenimiento y Bienes Patrimoniales, {0}", f1214.Fecha_confeccion.Value.ToShortDateString()))
+                         .SetMargins(
+                                /*top*/20
+                                ,/*right*/15
+                                , /*bottom*/0
+                                , /*left*/40);
+                    document.Add(p_depto_manteminiento);
+
+                    Paragraph firma_responsable = new Paragraph(".............................................................")
+                        .SetTextAlignment(TextAlignment.RIGHT)
+                        .SetMargins(
+                                /*top*/90
+                                ,/*right*/15
+                                , /*bottom*/0
+                                , /*left*/40);
+                    document.Add(firma_responsable);
+
+                    Paragraph firma_responsable_texto = new Paragraph("Firma y Sello del responsable a/c")
+                        .SetTextAlignment(TextAlignment.RIGHT)
+                        .SetMargins(
+                                /*top*/0
+                                ,/*right*/20
+                                , /*bottom*/0
+                                , /*left*/40);
+                    document.Add(firma_responsable_texto);
+
+
+                    //Cierro el documento
+                    document.Close();
+
+                    Session["Bytes"] = ms.ToArray();
+                }
             }
 
-            return ret;
-        }
-
-        private void RenderReportComision()
-        {
-            //Frente
-            ReportViewer viewer = new ReportViewer();
-            viewer.ProcessingMode = ProcessingMode.Local;
-            viewer.LocalReport.EnableExternalImages = true;
-            viewer.LocalReport.ReportPath = Server.MapPath("~/Aplicativo/Reportes/FComision_principal.rdlc");
-            Reportes.Fcomision_ds ds = GenerarDSFComision();
-
-            ReportDataSource general = new ReportDataSource("Formulario", ds.Formulario.Rows);
-            ReportDataSource detalle = new ReportDataSource("Nomina", ds.Nomina.Rows);
-
-            viewer.LocalReport.DataSources.Add(general);
-            viewer.LocalReport.DataSources.Add(detalle);
-
-            Microsoft.Reporting.WebForms.Warning[] warnings = null;
-            string[] streamids = null;
-            string mimeType = null;
-            string encoding = null;
-            string extension = null;
-            string deviceInfo = null;
-            byte[] bytes = null;
-            deviceInfo = "<DeviceInfo><SimplePageHeaders>True</SimplePageHeaders></DeviceInfo>";
-
-            //Render the report
-            bytes = viewer.LocalReport.Render("PDF", deviceInfo, out mimeType, out encoding, out extension, out streamids, out warnings);
-            Session["BytesFrente"] = bytes;
-
-
-            //Reverso
-            ReportViewer viewerreverso = new ReportViewer();
-            viewerreverso.ProcessingMode = ProcessingMode.Local;
-            viewerreverso.LocalReport.EnableExternalImages = true;
-            viewerreverso.LocalReport.ReportPath = Server.MapPath("~/Aplicativo/Reportes/Form1214_reverso_r.rdlc");
-
-            ReportDataSource general_reverso = new ReportDataSource("General", ds.Formulario.Rows);
-
-            viewerreverso.LocalReport.DataSources.Add(general_reverso);
-
-            bytes = viewerreverso.LocalReport.Render("PDF", deviceInfo, out mimeType, out encoding, out extension, out streamids, out warnings);
-            Session["BytesReverso"] = bytes;
-
-            string script = "<script type='text/javascript'>window.open('Reportes/ReportePDF_combinado.aspx');</script>";
+            string script = "<script type='text/javascript'>window.open('Reportes/ReportePDF.aspx');</script>";
             Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "VentanaPadre", script);
-        }
 
-        private Reportes.Fcomision_ds GenerarDSFComision()
-        {
-            var cxt = new Model1Container();
-            Formulario1214 f1214 = Session["Form214"] as Formulario1214;
 
-            if (f1214.Id > 0)
-            {
-                f1214 = cxt.Formularios1214.First(ff => ff.Id == f1214.Id);
-            }
-
-            Reportes.Fcomision_ds ret = new Reportes.Fcomision_ds();
-
-            Reportes.Fcomision_ds.FormularioRow drGeneral = ret.Formulario.NewFormularioRow();
-
-            drGeneral.Desde = f1214.Desde.ToLongDateString();
-            drGeneral.Hasta = f1214.Hasta.ToLongDateString();
-            drGeneral.Destino = f1214.Destino;
-            drGeneral.Dias = ((f1214.Hasta - f1214.Desde).Days + 1);
-            drGeneral.DiasLetra = Numalet.ToCardinal(drGeneral.Dias);
-            drGeneral.Anticipo = lbl_monto_anticipo.InnerText;
-            drGeneral.MontoAnticipo = f1214.MontoAnticipo;
-            drGeneral.Movilidad = f1214.Movilidad.ToString().Replace('_', ' ');
-            drGeneral.Numero = Cadena.CompletarConCeros(6, f1214.Id);
-            drGeneral.Tareas = f1214.TareasACumplir;
-            drGeneral.FechaConfeccion = f1214.Fecha_confeccion.Value.ToLongDateString();
-
-            drGeneral.Viaticos = f1214.Fuera_provincia ?
-                f1214.Estrato1214.ImpFueraProv * drGeneral.Dias : f1214.Estrato1214.ImpDentroProv * drGeneral.Dias;
-
-            drGeneral.Leyenda = ConfigurationManager.AppSettings["Leyenda"];
-            var jefe = f1214.Nomina.First(x => x.JefeComicion && x.Estado == EstadoAgente1214.Aprobado).Agente;
-            var chofer = f1214.Nomina.FirstOrDefault(x => x.JefeComicion && x.Estado == EstadoAgente1214.Aprobado);
-            drGeneral.Jefe = String.Format("{0} - Estrato:{3} - Legajo: {1} - CUIL: {2}", jefe.ApellidoYNombre, jefe.Legajo, jefe.Legajo_datos_laborales.CUIT, f1214.Estrato1214.Estrato);
-            drGeneral.Chofer = f1214.Usa_chofer ? String.Format("Agente: {0} - Estrato:{3} - Legajo: {1} - CUIL: {2}", chofer.Agente.ApellidoYNombre, chofer.Agente.Legajo, chofer.Agente.Legajo_datos_laborales.CUIT, f1214.Estrato1214.Estrato) : "No aplica";
-
-            ret.Formulario.Rows.Add(drGeneral);
-
-            List<Agente1214> nomina = new List<Agente1214>();
-
-            nomina = f1214.Nomina.Where(x => !x.JefeComicion && !x.Chofer && x.Estado == EstadoAgente1214.Aprobado).ToList();
-
-            foreach (Agente1214 item in nomina)
-            {
-                Agente ag = item.Agente;
-                Reportes.Fcomision_ds.NominaRow drNomina = ret.Nomina.NewNominaRow();
-                drNomina.Numero214 = Cadena.CompletarConCeros(6, f1214.Id);
-                drNomina.Agente = String.Format("{0} - Estrato:{3} - Legajo: {1} - CUIL: {2}", ag.ApellidoYNombre, ag.Legajo, ag.Legajo_datos_laborales.CUIT, f1214.Estrato1214.Estrato);
-                ret.Nomina.Rows.Add(drNomina);
-            }
-
-            return ret;
+            #endregion
         }
 
         #endregion
