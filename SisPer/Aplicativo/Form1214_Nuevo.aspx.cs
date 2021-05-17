@@ -122,6 +122,11 @@ namespace SisPer.Aplicativo
                     f1214.Movilidad = Movilidad1214.Vehiculo_oficial;
                     f1214.Vehiculo_dominio = txt_dominio_vehiculo_oficial.Text;
                     f1214.Usa_chofer = ddl_con_chofer.SelectedValue == "1";
+                    f1214.Vehiculo_particular_poliza_cobertura = "";
+                    f1214.Vehiculo_particular_poliza_nro = "";
+                    f1214.Vehiculo_particular_poliza_vigencia = "";
+                    f1214.Vehiculo_particular_tipo_combustible = "";
+                    f1214.Vehiculo_particular_titular = "";
                     break;
                 case "2":
                     f1214.Movilidad = Movilidad1214.Vehiculo_particular;
@@ -134,6 +139,12 @@ namespace SisPer.Aplicativo
                     break;
                 case "3":
                     f1214.Movilidad = Movilidad1214.Transporte_publico;
+                    f1214.Vehiculo_dominio = "";
+                    f1214.Vehiculo_particular_poliza_cobertura = "";
+                    f1214.Vehiculo_particular_poliza_nro = "";
+                    f1214.Vehiculo_particular_poliza_vigencia = "";
+                    f1214.Vehiculo_particular_tipo_combustible = "";
+                    f1214.Vehiculo_particular_titular = "";
                     break;
                 default:
                     break;
@@ -202,6 +213,8 @@ namespace SisPer.Aplicativo
                 btn_aprobar.Visible = f1214.Estado == Estado1214.Enviado && (usuarioLogueado.Perfil == PerfilUsuario.Personal || usuarioLogueado.Area.Nombre == "Despacho");
             }
 
+            id_formulario.Value = f1214.Id.ToString();
+
             #region fechas, destino, tareas
 
             if (f1214.Desde != DateTime.MinValue && f1214.Hasta != DateTime.MinValue)
@@ -231,12 +244,6 @@ namespace SisPer.Aplicativo
             dentro_fuera.Value = f1214.Fuera_provincia ? "2" : "1";
             tb_tareas.Text = f1214.TareasACumplir;
             tb_destino.Enabled = tb_tareas.Enabled = f1214.Id == 0;
-
-            if (f1214.Id != 0)
-            {
-                btn_action.Attributes["disabled"] = "disabled";
-
-            }
 
             #endregion
 
@@ -299,11 +306,6 @@ namespace SisPer.Aplicativo
 
             ddl_con_chofer.Enabled = txt_dominio_vehiculo_oficial.Enabled = tb_monto_anticipo.Enabled = f1214.Id == 0;
 
-            if (f1214.Id != 0)
-            {
-                btn_seleccion.Attributes["disabled"] = "disabled";
-            }
-
             if (f1214.Desde == DateTime.MinValue)
             {
                 panel_movilidad.Attributes["Style"] = "display:none";
@@ -320,16 +322,12 @@ namespace SisPer.Aplicativo
                 switch (hf_movilidad.Value)
                 {
                     case "1":
-                        btn_seleccion.InnerText = "Vehículo oficial ";
-                        lbl_monto_anticipo.InnerText = "Gastos vehículo: nafta, otros.";
                         txt_dominio_vehiculo_oficial.Text = f1214.Vehiculo_dominio;
 
                         txt_dominio_vehiculo_oficial.Enabled = false;
 
                         break;
                     case "2":
-                        btn_seleccion.InnerText = "Vehículo particular ";
-                        lbl_monto_anticipo.InnerText = "Gastos vehículo: nafta, otros.";
                         tb_dominio_particular.Text = f1214.Vehiculo_dominio;
                         tb_tipo_combustible_particular.Text = f1214.Vehiculo_particular_tipo_combustible;
                         tb_titular.Text = f1214.Vehiculo_particular_titular;
@@ -348,17 +346,13 @@ namespace SisPer.Aplicativo
                         hf_vigencia.Value = "deshabilitar";
 
                         break;
-                    case "3":
-                        btn_seleccion.InnerText = "Transporte público ";
-                        lbl_monto_anticipo.InnerText = "Pasajes";
-                        break;
                     default:
                         break;
                 }
 
                 ddl_con_chofer.SelectedValue = f1214.Usa_chofer ? "1" : "2";
 
-                tb_monto_anticipo.Text = f1214.MontoAnticipo.ToString();
+                tb_monto_anticipo.Text = f1214.AnticipoMovilidad.ToString();
 
             }
             #endregion
@@ -833,7 +827,7 @@ namespace SisPer.Aplicativo
                     agNomina.Id_Agente = ag.Id;
                     agNomina.JefeComicion = false;
                     agNomina.Chofer = true;
-                    agNomina.Id_Jefe = ag.Area.Agentes.Where(aa => (aa.Jefe || aa.JefeTemporal) && aa.FechaBaja == null).First().Id; agNomina.Id_Jefe = ag.Area.Agentes.FirstOrDefault(aa => (aa.Jefe || aa.JefeTemporal) && aa.FechaBaja == null).Id;
+                    agNomina.Id_Jefe = ag.Id;
                     agNomina.Estado = EstadoAgente1214.Aprobado;
                     agNomina.Id_Jefe = usuarioLogueado.Id;
                     agNomina.FechaAprobacion = DateTime.Now;
@@ -1008,6 +1002,7 @@ namespace SisPer.Aplicativo
                     f1214.AnticipoViaticos = f1214.Fuera_provincia ? estrato.ImpFueraProv * dias : estrato.ImpDentroProv * dias;
                     f1214.Usa_chofer = ddl_con_chofer.SelectedValue == "1";
                     f1214.Fecha_confeccion = DateTime.Now;
+
                     cxt.Formularios1214.AddObject(f1214);
                     cxt.SaveChanges();
 
@@ -1015,6 +1010,10 @@ namespace SisPer.Aplicativo
 
                     Response.Redirect("~/Aplicativo/Formulario1214_Generados.aspx");
                 }
+            }
+            else
+            {
+                CargarDatos214();
             }
         }
 
@@ -1520,7 +1519,14 @@ namespace SisPer.Aplicativo
 
         protected void cv_anticipo_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            args.IsValid = hf_movilidad.Value != "0";
+            try
+            {
+                args.IsValid = Convert.ToInt32(hf_movilidad.Value) != 0;
+            }
+            catch
+            {
+                args.IsValid = false;
+            }
         }
 
         protected void cv_monto_anticipo_ServerValidate(object source, ServerValidateEventArgs args)

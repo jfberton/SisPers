@@ -78,6 +78,15 @@ namespace SisPer.Aplicativo
         protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary2;
 
         /// <summary>
+        /// Control id_formulario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField id_formulario;
+
+        /// <summary>
         /// Control ValidationSummary1.
         /// </summary>
         /// <remarks>
@@ -238,15 +247,6 @@ namespace SisPer.Aplicativo
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tb_destino;
-
-        /// <summary>
-        /// Control btn_action.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btn_action;
 
         /// <summary>
         /// Control rv_destino.
@@ -672,15 +672,6 @@ namespace SisPer.Aplicativo
         protected global::System.Web.UI.WebControls.HiddenField hf_movilidad;
 
         /// <summary>
-        /// Control btn_seleccion.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btn_seleccion;
-
-        /// <summary>
         /// Control cv_anticipo.
         /// </summary>
         /// <remarks>
@@ -688,15 +679,6 @@ namespace SisPer.Aplicativo
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CustomValidator cv_anticipo;
-
-        /// <summary>
-        /// Control lbl_monto_anticipo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lbl_monto_anticipo;
 
         /// <summary>
         /// Control tb_monto_anticipo.

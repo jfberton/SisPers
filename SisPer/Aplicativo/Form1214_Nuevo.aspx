@@ -27,6 +27,8 @@
                 CssClass="validationsummary panel panel-danger " HeaderText="<div class='panel-heading'>&nbsp;Corrija los siguientes errores antes de continuar:</div>" />
             <p />
 
+            <asp:HiddenField runat="server" ID="id_formulario" />
+
             <%--Días, destino y tareas--%>
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -102,8 +104,6 @@
                     </div>
                     <p />
                     <div class="row">
-                        
-
                         <div class="col-md-11">
                             <asp:HiddenField ID="dentro_fuera" runat="server" />
 
@@ -111,7 +111,7 @@
                                 <span class="input-group-addon">Destino</span>
                                 <asp:TextBox runat="server" ID="tb_destino" CssClass="form-control" />
                                 <div class="input-group-btn">
-                                    <button type="button" class="btn btn-default dropdown-toggle" runat="server" id="btn_action" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Seleccionar <span class="caret"></span></button>
+                                    <button type="button" class="btn btn-default dropdown-toggle" id="btn_action" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Seleccionar <span class="caret"></span></button>
                                     <ul class="dropdown-menu dropdown-menu-right">
                                         <li><a href="#" onclick="SeleccionDentroFuera(0);return false;">Seleccionar</a></li>
                                         <li><a href="#" onclick="SeleccionDentroFuera(1);return false;">Dentro de la provincia</a></li>
@@ -381,11 +381,10 @@
                         <div class="col-md-5">
                              <asp:HiddenField ID="hf_movilidad" runat="server" />
 
-
                             <div class="input-group">
                                 <span class="input-group-addon">Movilidad</span>
                                 <div class="input-group-btn">
-                                    <button type="button" class="btn btn-default dropdown-toggle" runat="server" id="btn_seleccion" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Seleccionar <span class="caret"></span></button>
+                                    <button type="button" class="btn btn-default dropdown-toggle" id="btn_seleccion" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Seleccionar <span class="caret"></span></button>
                                     <ul class="dropdown-menu dropdown-menu-right">
                                         <li><a href="#" onclick="SeleccionMovilidad(0);return false;">Seleccionar</a></li>
                                         <li><a href="#" onclick="SeleccionMovilidad(1);return false;">Vehículo oficial</a></li>
@@ -399,7 +398,7 @@
                             ErrorMessage="Debe seleccionar un tipo de movilidad." ForeColor="Red" ValidationGroup="general_214" OnServerValidate="cv_anticipo_ServerValidate" />
                         <div class="col-md-4">
                             Anticipo para:
-                            <label id="lbl_monto_anticipo" runat="server" class="badge">Debe seleccionar el tipo de mobilidad.</label>
+                            <label id="lbl_monto_anticipo" class="badge">Debe seleccionar el tipo de mobilidad.</label>
                         </div>
                         <div class="col-md-3">
                             <div class="input-group">
@@ -579,7 +578,7 @@
             </div>
 
 
-
+            <%--botones confirmar eliminar aprobar, etc--%>
             <div class="row text-right">
                 <div class="col-md-12">
                     <asp:Button Text="Confeccionar" CssClass="btn btn-lg btn-primary" OnClick="btn_Confeccionar_Click" runat="server" ID="btn_Confeccionar" />
@@ -998,6 +997,7 @@
         var d = new Date;
 
         $(function () {
+
             var d = new Date();
             var e = new Date(d.getFullYear(), d.getMonth(), d.getDate());
             var hidden_dtp = document.getElementById('<%=hf_vigencia.ClientID %>');
@@ -1033,16 +1033,14 @@
                 $('#datetimepicker3').data("DateTimePicker").disable();
             }
 
-            ActualizarDestinoAnticipo();
-
             let hidden_seleccion = document.getElementById('<%=dentro_fuera.ClientID %>');
             let hidden_seleccion_movilidad = document.getElementById('<%=hf_movilidad.ClientID %>');
 
             SeleccionDentroFuera(hidden_seleccion.value);
-            SeleccionMovilidad(hidden_seleccion_movilidad);
-
+            SeleccionMovilidad(hidden_seleccion_movilidad.value);
         });
     </script>
+    
 
     <script>
 
@@ -1079,7 +1077,8 @@
         function SeleccionDentroFuera(seleccion) {
 
             let valorSeleccionado = document.getElementById('<%=dentro_fuera.ClientID %>');
-            let btn = document.getElementById('<%=btn_action.ClientID %>');
+            let btn = document.getElementById('btn_action');
+            let id_form = document.getElementById('<%=id_formulario.ClientID %>');
 
             if (seleccion == "0") {
                 btn.innerText = 'Seleccionar '
@@ -1098,34 +1097,16 @@
 
             btn.append(span);
 
+            if (id_form.value != "0") {
+                btn.setAttribute('disabled', true);
+            }
+
             valorSeleccionado.value = seleccion;
 
         }
 
         function SeleccionMovilidad(seleccion) {
             let valorSeleccionado = document.getElementById('<%=hf_movilidad.ClientID %>');
-            let btn = document.getElementById('<%=btn_seleccion.ClientID %>');
-            btn = document.createElement('span')
-
-            if (seleccion == "0") {
-                btn.innerText = 'Seleccionar '
-            }
-
-            if (seleccion == "1") {
-                btn.innerText = 'Vehículo oficial '
-            }
-
-            if (seleccion == "2") {
-                btn.innerText = 'Vehículo particular '
-            }
-            if (seleccion == "3") {
-                btn.innerText = 'Transporte público '
-            }
-
-            let span = document.createElement('span')
-            span.className = 'caret';
-
-            btn.append(span);
 
             valorSeleccionado.value = seleccion;
 
@@ -1133,8 +1114,15 @@
         }
 
         function ActualizarDestinoAnticipo() {
+
+            var id_form = document.getElementById('<%=id_formulario.ClientID %>');
+
+            var btn = document.getElementById('btn_seleccion');
+
+            btn.innerText = 'Seleccionar ';
+
             var movil = document.getElementById('<%=hf_movilidad.ClientID %>');
-            var anticipo = document.getElementById('<%=lbl_monto_anticipo.ClientID%>');
+            var anticipo = document.getElementById('lbl_monto_anticipo');
             var tb_monto = document.getElementById('<%=tb_monto_anticipo.ClientID%>');
 
             var fila_datos_vehiculo_oficial = document.getElementById('fila_datos_vehiculo_oficial');
@@ -1144,6 +1132,7 @@
 
             if (movil.value == "0") {
                 anticipo.textContent = "Debe seleccionar el tipo de mobilidad.";
+               
                 tb_monto.style = 'display: none';
                 fila_datos_vehiculo_oficial.style = 'display: none';
                 fila_datos_vehiculo_particular.style = 'display: none';
@@ -1157,9 +1146,11 @@
                 fila_datos_vehiculo_particular.style = 'display: none';
 
                 if (movil.value == "1") {
+                    btn.innerText = 'Vehículo oficial '
                     fila_datos_vehiculo_oficial.style = 'display:normal';
                 }
                 else {
+                    btn.innerText = 'Vehículo particular '
                     fila_datos_vehiculo_particular.style = 'display:normal';
                 }
 
@@ -1172,11 +1163,21 @@
             }
 
             if (movil.value == "3") {
-
+                btn.innerText = 'Transporte público '
                 anticipo.textContent = "Pasajes";
                 tb_monto.disabled = false;
                 fila_datos_vehiculo_oficial.style = 'display: none';
                 fila_datos_vehiculo_particular.style = 'display: none';
+            }
+
+            var span = document.createElement('span')
+            span.className = 'caret';
+
+            btn.append(span);
+
+            if (id_form.value != "0") {
+                btn.setAttribute('disabled', true);
+                tb_monto_anticipo.setAttribute('disabled', true);
             }
         }
 
