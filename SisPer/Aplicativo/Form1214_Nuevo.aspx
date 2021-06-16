@@ -583,8 +583,8 @@
                 <div class="col-md-12">
                     <asp:Button Text="Confeccionar" CssClass="btn btn-lg btn-primary" OnClick="btn_Confeccionar_Click" runat="server" ID="btn_Confeccionar" />
                     <asp:Button Text="Aprobar" CssClass="btn btn-lg btn-success" OnClick="btn_aprobar_Click" runat="server" ID="btn_aprobar" />
-                    <asp:Button Text="Enviar" CssClass="btn btn-lg btn-success" OnClick="btn_Enviar_Click" runat="server" ID="btn_Enviar" />
-                    <asp:Button Text="Imprimir" CssClass="btn btn-lg btn-primary" OnClick="btn_Imprimir_Click" runat="server" ID="btn_Imprimir" />
+                    <asp:Button Text="Enviar e imprimir" CssClass="btn btn-lg btn-success" OnClick="btn_Enviar_e_imprimir_Click" runat="server" ID="btn_Enviar" />
+                    <%--<asp:Button Text="Volver" CssClass="btn btn-lg btn-primary" OnClick="btn_Volver_Click" runat="server" ID="btn_Imprimir" />--%>
                     <asp:Button Text="Anular" CssClass=" btn btn-lg btn-danger" OnClick="btn_Anular_Click" runat="server" ID="btn_Anular" />
                     <asp:Button Text="Cancelar" CssClass=" btn btn-lg btn-default" OnClick="btn_Cancelar_Click" runat="server" ID="btn_Cancelar" />
                 </div>

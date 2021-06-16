@@ -40,9 +40,9 @@ namespace SisPer.Aplicativo.Menues
                 lbl_mensajesNuevos.Text = mensajesSinLeer > 0 ? mensajesSinLeer.ToString() : "";
                 mensajes.Visible = mensajesSinLeer > 0;
 
-                int solicitudes214 = cxt.Agentes1214.Count(aa => aa.Estado == EstadoAgente1214.Solicitado);
-                lbl_novedades214.Text = lbl_solicitudes.Text = solicitudes214.ToString();
-                novedades214.Visible = solicitudes.Visible = solicitudes214 > 0;
+                //int solicitudes214 = cxt.Agentes1214.Count(aa => aa.Estado == EstadoAgente1214.Solicitado);
+                //lbl_novedades214.Text = lbl_solicitudes.Text = solicitudes214.ToString();
+                //novedades214.Visible = solicitudes.Visible = solicitudes214 > 0;
             }
         }
 

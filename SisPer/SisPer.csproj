@@ -157,7 +157,7 @@
     <Content Include="Aplicativo\Controles\MensageBienvenida.ascx" />
     <Content Include="Aplicativo\Controles\OtorgarBonificacion.ascx" />
     <Content Include="Aplicativo\Form1214_Nuevo.aspx" />
-    <Content Include="Aplicativo\Form1214_Nuevo_.aspx" />
+    <Content Include="Aplicativo\Formulario1214_Anticipos.aspx" />
     <Content Include="Aplicativo\Formulario1214_Generados.aspx" />
     <Content Include="Aplicativo\Formulario1214_Solicitudes.aspx" />
     <Content Include="Aplicativo\Guardia_Ag_Observacion.aspx" />
@@ -1239,14 +1239,14 @@
     <Compile Include="Aplicativo\Form1214_Nuevo.aspx.designer.cs">
       <DependentUpon>Form1214_Nuevo.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Aplicativo\Form1214_Nuevo_.aspx.cs">
-      <DependentUpon>Form1214_Nuevo_.aspx</DependentUpon>
+    <Compile Include="Aplicativo\Formulario1214.cs" />
+    <Compile Include="Aplicativo\Formulario1214_Anticipos.aspx.cs">
+      <DependentUpon>Formulario1214_Anticipos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Aplicativo\Form1214_Nuevo_.aspx.designer.cs">
-      <DependentUpon>Form1214_Nuevo_.aspx</DependentUpon>
+    <Compile Include="Aplicativo\Formulario1214_Anticipos.aspx.designer.cs">
+      <DependentUpon>Formulario1214_Anticipos.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Aplicativo\Formulario1214.cs" />
     <Compile Include="Aplicativo\Formulario1214_Generados.aspx.cs">
       <DependentUpon>Formulario1214_Generados.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

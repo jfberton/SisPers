@@ -83,18 +83,13 @@
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Form AT Nº 3168
-                                <span class="badge" runat="server" id="novedades214">
+                               <%-- <span class="badge" runat="server" id="novedades214">
                                     <small>
                                         <asp:Label Text="" ID="lbl_novedades214" runat="server" /></small></span>
-                                <span class="caret"></span>
+                                <span class="caret"></span>--%>
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="../Aplicativo/Form1214_Nuevo_.aspx">Nuevo AT Nº 3168</a></li>
-                                <li><a href="../Aplicativo/Formulario1214_Solicitudes.aspx">Solicitudes
-                                    <span class="badge" runat="server" id="solicitudes">
-                                        <small>
-                                            <asp:Label Text="" ID="lbl_solicitudes" runat="server" /></small></span>
-                                </a></li>
                                 <li><a href="../Aplicativo/Formulario1214_Generados.aspx">Generados</a></li>
                             </ul>
                         </li>

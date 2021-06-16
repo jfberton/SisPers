@@ -915,15 +915,6 @@ namespace SisPer.Aplicativo
         protected global::System.Web.UI.WebControls.Button btn_Enviar;
 
         /// <summary>
-        /// Control btn_Imprimir.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_Imprimir;
-
-        /// <summary>
         /// Control btn_Anular.
         /// </summary>
         /// <remarks>

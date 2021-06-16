@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SisPer.Aplicativo.Controles;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,9 +14,10 @@ namespace SisPer.Aplicativo
         {
             if (!IsPostBack)
             {
-                #region Menues
                 Agente usuarioLogueado = Session["UsuarioLogueado"] as Agente;
-                
+
+                #region Menues
+
                 if (usuarioLogueado == null)
                 {
                     Response.Redirect("~/Default.aspx?mode=session_end");
@@ -35,7 +37,43 @@ namespace SisPer.Aplicativo
                 #endregion
 
                 CargarF1214();
+
+                if (usuarioLogueado.Area.Nombre == "Sub-Administración")
+                {
+                    CargarF1214Enviados();
+                }
+                else
+                {
+                    panel_enviados.Attributes["Style"] = "display:none";
+                }
             }
+        }
+
+        private void CargarF1214Enviados()
+        {
+            Agente usuarioLogueado = Session["UsuarioLogueado"] as Agente;
+            Model1Container cxt = new Model1Container();
+
+
+
+            var items = (from ff in cxt.Formularios1214
+                         where
+                         ff.Estado == Estado1214.Enviado
+                         select new
+                         {
+                             Numero = ff.Id,
+                             Estado = ff.Estado,
+                             Generadopor = ff.GeneradoPor.ApellidoYNombre,
+                             Destino = ff.Destino,
+                             Desde = ff.Desde,
+                             Hasta = ff.Hasta,
+                             Jefe = ff.Nomina.FirstOrDefault(aa => aa.JefeComicion && aa.Estado != EstadoAgente1214.Cancelado) != null ? ff.Nomina.FirstOrDefault(aa => aa.JefeComicion && aa.Estado != EstadoAgente1214.Cancelado).Agente.ApellidoYNombre : string.Empty,
+                             Tareas = ff.TareasACumplir,
+                             IdF1214 = ff.Id
+                         }).ToList();
+
+            gv_Form1214_enviados.DataSource = items;
+            gv_Form1214_enviados.DataBind();
         }
 
         private void CargarF1214()
@@ -43,10 +81,12 @@ namespace SisPer.Aplicativo
             Agente usuarioLogueado = Session["UsuarioLogueado"] as Agente;
             Model1Container cxt = new Model1Container();
 
+
+
             var items = (from ff in cxt.Formularios1214
                          where
-                         //ff.Estado == Estado1214.Confeccionado &&
-                         (usuarioLogueado.Perfil == PerfilUsuario.Personal || ff.GeneradoPor.Id == usuarioLogueado.Id)
+                         //(usuarioLogueado.Perfil == PerfilUsuario.Personal || ff.GeneradoPor.Id == usuarioLogueado.Id)
+                         ff.GeneradoPor.Id == usuarioLogueado.Id 
                          select new
                          {
                              Numero = ff.Id,
@@ -63,7 +103,7 @@ namespace SisPer.Aplicativo
             gv_form1214.DataSource = items;
             gv_form1214.DataBind();
 
-            if(usuarioLogueado.Perfil != PerfilUsuario.Personal)
+            if (usuarioLogueado.Perfil != PerfilUsuario.Personal)
             {
                 gv_form1214.Columns[ObtenerColumna("Confeccionó")].Visible = false;
             }
@@ -99,5 +139,30 @@ namespace SisPer.Aplicativo
             Session["id214"] = idf1214;
             Response.Redirect("~/Aplicativo/Form1214_Nuevo.aspx");
         }
+
+        protected void btn_reimprimir_Click(object sender, ImageClickEventArgs e)
+        {
+            using (var cxt = new Model1Container())
+            {
+                int idf1214 = Convert.ToInt32(((ImageButton)sender).CommandArgument);
+                Formulario1214 formulario = cxt.Formularios1214.FirstOrDefault(f => f.Id == idf1214);
+                if (formulario != null && formulario.Estado == Estado1214.Enviado)
+                {
+                    #region imprimir
+
+                    Session["Bytes"] = formulario.GenerarPDFSolicitud();
+                    string script = "<script type='text/javascript'>window.open('Reportes/ReportePDF.aspx');</script>";
+                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "VentanaPadre", script);
+
+                    #endregion
+                }
+                else
+                {
+                    MessageBox.Show(this, "Solo se pueden reimprimir solicitudes en estado Enviada!", MessageBox.Tipo_MessageBox.Info);
+                }
+            }
+        }
+
+
     }
 }

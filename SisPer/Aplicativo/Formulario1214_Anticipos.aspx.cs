@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace SisPer.Aplicativo
 {
-    public partial class Formulario1214_Solicitudes : System.Web.UI.Page
+    public partial class Formulario1214_Anticipos : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -40,97 +39,7 @@ namespace SisPer.Aplicativo
         private void CargarPendientes()
         {
             Agente usuarioLogueado = Session["UsuarioLogueado"] as Agente;
-
-            //if (usuarioLogueado.Perfil == PerfilUsuario.Personal)
-            //{
-            //    CargarPendientesPerfilPersonal();
-            //}
-            //else
-            //{
             CargarPendientesAgentesComunes();
-
-            //}
-           
-        }
-
-        private void CargarPendientesPerfilPersonal()
-        {
-            using (var cxt = new Model1Container())
-            {
-                var items = (from aa in cxt.Agentes1214
-                             where aa.Estado == EstadoAgente1214.Solicitado
-                             select new
-                             {
-                                 agente214_id = aa.Id,
-                                 area = aa.Agente.Area.Nombre,
-                                 f1214_id = aa.Formulario1214Id,
-                                 agente = aa.Agente.ApellidoYNombre,
-                                 destino = aa.Formulario1214.Destino,
-                                 desde = aa.Formulario1214.Desde,
-                                 hasta = aa.Formulario1214.Hasta,
-                                 jefe_comision = aa.Formulario1214.Nomina.FirstOrDefault(nn => nn.JefeComicion).Agente.ApellidoYNombre,
-                                 tareas = aa.Formulario1214.TareasACumplir
-                             }).ToList();
-
-                var itemsFormateados = (from item in items
-                                        select new
-                                        {
-                                            agente214_id = item.agente214_id,
-                                            area = item.area,
-                                            f1214_id = Cadena.CompletarConCeros(6, item.f1214_id),
-                                            agente = item.agente,
-                                            destino = item.destino,
-                                            desde = item.desde,
-                                            hasta = item.hasta,
-                                            desde_long_str = item.desde.ToLongDateString(),
-                                            hasta_long_str = item.hasta.ToLongDateString(),
-                                            jefe_comision = item.jefe_comision,
-                                            dias = ((item.hasta - item.desde).Days + 1).ToString(),
-                                            tareas = item.tareas
-                                        }).ToList();
-
-                gv_pendientes.DataSource = itemsFormateados;
-                gv_pendientes.DataBind();
-
-                var items_otros = (from aa in cxt.Agentes1214
-                                   where aa.Estado != EstadoAgente1214.Solicitado
-                                   select new
-                                   {
-                                       agente214_id = aa.Id,
-                                       area = aa.Agente.Area.Nombre,
-                                       f1214_id = aa.Formulario1214Id,
-                                       estado_1214 = aa.Formulario1214.Estado,
-                                       agente = aa.Agente.ApellidoYNombre,
-                                       destino = aa.Formulario1214.Destino,
-                                       desde = aa.Formulario1214.Desde,
-                                       hasta = aa.Formulario1214.Hasta,
-                                       jefe_comision = aa.Formulario1214.Nomina.FirstOrDefault(nn => nn.JefeComicion).Agente.ApellidoYNombre,
-                                       tareas = aa.Formulario1214.TareasACumplir,
-                                       estado_solicitud = aa.Estado
-                                   }).ToList();
-
-                var itemsFormateados_otros = (from item in items_otros
-                                              select new
-                                              {
-                                                  agente214_id = item.agente214_id,
-                                                  area = item.area,
-                                                  f1214_id = Cadena.CompletarConCeros(6, item.f1214_id),
-                                                  estado_1214 = item.estado_1214.ToString(),
-                                                  agente = item.agente,
-                                                  destino = item.destino,
-                                                  desde = item.desde,
-                                                  hasta = item.hasta,
-                                                  desde_long_str = item.desde.ToLongDateString(),
-                                                  hasta_long_str = item.hasta.ToLongDateString(),
-                                                  jefe_comision = item.jefe_comision,
-                                                  dias = ((item.hasta - item.desde).Days + 1).ToString(),
-                                                  tareas = item.tareas,
-                                                  estado_solicitud = item.estado_solicitud.ToString()
-                                              }).ToList();
-
-                gv_otras_solicitudes.DataSource = itemsFormateados_otros;
-                gv_otras_solicitudes.DataBind();
-            }
         }
 
         private void CargarPendientesAgentesComunes()
