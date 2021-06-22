@@ -49,8 +49,17 @@ namespace SisPer.Aplicativo.Menues
                 mensajes.Visible = mensajesSinLeer > 0;
 
                 int solicitudes214 = cxt.Agentes1214.Count(aa => aa.Estado == EstadoAgente1214.Solicitado && aa.Id_Jefe == agente.Id);
-                lbl_novedades214.Text = lbl_solicitudes.Text = solicitudes214.ToString();
-                novedades214.Visible = solicitudes.Visible = solicitudes214 > 0;
+                lbl_solicitudes.Text = solicitudes214.ToString();
+                solicitudes.Visible = solicitudes214 > 0;
+
+                int solicitudes_enviadas_sub = cxt.Formularios1214.Count(ff => ff.Estado == Estado1214.Enviado && agente.Area.Nombre == "Sub-Administración");
+                solicitudes_subadministracion.Visible = solicitudes_enviadas_sub > 0;
+                lbl_solicitudes_subadministracion.Text = solicitudes_enviadas_sub.ToString();
+
+                int novedades3168Totales = solicitudes214 + solicitudes_enviadas_sub;
+
+                lbl_novedades214.Text = novedades3168Totales.ToString();
+                novedades214.Visible = novedades3168Totales > 0;
             }
         }
 

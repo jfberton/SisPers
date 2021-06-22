@@ -39,6 +39,32 @@ namespace SisPer.Aplicativo.Menues
 
                 lbl_mensajesNuevos.Text = mensajesSinLeer > 0 ? mensajesSinLeer.ToString() : "";
                 mensajes.Visible = mensajesSinLeer > 0;
+
+                int solicitudesDeAnticipo = 0;
+
+                if (agente.Area.Nombre == "Administración")
+                {
+                    solicitudesDeAnticipo = cxt.Agentes1214.Count(aa => aa.Formulario1214.Estado == Estado1214.Aprobada
+                                                                            && aa.Estado == EstadoAgente1214.Aprobado
+                                                                            && aa.NroAnticipo == null);
+                    lbl_solicitudes.Text = solicitudesDeAnticipo.ToString();
+                    solicitudes.Visible = solicitudesDeAnticipo > 0;
+                }
+                else
+                {
+                    li_solicitudes.Attributes["Style"] = "display:none";
+                    solicitudes.Visible = false;
+                }
+
+                int solicitudes_enviadas_sub = cxt.Formularios1214.Count(ff => ff.Estado == Estado1214.Enviado && agente.Area.Nombre == "Sub-Administración");
+                solicitudes_subadministracion.Visible = solicitudes_enviadas_sub > 0;
+                lbl_solicitudes_subadministracion.Text = solicitudes_enviadas_sub.ToString();
+
+                int novedades3168Totales = solicitudesDeAnticipo + solicitudes_enviadas_sub;
+
+                lbl_novedades214.Text = novedades3168Totales.ToString();
+                novedades214.Visible = novedades3168Totales > 0;
+
             }
         }
 

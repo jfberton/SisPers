@@ -123,6 +123,7 @@ namespace SisPer.Aplicativo
                     .SetBold();
 
                 var nom_jefe = this.Nomina.First(x => x.JefeComicion && x.Estado == EstadoAgente1214.Aprobado).Agente;
+
                 Paragraph jefe = new Paragraph().Add("    - ").Add(String.Format("{0} - Estrato:{3} - Legajo: {1} - CUIL: {2}", nom_jefe.ApellidoYNombre, nom_jefe.Legajo, nom_jefe.Legajo_datos_laborales.CUIT, this.Estrato1214.Estrato))
                     .SetTextAlignment(TextAlignment.JUSTIFIED)
                     .SetMargins(

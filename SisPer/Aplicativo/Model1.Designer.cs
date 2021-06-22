@@ -4039,6 +4039,54 @@ namespace SisPer.Aplicativo
         private global::System.Boolean _Chofer;
         partial void OnChoferChanging(global::System.Boolean value);
         partial void OnChoferChanged();
+    
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String NroAnticipo
+        {
+            get
+            {
+                return _NroAnticipo;
+            }
+            set
+            {
+                OnNroAnticipoChanging(value);
+                ReportPropertyChanging("NroAnticipo");
+                _NroAnticipo = StructuralObject.SetValidValue(value, true, "NroAnticipo");
+                ReportPropertyChanged("NroAnticipo");
+                OnNroAnticipoChanged();
+            }
+        }
+        private global::System.String _NroAnticipo;
+        partial void OnNroAnticipoChanging(global::System.String value);
+        partial void OnNroAnticipoChanged();
+    
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> NroAnticipoCargadoPor
+        {
+            get
+            {
+                return _NroAnticipoCargadoPor;
+            }
+            set
+            {
+                OnNroAnticipoCargadoPorChanging(value);
+                ReportPropertyChanging("NroAnticipoCargadoPor");
+                _NroAnticipoCargadoPor = StructuralObject.SetValidValue(value, "NroAnticipoCargadoPor");
+                ReportPropertyChanged("NroAnticipoCargadoPor");
+                OnNroAnticipoCargadoPorChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _NroAnticipoCargadoPor;
+        partial void OnNroAnticipoCargadoPorChanging(Nullable<global::System.Int32> value);
+        partial void OnNroAnticipoCargadoPorChanged();
 
         #endregion
 

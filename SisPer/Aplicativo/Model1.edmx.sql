@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/10/2021 10:52:00
--- Generated from EDMX file: d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Model1.edmx
+-- Date Created: 06/16/2021 07:38:52
+-- Generated from EDMX file: D:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Model1.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -971,7 +971,9 @@ CREATE TABLE [dbo].[Agentes1214] (
     [JefeComicion] bit  NOT NULL,
     [Aprobado_por_agente_id] int  NULL,
     [Rechazado_por_agente_id] int  NULL,
-    [Chofer] bit  NOT NULL
+    [Chofer] bit  NOT NULL,
+    [NroAnticipo] nvarchar(max)  NULL,
+    [NroAnticipoCargadoPor] int  NULL
 );
 GO
 

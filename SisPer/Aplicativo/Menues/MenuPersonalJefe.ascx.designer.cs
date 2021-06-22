@@ -51,6 +51,24 @@ namespace SisPer.Aplicativo.Menues
         protected global::System.Web.UI.WebControls.Label lbl_solicitudes;
 
         /// <summary>
+        /// Control solicitudes_subadministracion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl solicitudes_subadministracion;
+
+        /// <summary>
+        /// Control lbl_solicitudes_subadministracion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_solicitudes_subadministracion;
+
+        /// <summary>
         /// Control notificaciones.
         /// </summary>
         /// <remarks>

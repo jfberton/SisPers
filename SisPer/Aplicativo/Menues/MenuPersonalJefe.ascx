@@ -94,7 +94,11 @@
                                         <small>
                                             <asp:Label Text="" ID="lbl_solicitudes" runat="server" /></small></span>
                                 </a></li>
-                                <li><a href="../Aplicativo/Formulario1214_Generados.aspx">Generados</a></li>
+                                <li><a href="../Aplicativo/Formulario1214_Generados.aspx">Generados
+                                    <span class="badge" runat="server" id="solicitudes_subadministracion">
+                                        <small>
+                                            <asp:Label Text="" ID="lbl_solicitudes_subadministracion" runat="server" /></small></span>
+                                    </a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
