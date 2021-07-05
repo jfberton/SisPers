@@ -382,13 +382,12 @@
                             <div class="col-md-4">
                                 <p>
                                     <label>Nro Anticipo:</label>
-                                    <asp:Label Text="" ID="lbl_ant_nro_anticipo_otorgado" runat="server" />
                                     <asp:TextBox runat="server" ID="tb_ant_nro_anticipo" CssClass="form-control" />
                                 </p>
                             </div>
                             <div class="col-md-8" id="ant_otorgado_por_PanelRowColumn" runat="server">
                                 <p>
-                                    <label >Otorgado por:</label>
+                                    <label >Última modificación:</label>
                                     <asp:Label Text="" ID="lbl_ant_otorgado_por" runat="server" />
                                 </p>
                             </div>

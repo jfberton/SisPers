@@ -146,7 +146,7 @@ namespace SisPer.Aplicativo
                 gv_otras_solicitudes.DataBind();
             }
         }
-        
+
         private int ObtenerColumna(string p)
         {
             int id = 0;
@@ -409,40 +409,40 @@ namespace SisPer.Aplicativo
                 gv_anticipos.DataBind();
 
                 var items_anticipos_otorgados = (from aa in cxt.Agentes1214
-                             where aa.Formulario1214.Estado == Estado1214.Aprobada
-                                    && aa.Estado == EstadoAgente1214.Aprobado
-                                    && aa.NroAnticipo != null
-                             select new
-                             {
-                                 agente214_id = aa.Id,
-                                 area = aa.Agente.Area.Nombre,
-                                 f1214_id = aa.Formulario1214Id,
-                                 agente = aa.Agente.ApellidoYNombre,
-                                 destino = aa.Formulario1214.Destino,
-                                 desde = aa.Formulario1214.Desde,
-                                 hasta = aa.Formulario1214.Hasta,
-                                 jefe_comision = aa.Formulario1214.Nomina.FirstOrDefault(nn => nn.JefeComicion).Agente.ApellidoYNombre,
-                                 tareas = aa.Formulario1214.TareasACumplir,
-                                 nro_anticipo = aa.NroAnticipo
-                             }).ToList();
+                                                 where aa.Formulario1214.Estado == Estado1214.Aprobada
+                                                        && aa.Estado == EstadoAgente1214.Aprobado
+                                                        && aa.NroAnticipo != null
+                                                 select new
+                                                 {
+                                                     agente214_id = aa.Id,
+                                                     area = aa.Agente.Area.Nombre,
+                                                     f1214_id = aa.Formulario1214Id,
+                                                     agente = aa.Agente.ApellidoYNombre,
+                                                     destino = aa.Formulario1214.Destino,
+                                                     desde = aa.Formulario1214.Desde,
+                                                     hasta = aa.Formulario1214.Hasta,
+                                                     jefe_comision = aa.Formulario1214.Nomina.FirstOrDefault(nn => nn.JefeComicion).Agente.ApellidoYNombre,
+                                                     tareas = aa.Formulario1214.TareasACumplir,
+                                                     nro_anticipo = aa.NroAnticipo
+                                                 }).ToList();
 
                 var items_anticipos_otorgados_Formateados = (from item in items_anticipos_otorgados
-                                        select new
-                                        {
-                                            agente214_id = item.agente214_id,
-                                            area = item.area,
-                                            f1214_id = Cadena.CompletarConCeros(6, item.f1214_id),
-                                            agente = item.agente,
-                                            destino = item.destino,
-                                            desde = item.desde,
-                                            hasta = item.hasta,
-                                            desde_long_str = item.desde.ToLongDateString(),
-                                            hasta_long_str = item.hasta.ToLongDateString(),
-                                            jefe_comision = item.jefe_comision,
-                                            dias = ((item.hasta - item.desde).Days + 1).ToString(),
-                                            tareas = item.tareas,
-                                            nro_anticipo = item.nro_anticipo
-                                        }).ToList();
+                                                             select new
+                                                             {
+                                                                 agente214_id = item.agente214_id,
+                                                                 area = item.area,
+                                                                 f1214_id = Cadena.CompletarConCeros(6, item.f1214_id),
+                                                                 agente = item.agente,
+                                                                 destino = item.destino,
+                                                                 desde = item.desde,
+                                                                 hasta = item.hasta,
+                                                                 desde_long_str = item.desde.ToLongDateString(),
+                                                                 hasta_long_str = item.hasta.ToLongDateString(),
+                                                                 jefe_comision = item.jefe_comision,
+                                                                 dias = ((item.hasta - item.desde).Days + 1).ToString(),
+                                                                 tareas = item.tareas,
+                                                                 nro_anticipo = item.nro_anticipo
+                                                             }).ToList();
 
 
                 gv_anticipos_otorgados.DataSource = items_anticipos_otorgados_Formateados;
@@ -469,21 +469,15 @@ namespace SisPer.Aplicativo
                 lbl_ant_hasta.Text = f214.Hasta.ToLongDateString();
                 lbl_ant_jefe_comision.Text = f214.Nomina.First(nn => nn.JefeComicion).Agente.ApellidoYNombre;
                 lbl_ant_tareas.Text = f214.TareasACumplir;
+                tb_ant_nro_anticipo.Text = ag214.NroAnticipo;
 
-                if (ag214.NroAnticipo != null)
+                if (ag214.NroAnticipoCargadoPor.HasValue)
                 {
-                    tb_ant_nro_anticipo.Visible = false;
-                    lbl_ant_nro_anticipo_otorgado.Text = ag214.NroAnticipo;
-                    if (ag214.NroAnticipoCargadoPor.HasValue)
-                    {
-                        int idAgente = ag214.NroAnticipoCargadoPor.Value;
-                        lbl_ant_otorgado_por.Text = cxt.Agentes.FirstOrDefault(a => a.Id == idAgente).ApellidoYNombre;
-                    }
+                    int idAgente = ag214.NroAnticipoCargadoPor.Value;
+                    lbl_ant_otorgado_por.Text = cxt.Agentes.FirstOrDefault(a => a.Id == idAgente).ApellidoYNombre;
                 }
                 else
                 {
-                    lbl_ant_nro_anticipo_otorgado.Visible = false;
-                    tb_ant_nro_anticipo.Text = string.Empty;
                     ant_otorgado_por_PanelRowColumn.Attributes["Style"] = "display:none";
                 }
             }
@@ -504,9 +498,22 @@ namespace SisPer.Aplicativo
             {
                 Agente ag = Session["UsuarioLogueado"] as Agente;
                 Agente1214 ag214 = cxt.Agentes1214.First(aa => aa.Id == idSol214);
-                ag214.NroAnticipo = tb_ant_nro_anticipo.Text;
-                ag214.NroAnticipoCargadoPor = ag.Id;
-                cxt.SaveChanges();
+
+                if (tb_ant_nro_anticipo.Text != "" && tb_ant_nro_anticipo.Text != ag214.NroAnticipo)
+                {
+                    ag214.NroAnticipo = tb_ant_nro_anticipo.Text;
+                    ag214.NroAnticipoCargadoPor = ag.Id;
+                    cxt.SaveChanges();
+
+                }
+
+                if (tb_ant_nro_anticipo.Text == "" && ag214.NroAnticipo != null)
+                {
+                    ag214.NroAnticipo = null;
+                    ag214.NroAnticipoCargadoPor = ag.Id;
+                    cxt.SaveChanges();
+                }
+
                 CargarPendientes();
                 RefrescarMenu();
             }

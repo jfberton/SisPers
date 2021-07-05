@@ -402,15 +402,6 @@ namespace SisPer.Aplicativo
         protected global::System.Web.UI.WebControls.Label lbl_ant_tareas;
 
         /// <summary>
-        /// Control lbl_ant_nro_anticipo_otorgado.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_ant_nro_anticipo_otorgado;
-
-        /// <summary>
         /// Control tb_ant_nro_anticipo.
         /// </summary>
         /// <remarks>

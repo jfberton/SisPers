@@ -182,7 +182,6 @@ namespace SisPer.Aplicativo
 
                 Text t_tareas = new Text(String.Format("{0}", this.TareasACumplir)).SetBold();
 
-
                 Paragraph destino = new Paragraph()
                     .Add("La localidad donde se realizará la Comisión de servicio es ")
                     .Add(t_destino)
@@ -208,12 +207,30 @@ namespace SisPer.Aplicativo
                 document.Add(p_para_la_presente);
 
                 Text t_a = new Text("a. Medio de transporte utilizado:").SetBold();
-                Paragraph p_a = new Paragraph().Add(t_a).Add(String.Format(" {0}", this.Movilidad.ToString()))
-                    .SetMargins(
-                        /*top*/0
-                        ,/*right*/0
-                        , /*bottom*/0
-                        , /*left*/0);
+
+                string medio = string.Empty;
+
+                switch (Movilidad)
+                {
+                    case Movilidad1214.Vehiculo_oficial:
+                        medio = "Vehículo oficial";
+                        break;
+                    case Movilidad1214.Vehiculo_particular:
+                        medio = "Vehículo particular";
+                        break;
+                    case Movilidad1214.Transporte_publico:
+                        medio = "Transporte público";
+                        break;
+                    default:
+                        break;
+                }
+
+                Paragraph p_a = new Paragraph().Add(t_a).Add(String.Format(" {0}",medio))
+                           .SetMargins(
+                               /*top*/0
+                               ,/*right*/0
+                               , /*bottom*/0
+                               , /*left*/0);
                 document.Add(p_a);
 
                 Text t_b = new Text("b. Anticipo de viáticos:").SetBold();
@@ -225,8 +242,22 @@ namespace SisPer.Aplicativo
                         , /*left*/0);
                 document.Add(p_b);
 
+                string anticipo_otros_gastos = string.Empty;
+
+                switch (Anticipo)
+                {
+                    case Anticipo1214.Gastos_vehiculo:
+                        anticipo_otros_gastos = "Gastos vehículo";
+                        break;
+                    case Anticipo1214.Pasajes:
+                        anticipo_otros_gastos = "Gastos pasajes";
+                        break;
+                    default:
+                        break;
+                }
+
                 Text t_c = new Text("c. Anticipo para otros gastos: ").SetBold();
-                Paragraph p_c = new Paragraph().Add(t_c).Add(String.Format(" {0} {1}", this.Anticipo.ToString(), this.AnticipoMovilidad.ToString("C")))
+                Paragraph p_c = new Paragraph().Add(t_c).Add(String.Format(" {0} {1}", anticipo_otros_gastos, this.AnticipoMovilidad.ToString("C")))
                     .SetMargins(
                         /*top*/0
                         ,/*right*/0
@@ -260,24 +291,24 @@ namespace SisPer.Aplicativo
                 switch (this.Movilidad)
                 {
                     case Movilidad1214.Transporte_publico:
-                        Paragraph medio_transporte = new Paragraph().Add(t_medio).Add(String.Format(" Transporte público"))
-                            .SetFontSize(12)
-                            .SetMargins(
-                                /*top*/40
-                                ,/*right*/15
-                                , /*bottom*/0
-                                , /*left*/40);
-                        document.Add(medio_transporte);
+                        //Paragraph medio_transporte = new Paragraph().Add(t_medio).Add(String.Format(" Transporte público"))
+                        //    .SetFontSize(12)
+                        //    .SetMargins(
+                        //        /*top*/40
+                        //        ,/*right*/15
+                        //        , /*bottom*/0
+                        //        , /*left*/40);
+                        //document.Add(medio_transporte);
 
-                        Paragraph p_medio_texto_publico = new Paragraph(String.Format("Para el cumplimiento de la comisión se dede proveer de Pesos {0} ({1}) en concepto de gastos de pasajes.-", Numalet.ToCardinal(this.AnticipoMovilidad), this.AnticipoMovilidad.ToString("C")))
-                            .SetFontSize(12)
-                            .SetTextAlignment(TextAlignment.JUSTIFIED)
-                            .SetMargins(
-                                /*top*/0
-                                ,/*right*/15
-                                , /*bottom*/0
-                                , /*left*/40);
-                        document.Add(p_medio_texto_publico);
+                        //Paragraph p_medio_texto_publico = new Paragraph(String.Format("Para el cumplimiento de la comisión se dede proveer de Pesos {0} ({1}) en concepto de gastos de pasajes.-", Numalet.ToCardinal(this.AnticipoMovilidad), this.AnticipoMovilidad.ToString("C")))
+                        //    .SetFontSize(12)
+                        //    .SetTextAlignment(TextAlignment.JUSTIFIED)
+                        //    .SetMargins(
+                        //        /*top*/0
+                        //        ,/*right*/15
+                        //        , /*bottom*/0
+                        //        , /*left*/40);
+                        //document.Add(p_medio_texto_publico);
                         break;
                     case Movilidad1214.Vehiculo_oficial:
                         Paragraph medio_transporte_oficial = new Paragraph().Add(t_medio).Add(String.Format(" Vehículo oficial"))
@@ -307,6 +338,9 @@ namespace SisPer.Aplicativo
                             , /*bottom*/0
                             , /*left*/40);
                         document.Add(p_medio_oficial_texto);
+
+                        document = AgregarFirmaMantenimiento(document);
+
                         break;
                     case Movilidad1214.Vehiculo_particular:
                         Paragraph medio_transporte_particular = new Paragraph().Add(t_medio).Add(String.Format(" Vehículo particular"))
@@ -335,35 +369,12 @@ namespace SisPer.Aplicativo
                             , /*bottom*/0
                             , /*left*/40);
                         document.Add(p_medio_particular_texto);
+
+                        document = AgregarFirmaMantenimiento(document);
+
                         break;
 
                 }
-
-                Paragraph p_depto_manteminiento = new Paragraph(String.Format("Departamento de Mantenimiento y Bienes Patrimoniales, {0}", this.Fecha_confeccion.Value.ToShortDateString()))
-                     .SetMargins(
-                            /*top*/20
-                            ,/*right*/15
-                            , /*bottom*/0
-                            , /*left*/40);
-                document.Add(p_depto_manteminiento);
-
-                Paragraph firma_responsable = new Paragraph(".............................................................")
-                    .SetTextAlignment(TextAlignment.RIGHT)
-                    .SetMargins(
-                            /*top*/90
-                            ,/*right*/15
-                            , /*bottom*/0
-                            , /*left*/40);
-                document.Add(firma_responsable);
-
-                Paragraph firma_responsable_texto = new Paragraph("Firma y Sello del responsable a/c")
-                    .SetTextAlignment(TextAlignment.RIGHT)
-                    .SetMargins(
-                            /*top*/0
-                            ,/*right*/20
-                            , /*bottom*/0
-                            , /*left*/40);
-                document.Add(firma_responsable_texto);
 
 
                 //nuevo
@@ -378,23 +389,23 @@ namespace SisPer.Aplicativo
                         , /*left*/40).SetTextAlignment(TextAlignment.JUSTIFIED);
                 document.Add(p_notificacion);
 
-                firma_responsable = new Paragraph(".............................................................")
+                p_firma = new Paragraph(".............................................................")
                     .SetTextAlignment(TextAlignment.RIGHT)
                     .SetMargins(
                             /*top*/90
                             ,/*right*/15
                             , /*bottom*/0
                             , /*left*/40);
-                document.Add(firma_responsable);
+                document.Add(p_firma);
 
-                firma_responsable_texto = new Paragraph("Firma Jefe comisión de servicios")
+                p_firma = new Paragraph("Firma Jefe comisión de servicios")
                     .SetTextAlignment(TextAlignment.RIGHT)
                     .SetMargins(
                             /*top*/0
                             ,/*right*/20
                             , /*bottom*/0
                             , /*left*/40);
-                document.Add(firma_responsable_texto);
+                document.Add(p_firma);
 
 
                 Table t = new Table(1);
@@ -667,104 +678,116 @@ namespace SisPer.Aplicativo
 
                 document.Add(p);
 
-                if (Movilidad == Movilidad1214.Vehiculo_oficial)
+                switch (Movilidad)
                 {
-                    negrita = new Text("ARTÍCULO 6º: AFECTAR ").SetBold();
+                    case Movilidad1214.Vehiculo_oficial:
+                        negrita = new Text("ARTÍCULO 6º: AFECTAR ").SetBold();
 
-                    cadena = String.Format("el vehículo {0} que será conducido por el/la agente {1} – CUIL {2} – Estrato {3} - Legajo {4}, el cual será responsable del cumplimiento de las normas vigentes en materia de conservación y cuidado de automotores del Estado Provincial.", Vehiculo_dominio, chofer_agente.ApellidoYNombre, chofer_agente.Legajo_datos_laborales.CUIT, Estrato1214.Estrato, chofer_agente.Legajo);
+                        cadena = String.Format("el vehículo {0} que será conducido por el/la agente {1} – CUIL {2} – Estrato {3} - Legajo {4}, el cual será responsable del cumplimiento de las normas vigentes en materia de conservación y cuidado de automotores del Estado Provincial.", Vehiculo_dominio, chofer_agente.ApellidoYNombre, chofer_agente.Legajo_datos_laborales.CUIT, Estrato1214.Estrato, chofer_agente.Legajo);
 
-                    normal = new Text(cadena);
+                        normal = new Text(cadena);
 
-                    p = new Paragraph().Add(negrita).Add(normal)
-                          .SetMargins(
-                              /*top*/0
-                              ,/*right*/15
-                              , /*bottom*/10
-                              , /*left*/40)
-                          .SetFontSize(12)
-                          .SetTextAlignment(TextAlignment.JUSTIFIED)
-                          .SetKeepTogether(true)
-                          .SetKeepWithNext(false);
+                        p = new Paragraph().Add(negrita).Add(normal)
+                              .SetMargins(
+                                  /*top*/0
+                                  ,/*right*/15
+                                  , /*bottom*/10
+                                  , /*left*/40)
+                              .SetFontSize(12)
+                              .SetTextAlignment(TextAlignment.JUSTIFIED)
+                              .SetKeepTogether(true)
+                              .SetKeepWithNext(false);
 
-                    document.Add(p);
+                        document.Add(p);
 
-                    negrita = new Text("ARTÍCULO 7º: TOME ").SetBold();
+                        break;
+                    case Movilidad1214.Vehiculo_particular:
 
-                    normal = new Text("razón Despacho. ");
+                        negrita = new Text("ARTÍCULO 6º: AUTORIZAR ").SetBold();
 
-                    p = new Paragraph().Add(negrita).Add(normal);
 
-                    negrita = new Text("REGÍSTRESE");
-                    normal = new Text(". Comuníquese a la Dirección Administración y ");
+                        Text particular_dominio = new Text(String.Format(" {0}", this.Vehiculo_dominio)).SetBold();
+                        Text particular_titular = new Text(String.Format(" {0}", this.Vehiculo_particular_titular)).SetBold();
+                        Text particular_tipo_combustible = new Text(String.Format(" {0}", this.Vehiculo_particular_tipo_combustible)).SetBold();
+                        Text particular_poliza = new Text(String.Format(" {0}", this.Vehiculo_particular_poliza_nro)).SetBold();
+                        Text particular_poliza_vigencia = new Text(String.Format(" {0}", this.Vehiculo_particular_poliza_vigencia)).SetBold();
+                        Text particular_poliza_cobertura = new Text(String.Format(" {0}", this.Vehiculo_particular_poliza_cobertura)).SetBold();
 
-                    p.Add(negrita).Add(normal);
+                        Paragraph p_medio_particular_texto = new Paragraph(negrita).Add(String.Format("el vehículo particular dominio ")).Add(particular_dominio);
+                        p_medio_particular_texto.Add(", perteneciente a ").Add(particular_titular).Add(", tipo de combustible ").Add(particular_tipo_combustible).Add(", número de póliza ").Add(particular_poliza).Add(" vigente hasta ").Add(particular_poliza_vigencia).Add(" tipo de cobertura ").Add(particular_poliza_cobertura);
+                        p_medio_particular_texto.Add(String.Format(" que será conducido por el/la agente {0} – CUIL {1} – Estrato {2} - Legajo {3}", chofer_agente.ApellidoYNombre, chofer_agente.Legajo_datos_laborales.CUIT, Estrato1214.Estrato, chofer_agente.Legajo));
+                        p_medio_particular_texto.SetFontSize(12)
+                            .SetMargins(
+                                /*top*/0
+                                ,/*right*/15
+                                , /*bottom*/10
+                                , /*left*/40)
+                            .SetFontSize(12)
+                            .SetTextAlignment(TextAlignment.JUSTIFIED)
+                            .SetKeepTogether(true)
+                            .SetKeepWithNext(false);
+                        document.Add(p_medio_particular_texto);
 
-                    negrita = new Text("NOTIFÍQUESE ");
-                    normal = new Text("a los integrantes de la Comisión de Servicios y al Tribunal de Cuentas. Cumplido, ");
+                        break;
+                    case Movilidad1214.Transporte_publico:
 
-                    p.Add(negrita).Add(normal);
+                        negrita = new Text("ARTÍCULO 6º: AUTORIZAR ").SetBold();
+                        normal = new Text("el traslado de los/las agentes integrantes de la presente comisión de servicios en transporte público, debiendo presentar y rendir, en los términos del ARTÍCULO 4°, los pasajes y/o documentos que justifiquen el traslado.");
 
-                    negrita = new Text("ARCHÍVESE");
+                        p = new Paragraph().Add(negrita).Add(normal)
+                              .SetMargins(
+                                  /*top*/0
+                                  ,/*right*/15
+                                  , /*bottom*/10
+                                  , /*left*/40)
+                              .SetFontSize(12)
+                              .SetTextAlignment(TextAlignment.JUSTIFIED)
+                              .SetKeepTogether(true)
+                              .SetKeepWithNext(false);
 
-                    normal = new Text(".");
-
-                    p.Add(negrita).Add(normal)
-                         .SetMargins(
-                              /*top*/0
-                              ,/*right*/15
-                              , /*bottom*/10
-                              , /*left*/40)
-                          .SetFontSize(12)
-                          .SetTextAlignment(TextAlignment.JUSTIFIED)
-                          .SetKeepTogether(true)
-                          .SetKeepWithNext(false);
-
-                    document.Add(p);
-
-                }
-                else
-                {
-                    negrita = new Text("ARTÍCULO 6º: TOME ").SetBold();
-
-                    normal = new Text("razón Despacho. ");
-
-                    p = new Paragraph().Add(negrita).Add(normal);
-
-                    negrita = new Text("REGÍSTRESE");
-                    normal = new Text(". Comuníquese a la Dirección Administración y ");
-
-                    p.Add(negrita).Add(normal);
-
-                    negrita = new Text("NOTIFÍQUESE ");
-                    normal = new Text("a los integrantes de la Comisión de Servicios y al Tribunal de Cuentas. Cumplido, ");
-
-                    p.Add(negrita).Add(normal);
-
-                    negrita = new Text("ARCHÍVESE");
-
-                    normal = new Text(".");
-
-                    p.Add(negrita).Add(normal)
-                         .SetMargins(
-                              /*top*/0
-                              ,/*right*/15
-                              , /*bottom*/10
-                              , /*left*/40)
-                          .SetFontSize(12)
-                          .SetTextAlignment(TextAlignment.JUSTIFIED)
-                          .SetKeepTogether(true);
-
-                    document.Add(p);
+                        document.Add(p);
+                        break;
+                    default:
+                        break;
                 }
 
+                negrita = new Text("ARTÍCULO 7º: TOME ").SetBold();
+
+                normal = new Text("razón Despacho. ");
+
+                p = new Paragraph().Add(negrita).Add(normal);
+
+                negrita = new Text("REGÍSTRESE");
+                normal = new Text(". Comuníquese a la Dirección Administración y ");
+
+                p.Add(negrita).Add(normal);
+
+                negrita = new Text("NOTIFÍQUESE ");
+                normal = new Text("a los integrantes de la Comisión de Servicios y al Tribunal de Cuentas. Cumplido, ");
+
+                p.Add(negrita).Add(normal);
+
+                negrita = new Text("ARCHÍVESE");
+
+                normal = new Text(".");
+
+                p.Add(negrita).Add(normal)
+                     .SetMargins(
+                          /*top*/0
+                          ,/*right*/15
+                          , /*bottom*/10
+                          , /*left*/40)
+                      .SetFontSize(12)
+                      .SetTextAlignment(TextAlignment.JUSTIFIED)
+                      .SetKeepTogether(true)
+                      .SetKeepWithNext(false);
+
+                document.Add(p);
 
 
                 #endregion
 
-
                 document.Flush();
-
-
 
                 #region Agrego cabecera y pie
 
@@ -783,21 +806,18 @@ namespace SisPer.Aplicativo
                 {
                     PdfPage page = pdfDoc.GetPage(i);
                     Rectangle area = page.GetPageSize().ApplyMargins(40, 28, 28, 28, false);
-                    float x = area.GetWidth()+10; // 2;
+                    float x = area.GetWidth() + 10; // 2;
                     float y = area.GetTop() + 5;
                     //document.ShowTextAligned(header, x, y, i, TextAlignment.CENTER, VerticalAlignment.BOTTOM, 0);
                     document.ShowTextAligned(leyenda, x, y, i, TextAlignment.RIGHT, VerticalAlignment.BOTTOM, 0);
 
                     PdfCanvas aboveCanvas = new PdfCanvas(page.NewContentStreamAfter(),
                                         page.GetResources(), pdfDoc);
-                    
+
                     new Canvas(aboveCanvas, pdfDoc, area).Add(membrete);
                 }
 
                 #endregion
-
-
-
 
                 //Cierro el documento
                 document.Close();
@@ -809,10 +829,35 @@ namespace SisPer.Aplicativo
         }
 
 
-        private void AgregarMembreteLeyenda(Document document)
+        private Document AgregarFirmaMantenimiento(Document document)
         {
-            //Creo la leyenda
+            Paragraph p_depto_manteminiento = new Paragraph(String.Format("Departamento de Mantenimiento y Bienes Patrimoniales, {0}", this.Fecha_confeccion.Value.ToShortDateString()))
+                      .SetMargins(
+                             /*top*/20
+                             ,/*right*/15
+                             , /*bottom*/0
+                             , /*left*/40);
+            document.Add(p_depto_manteminiento);
 
+            Paragraph firma_responsable = new Paragraph(".............................................................")
+                .SetTextAlignment(TextAlignment.RIGHT)
+                .SetMargins(
+                        /*top*/90
+                        ,/*right*/15
+                        , /*bottom*/0
+                        , /*left*/40);
+            document.Add(firma_responsable);
+
+            Paragraph firma_responsable_texto = new Paragraph("Firma y Sello del responsable a/c")
+                .SetTextAlignment(TextAlignment.RIGHT)
+                .SetMargins(
+                        /*top*/0
+                        ,/*right*/20
+                        , /*bottom*/0
+                        , /*left*/40);
+            document.Add(firma_responsable_texto);
+
+            return document;
         }
 
     }
