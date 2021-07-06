@@ -178,13 +178,13 @@ namespace SisPer.Aplicativo
                 //btn_Imprimir.Visible = false;
                 btn_aprobar.Visible = false;
 
-                lbl_encabezado1214.Text = "Nuevo formulario 1214";
+                lbl_encabezado1214.Text = "Nuevo formulario 3168";
             }
             else
             {
                 f1214 = cxt.Formularios1214.First(ff => ff.Id == f1214.Id);
 
-                lbl_encabezado1214.Text = "Formulario 1214 N° " + Cadena.CompletarConCeros(6, f1214.Id);
+                lbl_encabezado1214.Text = "Formulario 3168 N° " + Cadena.CompletarConCeros(6, f1214.Id);
 
                 switch (f1214.Estado)
                 {

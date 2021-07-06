@@ -36,7 +36,7 @@
             <asp:GridView ID="gv_pendientes" runat="server" EmptyDataText="No existen registros para mostrar." ForeColor="#717171"
                 AutoGenerateColumns="False" GridLines="None" CssClass="mGrid table-condensed" AlternatingRowStyle-CssClass="alt">
                 <Columns>
-                    <asp:BoundField DataField="f1214_id" HeaderText="F1214 N°" ReadOnly="true" SortExpression="f1214_id" />
+                    <asp:BoundField DataField="f1214_id" HeaderText="F3168 N°" ReadOnly="true" SortExpression="f1214_id" />
                     <asp:BoundField DataField="area" HeaderText="Area" ReadOnly="true" SortExpression="area" />
                     <asp:BoundField DataField="agente" HeaderText="Agente" ReadOnly="true" SortExpression="agente" />
                     <asp:BoundField DataField="destino" HeaderText="Destino" ReadOnly="true" SortExpression="destino" />
@@ -146,7 +146,7 @@
             <asp:GridView ID="gv_otras_solicitudes" runat="server" EmptyDataText="No existen registros para mostrar." ForeColor="#717171"
                 AutoGenerateColumns="False" GridLines="None" CssClass="mGrid table-condensed" AlternatingRowStyle-CssClass="alt">
                 <Columns>
-                    <asp:BoundField DataField="f1214_id" HeaderText="F1214 N°" ReadOnly="true" />
+                    <asp:BoundField DataField="f1214_id" HeaderText="F3168 N°" ReadOnly="true" />
                     <asp:BoundField DataField="estado_1214" HeaderText="Estado 1214" ReadOnly="true" />
                     <asp:BoundField DataField="area" HeaderText="Area" ReadOnly="true" SortExpression="area" />
                     <asp:BoundField DataField="agente" HeaderText="Agente" ReadOnly="true" SortExpression="agente" />
@@ -298,7 +298,7 @@
             <asp:GridView ID="gv_anticipos" runat="server" EmptyDataText="No existen registros para mostrar." ForeColor="#717171"
                 AutoGenerateColumns="False" GridLines="None" CssClass="mGrid table-condensed" AlternatingRowStyle-CssClass="alt">
                 <Columns>
-                    <asp:BoundField DataField="f1214_id" HeaderText="F1214 N°" ReadOnly="true" SortExpression="f1214_id" />
+                    <asp:BoundField DataField="f1214_id" HeaderText="F3168 N°" ReadOnly="true" SortExpression="f1214_id" />
                     <asp:BoundField DataField="area" HeaderText="Area" ReadOnly="true" SortExpression="area" />
                     <asp:BoundField DataField="agente" HeaderText="Agente" ReadOnly="true" SortExpression="agente" />
                     <asp:BoundField DataField="nro_anticipo" HeaderText="Nro Anticipo" ReadOnly="true" SortExpression="nro_anticipo" />
@@ -423,7 +423,7 @@
             <asp:GridView ID="gv_anticipos_otorgados" runat="server" EmptyDataText="No existen registros para mostrar." ForeColor="#717171"
                 AutoGenerateColumns="False" GridLines="None" CssClass="mGrid table-condensed" AlternatingRowStyle-CssClass="alt">
                 <Columns>
-                    <asp:BoundField DataField="f1214_id" HeaderText="F1214 N°" ReadOnly="true" SortExpression="f1214_id" />
+                    <asp:BoundField DataField="f1214_id" HeaderText="F3168 N°" ReadOnly="true" SortExpression="f1214_id" />
                     <asp:BoundField DataField="area" HeaderText="Area" ReadOnly="true" SortExpression="area" />
                     <asp:BoundField DataField="agente" HeaderText="Agente" ReadOnly="true" SortExpression="agente" />
                     <asp:BoundField DataField="nro_anticipo" HeaderText="Nro Anticipo" ReadOnly="true" SortExpression="nro_anticipo" />

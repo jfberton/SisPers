@@ -19,7 +19,7 @@
     <br />
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h2 class="panel-title">Formularios 1214 generados</h2>
+            <h2 class="panel-title">Formularios 3168 generados</h2>
         </div>
         <div class="panel-body">
             <div class="input-group">
@@ -61,7 +61,7 @@
     
     <div class="panel panel-default" runat="server" id="panel_enviados">
         <div class="panel-heading">
-            <h2 class="panel-title">Formularios 1214 Enviados por aprobar</h2>
+            <h2 class="panel-title">Formularios 3168 Enviados por aprobar</h2>
         </div>
         <div class="panel-body">
             <div class="input-group">

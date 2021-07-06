@@ -1048,7 +1048,7 @@
         //location.reload(true);
         function ConfirmarEliminacion() {
             var encabezado = document.getElementById('<%=lbl_encabezado1214.ClientID%>');
-            if (encabezado.textContent != "Nuevo formulario 1214") {
+            if (encabezado.textContent != "Nuevo formulario 3168") {
                 if (!confirm("Esta a punto de eliminar un agente de la nomina ya confeccionada, esta seguro de continuar?"))
                     event.preventDefault();
             }
@@ -1057,7 +1057,7 @@
 
         function ConfirmarEliminacionChofer() {
             var encabezado = document.getElementById('<%=lbl_encabezado1214.ClientID%>');
-            if (encabezado.textContent != "Nuevo formulario 1214") {
+            if (encabezado.textContent != "Nuevo formulario 3168") {
                 if (!confirm("Esta a punto de eliminar al chofer de la nomina ya confeccionada, esta seguro de continuar?"))
                     event.preventDefault();
             }
@@ -1066,7 +1066,7 @@
 
         function RechazarEliminacion() {
             var encabezado = document.getElementById('<%=lbl_encabezado1214.ClientID%>');
-            if (encabezado.textContent != "Nuevo formulario 1214") {
+            if (encabezado.textContent != "Nuevo formulario 3168") {
                 alert("El jefe de comisión designado no puede eliminarce. Deberá anular el formulario y crear uno nuevo.-")
                 event.preventDefault();
             }
