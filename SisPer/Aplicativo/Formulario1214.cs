@@ -50,63 +50,66 @@ namespace SisPer.Aplicativo
 
                 float puntos_por_centimetro = (float)20;
 
-                float margenSuperior = ((float)(5 * puntos_por_centimetro));
+                float margenSuperior = ((float)(6 * puntos_por_centimetro));
                 float margenInferior = ((float)(3 * puntos_por_centimetro));
                 float margenDerecho = ((float)(2 * puntos_por_centimetro));
                 float margenIzquierdo = ((float)(4 * puntos_por_centimetro));
 
                 document.SetMargins(margenSuperior, margenDerecho, margenInferior, margenIzquierdo);
+                document.SetFontSize(12);
 
                 #region Solicitud F - 3168
 
                 //Creo el titulo
-                Paragraph titulo = new Paragraph("FORMULARIO A.T. Nº 3168")
-                   .SetTextAlignment(TextAlignment.CENTER)
+                string texto_titulo = string.Empty;
+                switch (Movilidad)
+                {
+                    case Movilidad1214.Vehiculo_oficial:
+                        texto_titulo = "FORMULARIO A.T. Nº 3168-A";
+                        break;
+                    case Movilidad1214.Vehiculo_particular:
+                        texto_titulo = "FORMULARIO A.T. Nº 3168-B";
+                        break;
+                    case Movilidad1214.Transporte_publico:
+                        texto_titulo = "FORMULARIO A.T. Nº 3168-C";
+                        break;
+                    default:
+                        break;
+                }
+
+                Paragraph titulo = new Paragraph(texto_titulo)
+                   .SetTextAlignment(TextAlignment.RIGHT)
                    .SetBold()
-                   .SetFontSize(12)
+                   .SetUnderline()
                    .SetMargins(
-                        /*top*/15
+                        /*top*/0
                         ,/*right*/0
                         , /*bottom*/10
                         , /*left*/0);
                 document.Add(titulo);
 
-                Paragraph subtitulo = new Paragraph("Solicitud Comisión de Servicios Nº " + Cadena.CompletarConCeros(6, Id))
+                Paragraph subtitulo = new Paragraph("SOLICITUD DE AUTORIZACIÓN DE COMISIÓN DE SERVICIOS Nº " + Cadena.CompletarConCeros(6, Id))
                    .SetTextAlignment(TextAlignment.CENTER)
                    .SetBold()
-                   .SetFontSize(12)
+                   .SetUnderline()
                    .SetMargins(
                         /*top*/15
                         ,/*right*/0
                         , /*bottom*/10
-                        , /*left*/0);
+                        , /*left*/40);
                 document.Add(subtitulo);
 
 
                 //Creo lugar y fecha
-                Text t_lugarYFecha = new Text(String.Format("Resistencia, {0}", this.Fecha_confeccion.Value.ToLongDateString()));
+                Text t_lugarYFecha = new Text(String.Format("Resistencia, {0}", this.Fecha_confeccion.Value.ToLongDateString().Replace(",", "")));
                 Paragraph lugar_y_fecha = new Paragraph().Add(t_lugarYFecha)
                    .SetTextAlignment(TextAlignment.RIGHT)
                    .SetFontSize(12);
                 document.Add(lugar_y_fecha);
 
-                //Creo referencia
-                Text t_referencia = new Text("Referencia: ").SetBold();
-                Text t_referencia_valor = new Text("Autorización Comisión de Servicios");
-                Paragraph referencia = new Paragraph()
-                    .Add(t_referencia)
-                    .Add(" ")
-                    .Add(t_referencia_valor)
-                    .SetMargins(
-                        /*top*/15
-                        ,/*right*/0
-                        , /*bottom*/10
-                        , /*left*/0)
-                    .SetFontSize(12);
-                document.Add(referencia);
 
                 //Creo el primer texto
-                Text t_comunico = new Text(String.Format("Comunico al Señor Administrador General que ésta Dirección/Departamento tiene dispuesto una Comisión de Servicios por {0} ({1}) días a partir del día {2} al {3}, integrada por los agentes consignados a continuación: "
+                Text t_comunico = new Text(String.Format("Se solicita autorización de la Administración General, para la Comisión de Servicios que, ésta Dirección/Departamento tiene dispuesta por {0} ({1}) días a partir del día {2} al día {3}, integrada por los agentes consignados a continuación:"
                     , Numalet.ToCardinal(((this.Hasta - this.Desde).Days + 1))
                     , ((this.Hasta - this.Desde).Days + 1).ToString()
                     , this.Desde.ToLongDateString()
@@ -114,67 +117,41 @@ namespace SisPer.Aplicativo
                     ));
 
                 Paragraph comunico = new Paragraph()
-                    .Add(t_comunico)
-                    .SetMargins(
-                        /*top*/15
-                        ,/*right*/0
-                        , /*bottom*/10
-                        , /*left*/0)
-                    .SetFontSize(12)
-                    .SetTextAlignment(TextAlignment.JUSTIFIED)
-                    .SetFontKerning(FontKerning.YES);
+                    .Add(t_comunico).SetMarginTop(15).SetMarginBottom(10).SetMarginLeft(40)
+                    .SetTextAlignment(TextAlignment.JUSTIFIED);
                 document.Add(comunico);
 
                 //Creo el jefe de comision
                 Text t_jefe = new Text("Jefe de Comisión de Servicios").SetUnderline();
-                Paragraph titulo_jefe = new Paragraph().Add("1. ").Add(t_jefe).Add(":")
-                     .SetMargins(
-                        /*top*/15
-                        ,/*right*/0
-                        , /*bottom*/5
-                        , /*left*/0)
-                    .SetFontSize(12)
-                    .SetBold();
+                Paragraph titulo_jefe = new Paragraph().Add("1. ").Add(t_jefe).Add(":").SetMarginTop(15).SetMarginBottom(5).SetMarginLeft(40).SetBold();
 
                 var nom_jefe = this.Nomina.First(x => x.JefeComicion && x.Estado == EstadoAgente1214.Aprobado).Agente;
                 var chofer = this.Nomina.FirstOrDefault(x => x.Chofer && x.Estado == EstadoAgente1214.Aprobado);
                 var chofer_agente = chofer != null ? chofer.Agente : nom_jefe;
 
                 Paragraph jefe = new Paragraph().Add("    - ").Add(String.Format("{0} - Estrato:{3} - Legajo: {1} - CUIL: {2}", nom_jefe.ApellidoYNombre, nom_jefe.Legajo, nom_jefe.Legajo_datos_laborales.CUIT, this.Estrato1214.Estrato))
-                    .SetTextAlignment(TextAlignment.JUSTIFIED)
-                    .SetMargins(
-                        /*top*/0
-                        ,/*right*/0
-                        , /*bottom*/0
-                        , /*left*/55)
-                    .SetFontSize(12);
+                    .SetMarginLeft(55).SetMarginLeft(45);
                 document.Add(titulo_jefe);
                 document.Add(jefe);
 
                 //Trabajo con la nomina de agentes
                 Text t_otros = new Text("Otros agentes afectados a la Comisión de Servicios").SetUnderline();
-                Paragraph titulo_otros = new Paragraph().Add("2. ").Add(t_otros).Add(":")
-                     .SetMargins(
-                        /*top*/15
-                        ,/*right*/0
-                        , /*bottom*/5
-                        , /*left*/0)
-                    .SetFontSize(12)
-                    .SetBold();
+                Paragraph titulo_otros = new Paragraph().Add("2. ").Add(t_otros).Add(":").SetMarginTop(15).SetMarginBottom(5).SetMarginLeft(40).SetBold();
                 document.Add(titulo_otros);
 
                 var nomina = this.Nomina.Where(x => !x.JefeComicion && !x.Chofer && x.Estado == EstadoAgente1214.Aprobado).ToList();
-
-                foreach (Agente1214 item in nomina)
+                if (nomina.Count > 0)
                 {
-                    Paragraph otro = new Paragraph().Add("    - ").Add(String.Format("{0} - Estrato:{3} - Legajo: {1} - CUIL: {2}", item.Agente.ApellidoYNombre, item.Agente.Legajo.ToString(), item.Agente.Legajo_datos_laborales.CUIT, this.Estrato1214.Estrato))
-                        .SetTextAlignment(TextAlignment.JUSTIFIED)
-                        .SetMargins(
-                            /*top*/0
-                            ,/*right*/0
-                            , /*bottom*/0
-                            , /*left*/55)
-                        .SetFontSize(12);
+                    foreach (Agente1214 item in nomina)
+                    {
+                        Paragraph otro = new Paragraph().Add("    - ").Add(String.Format("{0} - Estrato:{3} - Legajo: {1} - CUIL: {2}", item.Agente.ApellidoYNombre, item.Agente.Legajo.ToString(), item.Agente.Legajo_datos_laborales.CUIT, this.Estrato1214.Estrato))
+                            .SetMarginLeft(55).SetMarginLeft(45);
+                        document.Add(otro);
+                    }
+                }
+                else
+                {
+                    Paragraph otro = new Paragraph().Add("    - ").Add("Sin otros agentes afectados afectados a la Comisión de Servicios").SetMarginLeft(55).SetMarginLeft(45);
                     document.Add(otro);
                 }
 
@@ -186,15 +163,8 @@ namespace SisPer.Aplicativo
                     .Add("La localidad donde se realizará la Comisión de servicio es ")
                     .Add(t_destino)
                     .Add(" y las tareas a realizar por orden de mi superior son: ")
-                    .Add(t_tareas)
-                    .SetMargins(
-                        /*top*/15
-                        ,/*right*/0
-                        , /*bottom*/10
-                        , /*left*/0)
-                    .SetFontSize(12)
-                    .SetTextAlignment(TextAlignment.JUSTIFIED)
-                    .SetFontKerning(FontKerning.YES);
+                    .Add(t_tareas).SetMarginTop(15).SetMarginBottom(10).SetMarginLeft(40)
+                    .SetTextAlignment(TextAlignment.JUSTIFIED);
                 document.Add(destino);
 
                 Paragraph p_para_la_presente = new Paragraph("Para la presente comisión estimaré disponer, por donde corresponda, se provea:")
@@ -202,7 +172,7 @@ namespace SisPer.Aplicativo
                         /*top*/15
                         ,/*right*/0
                         , /*bottom*/0
-                        , /*left*/0);
+                        , /*left*/40);
 
                 document.Add(p_para_la_presente);
 
@@ -225,12 +195,12 @@ namespace SisPer.Aplicativo
                         break;
                 }
 
-                Paragraph p_a = new Paragraph().Add(t_a).Add(String.Format(" {0}",medio))
+                Paragraph p_a = new Paragraph().Add(t_a).Add(String.Format(" {0}", medio))
                            .SetMargins(
                                /*top*/0
                                ,/*right*/0
                                , /*bottom*/0
-                               , /*left*/0);
+                               , /*left*/40);
                 document.Add(p_a);
 
                 Text t_b = new Text("b. Anticipo de viáticos:").SetBold();
@@ -239,7 +209,7 @@ namespace SisPer.Aplicativo
                         /*top*/0
                         ,/*right*/0
                         , /*bottom*/0
-                        , /*left*/0);
+                        , /*left*/40);
                 document.Add(p_b);
 
                 string anticipo_otros_gastos = string.Empty;
@@ -262,25 +232,25 @@ namespace SisPer.Aplicativo
                         /*top*/0
                         ,/*right*/0
                         , /*bottom*/0
-                        , /*left*/0);
+                        , /*left*/40);
                 document.Add(p_c);
 
 
-                Paragraph p_linea_firma = new Paragraph("............................................                                                    ................................................")
+                Paragraph p_linea_firma = new Paragraph("....................................                                                    ........................................")
                     .SetMargins(
                         /*top*/70
                         ,/*right*/0
                         , /*bottom*/0
-                        , /*left*/0);
+                        , /*left*/40);
                 document.Add(p_linea_firma);
 
-                Paragraph p_firma = new Paragraph("Firma del Jefe de comisión                                                                                     Autorización Superior inmediato")
+                Paragraph p_firma = new Paragraph("Firma del Jefe de comisión                                                                         Autorización Superior inmediato")
                     .SetFontSize(9)
                     .SetMargins(
                         /*top*/0
                         ,/*right*/0
                         , /*bottom*/0
-                        , /*left*/20);
+                        , /*left*/45);
                 document.Add(p_firma);
 
                 document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
@@ -291,30 +261,13 @@ namespace SisPer.Aplicativo
                 switch (this.Movilidad)
                 {
                     case Movilidad1214.Transporte_publico:
-                        //Paragraph medio_transporte = new Paragraph().Add(t_medio).Add(String.Format(" Transporte público"))
-                        //    .SetFontSize(12)
-                        //    .SetMargins(
-                        //        /*top*/40
-                        //        ,/*right*/15
-                        //        , /*bottom*/0
-                        //        , /*left*/40);
-                        //document.Add(medio_transporte);
 
-                        //Paragraph p_medio_texto_publico = new Paragraph(String.Format("Para el cumplimiento de la comisión se dede proveer de Pesos {0} ({1}) en concepto de gastos de pasajes.-", Numalet.ToCardinal(this.AnticipoMovilidad), this.AnticipoMovilidad.ToString("C")))
-                        //    .SetFontSize(12)
-                        //    .SetTextAlignment(TextAlignment.JUSTIFIED)
-                        //    .SetMargins(
-                        //        /*top*/0
-                        //        ,/*right*/15
-                        //        , /*bottom*/0
-                        //        , /*left*/40);
-                        //document.Add(p_medio_texto_publico);
                         break;
                     case Movilidad1214.Vehiculo_oficial:
                         Paragraph medio_transporte_oficial = new Paragraph().Add(t_medio).Add(String.Format(" Vehículo oficial"))
                             .SetFontSize(12)
                             .SetMargins(
-                                /*top*/40
+                                /*top*/0
                                 ,/*right*/15
                                 , /*bottom*/0
                                 , /*left*/40);
@@ -322,13 +275,10 @@ namespace SisPer.Aplicativo
 
                         Text oficial_dominio = new Text(String.Format(" {0}", this.Vehiculo_dominio)).SetBold();
 
-                        Paragraph p_medio_oficial_texto = new Paragraph(String.Format("Para el cumplimiento de la comisión se dede proveer de Pesos {0} ({1}) en concepto de gastos de movilidad y afectar al vehículo oficial dominio ", Numalet.ToCardinal(this.AnticipoMovilidad), this.AnticipoMovilidad.ToString("C"))).Add(oficial_dominio);
+                        Paragraph p_medio_oficial_texto = new Paragraph(String.Format("Para el cumplimiento de la comisión se debe proveer de Pesos {0} ({1}) en concepto de gastos de movilidad y afectar al vehículo oficial dominio ", Numalet.ToCardinal(this.AnticipoMovilidad), this.AnticipoMovilidad.ToString("C"))).Add(oficial_dominio);
 
-                        if (this.Usa_chofer)
-                        {
-                            Text t_chofer = new Text(String.Format(", conducido por {0}", String.Format("{0} - Estrato:{3} - Legajo: {1} - CUIL: {2}", chofer.Agente.ApellidoYNombre, chofer.Agente.Legajo, chofer.Agente.Legajo_datos_laborales.CUIT, this.Estrato1214.Estrato))).SetBold();
-                            p_medio_oficial_texto.Add(t_chofer);
-                        }
+                        Text t_chofer = new Text(String.Format(", conducido por {0}", String.Format("{0} - Estrato:{3} - Legajo: {1} - CUIL: {2}", chofer_agente.ApellidoYNombre, chofer_agente.Legajo, chofer_agente.Legajo_datos_laborales.CUIT, this.Estrato1214.Estrato)));
+                        p_medio_oficial_texto.Add(t_chofer);
 
                         p_medio_oficial_texto.SetFontSize(12)
                         .SetTextAlignment(TextAlignment.JUSTIFIED)
@@ -346,7 +296,7 @@ namespace SisPer.Aplicativo
                         Paragraph medio_transporte_particular = new Paragraph().Add(t_medio).Add(String.Format(" Vehículo particular"))
                             .SetFontSize(12)
                             .SetMargins(
-                                /*top*/40
+                                /*top*/0
                                 ,/*right*/15
                                 , /*bottom*/0
                                 , /*left*/40);
@@ -359,7 +309,7 @@ namespace SisPer.Aplicativo
                         Text particular_poliza_vigencia = new Text(String.Format(" {0}", this.Vehiculo_particular_poliza_vigencia)).SetBold();
                         Text particular_poliza_cobertura = new Text(String.Format(" {0}", this.Vehiculo_particular_poliza_cobertura)).SetBold();
 
-                        Paragraph p_medio_particular_texto = new Paragraph(String.Format("Para el cumplimiento de la comisión se dede proveer de Pesos {0} ({1}) en concepto de gastos de movilidad. Datos del vehículo particular: dominio ", Numalet.ToCardinal(this.AnticipoMovilidad), this.AnticipoMovilidad.ToString("C"))).Add(particular_dominio);
+                        Paragraph p_medio_particular_texto = new Paragraph(String.Format("Para el cumplimiento de la comisión se dede proveer de Pesos {0} ({1}) en concepto de gastos de movilidad. Datos del vehículo particular para el que se solicita autorización: dominio ", Numalet.ToCardinal(this.AnticipoMovilidad), this.AnticipoMovilidad.ToString("C"))).Add(particular_dominio);
                         p_medio_particular_texto.Add(", perteneciente a ").Add(particular_titular).Add(", tipo de combustible ").Add(particular_tipo_combustible).Add(", número de póliza ").Add(particular_poliza).Add(" vigente hasta ").Add(particular_poliza_vigencia).Add(" tipo de cobertura ").Add(particular_poliza_cobertura);
                         p_medio_particular_texto.SetFontSize(12)
                         .SetTextAlignment(TextAlignment.JUSTIFIED)
@@ -431,6 +381,9 @@ namespace SisPer.Aplicativo
                 #endregion
 
                 document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+                //actualizo el margen superior para dejar espacio para agregar el titulo DISPOCICION N°_____
+                margenSuperior = ((float)(7.5 * puntos_por_centimetro));
+                document.SetMargins(margenSuperior, margenDerecho, margenInferior, margenIzquierdo);
 
                 #region Disposicion
 
@@ -443,13 +396,13 @@ namespace SisPer.Aplicativo
                    .SetBold()
                    .SetFontSize(12)
                    .SetMargins(
-                        /*top*/15
+                        /*top*/0
                         ,/*right*/15
                         , /*bottom*/10
                         , /*left*/40);
-                document.Add(titulo);
+                //document.Add(titulo); <-- no lo agrego aca porque lo agrego luego en la parte que agrego encabezados y pies de pagina ya que va en todas las hojas de la disposición
 
-                document.Add(lugar_y_fecha.SetMarginRight(15));
+                document.Add(lugar_y_fecha.SetMarginRight(15).SetMarginTop(20));
 
                 negrita = new Text("VISTO Y CONSIDERANDO:").SetBold();
                 Paragraph p = new Paragraph().Add(negrita)
@@ -508,7 +461,7 @@ namespace SisPer.Aplicativo
 
                 document.Add(p);
 
-                normal = new Text("Que, una vez concluida la Comisión de servicios autorizada, cada uno/a de los/las agentes afectados/as a la misma, deberán realizar la correspondiente rendición de viáticos y gastos, según corresponda, en el marco de las normas vigentes, Decreto provincial Nº 1324/78, Memorándum Nº 50/2014 de Contaduría General de la provincia, Memorándum Nº 03/2014, Nº 01/2015 y Circular General Nº 06/2015 del Administrador General de la ATP, entre otros instrumentos legales.");
+                normal = new Text("Que, una vez concluida la Comisión de servicios autorizada, cada uno/a de los/las agentes afectados/as a la misma, deberán realizar la correspondiente rendición de viáticos y gastos, según corresponda, en el marco de las normas vigentes, Decreto Provincial Nº 1324/78, Memorándum Nº 50/2014 de Contaduría General de la Provincia, Memorándums Nº 03/2014, Nº 01/2015 y Circular General Nº 06/2015 de la Administración Tributaria, entre otros instrumentos legales.");
 
                 p = new Paragraph().Add(normal)
                     .SetMargins(
@@ -620,7 +573,7 @@ namespace SisPer.Aplicativo
 
                 negrita = new Text("ARTÍCULO 3º: AUTORIZAR ").SetBold();
 
-                cadena = String.Format("a la Dirección de Administración de la Administración Tributaria Provincial a liquidar y abonar, mediante depósito/transferencia en el NUEVO BANCO DEL CHA-CO S.A , Caja de Ahorro sueldo a la/el agente: {0} CUIL {1} Legajo {2} la suma total de pesos {3} ({4}) para otros gastos que resulten necesarios a fin de cumplir con las tareas que se indican en Formulario AT Nº 3168 “Solicitud autorización Comisión de Servicios N° {5} ”. que se adjunta a la presente.  ", nom_jefe.ApellidoYNombre, nom_jefe.Legajo_datos_laborales.CUIT, nom_jefe.Legajo, Numalet.ToCardinal(this.AnticipoMovilidad), this.AnticipoMovilidad.ToString("C"), Cadena.CompletarConCeros(6, Id));
+                cadena = String.Format("a la Dirección de Administración de la Administración Tributaria Provincial a liquidar y abonar, mediante depósito/transferencia en el NUEVO BANCO DEL CHACO S.A , Caja de Ahorro sueldo a la/el agente: {0} CUIL {1} Legajo {2} la suma total de pesos {3} ({4}) para otros gastos que resulten necesarios a fin de cumplir con las tareas que se indican en Formulario AT Nº 3168 “Solicitud autorización Comisión de Servicios N° {5} ”. que se adjunta a la presente.  ", nom_jefe.ApellidoYNombre, nom_jefe.Legajo_datos_laborales.CUIT, nom_jefe.Legajo, Numalet.ToCardinal(this.AnticipoMovilidad), this.AnticipoMovilidad.ToString("C"), Cadena.CompletarConCeros(6, Id));
 
                 normal = new Text(cadena);
 
@@ -706,16 +659,15 @@ namespace SisPer.Aplicativo
                         negrita = new Text("ARTÍCULO 6º: AUTORIZAR ").SetBold();
 
 
-                        Text particular_dominio = new Text(String.Format(" {0}", this.Vehiculo_dominio)).SetBold();
-                        Text particular_titular = new Text(String.Format(" {0}", this.Vehiculo_particular_titular)).SetBold();
-                        Text particular_tipo_combustible = new Text(String.Format(" {0}", this.Vehiculo_particular_tipo_combustible)).SetBold();
-                        Text particular_poliza = new Text(String.Format(" {0}", this.Vehiculo_particular_poliza_nro)).SetBold();
-                        Text particular_poliza_vigencia = new Text(String.Format(" {0}", this.Vehiculo_particular_poliza_vigencia)).SetBold();
-                        Text particular_poliza_cobertura = new Text(String.Format(" {0}", this.Vehiculo_particular_poliza_cobertura)).SetBold();
+                        Text particular_dominio = new Text(String.Format(" {0}", this.Vehiculo_dominio));
+                        Text particular_titular = new Text(String.Format(" {0}", this.Vehiculo_particular_titular));
+                        Text particular_tipo_combustible = new Text(String.Format(" {0}", this.Vehiculo_particular_tipo_combustible));
+                        Text particular_poliza = new Text(String.Format(" {0}", this.Vehiculo_particular_poliza_nro));
+                        Text particular_poliza_vigencia = new Text(String.Format(" {0}", this.Vehiculo_particular_poliza_vigencia));
+                        Text particular_poliza_cobertura = new Text(String.Format(" {0}", this.Vehiculo_particular_poliza_cobertura));
 
                         Paragraph p_medio_particular_texto = new Paragraph(negrita).Add(String.Format("el vehículo particular dominio ")).Add(particular_dominio);
                         p_medio_particular_texto.Add(", perteneciente a ").Add(particular_titular).Add(", tipo de combustible ").Add(particular_tipo_combustible).Add(", número de póliza ").Add(particular_poliza).Add(" vigente hasta ").Add(particular_poliza_vigencia).Add(" tipo de cobertura ").Add(particular_poliza_cobertura);
-                        p_medio_particular_texto.Add(String.Format(" que será conducido por el/la agente {0} – CUIL {1} – Estrato {2} - Legajo {3}", chofer_agente.ApellidoYNombre, chofer_agente.Legajo_datos_laborales.CUIT, Estrato1214.Estrato, chofer_agente.Legajo));
                         p_medio_particular_texto.SetFontSize(12)
                             .SetMargins(
                                 /*top*/0
@@ -751,27 +703,39 @@ namespace SisPer.Aplicativo
                         break;
                 }
 
-                negrita = new Text("ARTÍCULO 7º: TOME ").SetBold();
+
+
+                negrita = new Text("ARTÍCULO 7º: NOTIFÍQUESE ").SetBold();
+
+                normal = new Text("al Tribunal de Cuentas. ");
+
+                p = new Paragraph().Add(negrita).Add(normal)
+                     .SetMargins(
+                            /*top*/0
+                            ,/*right*/15
+                            , /*bottom*/10
+                            , /*left*/40)
+                        .SetFontSize(12)
+                        .SetTextAlignment(TextAlignment.JUSTIFIED)
+                        .SetKeepTogether(true)
+                        .SetKeepWithNext(false);
+
+                document.Add(p);
+
+                negrita = new Text("ARTÍCULO 8º: TOME ").SetBold();
 
                 normal = new Text("razón Despacho. ");
 
                 p = new Paragraph().Add(negrita).Add(normal);
 
-                negrita = new Text("REGÍSTRESE");
-                normal = new Text(". Comuníquese a la Dirección Administración y ");
+                negrita = new Text("REGÍSTRESE. ").SetBold();
+                normal = new Text("Comuníquese a la Dirección Administración y a los integrantes de la Comisión de Servicios. Cumplido, ");
 
                 p.Add(negrita).Add(normal);
 
-                negrita = new Text("NOTIFÍQUESE ");
-                normal = new Text("a los integrantes de la Comisión de Servicios y al Tribunal de Cuentas. Cumplido, ");
+                negrita = new Text("ARCHÍVESE.").SetBold();
 
-                p.Add(negrita).Add(normal);
-
-                negrita = new Text("ARCHÍVESE");
-
-                normal = new Text(".");
-
-                p.Add(negrita).Add(normal)
+                p.Add(negrita)
                      .SetMargins(
                           /*top*/0
                           ,/*right*/15
@@ -784,6 +748,20 @@ namespace SisPer.Aplicativo
 
                 document.Add(p);
 
+                negrita = new Text("ADMINISTRACIÓN TRIBUTARIA PROVINCIAL.").SetBold();
+
+                p = new Paragraph().Add(negrita)
+                     .SetMargins(
+                          /*top*/30
+                          ,/*right*/15
+                          , /*bottom*/10
+                          , /*left*/40)
+                      .SetFontSize(12)
+                      .SetTextAlignment(TextAlignment.LEFT)
+                      .SetKeepTogether(true)
+                      .SetKeepWithNext(false);
+
+                document.Add(p);
 
                 #endregion
 
@@ -794,11 +772,12 @@ namespace SisPer.Aplicativo
                 Text t_leyenda = new Text(ConfigurationManager.AppSettings["Leyenda"]);
 
                 Paragraph leyenda = new Paragraph().Add(t_leyenda)
-                    //.SetTextAlignment(TextAlignment.RIGHT)
                     .SetFontSize(9);
 
                 Image membrete = new Image(ImageDataFactory.Create(HttpContext.Current.Server.MapPath("../Imagenes/membrete.png"))).SetAutoScale(true);
 
+                //Actualizo nuevamente el margen que voy a utilizar como punto para agregar la linea de titulo
+                margenSuperior = ((float)5 * puntos_por_centimetro);
 
                 var pdfDoc = document.GetPdfDocument();
 
@@ -808,8 +787,13 @@ namespace SisPer.Aplicativo
                     Rectangle area = page.GetPageSize().ApplyMargins(40, 28, 28, 28, false);
                     float x = area.GetWidth() + 10; // 2;
                     float y = area.GetTop() + 5;
-                    //document.ShowTextAligned(header, x, y, i, TextAlignment.CENTER, VerticalAlignment.BOTTOM, 0);
+                    
                     document.ShowTextAligned(leyenda, x, y, i, TextAlignment.RIGHT, VerticalAlignment.BOTTOM, 0);
+
+                    if (i > 2)
+                    {
+                        document.ShowTextAligned(titulo, x, y-margenSuperior, i, TextAlignment.RIGHT, VerticalAlignment.BOTTOM, 0);
+                    }
 
                     PdfCanvas aboveCanvas = new PdfCanvas(page.NewContentStreamAfter(),
                                         page.GetResources(), pdfDoc);
