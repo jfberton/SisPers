@@ -329,7 +329,7 @@ namespace SisPer.Aplicativo
 
                 //nuevo
                 Text negrita = new Text("Notificación:").SetBold().SetUnderline();
-                Text normal = new Text(" En caso de incumplimiento, de las obligaciones referidas a la rendición del pre-sente anticipo, será aplicable lo estipulado por el Memorándum Nº 50/2014 de Contaduría General de la provincia del Chaco…");
+                Text normal = new Text(" En caso de incumplimiento, de las obligaciones referidas a la rendición del presente anticipo, será aplicable lo estipulado por el Memorándum Nº 50/2014 de Contaduría General de la Provincia del Chaco…");
                 Text ital = new Text("” Si el subresponsable no efectuare la rendición y/o reintegro del excedente del presente anticipo dentro del plazo reglamentario, autoriza expresamente a retener de sus haberes los importes recibidos y/o no reintegrados”").SetItalic();
                 Paragraph p_notificacion = new Paragraph().Add(negrita).Add(normal).Add(ital)
                     .SetMargins(
@@ -612,7 +612,7 @@ namespace SisPer.Aplicativo
 
                 negrita = new Text("ARTÍCULO 5º: ESTABLECER ").SetBold();
 
-                cadena = String.Format("que, en caso de incumplimiento, de las obligaciones referidas en el artículo precedente, será aplicable lo estipulado por el Memorándum Nº 50/2014 de Contaduría General de la provincia del Chaco ");
+                cadena = String.Format("que, en caso de incumplimiento, de las obligaciones referidas en el artículo precedente, será aplicable lo estipulado por el Memorándum Nº 50/2014 de Contaduría General de la Provincia del Chaco ");
 
                 normal = new Text(cadena);
 
@@ -779,6 +779,9 @@ namespace SisPer.Aplicativo
                 //Actualizo nuevamente el margen que voy a utilizar como punto para agregar la linea de titulo
                 margenSuperior = ((float)5 * puntos_por_centimetro);
 
+
+                int pagina = 1;
+
                 var pdfDoc = document.GetPdfDocument();
 
                 for (int i = 1; i <= pdfDoc.GetNumberOfPages(); i++)
@@ -787,18 +790,40 @@ namespace SisPer.Aplicativo
                     Rectangle area = page.GetPageSize().ApplyMargins(40, 28, 28, 28, false);
                     float x = area.GetWidth() + 10; // 2;
                     float y = area.GetTop() + 5;
-                    
+
+                    #region encabezados
+
+                    //comun a todos membrete y leyenda
                     document.ShowTextAligned(leyenda, x, y, i, TextAlignment.RIGHT, VerticalAlignment.BOTTOM, 0);
-
-                    if (i > 2)
-                    {
-                        document.ShowTextAligned(titulo, x, y-margenSuperior, i, TextAlignment.RIGHT, VerticalAlignment.BOTTOM, 0);
-                    }
-
+                    
                     PdfCanvas aboveCanvas = new PdfCanvas(page.NewContentStreamAfter(),
                                         page.GetResources(), pdfDoc);
 
                     new Canvas(aboveCanvas, pdfDoc, area).Add(membrete);
+
+                    if (i > 2) //disposicion
+                    {
+                        document.ShowTextAligned(titulo, x, y - margenSuperior, i, TextAlignment.RIGHT, VerticalAlignment.BOTTOM, 0);
+                    }
+
+                    #endregion
+
+                    #region pie de pagina
+                    
+                    if (i <= 2) //formulario
+                    {
+                        document.ShowTextAligned(new Paragraph(texto_titulo).Add(" - hoja ").Add(pagina.ToString()).SetFontSize(9).SetFontColor(iText.Kernel.Colors.ColorConstants.GRAY), x, area.GetBottom(), i, TextAlignment.RIGHT, VerticalAlignment.BOTTOM, 0);
+                        pagina++;
+                    }
+                    else //disposicion
+                    {
+                        pagina = i == 3 ? 1 : pagina;
+
+                        document.ShowTextAligned(new Paragraph(pagina.ToString()), x, area.GetBottom(), i, TextAlignment.RIGHT, VerticalAlignment.BOTTOM, 0);
+                        pagina++;
+                    }
+                    
+                    #endregion
                 }
 
                 #endregion

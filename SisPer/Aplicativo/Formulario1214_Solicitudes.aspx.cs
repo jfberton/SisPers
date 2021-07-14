@@ -475,6 +475,7 @@ namespace SisPer.Aplicativo
                 {
                     int idAgente = ag214.NroAnticipoCargadoPor.Value;
                     lbl_ant_otorgado_por.Text = cxt.Agentes.FirstOrDefault(a => a.Id == idAgente).ApellidoYNombre;
+                    ant_otorgado_por_PanelRowColumn.Attributes["Style"] = "display:inline";
                 }
                 else
                 {
