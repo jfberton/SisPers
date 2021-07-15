@@ -80,6 +80,7 @@ namespace SisPer.Aplicativo
             return agentes;
         }
 
+
         private List<Agente> ObtenerAgentesAreaCascada(Area area)
         {
             List<Agente> ret = new List<Agente>();

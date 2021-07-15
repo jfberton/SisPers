@@ -48,13 +48,13 @@
           <Property Name="Id_Agente" Type="int" Nullable="false" />
           <Property Name="Estado" Type="int" Nullable="false" />
           <Property Name="Formulario1214Id" Type="int" Nullable="false" />
-          <Property Name="Id_Jefe" Type="int" Nullable="false" />
+          <Property Name="Id_Area" Type="int" Nullable="false" />
           <Property Name="FechaAprobacion" Type="datetime" />
           <Property Name="FechaRechazo" Type="datetime" />
           <Property Name="JefeComicion" Type="bit" Nullable="false" />
+          <Property Name="Chofer" Type="bit" Nullable="false" />
           <Property Name="Aprobado_por_agente_id" Type="int" />
           <Property Name="Rechazado_por_agente_id" Type="int" />
-          <Property Name="Chofer" Type="bit" Nullable="false" />
           <Property Name="NroAnticipo" Type="nvarchar(max)" />
           <Property Name="NroAnticipoCargadoPor" Type="int" />
         </EntityType>
@@ -812,18 +812,6 @@
             </Principal>
             <Dependent Role="Agentes1214">
               <PropertyRef Name="Id_Agente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AgenteAgente12141">
-          <End Role="Agentes" Type="Self.Agentes" Multiplicity="1" />
-          <End Role="Agentes1214" Type="Self.Agentes1214" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Agentes">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Agentes1214">
-              <PropertyRef Name="Id_Jefe" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1901,10 +1889,6 @@
             <End Role="Agentes" EntitySet="Agentes" />
             <End Role="Agentes1214" EntitySet="Agentes1214" />
           </AssociationSet>
-          <AssociationSet Name="FK_AgenteAgente12141" Association="Self.FK_AgenteAgente12141">
-            <End Role="Agentes" EntitySet="Agentes" />
-            <End Role="Agentes1214" EntitySet="Agentes1214" />
-          </AssociationSet>
           <AssociationSet Name="FK_AgenteAgente12142" Association="Self.FK_AgenteAgente12142">
             <End Role="Agentes" EntitySet="Agentes" />
             <End Role="Agentes1214" EntitySet="Agentes1214" />
@@ -2493,10 +2477,6 @@
           </AssociationSet>
           <AssociationSet Name="Formulario1214Agente1214" Association="Model1.Formulario1214Agente1214">
             <End Role="Formulario1214" EntitySet="Formularios1214" />
-            <End Role="Agente1214" EntitySet="Agentes1214" />
-          </AssociationSet>
-          <AssociationSet Name="AgenteAgente12141" Association="Model1.AgenteAgente12141">
-            <End Role="Agente" EntitySet="Agentes" />
             <End Role="Agente1214" EntitySet="Agentes1214" />
           </AssociationSet>
           <EntitySet Name="Legajos_datos_laborales" EntityType="Model1.Legajo_datos_laborales" />
@@ -4046,8 +4026,7 @@
           <Property Name="Estado" Type="Model1.EstadoAgente1214" Nullable="false" />
           <NavigationProperty Name="Formulario1214" Relationship="Model1.Formulario1214Agente1214" FromRole="Agente1214" ToRole="Formulario1214" />
           <Property Name="Formulario1214Id" Type="Int32" Nullable="false" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-          <NavigationProperty Name="Jefe" Relationship="Model1.AgenteAgente12141" FromRole="Agente1214" ToRole="Agente" />
-          <Property Name="Id_Jefe" Type="Int32" Nullable="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Id_Area" Type="Int32" Nullable="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Name="FechaAprobacion" Type="DateTime" Nullable="true" Precision="3" />
           <Property Name="FechaRechazo" Type="DateTime" Nullable="true" Precision="3" />
           <Property Name="JefeComicion" Type="Boolean" Nullable="false" />
@@ -4086,18 +4065,6 @@
             </Principal>
             <Dependent Role="Agente1214">
               <PropertyRef Name="Formulario1214Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="AgenteAgente12141">
-          <End Type="Model1.Agente" Role="Agente" Multiplicity="1" />
-          <End Type="Model1.Agente1214" Role="Agente1214" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Agente">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Agente1214">
-              <PropertyRef Name="Id_Jefe" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5246,7 +5213,7 @@
           <ScalarProperty Name="Id_Agente" ColumnName="Id_Agente" />
           <ScalarProperty Name="Estado" ColumnName="Estado" />
           <ScalarProperty Name="Formulario1214Id" ColumnName="Formulario1214Id" />
-          <ScalarProperty Name="Id_Jefe" ColumnName="Id_Jefe" />
+          <ScalarProperty Name="Id_Area" ColumnName="Id_Area" />
           <ScalarProperty Name="FechaAprobacion" ColumnName="FechaAprobacion" />
           <ScalarProperty Name="FechaRechazo" ColumnName="FechaRechazo" />
           <ScalarProperty Name="JefeComicion" ColumnName="JefeComicion" />
@@ -5788,7 +5755,6 @@
         <EntityTypeShape EntityType="Model1.Agente1214" Width="2.375" PointX="0.5" PointY="6.375" />
         <AssociationConnector Association="Model1.AgenteAgente1214" />
         <AssociationConnector Association="Model1.Formulario1214Agente1214" />
-        <AssociationConnector Association="Model1.AgenteAgente12141" />
         <EntityTypeShape EntityType="Model1.Legajo_datos_laborales" Width="2.75" PointX="0.75" PointY="41.125" />
         <AssociationConnector Association="Model1.AgenteAgente_legajo_datos_laborales" />
         <EntityTypeShape EntityType="Model1.Legajo_datos_personales" Width="4.125" PointX="4.5" PointY="46.375" />

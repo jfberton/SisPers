@@ -606,25 +606,28 @@ namespace SisPer.Aplicativo
                                 cxt.Notificacion_Estados.AddObject(ne);
                             }
 
-                            Agente destinatarioCxt = cxt.Agentes.First(a => a.Id == agNomina.Id_Jefe);
-                            Notificacion notificacion = new Notificacion();
-
-                            notificacion.Descripcion = "Por la presente se notifica que el agente " + agNomina.Agente.ApellidoYNombre + " fue removido de la comición aprobada por usted para las fechas " + f1214.Desde.ToShortDateString() + " a " + f1214.Hasta.ToShortDateString() + " ya que dicha comisión ha sufrico cambios en las fechas mencionadas.-";
-                            notificacion.Destinatario = destinatarioCxt;
-                            notificacion.ObservacionPendienteRecibir = string.Empty;
-
-                            notificacion.Tipo = nt;
-                            cxt.Notificaciones.AddObject(notificacion);
-
-                            Notificacion_Historial notHist = new Notificacion_Historial()
+                            if (agNomina.Aprobado_por_agente_id.HasValue)
                             {
-                                Agente = agNomina.Agente,
-                                Estado = ne,
-                                Fecha = DateTime.Now,
-                                Notificacion = notificacion
-                            };
+                                Agente destinatarioCxt = cxt.Agentes.First(a => a.Id == agNomina.Aprobado_por_agente_id);
+                                Notificacion notificacion = new Notificacion();
 
-                            cxt.Notificacion_Historiales.AddObject(notHist);
+                                notificacion.Descripcion = "Por la presente se notifica que el agente " + agNomina.Agente.ApellidoYNombre + " fue removido de la comición aprobada por usted para las fechas " + f1214.Desde.ToShortDateString() + " a " + f1214.Hasta.ToShortDateString() + " ya que dicha comisión ha sufrico cambios en las fechas mencionadas.-";
+                                notificacion.Destinatario = destinatarioCxt;
+                                notificacion.ObservacionPendienteRecibir = string.Empty;
+
+                                notificacion.Tipo = nt;
+                                cxt.Notificaciones.AddObject(notificacion);
+
+                                Notificacion_Historial notHist = new Notificacion_Historial()
+                                {
+                                    Agente = agNomina.Agente,
+                                    Estado = ne,
+                                    Fecha = DateTime.Now,
+                                    Notificacion = notificacion
+                                };
+
+                                cxt.Notificacion_Historiales.AddObject(notHist);
+                            }
 
                             #endregion
                         }
@@ -750,7 +753,7 @@ namespace SisPer.Aplicativo
                     agNomina.Chofer = false;
                     try
                     {
-                        agNomina.Id_Jefe = ag.Area.Agentes.Where(aa => (aa.Jefe || aa.JefeTemporal) && aa.FechaBaja == null).First().Id;
+                        agNomina.Id_Area = ag.Area.Id;
                     }
                     catch (Exception ex)
                     {
@@ -767,7 +770,7 @@ namespace SisPer.Aplicativo
                         if (autorizado.Value == true)
                         {
                             agNomina.Estado = EstadoAgente1214.Aprobado;
-                            agNomina.Id_Jefe = usuarioLogueado.Id;
+                            agNomina.Aprobado_por_agente_id = usuarioLogueado.Id;
                             agNomina.FechaAprobacion = DateTime.Now;
                         }
                     }
@@ -826,9 +829,8 @@ namespace SisPer.Aplicativo
                     agNomina.Id_Agente = ag.Id;
                     agNomina.JefeComicion = false;
                     agNomina.Chofer = true;
-                    agNomina.Id_Jefe = ag.Id;
+                    agNomina.Id_Area = ag.Area.Id;
                     agNomina.Estado = EstadoAgente1214.Aprobado;
-                    agNomina.Id_Jefe = usuarioLogueado.Id;
                     agNomina.FechaAprobacion = DateTime.Now;
 
                     f1214.Nomina.Add(agNomina);
@@ -923,7 +925,7 @@ namespace SisPer.Aplicativo
                         mensaje.Agente = agCxt;
                         mensaje.FechaEnvio = DateTime.Now;
 
-                        Agente destinatarioCxt = cxt.Agentes.First(a => a.Id == agNomina.Jefe.Id);
+                        Agente destinatarioCxt = cxt.Agentes.First(a => a.Id == agNomina.Aprobado_por_agente_id);
                         Destinatario dest = new Destinatario();
                         dest.Agente = destinatarioCxt;
                         mensaje.Destinatarios.Add(dest);
@@ -1117,7 +1119,7 @@ namespace SisPer.Aplicativo
                         mensaje.Agente = agCxt;
                         mensaje.FechaEnvio = DateTime.Now;
 
-                        Agente destinatarioCxt = cxt.Agentes.First(a => a.Id == item.Jefe.Id);
+                        Agente destinatarioCxt = cxt.Agentes.First(a => a.Id == item.Aprobado_por_agente_id);
                         Destinatario dest = new Destinatario();
                         dest.Agente = destinatarioCxt;
                         mensaje.Destinatarios.Add(dest);

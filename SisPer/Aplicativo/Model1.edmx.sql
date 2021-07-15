@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 06/16/2021 07:38:52
+-- Date Created: 07/14/2021 10:45:45
 -- Generated from EDMX file: D:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Model1.edmx
 -- --------------------------------------------------
 
@@ -965,7 +965,7 @@ CREATE TABLE [dbo].[Agentes1214] (
     [Id_Agente] int  NOT NULL,
     [Estado] int  NOT NULL,
     [Formulario1214Id] int  NOT NULL,
-    [Id_Jefe] int  NOT NULL,
+    [Id_Area] int  NOT NULL,
     [FechaAprobacion] datetime  NULL,
     [FechaRechazo] datetime  NULL,
     [JefeComicion] bit  NOT NULL,
@@ -2481,21 +2481,6 @@ GO
 CREATE INDEX [IX_FK_Formulario1214Agente1214]
 ON [dbo].[Agentes1214]
     ([Formulario1214Id]);
-GO
-
--- Creating foreign key on [Id_Jefe] in table 'Agentes1214'
-ALTER TABLE [dbo].[Agentes1214]
-ADD CONSTRAINT [FK_AgenteAgente12141]
-    FOREIGN KEY ([Id_Jefe])
-    REFERENCES [dbo].[Agentes]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_AgenteAgente12141'
-CREATE INDEX [IX_FK_AgenteAgente12141]
-ON [dbo].[Agentes1214]
-    ([Id_Jefe]);
 GO
 
 -- Creating foreign key on [Agente_Id] in table 'Legajos_datos_laborales'

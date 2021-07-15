@@ -78,7 +78,6 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("Model1", "AgenteFormulario1214", "Agente", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SisPer.Aplicativo.Agente), "Formulario1214", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SisPer.Aplicativo.Formulario1214), true)]
 [assembly: EdmRelationshipAttribute("Model1", "AgenteAgente1214", "Agente", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SisPer.Aplicativo.Agente), "Agente1214", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SisPer.Aplicativo.Agente1214), true)]
 [assembly: EdmRelationshipAttribute("Model1", "Formulario1214Agente1214", "Formulario1214", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SisPer.Aplicativo.Formulario1214), "Agente1214", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SisPer.Aplicativo.Agente1214), true)]
-[assembly: EdmRelationshipAttribute("Model1", "AgenteAgente12141", "Agente", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SisPer.Aplicativo.Agente), "Agente1214", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SisPer.Aplicativo.Agente1214), true)]
 [assembly: EdmRelationshipAttribute("Model1", "AgenteAgente_legajo_datos_laborales", "Agente", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SisPer.Aplicativo.Agente), "Agente_legajo_datos_laborales", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SisPer.Aplicativo.Legajo_datos_laborales))]
 [assembly: EdmRelationshipAttribute("Model1", "AgenteAgente_legajo_datos_personales", "Agente", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SisPer.Aplicativo.Agente), "Agente_legajo_datos_personales", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SisPer.Aplicativo.Legajo_datos_personales))]
 [assembly: EdmRelationshipAttribute("Model1", "Legajo_datos_personalesLegajo_historial_domicilio", "Legajo_datos_personales", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SisPer.Aplicativo.Legajo_datos_personales), "Legajo_historial_domicilio", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SisPer.Aplicativo.Legajo_historial_domicilio), true)]
@@ -3753,17 +3752,17 @@ namespace SisPer.Aplicativo
         /// <param name="id_Agente">Valor inicial de la propiedad Id_Agente.</param>
         /// <param name="estado">Valor inicial de la propiedad Estado.</param>
         /// <param name="formulario1214Id">Valor inicial de la propiedad Formulario1214Id.</param>
-        /// <param name="id_Jefe">Valor inicial de la propiedad Id_Jefe.</param>
+        /// <param name="id_Area">Valor inicial de la propiedad Id_Area.</param>
         /// <param name="jefeComicion">Valor inicial de la propiedad JefeComicion.</param>
         /// <param name="chofer">Valor inicial de la propiedad Chofer.</param>
-        public static Agente1214 CreateAgente1214(global::System.Int32 id, global::System.Int32 id_Agente, EstadoAgente1214 estado, global::System.Int32 formulario1214Id, global::System.Int32 id_Jefe, global::System.Boolean jefeComicion, global::System.Boolean chofer)
+        public static Agente1214 CreateAgente1214(global::System.Int32 id, global::System.Int32 id_Agente, EstadoAgente1214 estado, global::System.Int32 formulario1214Id, global::System.Int32 id_Area, global::System.Boolean jefeComicion, global::System.Boolean chofer)
         {
             Agente1214 agente1214 = new Agente1214();
             agente1214.Id = id;
             agente1214.Id_Agente = id_Agente;
             agente1214.Estado = estado;
             agente1214.Formulario1214Id = formulario1214Id;
-            agente1214.Id_Jefe = id_Jefe;
+            agente1214.Id_Area = id_Area;
             agente1214.JefeComicion = jefeComicion;
             agente1214.Chofer = chofer;
             return agente1214;
@@ -3877,24 +3876,24 @@ namespace SisPer.Aplicativo
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 Id_Jefe
+        public global::System.Int32 Id_Area
         {
             get
             {
-                return _Id_Jefe;
+                return _Id_Area;
             }
             set
             {
-                OnId_JefeChanging(value);
-                ReportPropertyChanging("Id_Jefe");
-                _Id_Jefe = StructuralObject.SetValidValue(value, "Id_Jefe");
-                ReportPropertyChanged("Id_Jefe");
-                OnId_JefeChanged();
+                OnId_AreaChanging(value);
+                ReportPropertyChanging("Id_Area");
+                _Id_Area = StructuralObject.SetValidValue(value, "Id_Area");
+                ReportPropertyChanged("Id_Area");
+                OnId_AreaChanged();
             }
         }
-        private global::System.Int32 _Id_Jefe;
-        partial void OnId_JefeChanging(global::System.Int32 value);
-        partial void OnId_JefeChanged();
+        private global::System.Int32 _Id_Area;
+        partial void OnId_AreaChanging(global::System.Int32 value);
+        partial void OnId_AreaChanged();
     
         /// <summary>
         /// No hay documentación de metadatos disponible.
@@ -4164,44 +4163,6 @@ namespace SisPer.Aplicativo
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Formulario1214>("Model1.Formulario1214Agente1214", "Formulario1214", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No hay documentación de metadatos disponible.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Model1", "AgenteAgente12141", "Agente")]
-        public Agente Jefe
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Agente>("Model1.AgenteAgente12141", "Agente").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Agente>("Model1.AgenteAgente12141", "Agente").Value = value;
-            }
-        }
-        /// <summary>
-        /// No hay documentación de metadatos disponible.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<Agente> JefeReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Agente>("Model1.AgenteAgente12141", "Agente");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Agente>("Model1.AgenteAgente12141", "Agente", value);
                 }
             }
         }

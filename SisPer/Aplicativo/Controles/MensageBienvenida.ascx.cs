@@ -110,7 +110,13 @@ namespace SisPer.Aplicativo.Controles
                 }
                 else
                 {
-                    solicitudes214 = cxt.Agentes1214.Count(aa => aa.Estado == EstadoAgente1214.Solicitado && aa.Id_Jefe == agente.Id);
+                    solicitudes214 = cxt.Agentes1214.Count(aa => aa.Estado == EstadoAgente1214.Solicitado && 
+                                (
+                                agente.AreaId == aa.Id_Area //depende directamente
+                                || (aa.Agente.Area.DependeDe != null && aa.Agente.Area.DependeDe.AreaId == agente.AreaId) //depende en segunda instancia
+                                || (aa.Agente.Area.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe.AreaId == agente.AreaId) //depende en tercera instancia
+                                || (aa.Agente.Area.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe.DependeDe.AreaId == agente.AreaId) //depende en cuarta instancia
+                                ));
                 }
 
                 CargarPendientes();
@@ -171,7 +177,7 @@ namespace SisPer.Aplicativo.Controles
                 else
                 {
                     var items = (from aa in cxt.Agentes1214
-                                 where aa.Estado == EstadoAgente1214.Solicitado && aa.Id_Jefe == usuarioLogueado.Id
+                                 where aa.Estado == EstadoAgente1214.Solicitado && usuarioLogueado.AreaId == aa.Id_Area
                                  select new
                                  {
                                      agente214_id = aa.Id,

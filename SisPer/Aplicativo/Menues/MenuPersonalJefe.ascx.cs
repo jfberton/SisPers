@@ -48,7 +48,14 @@ namespace SisPer.Aplicativo.Menues
                 lbl_mensajesNuevos.Text = mensajesSinLeer > 0 ? mensajesSinLeer.ToString() : "";
                 mensajes.Visible = mensajesSinLeer > 0;
 
-                int solicitudes214 = cxt.Agentes1214.Count(aa => aa.Estado == EstadoAgente1214.Solicitado && aa.Id_Jefe == agente.Id);
+                int solicitudes214 = cxt.Agentes1214.Count(aa => aa.Estado == EstadoAgente1214.Solicitado &&
+                                (
+                                agente.AreaId == aa.Id_Area //depende directamente
+                                || (aa.Agente.Area.DependeDe != null && aa.Agente.Area.DependeDe.AreaId == agente.AreaId) //depende en segunda instancia
+                                || (aa.Agente.Area.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe.AreaId == agente.AreaId) //depende en tercera instancia
+                                || (aa.Agente.Area.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe.DependeDe.AreaId == agente.AreaId) //depende en cuarta instancia
+                                )
+                                );
                 lbl_solicitudes.Text = solicitudes214.ToString();
                 solicitudes.Visible = solicitudes214 > 0;
 

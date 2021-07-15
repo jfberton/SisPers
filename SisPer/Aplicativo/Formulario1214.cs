@@ -554,7 +554,7 @@ namespace SisPer.Aplicativo
                     cadena += ", " + chofer_agente.ApellidoYNombre + " CUIT " + chofer_agente.Legajo_datos_laborales.CUIT + " Legajo " + chofer_agente.Legajo.ToString();
                 }
 
-                cadena += String.Format(", la suma total de pesos  {0} ({1}) en concepto de anticipo de viático para cumplir con las tareas que se indican en Formulario AT Nº 3168 “Solicitud autorización Comisión de Servicios N° {2}.” que se adjunta a la presente.;", Numalet.ToCardinal(this.AnticipoViaticos), this.AnticipoViaticos.ToString("C"), Cadena.CompletarConCeros(6, Id));
+                cadena += String.Format(", la suma total de pesos {0} ({1}), a cada uno de los agentes mencionados, en concepto de anticipo de viático para cumplir con las tareas que se indican en Formulario AT Nº 3168 “Solicitud autorización Comisión de Servicios N° {2}.” que se adjunta a la presente.;", Numalet.ToCardinal(this.AnticipoViaticos), this.AnticipoViaticos.ToString("C"), Cadena.CompletarConCeros(6, Id));
 
                 normal = new Text(cadena);
 
@@ -767,7 +767,7 @@ namespace SisPer.Aplicativo
 
                 document.Flush();
 
-                #region Agrego cabecera y pie
+                 #region Agrego cabecera y pie
 
                 Text t_leyenda = new Text(ConfigurationManager.AppSettings["Leyenda"]);
 
