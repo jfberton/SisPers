@@ -43,9 +43,9 @@ namespace SisPer.Aplicativo.Menues
                 int solicitudes214 = cxt.Agentes1214.Count(aa => aa.Estado == EstadoAgente1214.Solicitado && 
                                 (
                                 agente.AreaId == aa.Id_Area //depende directamente
-                                || (aa.Agente.Area.DependeDe != null && aa.Agente.Area.DependeDe.AreaId == agente.AreaId) //depende en segunda instancia
-                                || (aa.Agente.Area.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe.AreaId == agente.AreaId) //depende en tercera instancia
-                                || (aa.Agente.Area.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe.DependeDe.AreaId == agente.AreaId) //depende en cuarta instancia
+                                || (aa.Agente.Area.DependeDe != null && aa.Agente.Area.DependeDe.Id == agente.AreaId) //depende en segunda instancia
+                                || (aa.Agente.Area.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe.Id == agente.AreaId) //depende en tercera instancia
+                                || (aa.Agente.Area.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe.DependeDe.Id == agente.AreaId) //depende en cuarta instancia
                                 ));
                 int solicitudesDeAnticipo = cxt.Agentes1214.Count(aa => agente.Area.Nombre == "Administración"
                                                                         && aa.Formulario1214.Estado == Estado1214.Aprobada

@@ -71,10 +71,10 @@ namespace SisPer.Aplicativo
                 var items = (from aa in cxt.Agentes1214
                              where aa.Estado == EstadoAgente1214.Solicitado &&
                                 (
-                                usuarioLogueado.AreaId == aa.Id_Area //depende directamente
-                                || (aa.Agente.Area.DependeDe != null && aa.Agente.Area.DependeDe.AreaId == usuarioLogueado.AreaId) //depende en segunda instancia
-                                || (aa.Agente.Area.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe.AreaId == usuarioLogueado.AreaId) //depende en tercera instancia
-                                || (aa.Agente.Area.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe.DependeDe.AreaId == usuarioLogueado.AreaId) //depende en cuarta instancia
+                                usuarioLogueado.AreaId == aa.Agente.Area.Id //depende directamente
+                                || (aa.Agente.Area.DependeDe != null && aa.Agente.Area.DependeDe.Id == usuarioLogueado.AreaId) //depende en segunda instancia
+                                || (aa.Agente.Area.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe.Id == usuarioLogueado.AreaId) //depende en tercera instancia
+                                || (aa.Agente.Area.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe.DependeDe.Id == usuarioLogueado.AreaId) //depende en cuarta instancia
                                 )
                              select new
                              {
@@ -114,10 +114,10 @@ namespace SisPer.Aplicativo
                 var items_otros = (from aa in cxt.Agentes1214
                                    where aa.Estado != EstadoAgente1214.Solicitado && 
                                    (
-                                    usuarioLogueado.AreaId == aa.Id_Area //depende directamente
-                                    || (aa.Agente.Area.DependeDe != null && aa.Agente.Area.DependeDe.AreaId == usuarioLogueado.AreaId) //depende en segunda instancia
-                                    || (aa.Agente.Area.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe.AreaId == usuarioLogueado.AreaId) //depende en tercera instancia
-                                    || (aa.Agente.Area.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe.DependeDe.AreaId == usuarioLogueado.AreaId) //depende en cuarta instancia
+                                    usuarioLogueado.AreaId == aa.Agente.Area.Id //depende directamente
+                                    || (aa.Agente.Area.DependeDe != null && aa.Agente.Area.DependeDe.Id == usuarioLogueado.AreaId) //depende en segunda instancia
+                                    || (aa.Agente.Area.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe.Id == usuarioLogueado.AreaId) //depende en tercera instancia
+                                    || (aa.Agente.Area.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe.DependeDe != null && aa.Agente.Area.DependeDe.DependeDe.DependeDe.Id == usuarioLogueado.AreaId) //depende en cuarta instancia
                                     )
                                    select new
                                    {
