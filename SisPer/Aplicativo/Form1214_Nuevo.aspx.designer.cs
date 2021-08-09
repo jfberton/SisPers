@@ -78,6 +78,15 @@ namespace SisPer.Aplicativo
         protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary2;
 
         /// <summary>
+        /// Control ValidationSummary3.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary3;
+
+        /// <summary>
         /// Control id_formulario.
         /// </summary>
         /// <remarks>
@@ -510,6 +519,24 @@ namespace SisPer.Aplicativo
         protected global::System.Web.UI.WebControls.CustomValidator cv_estrato;
 
         /// <summary>
+        /// Control ddl_liquidaViatico.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_liquidaViatico;
+
+        /// <summary>
+        /// Control cv_liquida_viatico.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cv_liquida_viatico;
+
+        /// <summary>
         /// Control btn_agente_6.
         /// </summary>
         /// <remarks>
@@ -888,13 +915,76 @@ namespace SisPer.Aplicativo
         protected global::System.Web.UI.WebControls.CustomValidator cv_poliza_vigencia;
 
         /// <summary>
-        /// Control btn_Confeccionar.
+        /// Control item_group_solicita_nro_dispo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_Confeccionar;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl item_group_solicita_nro_dispo;
+
+        /// <summary>
+        /// Control tb_disposicion_buscada.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tb_disposicion_buscada;
+
+        /// <summary>
+        /// Control btn_buscar_dispo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_buscar_dispo;
+
+        /// <summary>
+        /// Control CV_nroDisp.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CV_nroDisp;
+
+        /// <summary>
+        /// Control hdn_nro_dispo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdn_nro_dispo;
+
+        /// <summary>
+        /// Control hdn_datos_movilidad_dispo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdn_datos_movilidad_dispo;
+
+        /// <summary>
+        /// Control lbl_dispo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lbl_dispo;
+
+        /// <summary>
+        /// Control tb_dispo_aprobada.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tb_dispo_aprobada;
 
         /// <summary>
         /// Control btn_aprobar.
@@ -904,6 +994,24 @@ namespace SisPer.Aplicativo
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btn_aprobar;
+
+        /// <summary>
+        /// Control cv_verificar_carga_dispo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cv_verificar_carga_dispo;
+
+        /// <summary>
+        /// Control btn_Confeccionar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_Confeccionar;
 
         /// <summary>
         /// Control btn_Enviar.

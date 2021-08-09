@@ -15,6 +15,7 @@
     <uc1:MenuPersonalAgente runat="server" ID="MenuPersonalAgente" Visible="false" />
     <uc1:MenuPersonalJefe runat="server" ID="MenuPersonalJefe" Visible="false" />
 </asp:Content>
+
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <br />
     <div class="panel panel-default" id="main_panel" runat="server">
@@ -24,6 +25,8 @@
         </div>
         <div class="panel-body">
             <asp:ValidationSummary ID="ValidationSummary2" runat="server" DisplayMode="BulletList" ValidationGroup="general_214"
+                CssClass="validationsummary panel panel-danger " HeaderText="<div class='panel-heading'>&nbsp;Corrija los siguientes errores antes de continuar:</div>" />
+            <asp:ValidationSummary ID="ValidationSummary3" runat="server" DisplayMode="BulletList" ValidationGroup="aprobar_f3168"
                 CssClass="validationsummary panel panel-danger " HeaderText="<div class='panel-heading'>&nbsp;Corrija los siguientes errores antes de continuar:</div>" />
             <p />
 
@@ -68,7 +71,7 @@
                             <div class="row">
                                 <div class="col-md-11">
                                     <div class="input-group date" id="datetimepicker2">
-                                         <span class="input-group-addon">Hasta</span>
+                                        <span class="input-group-addon">Hasta</span>
                                         <input type="text" class="form-control" id="tb_hasta" runat="server" />
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
@@ -136,12 +139,12 @@
                     <p />
                     <div class="row">
                         <div class="col-md-11">
-                             <div class="form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">Tareas</span>
-                                            <asp:TextBox runat="server" TextMode="MultiLine" Rows="3" ID="tb_tareas" CssClass="form-control" />
-                                        </div>
-                                    </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Tareas</span>
+                                    <asp:TextBox runat="server" TextMode="MultiLine" Rows="3" ID="tb_tareas" CssClass="form-control" />
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-1">
                             <asp:RequiredFieldValidator ControlToValidate="tb_tareas" Text="<img src='../Imagenes/exclamation.gif' title='Debe ingresar las tareas a realizar' />"
@@ -271,16 +274,35 @@
                         </div>
                         <div class="col-md-6">
                             <div class="row">
-                                <div class="col-md-11">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Estrato del jefe de comisión:</span>
-                                        <asp:DropDownList runat="server" ID="ddl_estrato" CssClass="form-control" OnSelectedIndexChanged="ddl_estrato_SelectedIndexChanged">
-                                        </asp:DropDownList>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-11">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Estrato:</span>
+                                                <asp:DropDownList runat="server" ID="ddl_estrato" CssClass="form-control" OnSelectedIndexChanged="ddl_estrato_SelectedIndexChanged">
+                                                </asp:DropDownList>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <asp:CustomValidator ID="cv_estrato" runat="server" Style="margin-left: 5px; position: absolute;" Text="<img src='../Imagenes/exclamation.gif' title='Debe seleccionar el estrato del jefe de comisión.' />"
+                                                ErrorMessage="Debe seleccionar el estrato del jefe de comisión." ForeColor="Red" ValidationGroup="general_214" OnServerValidate="cv_estrato_ServerValidate" />
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-1">
-                                    <asp:CustomValidator ID="cv_estrato" runat="server" Style="margin-left: 5px; position: absolute;" Text="<img src='../Imagenes/exclamation.gif' title='Debe seleccionar el estrato del jefe de comisión.' />"
-                                        ErrorMessage="Debe seleccionar el estrato del jefe de comisión." ForeColor="Red" ValidationGroup="general_214" OnServerValidate="cv_estrato_ServerValidate" />
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-11">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Viáticos:</span>
+                                                <asp:DropDownList runat="server" ID="ddl_liquidaViatico" CssClass="form-control">
+                                                </asp:DropDownList>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <asp:CustomValidator ID="cv_liquida_viatico" runat="server" Style="margin-left: 5px; position: absolute;" Text="<img src='../Imagenes/exclamation.gif' title='Debe seleccionar la liquidación de viáticos de la comisión.' />"
+                                                ErrorMessage="Debe seleccionar la liquidación de viáticos de la comisión." ForeColor="Red" ValidationGroup="general_214" OnServerValidate="cv_liquida_viatico_ServerValidate" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -379,7 +401,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-5">
-                             <asp:HiddenField ID="hf_movilidad" runat="server" />
+                            <asp:HiddenField ID="hf_movilidad" runat="server" />
 
                             <div class="input-group">
                                 <span class="input-group-addon">Movilidad</span>
@@ -390,23 +412,28 @@
                                         <li><a href="#" onclick="SeleccionMovilidad(1);return false;">Vehículo oficial</a></li>
                                         <li><a href="#" onclick="SeleccionMovilidad(2);return false;">Vehículo particular</a></li>
                                         <li><a href="#" onclick="SeleccionMovilidad(3);return false;">Transporte público</a></li>
+                                        <li><a href="#" onclick="SeleccionMovilidad(4);return false;">Vehículo oficial autorizado por Disposición</a></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                         <asp:CustomValidator ID="cv_anticipo" runat="server" Style="margin-left: 5px; position: absolute;" Text="<img src='../Imagenes/exclamation.gif' title='Debe seleccionar un tipo de movilidad.' />"
                             ErrorMessage="Debe seleccionar un tipo de movilidad." ForeColor="Red" ValidationGroup="general_214" OnServerValidate="cv_anticipo_ServerValidate" />
-                        <div class="col-md-4">
-                            Anticipo para:
+                        <div class="col-md-7">
+                            <div class="row" id="datos_generales_vehiculo_sin_dispo">
+                                <div class="col-md-7">
+                                    Anticipo para:
                             <label id="lbl_monto_anticipo" class="badge">Debe seleccionar el tipo de mobilidad.</label>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="input-group">
-                                <span class="input-group-addon">$</span>
-                                <%--<input type="text" runat="server" id="tb_monto_anticipo" class="form-control" placeholder="Monto anticipo.">--%>
-                                <asp:TextBox runat="server" CssClass="form-control" ID="tb_monto_anticipo" placeholder="Monto anticipo." />
-                                <asp:CustomValidator ID="cv_monto_anticipo" runat="server" Style="margin-left: 5px; position: absolute;" Text="<img src='../Imagenes/exclamation.gif' title='El monto del anticipo debe ser numérico.' />"
-                                    ErrorMessage="El monto del anticipo debe ser numérico." ForeColor="Red" ValidationGroup="general_214" OnServerValidate="cv_monto_anticipo_ServerValidate" />
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">$</span>
+                                        <%--<input type="text" runat="server" id="tb_monto_anticipo" class="form-control" placeholder="Monto anticipo.">--%>
+                                        <asp:TextBox runat="server" CssClass="form-control" ID="tb_monto_anticipo" placeholder="Monto anticipo." />
+                                        <asp:CustomValidator ID="cv_monto_anticipo" runat="server" Style="margin-left: 5px; position: absolute;" Text="<img src='../Imagenes/exclamation.gif' title='El monto del anticipo debe ser numérico y si se liquidan viaticos o el transporte es particular o publico el monto debe ser tambien mayor a cero.' />"
+                                            ErrorMessage="El monto del anticipo debe ser numérico y si se liquidan viaticos o el transporte es particular o publico el monto debe ser tambien mayor a cero." ForeColor="Red" ValidationGroup="general_214" OnServerValidate="cv_monto_anticipo_ServerValidate" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -574,21 +601,69 @@
                             </div>
                         </div>
                     </div>
+
+                    <%-- VEHICULO OFICIAL AUTORIZADO POR DISPOSICION --%>
+                    <div id="fila_datos_vehiculo_oficial_autorizado_por_disposicion" style="display: none">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group" runat="server" id="item_group_solicita_nro_dispo">
+                                    <span class="input-group-addon">N° Disposición: </span>
+                                    <asp:TextBox runat="server" CssClass="form-control" ID="tb_disposicion_buscada" placeholder="Ingrese número" />
+                                    <span class="input-group-btn">
+                                        <asp:Button Text="Buscar" CssClass="btn btn-group" ID="btn_buscar_dispo" runat="server" OnClick="btn_buscar_dispo_Click" />
+                                    </span>
+                                    <asp:CustomValidator ID="CV_nroDisp" runat="server" Style="margin-left: 5px; position: absolute;" Text="<img src='../Imagenes/exclamation.gif' title='Debe ingresar un número de disposición válido.' />"
+                                        ErrorMessage="Debe ingresar un número de disposición válido." ForeColor="Red" ValidationGroup="general_214" OnServerValidate="CV_nroDisp_ServerValidate" />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <asp:HiddenField runat="server" ID="hdn_nro_dispo" />
+                            <asp:HiddenField runat="server" ID="hdn_datos_movilidad_dispo" />
+                            <div class="col-md-12">
+                                <div class="alert alert-success" role="alert" id="alert_datos_dispo">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
 
             <%--botones confirmar eliminar aprobar, etc--%>
-            <div class="row text-right">
+            <div class="row text-right derecha">
                 <div class="col-md-12">
-                    <asp:Button Text="Confeccionar" CssClass="btn btn-lg btn-primary" OnClick="btn_Confeccionar_Click" runat="server" ID="btn_Confeccionar" />
-                    <asp:Button Text="Aprobar" CssClass="btn btn-lg btn-success" OnClick="btn_aprobar_Click" runat="server" ID="btn_aprobar" />
-                    <asp:Button Text="Enviar e imprimir" CssClass="btn btn-lg btn-success" OnClick="btn_Enviar_e_imprimir_Click" runat="server" ID="btn_Enviar" />
-                    <%--<asp:Button Text="Volver" CssClass="btn btn-lg btn-primary" OnClick="btn_Volver_Click" runat="server" ID="btn_Imprimir" />--%>
-                    <asp:Button Text="Anular" CssClass=" btn btn-lg btn-danger" OnClick="btn_Anular_Click" runat="server" ID="btn_Anular" />
-                    <asp:Button Text="Cancelar" CssClass=" btn btn-lg btn-default" OnClick="btn_Cancelar_Click" runat="server" ID="btn_Cancelar" />
+                    <table align="right">
+                        <tr>
+                            <td>
+                                <div class="input-group" runat="server" id="lbl_dispo">
+                                    <span class="input-group-addon">
+                                        <asp:Label Text="N° Disposición:" runat="server" /></span>
+                                    <asp:TextBox runat="server" CssClass="form-control" ID="tb_dispo_aprobada" />
+                                    <span class="input-group-btn">
+                                        <asp:Button Text="Aprobar" CssClass="btn btn-lg btn-success" OnClick="btn_aprobar_Click" runat="server" ID="btn_aprobar" />
+                                    </span>
+                                    <asp:CustomValidator ID="cv_verificar_carga_dispo" runat="server" Style="margin-left: 5px; position: absolute;" Text="<img src='../Imagenes/exclamation.gif' title='Debe ingresar el número de disposición asignado.' />"
+                                        ErrorMessage="Debe ingresar el número de disposición asignado." ForeColor="Red" ValidationGroup="aprobar_f3168" OnServerValidate="cv_verificar_carga_dispo_ServerValidate" />
+                                </div>
+                            </td>
+                            <td>
+                                <asp:Button Text="Confeccionar" CssClass="btn btn-lg btn-primary" OnClick="btn_Confeccionar_Click" runat="server" ID="btn_Confeccionar" /></td>
+                            <td>
+                                <asp:Button Text="Enviar e imprimir" CssClass="btn btn-lg btn-success" OnClick="btn_Enviar_e_imprimir_Click" runat="server" ID="btn_Enviar" /></td>
+                            <td>
+                                <asp:Button Text="Anular" CssClass=" btn btn-lg btn-danger" OnClick="btn_Anular_Click" runat="server" ID="btn_Anular" /></td>
+                            <td>
+                                <asp:Button Text="Cancelar" CssClass=" btn btn-lg btn-default" OnClick="btn_Cancelar_Click" runat="server" ID="btn_Cancelar" />
+                        </tr>
+                    </table>
                 </div>
+
             </div>
+
+
+
         </div>
     </div>
 
@@ -916,42 +991,6 @@
         </div>
     </div>
 
-    <%--Seleccione agente puesto 10--%>
-    <%--<div class="modal fade" id="modal10" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Seleccione agente puesto 10</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="input-group">
-                        <span class="input-group-addon">Buscar</span>
-                        <input name="txtTerm" class="form-control" onkeyup="filter2(this, '<%=gv_agentes_para_10.ClientID %>')" placeholder="ingrese texto buscado" type="text">
-                    </div>
-                    <div style="height: 400px; overflow-y: scroll;">
-                        <asp:GridView ID="gv_agentes_para_10" runat="server" EmptyDataText="No existen registros para mostrar." ForeColor="#717171"
-                            AutoGenerateColumns="False" GridLines="None" CssClass="mGrid table-condensed" AlternatingRowStyle-CssClass="alt">
-                            <Columns>
-                                <asp:BoundField DataField="Legajo" HeaderText="Legajo" />
-                                <asp:BoundField DataField="Agente" HeaderText="Agente" />
-                                <asp:BoundField DataField="Area" HeaderText="Area" />
-                                <asp:TemplateField HeaderText="Seleccionar" ItemStyle-HorizontalAlign="Center">
-                                    <ItemTemplate>
-                                        <asp:Button Text="Seleccionar" runat="server" ID="btn_agente_chofer" OnClick="btn_agente_chofer_Click" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                            </Columns>
-                        </asp:GridView>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>--%>
-
     <%--Seleccione agente chofer--%>
     <div class="modal fade" id="modal11" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -1038,9 +1077,11 @@
 
             SeleccionDentroFuera(hidden_seleccion.value);
             SeleccionMovilidad(hidden_seleccion_movilidad.value);
+
+
         });
     </script>
-    
+
 
     <script>
 
@@ -1125,25 +1166,29 @@
             var anticipo = document.getElementById('lbl_monto_anticipo');
             var tb_monto = document.getElementById('<%=tb_monto_anticipo.ClientID%>');
 
+            var datos_generales_vehiculo_sin_dispo = document.getElementById('datos_generales_vehiculo_sin_dispo');
+
             var fila_datos_vehiculo_oficial = document.getElementById('fila_datos_vehiculo_oficial');
             var fila_datos_vehiculo_particular = document.getElementById('fila_datos_vehiculo_particular');
+            var fila_datos_vehiculo_oficial_autorizado_por_disposicion = document.getElementById('fila_datos_vehiculo_oficial_autorizado_por_disposicion');
+
+            fila_datos_vehiculo_oficial.style = 'display: none';
+            fila_datos_vehiculo_particular.style = 'display: none';
+            fila_datos_vehiculo_oficial_autorizado_por_disposicion.style = 'display: none';
+            datos_generales_vehiculo_sin_dispo.style = 'display: normal';
+
             var chofer = document.getElementById('<%=ddl_con_chofer.ClientID%>');
             var col_chofer = document.getElementById('selecciona_chofer');
 
             if (movil.value == "0") {
                 anticipo.textContent = "Debe seleccionar el tipo de mobilidad.";
-               
+
                 tb_monto.style = 'display: none';
-                fila_datos_vehiculo_oficial.style = 'display: none';
-                fila_datos_vehiculo_particular.style = 'display: none';
             }
 
             if (movil.value == "1" || movil.value == "2") {
                 anticipo.textContent = "Gastos vehículo: nafta, otros.";
                 tb_monto.style = 'display: normal';
-
-                fila_datos_vehiculo_oficial.style = 'display: none';
-                fila_datos_vehiculo_particular.style = 'display: none';
 
                 if (movil.value == "1") {
                     btn.innerText = 'Vehículo oficial '
@@ -1166,8 +1211,13 @@
                 btn.innerText = 'Transporte público '
                 anticipo.textContent = "Pasajes";
                 tb_monto.disabled = false;
-                fila_datos_vehiculo_oficial.style = 'display: none';
-                fila_datos_vehiculo_particular.style = 'display: none';
+            }
+
+            if (movil.value == "4") {
+                btn.innerText = 'Vehículo oficial autorizado por disposición '
+                datos_generales_vehiculo_sin_dispo.style = 'display: none';
+                fila_datos_vehiculo_oficial_autorizado_por_disposicion.style = 'display: normal';
+                MostrarDatosDispo();
             }
 
             var span = document.createElement('span')
@@ -1179,6 +1229,19 @@
                 btn.setAttribute('disabled', true);
                 tb_monto_anticipo.setAttribute('disabled', true);
             }
+        }
+
+        function MostrarDatosDispo() {
+            var datos_dispo = document.getElementById('<%=hdn_datos_movilidad_dispo.ClientID %>').value;
+            var alert_datos_dispo = document.getElementById('alert_datos_dispo');
+
+            alert_datos_dispo.style = 'display: none';
+
+            if (datos_dispo != '') {
+                alert_datos_dispo.style = 'display: normal';
+                alert_datos_dispo.innerHTML = datos_dispo;
+            }
+
         }
 
         function filter2(phrase, _id) {

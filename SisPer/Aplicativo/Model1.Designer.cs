@@ -8225,7 +8225,8 @@ namespace SisPer.Aplicativo
         /// <param name="vehiculo_particular_poliza_nro">Valor inicial de la propiedad Vehiculo_particular_poliza_nro.</param>
         /// <param name="vehiculo_particular_poliza_vigencia">Valor inicial de la propiedad Vehiculo_particular_poliza_vigencia.</param>
         /// <param name="vehiculo_particular_poliza_cobertura">Valor inicial de la propiedad Vehiculo_particular_poliza_cobertura.</param>
-        public static Formulario1214 CreateFormulario1214(global::System.Int32 id, global::System.DateTime desde, global::System.DateTime hasta, global::System.String destino, global::System.String tareasACumplir, Estado1214 estado, Movilidad1214 movilidad, Anticipo1214 anticipo, global::System.Decimal montoAnticipo, global::System.Int32 agenteId, global::System.Boolean fuera_provincia, global::System.Boolean usa_chofer, global::System.Int32 estrato1214Id, global::System.Decimal anticipoViaticos, global::System.Decimal anticipoMovilidad, global::System.String vehiculo_dominio, global::System.String vehiculo_particular_titular, global::System.String vehiculo_particular_tipo_combustible, global::System.String vehiculo_particular_poliza_nro, global::System.String vehiculo_particular_poliza_vigencia, global::System.String vehiculo_particular_poliza_cobertura)
+        /// <param name="porcentajeLiquidacionViatico">Valor inicial de la propiedad PorcentajeLiquidacionViatico.</param>
+        public static Formulario1214 CreateFormulario1214(global::System.Int32 id, global::System.DateTime desde, global::System.DateTime hasta, global::System.String destino, global::System.String tareasACumplir, Estado1214 estado, Movilidad1214 movilidad, Anticipo1214 anticipo, global::System.Decimal montoAnticipo, global::System.Int32 agenteId, global::System.Boolean fuera_provincia, global::System.Boolean usa_chofer, global::System.Int32 estrato1214Id, global::System.Decimal anticipoViaticos, global::System.Decimal anticipoMovilidad, global::System.String vehiculo_dominio, global::System.String vehiculo_particular_titular, global::System.String vehiculo_particular_tipo_combustible, global::System.String vehiculo_particular_poliza_nro, global::System.String vehiculo_particular_poliza_vigencia, global::System.String vehiculo_particular_poliza_cobertura, global::System.Int32 porcentajeLiquidacionViatico)
         {
             Formulario1214 formulario1214 = new Formulario1214();
             formulario1214.Id = id;
@@ -8249,6 +8250,7 @@ namespace SisPer.Aplicativo
             formulario1214.Vehiculo_particular_poliza_nro = vehiculo_particular_poliza_nro;
             formulario1214.Vehiculo_particular_poliza_vigencia = vehiculo_particular_poliza_vigencia;
             formulario1214.Vehiculo_particular_poliza_cobertura = vehiculo_particular_poliza_cobertura;
+            formulario1214.PorcentajeLiquidacionViatico = porcentajeLiquidacionViatico;
             return formulario1214;
         }
 
@@ -8810,6 +8812,78 @@ namespace SisPer.Aplicativo
         private Nullable<global::System.DateTime> _Fecha_confeccion;
         partial void OnFecha_confeccionChanging(Nullable<global::System.DateTime> value);
         partial void OnFecha_confeccionChanged();
+    
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 PorcentajeLiquidacionViatico
+        {
+            get
+            {
+                return _PorcentajeLiquidacionViatico;
+            }
+            set
+            {
+                OnPorcentajeLiquidacionViaticoChanging(value);
+                ReportPropertyChanging("PorcentajeLiquidacionViatico");
+                _PorcentajeLiquidacionViatico = StructuralObject.SetValidValue(value, "PorcentajeLiquidacionViatico");
+                ReportPropertyChanged("PorcentajeLiquidacionViatico");
+                OnPorcentajeLiquidacionViaticoChanged();
+            }
+        }
+        private global::System.Int32 _PorcentajeLiquidacionViatico;
+        partial void OnPorcentajeLiquidacionViaticoChanging(global::System.Int32 value);
+        partial void OnPorcentajeLiquidacionViaticoChanged();
+    
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> MovilidadAsociadaADispo
+        {
+            get
+            {
+                return _MovilidadAsociadaADispo;
+            }
+            set
+            {
+                OnMovilidadAsociadaADispoChanging(value);
+                ReportPropertyChanging("MovilidadAsociadaADispo");
+                _MovilidadAsociadaADispo = StructuralObject.SetValidValue(value, "MovilidadAsociadaADispo");
+                ReportPropertyChanged("MovilidadAsociadaADispo");
+                OnMovilidadAsociadaADispoChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _MovilidadAsociadaADispo;
+        partial void OnMovilidadAsociadaADispoChanging(Nullable<global::System.Int32> value);
+        partial void OnMovilidadAsociadaADispoChanged();
+    
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> NroDispo
+        {
+            get
+            {
+                return _NroDispo;
+            }
+            set
+            {
+                OnNroDispoChanging(value);
+                ReportPropertyChanging("NroDispo");
+                _NroDispo = StructuralObject.SetValidValue(value, "NroDispo");
+                ReportPropertyChanged("NroDispo");
+                OnNroDispoChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _NroDispo;
+        partial void OnNroDispoChanging(Nullable<global::System.Int32> value);
+        partial void OnNroDispoChanged();
 
         #endregion
 
@@ -22736,7 +22810,13 @@ namespace SisPer.Aplicativo
         /// No hay documentación de metadatos disponible.
         /// </summary>
         [EnumMemberAttribute()]
-        Transporte_publico = 3
+        Transporte_publico = 3,
+    
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        [EnumMemberAttribute()]
+        Vehiculo_oficial_autorizado_por_disposicion = 4
     }
     
     /// <summary>

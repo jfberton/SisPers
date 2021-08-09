@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.Reporting.WebForms;
+using SisPer.Aplicativo.Controles;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -101,13 +102,17 @@ namespace SisPer.Aplicativo
 
                 ddl_estrato.Items.Clear();
 
-                ddl_estrato.Items.Add(new System.Web.UI.WebControls.ListItem() { Text = "Seleccionar estrato", Value = "0" });
+                ddl_estrato.Items.Add(new System.Web.UI.WebControls.ListItem() { Text = "Seleccionar", Value = "0" });
 
                 foreach (Estrato1214 estrato in estratos)
                 {
                     ddl_estrato.Items.Add(new System.Web.UI.WebControls.ListItem() { Text = estrato.Estrato, Value = estrato.Id.ToString() });
                 }
             }
+
+            ddl_liquidaViatico.Items.Add(new System.Web.UI.WebControls.ListItem() { Text = "Seleccionar", Value = "101", Selected = true });
+            ddl_liquidaViatico.Items.Add(new System.Web.UI.WebControls.ListItem() { Text = "Si", Value = "100" });
+            ddl_liquidaViatico.Items.Add(new System.Web.UI.WebControls.ListItem() { Text = "No", Value = "0" });
         }
 
         private void ActualizarF1214ConDatosDeControles(Formulario1214 f1214)
@@ -146,6 +151,16 @@ namespace SisPer.Aplicativo
                     f1214.Vehiculo_particular_tipo_combustible = "";
                     f1214.Vehiculo_particular_titular = "";
                     break;
+                case "4":
+                    f1214.Movilidad = Movilidad1214.Vehiculo_oficial_autorizado_por_disposicion;
+                    f1214.Usa_chofer = false;
+                    f1214.Vehiculo_dominio = "";
+                    f1214.Vehiculo_particular_poliza_cobertura = "";
+                    f1214.Vehiculo_particular_poliza_nro = "";
+                    f1214.Vehiculo_particular_poliza_vigencia = "";
+                    f1214.Vehiculo_particular_tipo_combustible = "";
+                    f1214.Vehiculo_particular_titular = "";
+                    break;
                 default:
                     break;
             }
@@ -175,8 +190,7 @@ namespace SisPer.Aplicativo
 
                 btn_Enviar.Visible = false;
                 btn_Anular.Visible = false;
-                //btn_Imprimir.Visible = false;
-                btn_aprobar.Visible = false;
+                btn_aprobar.Visible = lbl_dispo.Visible = tb_dispo_aprobada.Visible = false;
 
                 lbl_encabezado1214.Text = "Nuevo formulario 3168";
             }
@@ -209,7 +223,7 @@ namespace SisPer.Aplicativo
 
                 btn_Enviar.Visible = f1214.PuedeEnviar();
                 btn_Anular.Visible = f1214.Estado != Estado1214.Anulado && (usuarioLogueado.Area.Nombre == "Sub-Administración");
-                btn_aprobar.Visible = f1214.Estado == Estado1214.Enviado && (usuarioLogueado.Area.Nombre == "Sub-Administración");
+                btn_aprobar.Visible = lbl_dispo.Visible = tb_dispo_aprobada.Visible = f1214.Estado == Estado1214.Enviado && (usuarioLogueado.Area.Nombre == "Sub-Administración");
             }
 
             id_formulario.Value = f1214.Id.ToString();
@@ -248,7 +262,8 @@ namespace SisPer.Aplicativo
 
             #region Nomina
 
-            ddl_estrato.Enabled = f1214.Id == 0;
+            ddl_estrato.Enabled = ddl_liquidaViatico.Enabled = f1214.Id == 0;
+
 
             if (f1214.Desde == DateTime.MinValue)
             {
@@ -291,7 +306,18 @@ namespace SisPer.Aplicativo
                 }
             }
 
-            ddl_estrato.Items.FindByValue(f1214.Estrato1214Id.ToString()).Selected = true;
+            foreach (ListItem item in ddl_estrato.Items)
+            {
+                item.Selected = item.Value == f1214.Estrato1214Id.ToString();
+            }
+
+            if (f1214.Id > 0)
+            {
+                foreach (ListItem item in ddl_liquidaViatico.Items)
+                {
+                    item.Selected = item.Value == f1214.PorcentajeLiquidacionViatico.ToString();
+                }
+            }
 
             MostrarNomina(nomina);
 
@@ -343,6 +369,19 @@ namespace SisPer.Aplicativo
                         tb_poliza_cobertura.Enabled = false;
                         tb_poliza_vigencia.Enabled = false;
                         hf_vigencia.Value = "deshabilitar";
+
+                        break;
+
+                    case "4":
+                        string nro_anio_dispo = f1214.MovilidadAsociadaADispo.Value.ToString();
+                        string nro_dispo = nro_anio_dispo.Substring(0, nro_anio_dispo.Length - 4);
+                        string anio_dispo = nro_anio_dispo.Substring(nro_anio_dispo.Length - 4, 4);
+
+                        item_group_solicita_nro_dispo.Visible = false;
+
+                        BuscarDisposicion(int.Parse(nro_dispo), int.Parse(anio_dispo));
+
+
 
                         break;
                     default:
@@ -989,6 +1028,7 @@ namespace SisPer.Aplicativo
             Page.Validate("general_214");
             if (IsValid)
             {
+                decimal porcentajeViatico = decimal.Parse(ddl_liquidaViatico.SelectedValue) / 100;
 
                 using (var cxt = new Model1Container())
                 {
@@ -998,11 +1038,48 @@ namespace SisPer.Aplicativo
                     f1214.Estrato1214Id = estrato.Id;
                     f1214.Movilidad = ((Movilidad1214)(Convert.ToInt32(hf_movilidad.Value)));
                     f1214.Anticipo = f1214.Movilidad == Movilidad1214.Transporte_publico ? Anticipo1214.Pasajes : Anticipo1214.Gastos_vehiculo;
-                    f1214.AnticipoMovilidad = Convert.ToDecimal(tb_monto_anticipo.Text);
+                    f1214.AnticipoMovilidad = f1214.Movilidad == Movilidad1214.Vehiculo_oficial_autorizado_por_disposicion ? 0 : Convert.ToDecimal(tb_monto_anticipo.Text);
                     int dias = ((f1214.Hasta - f1214.Desde).Days + 1);
-                    f1214.AnticipoViaticos = f1214.Fuera_provincia ? estrato.ImpFueraProv * dias : estrato.ImpDentroProv * dias;
+                    f1214.AnticipoViaticos = f1214.Fuera_provincia ? estrato.ImpFueraProv * dias * porcentajeViatico : estrato.ImpDentroProv * dias * porcentajeViatico;
                     f1214.Usa_chofer = ddl_con_chofer.SelectedValue == "1";
                     f1214.Fecha_confeccion = DateTime.Now;
+                    f1214.PorcentajeLiquidacionViatico = int.Parse(ddl_liquidaViatico.SelectedValue);
+                    if (f1214.Movilidad == Movilidad1214.Vehiculo_oficial_autorizado_por_disposicion)
+                    {
+                        f1214.MovilidadAsociadaADispo = int.Parse(hdn_nro_dispo.Value);
+                        Formulario1214 f1214_asociado = cxt.Formularios1214.First(ff => ff.NroDispo == f1214.MovilidadAsociadaADispo.Value);
+                        f1214.Vehiculo_dominio = f1214_asociado.Vehiculo_dominio;
+
+                        var jefe_asociado = f1214_asociado.Nomina.First(x => x.JefeComicion && x.Estado == EstadoAgente1214.Aprobado);
+                        var chofer_asociado = f1214_asociado.Nomina.FirstOrDefault(x => x.Chofer && x.Estado == EstadoAgente1214.Aprobado);
+                        if (chofer_asociado != null)
+                        {
+                            Agente1214 agNomina = new Agente1214();
+                            agNomina.Id_Agente = chofer_asociado.Agente.Id;
+                            agNomina.JefeComicion = false;
+                            agNomina.Chofer = true;
+                            agNomina.Id_Area = chofer_asociado.Agente.Area.Id;
+                            agNomina.Estado = chofer_asociado.Estado;
+                            agNomina.Aprobado_por_agente_id = chofer_asociado.Aprobado_por_agente_id;
+                            agNomina.FechaAprobacion = chofer_asociado.FechaAprobacion;
+
+                            f1214.Nomina.Add(agNomina);
+                        }
+                        else
+                        {
+                            Agente1214 agNomina = new Agente1214();
+                            agNomina.Id_Agente = jefe_asociado.Agente.Id;
+                            agNomina.JefeComicion = false;
+                            agNomina.Chofer = true;
+                            agNomina.Id_Area = jefe_asociado.Agente.Area.Id;
+                            agNomina.Estado = jefe_asociado.Estado;
+                            agNomina.Aprobado_por_agente_id = jefe_asociado.Aprobado_por_agente_id;
+                            agNomina.FechaAprobacion = jefe_asociado.FechaAprobacion;
+
+                            f1214.Nomina.Add(agNomina);
+                        }
+
+                    }
 
                     cxt.Formularios1214.AddObject(f1214);
                     cxt.SaveChanges();
@@ -1050,7 +1127,7 @@ namespace SisPer.Aplicativo
 
                     Session["Form214"] = f1214;
 
-                    btn_Anular.Visible = btn_aprobar.Visible = btn_Confeccionar.Visible = btn_Enviar.Visible = false;
+                    btn_Anular.Visible = btn_aprobar.Visible = lbl_dispo.Visible = tb_dispo_aprobada.Visible = btn_Confeccionar.Visible = btn_Enviar.Visible = false;
                 }
 
             }
@@ -1061,31 +1138,41 @@ namespace SisPer.Aplicativo
         protected void btn_aprobar_Click(object sender, EventArgs e)
         {
             Formulario1214 f1214 = Session["Form214"] as Formulario1214;
-            using (var cxt = new Model1Container())
+
+            Page.Validate("aprobar_f3168");
+            if (IsValid)
             {
-                f1214 = cxt.Formularios1214.FirstOrDefault(ff => ff.Id == f1214.Id);
-                f1214.Estado = Estado1214.Aprobada;
-                f1214.FechaAprobacion = DateTime.Now;
-
-
-                foreach (Agente1214 item in f1214.Nomina)
+                using (var cxt = new Model1Container())
                 {
-                    if (item.Estado == EstadoAgente1214.Aprobado)
+                    f1214 = cxt.Formularios1214.FirstOrDefault(ff => ff.Id == f1214.Id);
+                    f1214.Estado = Estado1214.Aprobada;
+                    f1214.FechaAprobacion = DateTime.Now;
+                    f1214.NroDispo = int.Parse(tb_dispo_aprobada.Text) * 10000 + DateTime.Now.Year;
+
+                    foreach (Agente1214 item in f1214.Nomina)
                     {
-                        for (DateTime dia = f1214.Desde; dia <= f1214.Hasta; dia = dia.AddDays(1))
+                        if (item.Estado == EstadoAgente1214.Aprobado)
                         {
-                            Agente agendadoPor = item.Agente;
-                            Agente agentecxt = item.Agente;
-                            TipoEstadoAgente te = cxt.TiposEstadoAgente.First(tea => tea.Estado == "Comisión");
-                            ProcesosGlobales.AgendarEstadoDiaAgente(agendadoPor, agentecxt, dia, te);
+                            for (DateTime dia = f1214.Desde; dia <= f1214.Hasta; dia = dia.AddDays(1))
+                            {
+                                Agente agendadoPor = item.Agente;
+                                Agente agentecxt = item.Agente;
+                                TipoEstadoAgente te = cxt.TiposEstadoAgente.First(tea => tea.Estado == "Comisión");
+                                ProcesosGlobales.AgendarEstadoDiaAgente(agendadoPor, agentecxt, dia, te);
+                            }
                         }
                     }
-                }
 
-                cxt.SaveChanges();
-                Session["Form214"] = null;
-                Response.Redirect("~/Aplicativo/Formulario1214_Generados.aspx");
+                    cxt.SaveChanges();
+                    Session["Form214"] = null;
+                    Response.Redirect("~/Aplicativo/Formulario1214_Generados.aspx");
+                }
             }
+            else
+            {
+                CargarDatos214();
+            }
+
         }
 
         /// <summary>
@@ -1136,11 +1223,6 @@ namespace SisPer.Aplicativo
                 Response.Redirect("~/Aplicativo/Formulario1214_Generados.aspx");
             }
         }
-
-        //protected void btn_Imprimir_Click(object sender, EventArgs e)
-        //{
-        //    Imprimir();
-        //}
 
         public void Imprimir()
         {
@@ -1217,10 +1299,21 @@ namespace SisPer.Aplicativo
 
         protected void cv_monto_anticipo_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            if (hf_movilidad.Value != "0")
+            if (hf_movilidad.Value != "0" && hf_movilidad.Value != "4")
             {
-                decimal d;
-                args.IsValid = decimal.TryParse(tb_monto_anticipo.Text, out d);
+                decimal monto_gasto_movilidad;
+                bool ret = decimal.TryParse(tb_monto_anticipo.Text, out monto_gasto_movilidad);
+                
+                if (ret)//el texto es decimal hasta aca bien
+                {
+                    int porcentaje_viatico = int.Parse(ddl_liquidaViatico.SelectedValue);
+
+                    ret = (hf_movilidad.Value == "1" /*oficial*/ && ((porcentaje_viatico > 0 && monto_gasto_movilidad > 0) || porcentaje_viatico == 0)) ||
+                        ((hf_movilidad.Value == "2" /*particular*/|| hf_movilidad.Value == "3" /*transporte publico*/) && monto_gasto_movilidad > 0);
+
+                }
+
+                args.IsValid = ret;
             }
             else
             {
@@ -1251,6 +1344,11 @@ namespace SisPer.Aplicativo
         protected void cv_estrato_ServerValidate(object source, ServerValidateEventArgs args)
         {
             args.IsValid = ddl_estrato.SelectedValue != "0";
+        }
+
+        protected void cv_liquida_viatico_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = ddl_liquidaViatico.SelectedValue != "101";
         }
 
         protected void cv_chofer_ServerValidate(object source, ServerValidateEventArgs args)
@@ -1303,8 +1401,93 @@ namespace SisPer.Aplicativo
             args.IsValid = (f1214.Movilidad != Movilidad1214.Vehiculo_particular) || (f1214.Movilidad == Movilidad1214.Vehiculo_particular && tb_poliza_cobertura.Text != string.Empty);
         }
 
+        protected void cv_verificar_carga_dispo_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = tb_dispo_aprobada.Text != string.Empty;
+        }
+
+        protected void CV_nroDisp_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            Formulario1214 f1214 = Session["Form214"] as Formulario1214;
+            args.IsValid = (f1214.Movilidad != Movilidad1214.Vehiculo_oficial_autorizado_por_disposicion) || (f1214.Movilidad == Movilidad1214.Vehiculo_oficial_autorizado_por_disposicion && tb_disposicion_buscada.Text != string.Empty);
+        }
+
         #endregion
 
+
+
+        protected void btn_buscar_dispo_Click(object sender, EventArgs e)
+        {
+            BuscarDisposicion();
+        }
+
+        private void BuscarDisposicion(int nro = 0, int anio = 0)
+        {
+            if (nro == 0 && anio == 0)
+            {
+                int numero_dispo_solicitada = 0;
+                if (int.TryParse(tb_disposicion_buscada.Text, out numero_dispo_solicitada))
+                {
+                    int año = DateTime.Now.Year;
+                    numero_dispo_solicitada = numero_dispo_solicitada * 10000 + año;
+                    using (var cxt = new Model1Container())
+                    {
+                        Formulario1214 f1214_asociado_a_disp = cxt.Formularios1214.FirstOrDefault(ff => ff.NroDispo.Value == numero_dispo_solicitada);
+                        if (f1214_asociado_a_disp == null)
+                        {
+                            año--;
+                            numero_dispo_solicitada--; //busco ese numero pero del año anterior
+                            f1214_asociado_a_disp = cxt.Formularios1214.FirstOrDefault(ff => ff.NroDispo.Value == numero_dispo_solicitada);
+                        }
+
+                        if (f1214_asociado_a_disp != null)
+                        {
+                            string chofer = f1214_asociado_a_disp.Nomina.FirstOrDefault(aa => aa.Chofer) != null ?
+                                //Tiene cargado chofer por lo tanto es este el encargado del vehiculo
+                                f1214_asociado_a_disp.Nomina.FirstOrDefault(aa => aa.Chofer).Agente.ApellidoYNombre :
+                                //No tiene cargado chofer el jefe de comision es el encargado del vehiculo
+                                f1214_asociado_a_disp.Nomina.FirstOrDefault(aa => aa.JefeComicion).Agente.ApellidoYNombre;
+
+                            hdn_nro_dispo.Value = numero_dispo_solicitada.ToString();
+                            hdn_datos_movilidad_dispo.Value = String.Format("<h4>Datos de la disposición buscada</h4><br/><u><b>Disposición N°</u>:</b> {0}/{1}<br/><u>Vehículo oficial dominio</u>: {2}<br/><u>Conducido por</u>: {3}", tb_disposicion_buscada.Text, año.ToString(), f1214_asociado_a_disp.Vehiculo_dominio, chofer);
+
+                        }
+                        else
+                        {
+                            string nro_dispo_buscada_str = tb_disposicion_buscada.Text;
+                            hdn_datos_movilidad_dispo.Value = tb_disposicion_buscada.Text = string.Empty;
+
+                            MessageBox.Show(this, "No existe disposición con el número " + nro_dispo_buscada_str, MessageBox.Tipo_MessageBox.Danger);
+                        }
+                    }
+                }
+                else
+                {
+                    hdn_datos_movilidad_dispo.Value = tb_disposicion_buscada.Text = string.Empty;
+
+                    MessageBox.Show(this, "El valor de la disposición debe ser numérico por defecto busca sobre las disposiciones del año en curso", MessageBox.Tipo_MessageBox.Danger);
+                }
+            }
+            else
+            {
+                int numero_dispo_solicitada = nro * 10000 + anio;
+                using (var cxt = new Model1Container())
+                {
+                    Formulario1214 f1214_asociado_a_disp = cxt.Formularios1214.FirstOrDefault(ff => ff.NroDispo == numero_dispo_solicitada);
+                    if (f1214_asociado_a_disp != null)
+                    {
+                        string chofer = f1214_asociado_a_disp.Nomina.FirstOrDefault(aa => aa.Chofer) != null ?
+                            //Tiene cargado chofer por lo tanto es este el encargado del vehiculo
+                            f1214_asociado_a_disp.Nomina.FirstOrDefault(aa => aa.Chofer).Agente.ApellidoYNombre :
+                            //No tiene cargado chofer el jefe de comision es el encargado del vehiculo
+                            f1214_asociado_a_disp.Nomina.FirstOrDefault(aa => aa.JefeComicion).Agente.ApellidoYNombre;
+
+                        hdn_nro_dispo.Value = numero_dispo_solicitada.ToString();
+                        hdn_datos_movilidad_dispo.Value = String.Format("<h4>Datos de la disposición asociada</h4><br/><u><b>Disposición N°</u>:</b> {0}/{1}<br/><u>Vehículo oficial dominio</u>: {2}<br/><u>Conducido por</u>: {3}", nro.ToString(), anio.ToString(), f1214_asociado_a_disp.Vehiculo_dominio, chofer);
+                    }
+                }
+            }
+        }
     }
 }
 
