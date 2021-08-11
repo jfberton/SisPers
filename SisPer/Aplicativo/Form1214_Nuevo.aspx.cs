@@ -111,8 +111,11 @@ namespace SisPer.Aplicativo
             }
 
             ddl_liquidaViatico.Items.Add(new System.Web.UI.WebControls.ListItem() { Text = "Seleccionar", Value = "101", Selected = true });
-            ddl_liquidaViatico.Items.Add(new System.Web.UI.WebControls.ListItem() { Text = "Si", Value = "100" });
-            ddl_liquidaViatico.Items.Add(new System.Web.UI.WebControls.ListItem() { Text = "No", Value = "0" });
+            ddl_liquidaViatico.Items.Add(new System.Web.UI.WebControls.ListItem() { Text = "No Liquida", Value = "0" });
+            ddl_liquidaViatico.Items.Add(new System.Web.UI.WebControls.ListItem() { Text = "Liquida 100 %", Value = "100" });
+            ddl_liquidaViatico.Items.Add(new System.Web.UI.WebControls.ListItem() { Text = "Liquida  40 %", Value = "40" });
+            ddl_liquidaViatico.Items.Add(new System.Web.UI.WebControls.ListItem() { Text = "Liquida  15 %", Value = "15" });
+            
         }
 
         private void ActualizarF1214ConDatosDeControles(Formulario1214 f1214)
@@ -1151,6 +1154,7 @@ namespace SisPer.Aplicativo
 
                     foreach (Agente1214 item in f1214.Nomina)
                     {
+                        if((f1214.Movilidad == Movilidad1214.Vehiculo_oficial_autorizado_por_disposicion && !item.Chofer) || f1214.Movilidad != Movilidad1214.Vehiculo_oficial_autorizado_por_disposicion)
                         if (item.Estado == EstadoAgente1214.Aprobado)
                         {
                             for (DateTime dia = f1214.Desde; dia <= f1214.Hasta; dia = dia.AddDays(1))
@@ -1409,7 +1413,8 @@ namespace SisPer.Aplicativo
         protected void CV_nroDisp_ServerValidate(object source, ServerValidateEventArgs args)
         {
             Formulario1214 f1214 = Session["Form214"] as Formulario1214;
-            args.IsValid = (f1214.Movilidad != Movilidad1214.Vehiculo_oficial_autorizado_por_disposicion) || (f1214.Movilidad == Movilidad1214.Vehiculo_oficial_autorizado_por_disposicion && tb_disposicion_buscada.Text != string.Empty);
+            args.IsValid = (f1214.Movilidad != Movilidad1214.Vehiculo_oficial_autorizado_por_disposicion) || 
+                (f1214.Movilidad == Movilidad1214.Vehiculo_oficial_autorizado_por_disposicion && hdn_datos_movilidad_dispo.Value != string.Empty);
         }
 
         #endregion
@@ -1449,7 +1454,7 @@ namespace SisPer.Aplicativo
                                 f1214_asociado_a_disp.Nomina.FirstOrDefault(aa => aa.JefeComicion).Agente.ApellidoYNombre;
 
                             hdn_nro_dispo.Value = numero_dispo_solicitada.ToString();
-                            hdn_datos_movilidad_dispo.Value = String.Format("<h4>Datos de la disposición buscada</h4><br/><u><b>Disposición N°</u>:</b> {0}/{1}<br/><u>Vehículo oficial dominio</u>: {2}<br/><u>Conducido por</u>: {3}", tb_disposicion_buscada.Text, año.ToString(), f1214_asociado_a_disp.Vehiculo_dominio, chofer);
+                            hdn_datos_movilidad_dispo.Value = String.Format("<h4>Datos de la disposición buscada</h4><br/><u><b>Disposición N°</u>:</b> {0}/{1}<br/><u>Destino</u>: {2}<br/><u>Vehículo oficial dominio</u>: {3}<br/><u>Conducido por</u>: {4}", tb_disposicion_buscada.Text, año.ToString(), f1214_asociado_a_disp.Destino,  f1214_asociado_a_disp.Vehiculo_dominio, chofer);
 
                         }
                         else
@@ -1483,7 +1488,7 @@ namespace SisPer.Aplicativo
                             f1214_asociado_a_disp.Nomina.FirstOrDefault(aa => aa.JefeComicion).Agente.ApellidoYNombre;
 
                         hdn_nro_dispo.Value = numero_dispo_solicitada.ToString();
-                        hdn_datos_movilidad_dispo.Value = String.Format("<h4>Datos de la disposición asociada</h4><br/><u><b>Disposición N°</u>:</b> {0}/{1}<br/><u>Vehículo oficial dominio</u>: {2}<br/><u>Conducido por</u>: {3}", nro.ToString(), anio.ToString(), f1214_asociado_a_disp.Vehiculo_dominio, chofer);
+                        hdn_datos_movilidad_dispo.Value = String.Format("<h4>Datos de la disposición buscada</h4><br/><u><b>Disposición N°</u>:</b> {0}/{1}<br/><u>Destino</u>: {2}<br/><u>Vehículo oficial dominio</u>: {3}<br/><u>Conducido por</u>: {4}", tb_disposicion_buscada.Text, anio.ToString(), f1214_asociado_a_disp.Destino, f1214_asociado_a_disp.Vehiculo_dominio, chofer);
                     }
                 }
             }

@@ -112,7 +112,7 @@ namespace SisPer.Aplicativo
                 gv_pendientes.DataBind();
 
                 var items_otros = (from aa in cxt.Agentes1214
-                                   where aa.Estado != EstadoAgente1214.Solicitado && 
+                                   where aa.Estado != EstadoAgente1214.Solicitado &&
                                    (
                                     usuarioLogueado.AreaId == aa.Agente.Area.Id //depende directamente
                                     || (aa.Agente.Area.DependeDe != null && aa.Agente.Area.DependeDe.Id == usuarioLogueado.AreaId) //depende en segunda instancia
@@ -386,6 +386,7 @@ namespace SisPer.Aplicativo
                              where aa.Formulario1214.Estado == Estado1214.Aprobada
                                     && aa.Estado == EstadoAgente1214.Aprobado
                                     && aa.NroAnticipo == null
+                                    && aa.Formulario1214.PorcentajeLiquidacionViatico > 0
                              select new
                              {
                                  agente214_id = aa.Id,
@@ -425,6 +426,7 @@ namespace SisPer.Aplicativo
                                                  where aa.Formulario1214.Estado == Estado1214.Aprobada
                                                         && aa.Estado == EstadoAgente1214.Aprobado
                                                         && aa.NroAnticipo != null
+                                                        && aa.Formulario1214.PorcentajeLiquidacionViatico > 0
                                                  select new
                                                  {
                                                      agente214_id = aa.Id,

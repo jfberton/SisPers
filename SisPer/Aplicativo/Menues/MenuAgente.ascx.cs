@@ -46,7 +46,8 @@ namespace SisPer.Aplicativo.Menues
                 {
                     solicitudesDeAnticipo = cxt.Agentes1214.Count(aa => aa.Formulario1214.Estado == Estado1214.Aprobada
                                                                             && aa.Estado == EstadoAgente1214.Aprobado
-                                                                            && aa.NroAnticipo == null);
+                                                                            && aa.NroAnticipo == null 
+                                                                            && aa.Formulario1214.PorcentajeLiquidacionViatico > 0);
                     lbl_solicitudes.Text = solicitudesDeAnticipo.ToString();
                     solicitudes.Visible = solicitudesDeAnticipo > 0;
                 }

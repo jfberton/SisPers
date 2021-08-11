@@ -50,7 +50,8 @@ namespace SisPer.Aplicativo.Menues
                 int solicitudesDeAnticipo = cxt.Agentes1214.Count(aa => agente.Area.Nombre == "Administración"
                                                                         && aa.Formulario1214.Estado == Estado1214.Aprobada
                                                                         && aa.Estado == EstadoAgente1214.Aprobado
-                                                                        && aa.NroAnticipo == null);
+                                                                        && aa.NroAnticipo == null
+                                                                        && aa.Formulario1214.PorcentajeLiquidacionViatico > 0);
                 int solicitudesTotales = solicitudes214 + solicitudesDeAnticipo;
                 lbl_solicitudes.Text = solicitudesTotales.ToString();
                 solicitudes.Visible = solicitudesTotales > 0;
