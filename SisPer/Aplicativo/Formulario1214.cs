@@ -427,57 +427,63 @@ namespace SisPer.Aplicativo
 
                 }
 
+                Text negrita = new Text("");
+                Text normal = new Text("");
+                Text ital = new Text("");
 
-                //nuevo
-                Text negrita = new Text("Notificación:").SetBold().SetUnderline();
-                Text normal = new Text(" En caso de incumplimiento, de las obligaciones referidas a la rendición del presente anticipo, será aplicable lo estipulado por el Memorándum Nº 50/2014 de Contaduría General de la Provincia del Chaco…");
-                Text ital = new Text("” Si el subresponsable no efectuare la rendición y/o reintegro del excedente del presente anticipo dentro del plazo reglamentario, autoriza expresamente a retener de sus haberes los importes recibidos y/o no reintegrados”").SetItalic();
-                Paragraph p_notificacion = new Paragraph().Add(negrita).Add(normal).Add(ital)
-                    .SetMargins(
-                        /*top*/90
-                        ,/*right*/15
-                        , /*bottom*/0
-                        , /*left*/40).SetTextAlignment(TextAlignment.JUSTIFIED);
-                document.Add(p_notificacion);
-
-                p_firma = new Paragraph(".............................................................")
-                    .SetTextAlignment(TextAlignment.RIGHT)
-                    .SetMargins(
+                if (letra_3168 != "E" && letra_3168 != "I")
+                {
+                    //nuevo
+                    negrita = new Text("Notificación:").SetBold().SetUnderline();
+                    normal = new Text(" En caso de incumplimiento, de las obligaciones referidas a la rendición del presente anticipo, será aplicable lo estipulado por el Memorándum Nº 50/2014 de Contaduría General de la Provincia del Chaco…");
+                    ital = new Text("” Si el subresponsable no efectuare la rendición y/o reintegro del excedente del presente anticipo dentro del plazo reglamentario, autoriza expresamente a retener de sus haberes los importes recibidos y/o no reintegrados”").SetItalic();
+                    Paragraph p_notificacion = new Paragraph().Add(negrita).Add(normal).Add(ital)
+                        .SetMargins(
                             /*top*/90
                             ,/*right*/15
                             , /*bottom*/0
-                            , /*left*/40);
-                document.Add(p_firma);
+                            , /*left*/40).SetTextAlignment(TextAlignment.JUSTIFIED);
+                    document.Add(p_notificacion);
 
-                p_firma = new Paragraph("Firma Jefe comisión de servicios")
-                    .SetTextAlignment(TextAlignment.RIGHT)
-                    .SetMargins(
-                            /*top*/0
-                            ,/*right*/20
-                            , /*bottom*/0
-                            , /*left*/40);
-                document.Add(p_firma);
+                    p_firma = new Paragraph(".............................................................")
+                        .SetTextAlignment(TextAlignment.RIGHT)
+                        .SetMargins(
+                                /*top*/90
+                                ,/*right*/15
+                                , /*bottom*/0
+                                , /*left*/40);
+                    document.Add(p_firma);
+
+                    p_firma = new Paragraph("Firma Jefe comisión de servicios")
+                        .SetTextAlignment(TextAlignment.RIGHT)
+                        .SetMargins(
+                                /*top*/0
+                                ,/*right*/20
+                                , /*bottom*/0
+                                , /*left*/40);
+                    document.Add(p_firma);
 
 
-                Table t = new Table(1);
+                    Table t = new Table(1);
 
-                negrita = new Text("IMPORTANTE: ").SetBold();
-                normal = new Text("Se recuerda que los anticipos a los cuales se refiere el presente Formulario AT 3168, deberán ser rendidos INDEFECTIBLEMENTE en el plazo de tres (3) días hábiles posteriores al regreso de la comisión de servicios, según lo establecido por Decreto Nº 1324/78 (t.v.) y Memorándum Nº 50/14 de la Contaduría General de la Provincia.");
+                    negrita = new Text("IMPORTANTE: ").SetBold();
+                    normal = new Text("Se recuerda que los anticipos a los cuales se refiere el presente Formulario AT 3168, deberán ser rendidos INDEFECTIBLEMENTE en el plazo de tres (3) días hábiles posteriores al regreso de la comisión de servicios, según lo establecido por Decreto Nº 1324/78 (t.v.) y Memorándum Nº 50/14 de la Contaduría General de la Provincia.");
 
-                Cell celda = new Cell(1, 1)
-                   .SetTextAlignment(TextAlignment.JUSTIFIED)
-                   .Add(new Paragraph().Add(negrita).Add(normal));
+                    Cell celda = new Cell(1, 1)
+                       .SetTextAlignment(TextAlignment.JUSTIFIED)
+                       .Add(new Paragraph().Add(negrita).Add(normal));
 
-                t.AddCell(celda);
+                    t.AddCell(celda);
 
-                Paragraph p_tabla = new Paragraph().Add(t)
-                    .SetMargins(
-                            /*top*/20
-                            ,/*right*/20
-                            , /*bottom*/0
-                            , /*left*/40);
+                    Paragraph p_tabla = new Paragraph().Add(t)
+                        .SetMargins(
+                                /*top*/20
+                                ,/*right*/20
+                                , /*bottom*/0
+                                , /*left*/40);
 
-                document.Add(p_tabla);
+                    document.Add(p_tabla);
+                }
 
                 #endregion
 
@@ -502,6 +508,11 @@ namespace SisPer.Aplicativo
                         , /*bottom*/10
                         , /*left*/40);
                 //document.Add(titulo); <-- no lo agrego aca porque lo agrego luego en la parte que agrego encabezados y pies de pagina ya que va en todas las hojas de la disposición
+
+                t_lugarYFecha = new Text(String.Format("Resistencia,                                              ."));
+                lugar_y_fecha = new Paragraph().Add(t_lugarYFecha)
+                   .SetTextAlignment(TextAlignment.RIGHT)
+                   .SetFontSize(12);
 
                 document.Add(lugar_y_fecha.SetMarginRight(15).SetMarginTop(20));
 
@@ -952,11 +963,11 @@ namespace SisPer.Aplicativo
                         case Movilidad1214.Vehiculo_particular:
                             if (AnticipoViaticos > 0)
                             {
-                                negrita = new Text("ARTÍCULO 6º: AFECTAR ").SetBold();
+                                negrita = new Text("ARTÍCULO 6º: AUTORIZAR ").SetBold();
                             }
                             else
                             {
-                                negrita = new Text("ARTÍCULO 5º: AFECTAR ").SetBold();
+                                negrita = new Text("ARTÍCULO 5º: AUTORIZAR ").SetBold();
                             }
 
 
