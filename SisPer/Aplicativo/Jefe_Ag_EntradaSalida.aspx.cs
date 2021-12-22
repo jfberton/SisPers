@@ -35,22 +35,60 @@ namespace SisPer.Aplicativo
                     MenuPersonalJefe1.Visible = (ag.Perfil == PerfilUsuario.Personal);
                     MenuJefe1.Visible = !(ag.Perfil == PerfilUsuario.Personal);
 
-                    if (ag.Area.Interior == true)
-                    {
-                        div_edificioCentral.Visible = false;
-                        div_FueraDelEdificio.Visible = true;
+                    ddl_areas_a_cargo.Items.Clear();
+                    CargarAreasDependientes(ag.Area);
 
-                        Calendario.SelectedDate = DateTime.Today;
-                        CargarAgentes();
-                        btn_Guardar.Enabled = GridView1.Enabled = (VerificarSiPuedeGuardar() && Calendario.SelectedDate <= DateTime.Today);
-                    }
-                    else
-                    {
-                        div_edificioCentral.Visible = true;
-                        div_FueraDelEdificio.Visible = false;
-                    }
+                    Session["AreaMarcacionManual"] = ag.Area;
+
+                    CargarHorariosAgentesArea();
+
                 }
             }
+        }
+
+        private void CargarHorariosAgentesArea()
+        {
+            Area area = Session["AreaMarcacionManual"] as Area;
+
+            if (area.Interior == true)
+            {
+                div_edificioCentral.Visible = false;
+                div_FueraDelEdificio.Visible = true;
+
+                Calendario.SelectedDate = DateTime.Today;
+                CargarAgentes();
+
+                btn_Guardar.Enabled = GridView1.Enabled = (VerificarSiPuedeGuardar() && Calendario.SelectedDate <= DateTime.Today);
+            }
+            else
+            {
+                div_edificioCentral.Visible = true;
+                div_FueraDelEdificio.Visible = false;
+            }
+        }
+
+        private void CargarAreasDependientes(Area area)
+        {
+            Model1Container cxt = new Model1Container();
+
+            ddl_areas_a_cargo.Items.Add(new ListItem() { Value = area.Id.ToString(), Text = area.Nombre });
+
+            var areas = area.Subordinados;
+
+            foreach (Area area2 in areas)
+            {
+                CargarAreasDependientes(area2);
+            }
+        }
+
+        protected void btn_ver_marcaciones_Click(object sender, EventArgs e)
+        {
+            Model1Container cxt = new Model1Container();
+            int id = int.Parse(ddl_areas_a_cargo.SelectedItem.Value);
+            var area = cxt.Areas.FirstOrDefault(aa => aa.Id == id);
+            Session["AreaMarcacionManual"] = area;
+
+            CargarHorariosAgentesArea();
         }
 
         private struct ItemGrilla
@@ -70,34 +108,19 @@ namespace SisPer.Aplicativo
 
         private void CargarAgentes()
         {
-            Agente ag = Session["UsuarioLogueado"] as Agente;
+            Area area = Session["AreaMarcacionManual"] as Area;
+
             DateTime diaBuscado = Calendario.SelectedDate;
 
             Model1Container cxt = new Model1Container();
-            Agente agCxt = cxt.Agentes.FirstOrDefault(a => a.Id == ag.Id);
-            var agentes = agCxt.ObtenerAgentesSubordinadosDirectos();
+            var agentes = area.Agentes;
             List<ItemGrilla> listado = new List<ItemGrilla>();
-
-            EntradaSalida e_s = agCxt.EntradasSalidas.FirstOrDefault(es => es.Fecha == diaBuscado);
-            ResumenDiario rd = agCxt.ResumenesDiarios.FirstOrDefault(rd1 => rd1.Dia == diaBuscado);
-
-            listado.Add(new ItemGrilla()
-            {
-                Id = agCxt.Id,
-                Legajo = agCxt.Legajo.ToString(),
-                Nombre = agCxt.ApellidoYNombre,
-                Hentrada = e_s != null ? e_s.Entrada : "00:00",
-                HSalida = e_s != null ? e_s.Salida : "00:00",
-                Enabled = rd == null ? true : (rd.Cerrado == null ? true : (rd.Cerrado.Value == false ? true : false)),
-                DireccionImagen = rd == null ? "" : (rd.Cerrado == null ? "" : (rd.Cerrado.Value == false ? "" : "~/Imagenes/cancel.png")),
-                Tooltip = rd == null ? "" : (rd.Cerrado == null ? "" : (rd.Cerrado.Value == false ? "" : "El agente tiene las marcaciones cerradas para el dia, no se pueden modificar."))
-            });
 
             foreach (Agente item in agentes)
             {
                 Agente agente = cxt.Agentes.First(a => a.Id == item.Id);
                 ResumenDiario rdag = agente.ResumenesDiarios.FirstOrDefault(rd3 => rd3.Dia == diaBuscado);
-                e_s = agente.EntradasSalidas.FirstOrDefault(es => es.Fecha == diaBuscado);
+                EntradaSalida e_s = agente.EntradasSalidas.FirstOrDefault(es => es.Fecha == diaBuscado);
                 listado.Add(new ItemGrilla()
                 {
                     Id = agente.Id,
@@ -149,11 +172,11 @@ namespace SisPer.Aplicativo
         private bool VerificarSiPuedeGuardar()
         {
             bool ret = true;
-
+            Area area = Session["AreaMarcacionManual"] as Area;
             Agente ag = Session["UsuarioLogueado"] as Agente;
             ///si el dia esta cerrado o no!!!
             ret = ret && !DiaCerrado();
-            ret = ret && (ag.Area.Interior == true);
+            ret = ret && (area.Interior == true);
             ret = ret && (Calendario.SelectedDate.DayOfWeek != DayOfWeek.Saturday && Calendario.SelectedDate.DayOfWeek != DayOfWeek.Sunday);
             return ret;
         }
@@ -165,14 +188,15 @@ namespace SisPer.Aplicativo
         /// <returns></returns>
         private bool DiaCerrado(Nullable<DateTime> d = null)
         {
-            Agente ag = Session["UsuarioLogueado"] as Agente;
+            Area area = Session["AreaMarcacionManual"] as Area;
+
+
             //dejo por defecto que el dia esta cerrado asi cuando el jefe 
             //no tenga agentes sale el día cerrado y no habilita el boton guardar
             bool ret = true;
             DateTime diaSeleccionado = d != null ? d.Value : Calendario.SelectedDate;
 
-            List<Agente> agentes = ag.ObtenerAgentesSubordinadosDirectos();
-            agentes.Add(ag);
+            List<Agente> agentes = area.Agentes.ToList();
 
             foreach (Agente item in agentes)
             {
@@ -506,7 +530,7 @@ namespace SisPer.Aplicativo
             deviceInfo = "<DeviceInfo><SimplePageHeaders>True</SimplePageHeaders></DeviceInfo>";
 
             //Render the report
-            bytes = viewer.LocalReport.Render("PDF", deviceInfo, out  mimeType, out encoding, out extension, out streamids, out warnings);
+            bytes = viewer.LocalReport.Render("PDF", deviceInfo, out mimeType, out encoding, out extension, out streamids, out warnings);
             Session["Bytes"] = bytes;
 
             string script = "<script type='text/javascript'>window.open('Reportes/ReportePDF.aspx');</script>";
@@ -564,5 +588,7 @@ namespace SisPer.Aplicativo
         {
             div_Atencion.Visible = false;
         }
+
+       
     }
 }

@@ -14,22 +14,30 @@
     <uc1:MenuJefe runat="server" ID="MenuJefe1" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    
+
     <br />
+
+    <h2>Agendar horario de ingreso y egreso personal</h2>
+    <p />
+    <hr />
+    <h3>Seleccione area para su control</h3>
+    <p />
+    <asp:DropDownList runat="server" ID="ddl_areas_a_cargo">
+    </asp:DropDownList>
+    <asp:Button Text="Ver" runat="server" ID="btn_ver_marcaciones" OnClick="btn_ver_marcaciones_Click" />
+    <hr />
 
     <div class="panel panel-info" runat="server" id="div_edificioCentral">
         <div class="panel-heading">
             <h3 class="panel-title">AVISO</h3>
         </div>
         <div class="panel-body">
-            Esta funcionalidad fue diseñada para las receptorias las cuales no poseen lectora de huellas digitales.-
+            Esta funcionalidad fue diseñada para visualizar areas que tienen permitido el ingreso de marcaciones manuales.-
         </div>
     </div>
 
 
     <div runat="server" id="div_FueraDelEdificio">
-        <h2>Agendar horario de ingreso y egreso personal</h2>
-        <p />
         <table style="margin: 15px;">
             <tr>
                 <td style="vertical-align: top;">
@@ -76,8 +84,7 @@
                                 <ItemTemplate>
                                     <asp:TextBox runat="server" ID="h_salida" Width="50" Text='<%#Eval("Hsalida") %>' Enabled='<%#Eval("Enabled") %>' />
                                     <asp:MaskedEditExtender runat="server" InputDirection="RightToLeft"
-                                        Mask="99:99" MaskType="Time" TargetControlID="h_salida" ID="h_salida_MaskedEditExtender">
-                                    </asp:MaskedEditExtender>
+                                        Mask="99:99" MaskType="Time" TargetControlID="h_salida" ID="h_salida_MaskedEditExtender"></asp:MaskedEditExtender>
                                     <asp:RequiredFieldValidator ControlToValidate="h_salida" Text="<img src='../Imagenes/exclamation.gif' title='El campo es obligatorio' />"
                                         ID="RequiredFieldValidator1" runat="server" ErrorMessage="El campo es obligatorio"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server"
@@ -125,5 +132,5 @@
         <asp:Button Text="Cancelar" runat="server" CssClass="btn btn-danger" ID="btn_CancelarGuardado" OnClick="btn_CancelarGuardado_Click" />
         </div>
     </div>
-    
+
 </asp:Content>
