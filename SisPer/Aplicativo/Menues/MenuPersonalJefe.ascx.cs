@@ -42,7 +42,7 @@ namespace SisPer.Aplicativo.Menues
                                              where ne.AgenteId == agente.Id && ne.HistorialEstadosNotificacion.FirstOrDefault(e => e.Estado.Estado == "Notificada") == null
                                              select ne).Count();
 
-                lbl_notificacionesNuevas.Text = notificacionesSinLeer > 0 ? notificacionesSinLeer.ToString() : "";
+                 lbl_notificacionesNuevas.Text = notificacionesSinLeer > 0 ? notificacionesSinLeer.ToString() : "";
                 notificaciones.Visible = notificacionesSinLeer > 0;
 
                 lbl_mensajesNuevos.Text = mensajesSinLeer > 0 ? mensajesSinLeer.ToString() : "";

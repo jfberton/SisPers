@@ -537,6 +537,37 @@ namespace SisPer.Aplicativo
 
         #endregion
 
+        protected void gv_pendientes_PreRender(object sender, EventArgs e)
+        {
+            if (gv_pendientes.Rows.Count > 0)
+            {
+                gv_pendientes.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
+        }
+
+        protected void gv_otras_solicitudes_PreRender(object sender, EventArgs e)
+        {
+            if (gv_otras_solicitudes.Rows.Count > 0)
+            {
+                gv_otras_solicitudes.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
+        }
+
+        protected void gv_anticipos_PreRender(object sender, EventArgs e)
+        {
+            if (gv_anticipos.Rows.Count > 0)
+            {
+                gv_anticipos.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
+        }
+
+        protected void gv_anticipos_otorgados_PreRender(object sender, EventArgs e)
+        {
+            if (gv_anticipos_otorgados.Rows.Count > 0)
+            {
+                gv_anticipos_otorgados.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
+        }
     }
 
 }

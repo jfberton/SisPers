@@ -1,6 +1,7 @@
 ﻿using SisPer.Aplicativo.Controles;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -41,12 +42,39 @@ namespace SisPer.Aplicativo
                 if (usuarioLogueado.Area.Nombre == "Sub-Administración")
                 {
                     CargarF1214Enviados();
+                    CargarF1214Aprobados();
                 }
                 else
                 {
                     panel_enviados.Attributes["Style"] = "display:none";
+                    panel_aprobados.Attributes["Style"] = "display:none";
                 }
             }
+        }
+
+        private void CargarF1214Aprobados()
+        {
+            Agente usuarioLogueado = Session["UsuarioLogueado"] as Agente;
+            Model1Container cxt = new Model1Container();
+
+            var items = (from ff in cxt.Formularios1214
+                         where
+                         ff.Estado == Estado1214.Aprobada
+                         select new
+                         {
+                             Form = ff.Id,
+                             Disp = ff.NroDispo/10000,
+                             Generadopor = ff.GeneradoPor.ApellidoYNombre,
+                             Destino = ff.Destino,
+                             Desde = ff.Desde,
+                             Hasta = ff.Hasta,
+                             Jefe = ff.Nomina.FirstOrDefault(aa => aa.JefeComicion && aa.Estado != EstadoAgente1214.Cancelado) != null ? ff.Nomina.FirstOrDefault(aa => aa.JefeComicion && aa.Estado != EstadoAgente1214.Cancelado).Agente.ApellidoYNombre : string.Empty,
+                             Tareas = ff.TareasACumplir,
+                             IdF1214 = ff.Id
+                         }).ToList();
+
+            gv_aprobados.DataSource = items;
+            gv_aprobados.DataBind();
         }
 
         private void CargarF1214Enviados()
@@ -85,7 +113,6 @@ namespace SisPer.Aplicativo
 
             var items = (from ff in cxt.Formularios1214
                          where
-                         //(usuarioLogueado.Perfil == PerfilUsuario.Personal || ff.GeneradoPor.Id == usuarioLogueado.Id)
                          ff.GeneradoPor.Id == usuarioLogueado.Id 
                          select new
                          {
@@ -131,7 +158,6 @@ namespace SisPer.Aplicativo
             gv_form1214.PageIndex = e.NewPageIndex;
             CargarF1214();
         }
-
        
         protected void btn_ver_Click(object sender, ImageClickEventArgs e)
         {
@@ -158,11 +184,61 @@ namespace SisPer.Aplicativo
                 }
                 else
                 {
-                    MessageBox.Show(this, "Solo se pueden reimprimir solicitudes en estado Enviada!", MessageBox.Tipo_MessageBox.Info);
+                    Agente usuarioLogueado = Session["UsuarioLogueado"] as Agente;
+
+                    if (usuarioLogueado.Area.Nombre == "Sub-Administración")
+                    {
+                        Session["Bytes"] = formulario.GenerarPDFSolicitud();
+                        string script = "<script type='text/javascript'>window.open('Reportes/ReportePDF.aspx');</script>";
+                        Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "VentanaPadre", script);
+                    }
+                    else
+                    {
+                        MessageBox.Show(this, "Solo se pueden reimprimir solicitudes en estado Enviada!", MessageBox.Tipo_MessageBox.Info);
+                    }
                 }
             }
         }
 
+        protected void gv_Form1214_enviados_PreRender(object sender, EventArgs e)
+        {
+            if (gv_Form1214_enviados.Rows.Count > 0)
+            {
+                gv_Form1214_enviados.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
+        }
 
+        protected void gv_form1214_PreRender(object sender, EventArgs e)
+        {
+            if (gv_form1214.Rows.Count > 0)
+            {
+                gv_form1214.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
+        }
+
+        protected void gv_form1214_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.DataItem != null)
+            {
+                if (e.Row.Cells[1].Text == "Anulado")
+                {
+                    e.Row.ForeColor = Color.Red;
+                    e.Row.Font.Italic = true;
+                }
+
+                if (e.Row.Cells[1].Text == "Aprobada")
+                {
+                    e.Row.ForeColor = Color.Green;
+                }
+            }
+        }
+
+        protected void gv_aprobados_PreRender(object sender, EventArgs e)
+        {
+            if (gv_aprobados.Rows.Count > 0)
+            {
+                gv_aprobados.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
+        }
     }
 }

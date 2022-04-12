@@ -61,15 +61,7 @@ namespace SisPer.Aplicativo
                     CargarHVS();
                     CargarFrancos();
                     CargarSolicitudes();
-                    if (ag.Area.Interior == true)
-                    {
-                        CargarHVPorCerrar();
-                        panel_interior.Visible = true;
-                    }
-                    else
-                    {
-                        panel_interior.Visible = false;
-                    }
+                    CargarHVPorCerrar();
                 }
 
                 bool mostrarMensaje = Convert.ToBoolean(Session["MostrarMensageBienvenida"]);
@@ -88,7 +80,7 @@ namespace SisPer.Aplicativo
             Agente ag = Session["Agente"] as Agente;
             using (var cxt = new Model1Container())
             {
-                var items = cxt.sp_obtener_agentes_cascada(ag.Id, false).OrderBy(x=>x.nivel_para_ordenar).OrderBy(x=>x.nombre_agente).ToList();
+                var items = cxt.sp_obtener_agentes_cascada(ag.Id, false).OrderBy(x => x.nivel_para_ordenar).OrderBy(x => x.nombre_agente).ToList();
 
                 GridView1.DataSource = items;
                 GridView1.DataBind();
@@ -167,7 +159,7 @@ namespace SisPer.Aplicativo
                 throw new Exception("CHANNNNNN");
             }
         }
-        
+
         protected void GridView1_PreRender(object sender, EventArgs e)
         {
             if (GridView1.Rows.Count > 0)
@@ -584,9 +576,15 @@ namespace SisPer.Aplicativo
             using (var cxt = new Model1Container())
             {
                 List<HorarioVespertino> horariosVespertinosAprobados = new List<HorarioVespertino>();
-                foreach (var hv in cxt.HorariosVespertinos.Where(hvs => hvs.Estado == EstadosHorarioVespertino.Aprobado))
+                
+                //TODO: verificar como hacer esta consulta asi traigo unicamente los HV pendientes de cerrar para los jefes de los agentes que tenian autorizado remoto
+                //BUG: aca tira error!
+                foreach (var hv in cxt.HorariosVespertinos.Include("Agente").Where(hvs => hvs.Estado == EstadosHorarioVespertino.Aprobado))
                 {
-                    horariosVespertinosAprobados.Add(hv);
+                    if (hv.Agente.DiasAutorizadoRemoto.FirstOrDefault(dar => dar.Dia == hv.Dia) != null)
+                    {
+                        horariosVespertinosAprobados.Add(hv);
+                    }
                 }
 
                 var hvsPorCerrar = (from hv in horariosVespertinosAprobados

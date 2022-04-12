@@ -987,9 +987,8 @@ namespace SisPer.Aplicativo
                 gv_Huellas.DataBind();
 
                 EntradaSalida es = ag.EntradasSalidas.FirstOrDefault(eess => eess.Fecha == Calendar1.SelectedDate);
-                Area area = ag.Area;
-
-                if ((area.Interior ?? false) == true)
+                //Area area = ag.Area;
+                if (ag.DiasAutorizadoRemoto.FirstOrDefault(dar => dar.Dia == Calendar1.SelectedDate) != null)
                 {
                     if ((es != null && !es.CerradoPersonal && (es.Enviado ?? false) == false) || es == null)
                     {
@@ -1014,6 +1013,32 @@ namespace SisPer.Aplicativo
                 {
                     div_ES.Visible = false;
                 }
+
+                //if ((area.Interior ?? false) == true)
+                //{
+                //    if ((es != null && !es.CerradoPersonal && (es.Enviado ?? false) == false) || es == null)
+                //    {
+                //        div_ES.Visible = true;
+                //        if (es != null)
+                //        {
+                //            h_entrada.Value = es.Entrada;
+                //            h_salida.Value = es.Salida;
+                //        }
+                //        else
+                //        {
+                //            h_entrada.Value = string.Empty;
+                //            h_salida.Value = string.Empty;
+                //        }
+                //    }
+                //    else
+                //    {
+                //        div_ES.Visible = false;
+                //    }
+                //}
+                //else
+                //{
+                //    div_ES.Visible = false;
+                //}
             }
         }
 

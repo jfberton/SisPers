@@ -52,9 +52,9 @@
           <Property Name="FechaAprobacion" Type="datetime" />
           <Property Name="FechaRechazo" Type="datetime" />
           <Property Name="JefeComicion" Type="bit" Nullable="false" />
-          <Property Name="Chofer" Type="bit" Nullable="false" />
           <Property Name="Aprobado_por_agente_id" Type="int" />
           <Property Name="Rechazado_por_agente_id" Type="int" />
+          <Property Name="Chofer" Type="bit" Nullable="false" />
           <Property Name="NroAnticipo" Type="nvarchar(max)" />
           <Property Name="NroAnticipoCargadoPor" Type="int" />
         </EntityType>
@@ -164,6 +164,14 @@
           <Property Name="Elimino" Type="nvarchar(max)" />
           <Property Name="ConfirmoEliminacion" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="DiasAutorizadosRemoto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AgenteId" Type="int" Nullable="false" />
+          <Property Name="Dia" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="DiasFrancos">
           <Key>
             <PropertyRef Name="Id" />
@@ -259,13 +267,13 @@
           <Property Name="AnticipoViaticos" Type="decimal" Precision="9" Scale="2" Nullable="false" />
           <Property Name="AnticipoMovilidad" Type="decimal" Precision="9" Scale="2" Nullable="false" />
           <Property Name="FechaAprobacion" Type="datetime" />
-          <Property Name="Fecha_confeccion" Type="datetime" />
           <Property Name="Vehiculo_dominio" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Vehiculo_particular_titular" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Vehiculo_particular_tipo_combustible" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Vehiculo_particular_poliza_nro" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Vehiculo_particular_poliza_vigencia" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Vehiculo_particular_poliza_cobertura" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Fecha_confeccion" Type="datetime" />
           <Property Name="PorcentajeLiquidacionViatico" Type="int" Nullable="false" />
           <Property Name="MovilidadAsociadaADispo" Type="int" />
           <Property Name="NroDispo" Type="int" />
@@ -750,6 +758,17 @@
           <Property Name="Suma" Type="bit" Nullable="false" />
           <Property Name="Manual" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="TurnosIngresoPermitido">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AgenteId" Type="int" Nullable="false" />
+          <Property Name="DiasSemana" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Turno" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Desde" Type="datetime" Nullable="false" />
+          <Property Name="Hasta" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Validaciones_email">
           <Key>
             <PropertyRef Name="Id" />
@@ -922,6 +941,18 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Destinatarios">
+              <PropertyRef Name="AgenteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AgenteDiaAutorizadoRemoto">
+          <End Role="Agentes" Type="Self.Agentes" Multiplicity="1" />
+          <End Role="DiasAutorizadosRemoto" Type="Self.DiasAutorizadosRemoto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agentes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DiasAutorizadosRemoto">
               <PropertyRef Name="AgenteId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1334,6 +1365,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AgenteTurnoIngresoPermitido">
+          <End Role="Agentes" Type="Self.Agentes" Multiplicity="1" />
+          <End Role="TurnosIngresoPermitido" Type="Self.TurnosIngresoPermitido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agentes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TurnosIngresoPermitido">
+              <PropertyRef Name="AgenteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_AgenteValidacion_email">
           <End Role="Agentes" Type="Self.Agentes" Multiplicity="1" />
           <End Role="Validaciones_email" Type="Self.Validaciones_email" Multiplicity="*" />
@@ -1733,35 +1776,6 @@
         <Function Name="Estado_agente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id_agente" Type="int" Mode="In" />
         </Function>
-        <Function Name="fn_TotalHoras" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
-          <Parameter Name="Enero" Type="varchar" Mode="In" />
-          <Parameter Name="Febrero" Type="varchar" Mode="In" />
-          <Parameter Name="Marzo" Type="varchar" Mode="In" />
-          <Parameter Name="Abril" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="fnSplitString" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="string" Type="nvarchar(max)" Mode="In" />
-          <Parameter Name="delimiter" Type="char" Mode="In" />
-          <ReturnType>
-            <CollectionType>
-              <RowType>
-                <Property Name="splitdata" Type="nvarchar(max)" />
-              </RowType>
-            </CollectionType>
-          </ReturnType>
-        </Function>
-        <Function Name="Obtener_hora_entrada" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
-          <Parameter Name="ID_AGENTE" Type="int" Mode="In" />
-          <Parameter Name="DIA" Type="datetime" Mode="In" />
-        </Function>
-        <Function Name="Obtener_hora_salida" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
-          <Parameter Name="ID_AGENTE" Type="int" Mode="In" />
-          <Parameter Name="DIA" Type="datetime" Mode="In" />
-        </Function>
-        <Function Name="Obtener_horas_jornada_laboral" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
-          <Parameter Name="ID_AGENTE" Type="int" Mode="In" />
-          <Parameter Name="DIA" Type="datetime" Mode="In" />
-        </Function>
         <Function Name="sp_obtener_agentes_cascada" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id_agente" Type="int" Mode="In" />
           <Parameter Name="personal_como_agente" Type="bit" Mode="In" />
@@ -1785,34 +1799,6 @@
         <Function Name="sp_obtener_suborinados_directos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id_agente" Type="int" Mode="In" />
         </Function>
-        <Function Name="sp_pd_AA_Proceso_automatico_de_cierre" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="sp_pd_AA_Proceso_automatico_de_cierre_caso_particular" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ID_AGENTE" Type="int" Mode="In" />
-          <Parameter Name="FECHA" Type="datetime" Mode="In" />
-        </Function>
-        <Function Name="sp_pd_agregar_movimientos_de_tardanza_salidas_horas_por_trabajar_y_horas_trabajadas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="id_resumen_diario" Type="int" Mode="In" />
-          <Parameter Name="elimina_horas_hv" Type="bit" Mode="In" />
-        </Function>
-        <Function Name="sp_pd_horario_flexible_agregar_movimientos_para_saldar_francos_y_salidas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ID_AGENTE" Type="int" Mode="In" />
-          <Parameter Name="ID_RD" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_pd_procesar_dia_agente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="id_agente" Type="int" Mode="In" />
-          <Parameter Name="dia" Type="varchar" Mode="In" />
-          <Parameter Name="OUT_ID_RESUMEN_DIARIO" Type="int" Mode="InOut" />
-          <Parameter Name="OUT_CREO_DIA" Type="bit" Mode="InOut" />
-          <Parameter Name="OUT_CERRADO_ANTERIORMENTE" Type="bit" Mode="InOut" />
-          <Parameter Name="OUT_CERRADO_POR_PROCESO" Type="bit" Mode="InOut" />
-        </Function>
-        <Function Name="SumarHoras" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
-          <Parameter Name="VALOR1" Type="varchar" Mode="In" />
-          <Parameter Name="VALOR2" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="SumHoras" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar(max)">
-          <Parameter Name="valor" Type="nvarchar(max)" Mode="In" />
-        </Function>
         <EntityContainer Name="Model1StoreContainer">
           <EntitySet Name="AbrioDias" EntityType="Self.AbrioDias" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Agentes" EntityType="Self.Agentes" Schema="dbo" store:Type="Tables" />
@@ -1826,6 +1812,7 @@
           <EntitySet Name="CierreMensual" EntityType="Self.CierreMensual" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CorteLicencia" EntityType="Self.CorteLicencia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Destinatarios" EntityType="Self.Destinatarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DiasAutorizadosRemoto" EntityType="Self.DiasAutorizadosRemoto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DiasFrancos" EntityType="Self.DiasFrancos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DiasProcesados" EntityType="Self.DiasProcesados" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DiasUsufructuados" EntityType="Self.DiasUsufructuados" Schema="dbo" store:Type="Tables" />
@@ -1874,6 +1861,7 @@
           <EntitySet Name="TiposEstadoAgente" EntityType="Self.TiposEstadoAgente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TiposHorariosFexibles" EntityType="Self.TiposHorariosFexibles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TiposMovimientosHora" EntityType="Self.TiposMovimientosHora" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TurnosIngresoPermitido" EntityType="Self.TurnosIngresoPermitido" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Validaciones_email" EntityType="Self.Validaciones_email" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VariablesGlobales" EntityType="Self.VariablesGlobales" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_AgenteAbrioDia" Association="Self.FK_AgenteAbrioDia">
@@ -1927,6 +1915,10 @@
           <AssociationSet Name="FK_AgenteDestinatario" Association="Self.FK_AgenteDestinatario">
             <End Role="Agentes" EntitySet="Agentes" />
             <End Role="Destinatarios" EntitySet="Destinatarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AgenteDiaAutorizadoRemoto" Association="Self.FK_AgenteDiaAutorizadoRemoto">
+            <End Role="Agentes" EntitySet="Agentes" />
+            <End Role="DiasAutorizadosRemoto" EntitySet="DiasAutorizadosRemoto" />
           </AssociationSet>
           <AssociationSet Name="FK_AgenteDiaUsufructado" Association="Self.FK_AgenteDiaUsufructado">
             <End Role="Agentes" EntitySet="Agentes" />
@@ -2063,6 +2055,10 @@
           <AssociationSet Name="FK_AgenteSolicitudDeEstado1" Association="Self.FK_AgenteSolicitudDeEstado1">
             <End Role="Agentes" EntitySet="Agentes" />
             <End Role="SolicitudesDeEstado" EntitySet="SolicitudesDeEstado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AgenteTurnoIngresoPermitido" Association="Self.FK_AgenteTurnoIngresoPermitido">
+            <End Role="Agentes" EntitySet="Agentes" />
+            <End Role="TurnosIngresoPermitido" EntitySet="TurnosIngresoPermitido" />
           </AssociationSet>
           <AssociationSet Name="FK_AgenteValidacion_email" Association="Self.FK_AgenteValidacion_email">
             <End Role="Agentes" EntitySet="Agentes" />
@@ -2579,45 +2575,47 @@
             <End Role="TipoHorariosFexible" EntitySet="TiposHorariosFexibles" />
             <End Role="Agente" EntitySet="Agentes" />
           </AssociationSet>
-          <FunctionImport Name="sp_obtener_agentes_cascada" ReturnType="Collection(Model1.sp_obtener_agentes_cascada_Result)">
-            <Parameter Name="id_agente" Mode="In" Type="Int32" />
-            <Parameter Name="personal_como_agente" Mode="In" Type="Boolean" />
-          </FunctionImport>
-          <FunctionImport Name="sp_obtener_datos_agente" ReturnType="Collection(Model1.sp_obtener_datos_agente_Result)">
-          <Parameter Name="ID_AGENTE" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_obtener_estado_agente_dia">
-            <ReturnType EntitySet="EstadosAgente" Type="Collection(Model1.EstadoAgente)" />
-            <ReturnType EntitySet="TiposEstadoAgente" Type="Collection(Model1.TipoEstadoAgente)" />
-            <Parameter Name="id_agente" Mode="In" Type="Int32" />
-            <Parameter Name="dia" Mode="In" Type="String" />
-            <Parameter Name="muestra_finde" Mode="In" Type="Boolean" />
-            </FunctionImport>
-          <FunctionImport Name="sp_obtener_resumen_diario_agente_fecha">
-            <ReturnType EntitySet="ResumenesDiarios" Type="Collection(Model1.ResumenDiario)" />
-            <ReturnType EntitySet="MovimientosHoras" Type="Collection(Model1.MovimientoHora)" />
-            <ReturnType EntitySet="Marcaciones" Type="Collection(Model1.Marcacion)" />
-            <Parameter Name="id_agente" Mode="In" Type="Int32" />
-            <Parameter Name="dia" Mode="In" Type="String" />
-            </FunctionImport>
-          <FunctionImport Name="sp_obtener_resumenes_diarios_agente_mes">
-            <ReturnType EntitySet="ResumenesDiarios" Type="Collection(Model1.ResumenDiario)" />
-            <ReturnType EntitySet="MovimientosHoras" Type="Collection(Model1.MovimientoHora)" />
-            <ReturnType EntitySet="Marcaciones" Type="Collection(Model1.Marcacion)" />
-            <Parameter Name="id_agente" Mode="In" Type="Int32" />
-            <Parameter Name="dia_hasta" Mode="In" Type="String" />
-            </FunctionImport>
-          <FunctionImport Name="sp_obtener_suborinados_directos" ReturnType="Collection(Model1.sp_obtener_suborinados_directos_Result)">
-          <Parameter Name="id_agente" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="Estado_agente" ReturnType="Collection(String)">
-          <Parameter Name="id_agente" Mode="In" Type="Int32" />
-          </FunctionImport>
           <EntitySet Name="Estratos1214" EntityType="Model1.Estrato1214" />
           <AssociationSet Name="Estrato1214Formulario1214" Association="Model1.Estrato1214Formulario1214">
             <End Role="Estrato1214" EntitySet="Estratos1214" />
             <End Role="Formulario1214" EntitySet="Formularios1214" />
           </AssociationSet>
+          <EntitySet Name="DiasAutorizadosRemoto" EntityType="Model1.DiaAutorizadoRemoto" />
+          <AssociationSet Name="AgenteDiaAutorizadoRemoto" Association="Model1.AgenteDiaAutorizadoRemoto">
+            <End Role="Agente" EntitySet="Agentes" />
+            <End Role="DiaAutorizadoRemoto" EntitySet="DiasAutorizadosRemoto" />
+          </AssociationSet>
+          <EntitySet Name="TurnosIngresoPermitido" EntityType="Model1.TurnoIngresoPermitido" />
+          <AssociationSet Name="AgenteTurnoIngresoPermitido" Association="Model1.AgenteTurnoIngresoPermitido">
+            <End Role="Agente" EntitySet="Agentes" />
+            <End Role="TurnoIngresoPermitido" EntitySet="TurnosIngresoPermitido" />
+          </AssociationSet>
+          <FunctionImport Name="Estado_agente" ReturnType="Collection(String)">
+            <Parameter Name="id_agente" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_obtener_agentes_cascada" ReturnType="Collection(Model1.sp_obtener_agentes_cascada_Result)">
+            <Parameter Name="id_agente" Mode="In" Type="Int32" />
+            <Parameter Name="personal_como_agente" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="sp_obtener_datos_agente" ReturnType="Collection(Model1.sp_obtener_datos_agente_Result)">
+            <Parameter Name="ID_AGENTE" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_obtener_estado_agente_dia" ReturnType="Collection(Model1.sp_obtener_estado_agente_dia_Result)">
+            <Parameter Name="id_agente" Mode="In" Type="Int32" />
+            <Parameter Name="dia" Mode="In" Type="String" />
+            <Parameter Name="muestra_finde" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="sp_obtener_resumen_diario_agente_fecha" EntitySet="ResumenesDiarios" ReturnType="Collection(Model1.ResumenDiario)">
+            <Parameter Name="id_agente" Mode="In" Type="Int32" />
+            <Parameter Name="dia" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_obtener_resumenes_diarios_agente_mes" EntitySet="ResumenesDiarios" ReturnType="Collection(Model1.ResumenDiario)">
+            <Parameter Name="id_agente" Mode="In" Type="Int32" />
+            <Parameter Name="dia_hasta" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_obtener_suborinados_directos" ReturnType="Collection(Model1.sp_obtener_suborinados_directos_Result)">
+            <Parameter Name="id_agente" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Agente">
           <Key>
@@ -2687,6 +2685,8 @@
           <Property Name="TipoHorariosFexibleId" Type="Int32" Nullable="true" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Name="TipoHorarioFlexibleDesde" Type="DateTime" Nullable="true" Precision="3" />
           <Property Name="TipoHorarioFlexibleHasta" Type="DateTime" Nullable="true" Precision="3" />
+          <NavigationProperty Name="DiasAutorizadoRemoto" Relationship="Model1.AgenteDiaAutorizadoRemoto" FromRole="Agente" ToRole="DiaAutorizadoRemoto" />
+          <NavigationProperty Name="TurnoIngresoPermitido" Relationship="Model1.AgenteTurnoIngresoPermitido" FromRole="Agente" ToRole="TurnoIngresoPermitido" />
         </EntityType>
         <EntityType Name="Area">
           <Key>
@@ -4550,20 +4550,20 @@
           <Property Type="Int32" Name="dias_por_cerrar" Nullable="true" />
         </ComplexType>
         <ComplexType Name="sp_obtener_datos_agente_Result">
-          <Property Type="Int32" Name="Id" Nullable="true" />
-          <Property Type="String" Name="ApellidoYNombre" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="ApellidoYNombre" Nullable="false" MaxLength="100" />
           <Property Type="Boolean" Name="HorarioFlexible" Nullable="true"/>
           <Property Type="Boolean" Name="PoseeBonificacion" Nullable="false"/>
-          <Property Type="String" Name="Area" Nullable="true" MaxLength="100" />
-          <Property Type="Int32" Name="Legajo" Nullable="true" />
-          <Property Type="String" Name="Email" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="horas_hf_acumuladas" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="Horas_bonificacion_resta_cumplir" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="HorasAcumuladasAnioAnterior" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="HorasAcumuladasAnioActual" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="Total_horas_disponible" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Area" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="Legajo" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="horas_hf_acumuladas" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Horas_bonificacion_resta_cumplir" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="HorasAcumuladasAnioAnterior" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="HorasAcumuladasAnioActual" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Total_horas_disponible" Nullable="true" MaxLength="7" />
           <Property Type="String" Name="Horas_tardanzas" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="Horas_HF_por_cumplir" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Horas_HF_por_cumplir" Nullable="true" MaxLength="7" />
         </ComplexType>
         <ComplexType Name="sp_obtener_suborinados_directos_Result">
           <Property Type="Int32" Name="id_agente" Nullable="false" />
@@ -4662,6 +4662,221 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="DiaAutorizadoRemoto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <NavigationProperty Name="Agente" Relationship="Model1.AgenteDiaAutorizadoRemoto" FromRole="DiaAutorizadoRemoto" ToRole="Agente" />
+          <Property Name="AgenteId" Type="Int32" Nullable="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Dia" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <Association Name="AgenteDiaAutorizadoRemoto">
+          <End Type="Model1.Agente" Role="Agente" Multiplicity="1" />
+          <End Type="Model1.DiaAutorizadoRemoto" Role="DiaAutorizadoRemoto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DiaAutorizadoRemoto">
+              <PropertyRef Name="AgenteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sp_obtener_agentes_cascada_Result1">
+          <Property Type="Int32" Name="id_agente" Nullable="true" />
+          <Property Type="String" Name="nombre_area" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="nivel_para_ordenar" Nullable="true" />
+          <Property Type="String" Name="nivel" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="nombre_agente" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="legajo" Nullable="true" />
+          <Property Type="String" Name="mail" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="horas_bonificacion" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="estado_agente" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="dias_por_cerrar" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_obtener_datos_agente_Result1">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="ApellidoYNombre" Nullable="false" />
+          <Property Type="Int32" Name="Legajo" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="false" />
+          <Property Type="String" Name="Area" Nullable="false" />
+          <Property Type="Boolean" Name="HorarioFlexible" Nullable="true" />
+          <Property Type="Boolean" Name="PoseeBonificacion" Nullable="false" />
+          <Property Type="String" Name="horas_hf_acumuladas" Nullable="false" />
+          <Property Type="String" Name="Horas_bonificacion_resta_cumplir" Nullable="false" />
+          <Property Type="String" Name="HorasAcumuladasAnioAnterior" Nullable="false" />
+          <Property Type="String" Name="HorasAcumuladasAnioActual" Nullable="false" />
+          <Property Type="String" Name="Total_horas_disponible" Nullable="true" MaxLength="7" />
+          <Property Type="String" Name="Horas_tardanzas" Nullable="true" />
+          <Property Type="String" Name="Horas_HF_por_cumplir" Nullable="true" MaxLength="7" />
+        </ComplexType>
+        <ComplexType Name="sp_obtener_estado_agente_dia_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="AgenteId" Nullable="false" />
+          <Property Type="Int32" Name="TipoEstadoAgenteId" Nullable="false" />
+          <Property Type="DateTime" Name="Dia" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="AgenteId1" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_obtener_resumen_diario_agente_fecha_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="DateTime" Name="Dia" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Horas" Nullable="false" />
+          <Property Type="Int32" Name="AgenteId" Nullable="false" />
+          <Property Type="String" Name="HEntrada" Nullable="false" />
+          <Property Type="String" Name="HSalida" Nullable="false" />
+          <Property Type="String" Name="HVEnt" Nullable="false" />
+          <Property Type="String" Name="HVSal" Nullable="false" />
+          <Property Type="Boolean" Name="MarcoTardanza" Nullable="false" />
+          <Property Type="Boolean" Name="MarcoProlongJornada" Nullable="false" />
+          <Property Type="Boolean" Name="Inconsistente" Nullable="false" />
+          <Property Type="String" Name="ObservacionInconsistente" Nullable="false" />
+          <Property Type="Boolean" Name="Cerrado" Nullable="true" />
+          <Property Type="String" Name="AcumuloHorasBonificacion" Nullable="true" />
+          <Property Type="String" Name="AcumuloHorasAnioActual" Nullable="true" />
+          <Property Type="String" Name="AcumuloHorasAnioAnterior" Nullable="true" />
+          <Property Type="String" Name="AcumuloHorasMes" Nullable="true" />
+          <Property Type="Int32" Name="AgenteId1" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_obtener_resumenes_diarios_agente_mes_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="DateTime" Name="Dia" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Horas" Nullable="false" />
+          <Property Type="Int32" Name="AgenteId" Nullable="false" />
+          <Property Type="String" Name="HEntrada" Nullable="false" />
+          <Property Type="String" Name="HSalida" Nullable="false" />
+          <Property Type="String" Name="HVEnt" Nullable="false" />
+          <Property Type="String" Name="HVSal" Nullable="false" />
+          <Property Type="Boolean" Name="MarcoTardanza" Nullable="false" />
+          <Property Type="Boolean" Name="MarcoProlongJornada" Nullable="false" />
+          <Property Type="Boolean" Name="Inconsistente" Nullable="false" />
+          <Property Type="String" Name="ObservacionInconsistente" Nullable="false" />
+          <Property Type="Boolean" Name="Cerrado" Nullable="true" />
+          <Property Type="String" Name="AcumuloHorasBonificacion" Nullable="true" />
+          <Property Type="String" Name="AcumuloHorasAnioActual" Nullable="true" />
+          <Property Type="String" Name="AcumuloHorasAnioAnterior" Nullable="true" />
+          <Property Type="String" Name="AcumuloHorasMes" Nullable="true" />
+          <Property Type="Int32" Name="AgenteId1" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_obtener_suborinados_directos_Result1">
+          <Property Type="Int32" Name="id_agente" Nullable="false" />
+          <Property Type="String" Name="nombre_agente" Nullable="false" />
+          <Property Type="Int32" Name="legajo_agente" Nullable="false" />
+          <Property Type="Int32" Name="jefe_agente" Nullable="false" />
+          <Property Type="Int32" Name="id_area" Nullable="false" />
+          <Property Type="String" Name="nombre_area" Nullable="false" />
+          <Property Type="Int32" Name="id_padre_area" Nullable="true" />
+          <Property Type="Int32" Name="nivel" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="TurnoIngresoPermitido">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <NavigationProperty Name="Agente" Relationship="Model1.AgenteTurnoIngresoPermitido" FromRole="TurnoIngresoPermitido" ToRole="Agente" />
+          <Property Name="AgenteId" Type="Int32" Nullable="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="DiasSemana" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Turno" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Desde" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Hasta" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <Association Name="AgenteTurnoIngresoPermitido">
+          <End Type="Model1.Agente" Role="Agente" Multiplicity="1" />
+          <End Type="Model1.TurnoIngresoPermitido" Role="TurnoIngresoPermitido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TurnoIngresoPermitido">
+              <PropertyRef Name="AgenteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sp_obtener_agentes_cascada_Result2">
+          <Property Type="Int32" Name="id_agente" Nullable="true" />
+          <Property Type="String" Name="nombre_area" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="nivel_para_ordenar" Nullable="true" />
+          <Property Type="String" Name="nivel" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="nombre_agente" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="legajo" Nullable="true" />
+          <Property Type="String" Name="mail" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="horas_bonificacion" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="estado_agente" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="dias_por_cerrar" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_obtener_datos_agente_Result2">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="ApellidoYNombre" Nullable="false" />
+          <Property Type="Int32" Name="Legajo" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="false" />
+          <Property Type="String" Name="Area" Nullable="false" />
+          <Property Type="Boolean" Name="HorarioFlexible" Nullable="true" />
+          <Property Type="Boolean" Name="PoseeBonificacion" Nullable="false" />
+          <Property Type="String" Name="horas_hf_acumuladas" Nullable="false" />
+          <Property Type="String" Name="Horas_bonificacion_resta_cumplir" Nullable="false" />
+          <Property Type="String" Name="HorasAcumuladasAnioAnterior" Nullable="false" />
+          <Property Type="String" Name="HorasAcumuladasAnioActual" Nullable="false" />
+          <Property Type="String" Name="Total_horas_disponible" Nullable="true" MaxLength="7" />
+          <Property Type="String" Name="Horas_tardanzas" Nullable="true" />
+          <Property Type="String" Name="Horas_HF_por_cumplir" Nullable="true" MaxLength="7" />
+        </ComplexType>
+        <ComplexType Name="sp_obtener_estado_agente_dia_Result1">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="AgenteId" Nullable="false" />
+          <Property Type="Int32" Name="TipoEstadoAgenteId" Nullable="false" />
+          <Property Type="DateTime" Name="Dia" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="AgenteId1" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_obtener_resumen_diario_agente_fecha_Result1">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="DateTime" Name="Dia" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Horas" Nullable="false" />
+          <Property Type="Int32" Name="AgenteId" Nullable="false" />
+          <Property Type="String" Name="HEntrada" Nullable="false" />
+          <Property Type="String" Name="HSalida" Nullable="false" />
+          <Property Type="String" Name="HVEnt" Nullable="false" />
+          <Property Type="String" Name="HVSal" Nullable="false" />
+          <Property Type="Boolean" Name="MarcoTardanza" Nullable="false" />
+          <Property Type="Boolean" Name="MarcoProlongJornada" Nullable="false" />
+          <Property Type="Boolean" Name="Inconsistente" Nullable="false" />
+          <Property Type="String" Name="ObservacionInconsistente" Nullable="false" />
+          <Property Type="Boolean" Name="Cerrado" Nullable="true" />
+          <Property Type="String" Name="AcumuloHorasBonificacion" Nullable="true" />
+          <Property Type="String" Name="AcumuloHorasAnioActual" Nullable="true" />
+          <Property Type="String" Name="AcumuloHorasAnioAnterior" Nullable="true" />
+          <Property Type="String" Name="AcumuloHorasMes" Nullable="true" />
+          <Property Type="Int32" Name="AgenteId1" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_obtener_resumenes_diarios_agente_mes_Result1">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="DateTime" Name="Dia" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Horas" Nullable="false" />
+          <Property Type="Int32" Name="AgenteId" Nullable="false" />
+          <Property Type="String" Name="HEntrada" Nullable="false" />
+          <Property Type="String" Name="HSalida" Nullable="false" />
+          <Property Type="String" Name="HVEnt" Nullable="false" />
+          <Property Type="String" Name="HVSal" Nullable="false" />
+          <Property Type="Boolean" Name="MarcoTardanza" Nullable="false" />
+          <Property Type="Boolean" Name="MarcoProlongJornada" Nullable="false" />
+          <Property Type="Boolean" Name="Inconsistente" Nullable="false" />
+          <Property Type="String" Name="ObservacionInconsistente" Nullable="false" />
+          <Property Type="Boolean" Name="Cerrado" Nullable="true" />
+          <Property Type="String" Name="AcumuloHorasBonificacion" Nullable="true" />
+          <Property Type="String" Name="AcumuloHorasAnioActual" Nullable="true" />
+          <Property Type="String" Name="AcumuloHorasAnioAnterior" Nullable="true" />
+          <Property Type="String" Name="AcumuloHorasMes" Nullable="true" />
+          <Property Type="Int32" Name="AgenteId1" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_obtener_suborinados_directos_Result2">
+          <Property Type="Int32" Name="id_agente" Nullable="false" />
+          <Property Type="String" Name="nombre_agente" Nullable="false" />
+          <Property Type="Int32" Name="legajo_agente" Nullable="false" />
+          <Property Type="Int32" Name="jefe_agente" Nullable="false" />
+          <Property Type="Int32" Name="id_area" Nullable="false" />
+          <Property Type="String" Name="nombre_area" Nullable="false" />
+          <Property Type="Int32" Name="id_padre_area" Nullable="true" />
+          <Property Type="Int32" Name="nivel" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5490,6 +5705,27 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="DiasAutorizadosRemoto">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.DiaAutorizadoRemoto)">
+        <MappingFragment StoreEntitySet="DiasAutorizadosRemoto">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="Dia" ColumnName="Dia" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TurnosIngresoPermitido">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.TurnoIngresoPermitido)">
+        <MappingFragment StoreEntitySet="TurnosIngresoPermitido">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="DiasSemana" ColumnName="DiasSemana" />
+          <ScalarProperty Name="Turno" ColumnName="Turno" />
+          <ScalarProperty Name="Desde" ColumnName="Desde" />
+          <ScalarProperty Name="Hasta" ColumnName="Hasta" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <AssociationSetMapping Name="AgenteCambioPendiente" TypeName="Model1.AgenteCambioPendiente" StoreEntitySet="CambiosPendientes">
       <EndProperty Name="Agente">
         <ScalarProperty Name="Id" ColumnName="Agente_Id" />
@@ -5532,7 +5768,7 @@
     </AssociationSetMapping>
           <FunctionImportMapping FunctionImportName="Estado_agente" FunctionName="Model1.Store.Estado_agente" />
           <FunctionImportMapping FunctionImportName="sp_obtener_agentes_cascada" FunctionName="Model1.Store.sp_obtener_agentes_cascada">
-            <ResultMapping>
+          <ResultMapping>
               <ComplexTypeMapping TypeName="Model1.sp_obtener_agentes_cascada_Result">
                 <ScalarProperty Name="id_agente" ColumnName="id_agente" />
                 <ScalarProperty Name="nombre_area" ColumnName="nombre_area" />
@@ -5548,7 +5784,7 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_obtener_datos_agente" FunctionName="Model1.Store.sp_obtener_datos_agente">
-            <ResultMapping>
+          <ResultMapping>
               <ComplexTypeMapping TypeName="Model1.sp_obtener_datos_agente_Result">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ApellidoYNombre" ColumnName="ApellidoYNombre" />
@@ -5567,11 +5803,23 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_obtener_estado_agente_dia" FunctionName="Model1.Store.sp_obtener_estado_agente_dia" />
-          <FunctionImportMapping FunctionImportName="sp_obtener_resumen_diario_agente_fecha" FunctionName="Model1.Store.sp_obtener_resumen_diario_agente_fecha" />
-          <FunctionImportMapping FunctionImportName="sp_obtener_resumenes_diarios_agente_mes" FunctionName="Model1.Store.sp_obtener_resumenes_diarios_agente_mes" />
+          <FunctionImportMapping FunctionImportName="sp_obtener_estado_agente_dia" FunctionName="Model1.Store.sp_obtener_estado_agente_dia">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="Model1.sp_obtener_estado_agente_dia_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+                <ScalarProperty Name="TipoEstadoAgenteId" ColumnName="TipoEstadoAgenteId" />
+                <ScalarProperty Name="Dia" ColumnName="Dia" />
+                <ScalarProperty Name="AgenteId1" ColumnName="AgenteId1" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_obtener_resumen_diario_agente_fecha" FunctionName="Model1.Store.sp_obtener_resumen_diario_agente_fecha">
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_obtener_resumenes_diarios_agente_mes" FunctionName="Model1.Store.sp_obtener_resumenes_diarios_agente_mes">
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_obtener_suborinados_directos" FunctionName="Model1.Store.sp_obtener_suborinados_directos">
-            <ResultMapping>
+          <ResultMapping>
               <ComplexTypeMapping TypeName="Model1.sp_obtener_suborinados_directos_Result">
                 <ScalarProperty Name="id_agente" ColumnName="id_agente" />
                 <ScalarProperty Name="nombre_agente" ColumnName="nombre_agente" />
@@ -5605,7 +5853,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram Name="Model1" ZoomLevel="124" xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
-        <EntityTypeShape EntityType="Model1.Agente" Width="2.375" PointX="10" PointY="2.5" Height="7.1724251302083317" />
+        <EntityTypeShape EntityType="Model1.Agente" Width="2.375" PointX="10" PointY="2.75" Height="7.1724251302083317" IsExpanded="true" />
         <EntityTypeShape EntityType="Model1.Area" Width="2.125" PointX="3.375" PointY="25.5" Height="2.1725878906249996" />
         <EntityTypeShape EntityType="Model1.ResumenDiario" Width="2.25" PointX="0.75" PointY="29.75" Height="2.172587890625" />
         <AssociationConnector ManuallyRouted="false" Association="Model1.AgenteResumenDiario">
@@ -5709,17 +5957,17 @@
         <EntityTypeShape EntityType="Model1.Marcacion" Width="1.5" PointX="4.25" PointY="31.25" />
         <AssociationConnector Association="Model1.ResumenDiarioMarcacion" />
         <AssociationConnector Association="Model1.AgenteMarcacion" />
-        <EntityTypeShape EntityType="Model1.DiaProcesado" Width="1.5" PointX="7" PointY="1.25" />
+        <EntityTypeShape EntityType="Model1.DiaProcesado" Width="1.5" PointX="5.125" PointY="0.5" />
         <EntityTypeShape EntityType="Model1.SolicitudDeEstado" Width="1.875" PointX="18.625" PointY="27.75" />
         <AssociationConnector Association="Model1.AgenteSolicitudDeEstado" />
         <AssociationConnector Association="Model1.AgenteSolicitudDeEstado1" />
         <AssociationConnector Association="Model1.TipoEstadoAgenteSolicitudDeEstado" />
         <EntityTypeShape EntityType="Model1.HAAnteriorEliminadas" Width="1.5" PointX="17.25" PointY="19.625" />
         <AssociationConnector Association="Model1.AgenteHAAnteriorEliminadas" />
-        <EntityTypeShape EntityType="Model1.Archivo" Width="1.5" PointX="2.875" PointY="1" />
-        <EntityTypeShape EntityType="Model1.Directorio" Width="1.5" PointX="0.625" PointY="1.375" />
+        <EntityTypeShape EntityType="Model1.Archivo" Width="1.5" PointX="2.875" PointY="0.75" />
+        <EntityTypeShape EntityType="Model1.Directorio" Width="1.5" PointX="0.625" PointY="0.75" />
         <AssociationConnector Association="Model1.DirectorioArchivo" />
-        <EntityTypeShape EntityType="Model1.ImpresionReporte" Width="2" PointX="14.375" PointY="7.75" />
+        <EntityTypeShape EntityType="Model1.ImpresionReporte" Width="2" PointX="13.875" PointY="8.75" />
         <AssociationConnector Association="Model1.AgenteImpresionReporte" />
         <EntityTypeShape EntityType="Model1.HorasMesHorarioFlexible" Width="2.375" PointX="5.875" PointY="14" />
         <AssociationConnector Association="Model1.AgenteHorasMesHorarioFlexible" ManuallyRouted="false" >
@@ -5744,13 +5992,13 @@
         <AssociationConnector Association="Model1.AgenteDestinatario" />
         <AssociationConnector Association="Model1.AgenteResumenDiario1" />
         <EntityTypeShape EntityType="Model1.Notificacion" Width="2.5" PointX="17.375" PointY="5.125" />
-        <EntityTypeShape EntityType="Model1.Notificacion_Tipo" Width="1.5" PointX="20.75" PointY="4.875" />
+        <EntityTypeShape EntityType="Model1.Notificacion_Tipo" Width="1.625" PointX="21.5" PointY="4.875" />
         <AssociationConnector Association="Model1.TipoNotificacionNotificacion" />
         <AssociationConnector Association="Model1.AgenteNotificacion" />
-        <EntityTypeShape EntityType="Model1.Notificacion_Historial" Width="1.875" PointX="17.875" PointY="1.625" />
+        <EntityTypeShape EntityType="Model1.Notificacion_Historial" Width="1.875" PointX="17.75" PointY="0.5" />
         <AssociationConnector Association="Model1.NotificacionHistorialEstadosNotificacion" />
         <AssociationConnector Association="Model1.AgenteHistorialEstadosNotificacion" />
-        <EntityTypeShape EntityType="Model1.Notificacion_Estado" Width="1.5" PointX="21.375" PointY="2" />
+        <EntityTypeShape EntityType="Model1.Notificacion_Estado" Width="1.5" PointX="21.375" PointY="1.375" />
         <AssociationConnector Association="Model1.Notificacion_EstadoNotificacion_Historial" />
         <EntityTypeShape EntityType="Model1.CorteLicenciaAnual" Width="1.5" PointX="16.5" PointY="30.625" />
         <AssociationConnector Association="Model1.AgenteCorteLicenciaAnual" />
@@ -5760,9 +6008,9 @@
         <AssociationConnector Association="Model1.AgenteAbrioDia" />
         <EntityTypeShape EntityType="Model1.AsuetoParcial" Width="1.875" PointX="0.5" PointY="25.5" />
         <AssociationConnector Association="Model1.AreaAsuetoParcial" />
-        <EntityTypeShape EntityType="Model1.Formulario1214" Width="2.875" PointX="3.75" PointY="6.375" />
+        <EntityTypeShape EntityType="Model1.Formulario1214" Width="2.875" PointX="0.5" PointY="5.5" />
         <AssociationConnector Association="Model1.AgenteFormulario1214" />
-        <EntityTypeShape EntityType="Model1.Agente1214" Width="2.375" PointX="0.5" PointY="6.375" />
+        <EntityTypeShape EntityType="Model1.Agente1214" Width="2.375" PointX="4.125" PointY="6.5" />
         <AssociationConnector Association="Model1.AgenteAgente1214" />
         <AssociationConnector Association="Model1.Formulario1214Agente1214" />
         <EntityTypeShape EntityType="Model1.Legajo_datos_laborales" Width="2.75" PointX="0.75" PointY="41.125" />
@@ -5785,7 +6033,7 @@
         <AssociationConnector Association="Model1.Legajo_fojas_de_servicioLegajo_otro_evento" />
         <EntityTypeShape EntityType="Model1.Legajo_afectacion_designacion" Width="2.375" PointX="18.125" PointY="38.875" />
         <AssociationConnector Association="Model1.Legajo_foja_de_servicioLegajo_afectacion_designacion" />
-        <EntityTypeShape EntityType="Model1.Modificacion_cierre_mes" Width="2" PointX="0.5" PointY="11.75" />
+        <EntityTypeShape EntityType="Model1.Modificacion_cierre_mes" Width="2" PointX="0.5" PointY="12.375" />
         <AssociationConnector Association="Model1.AgenteModificacion_cierre_mes" />
         <AssociationConnector Association="Model1.CierreMensualModificacion_cierre_mes" />
         <EntityTypeShape EntityType="Model1.Legajo_carrera_administrativa" Width="3.875" PointX="21.375" PointY="43.25" />
@@ -5802,8 +6050,12 @@
         <AssociationConnector Association="Model1.Memo_17_DDJJMemo_17_DDJJ_Hijo" />
         <EntityTypeShape EntityType="Model1.TipoHorariosFexible" Width="1.875" PointX="14.75" PointY="16" />
         <AssociationConnector Association="Model1.TipoHorariosFexibleAgente" />
-        <EntityTypeShape EntityType="Model1.Estrato1214" Width="1.5" PointX="13.5" PointY="1.625" />
+        <EntityTypeShape EntityType="Model1.Estrato1214" Width="1.5" PointX="0.625" PointY="2.875" />
         <AssociationConnector Association="Model1.Estrato1214Formulario1214" />
+        <EntityTypeShape EntityType="Model1.DiaAutorizadoRemoto" Width="2.125" PointX="7.75" PointY="0.5" />
+        <AssociationConnector Association="Model1.AgenteDiaAutorizadoRemoto" />
+        <EntityTypeShape EntityType="Model1.TurnoIngresoPermitido" Width="2" PointX="14" PointY="4.75" />
+        <AssociationConnector Association="Model1.AgenteTurnoIngresoPermitido" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

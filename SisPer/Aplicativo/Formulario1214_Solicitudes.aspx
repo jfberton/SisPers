@@ -24,17 +24,12 @@
                 <div class="col-md-5">
                     <h4 class="panel-title">Solicitudes pendientes</h4>
                 </div>
-                <div class="col-md-7">
-                    <div class="input-group">
-                        <span class="input-group-addon">Buscar</span>
-                        <input name="txtTerm" class="form-control" onkeyup="filtrar(this, '<%=gv_pendientes.ClientID %>')" placeholder="ingrese texto buscado" type="text">
-                    </div>
-                </div>
+              
             </div>
         </div>
         <div class="panel-body"> <%--style="height: 300px; overflow-y: scroll;"--%>
-            <asp:GridView ID="gv_pendientes" runat="server" EmptyDataText="No existen registros para mostrar." ForeColor="#717171"
-                AutoGenerateColumns="False" GridLines="None" CssClass="mGrid table-condensed" AlternatingRowStyle-CssClass="alt">
+            <asp:GridView ID="gv_pendientes" runat="server" ForeColor="#717171"
+                AutoGenerateColumns="False" OnPreRender="gv_pendientes_PreRender" GridLines="None" CssClass="mGrid table-condensed" AlternatingRowStyle-CssClass="alt">
                 <Columns>
                     <asp:BoundField DataField="f1214_id" HeaderText="F3168 N°" ReadOnly="true" SortExpression="f1214_id" />
                     <asp:BoundField DataField="area" HeaderText="Area" ReadOnly="true" SortExpression="area" />
@@ -134,17 +129,12 @@
                 <div class="col-md-5">
                     <h4 class="panel-title">Solicitudes aprobadas - rechazadas - canceladas</h4>
                 </div>
-                <div class="col-md-7">
-                    <div class="input-group">
-                        <span class="input-group-addon">Buscar</span>
-                        <input name="txtTerm" class="form-control" onkeyup="filtrar(this, '<%=gv_otras_solicitudes.ClientID %>')" placeholder="ingrese texto buscado" type="text">
-                    </div>
-                </div>
+              
             </div>
         </div>
         <div class="panel-body" ><%--style="height: 300px; overflow-y: scroll;"--%>
-            <asp:GridView ID="gv_otras_solicitudes" runat="server" EmptyDataText="No existen registros para mostrar." ForeColor="#717171"
-                AutoGenerateColumns="False" GridLines="None" CssClass="mGrid table-condensed" AlternatingRowStyle-CssClass="alt">
+            <asp:GridView ID="gv_otras_solicitudes" runat="server" ForeColor="#717171"
+                AutoGenerateColumns="False" OnPreRender="gv_otras_solicitudes_PreRender" GridLines="None" CssClass="mGrid table-condensed" AlternatingRowStyle-CssClass="alt">
                 <Columns>
                     <asp:BoundField DataField="f1214_id" HeaderText="F3168 N°" ReadOnly="true" />
                     <asp:BoundField DataField="estado_1214" HeaderText="Estado 1214" ReadOnly="true" />
@@ -286,16 +276,11 @@
                 <div class="col-md-5">
                     <h4 class="panel-title">Nro de Anticipos pendientes</h4>
                 </div>
-                <div class="col-md-7">
-                    <div class="input-group">
-                        <span class="input-group-addon">Buscar</span>
-                        <input name="txtTerm" class="form-control" onkeyup="filtrar(this, '<%=gv_anticipos.ClientID %>')" placeholder="ingrese texto buscado" type="text">
-                    </div>
-                </div>
+              
             </div>
         </div>
         <div class="panel-body" ><%--style="height: 300px; overflow-y: scroll;"--%>
-            <asp:GridView ID="gv_anticipos" runat="server" EmptyDataText="No existen registros para mostrar." ForeColor="#717171"
+            <asp:GridView ID="gv_anticipos" runat="server" OnPreRender="gv_anticipos_PreRender" ForeColor="#717171"
                 AutoGenerateColumns="False" GridLines="None" CssClass="mGrid table-condensed" AlternatingRowStyle-CssClass="alt">
                 <Columns>
                     <asp:BoundField DataField="f1214_id" HeaderText="F3168 N°" ReadOnly="true" SortExpression="f1214_id" />
@@ -411,16 +396,11 @@
                 <div class="col-md-5">
                     <h4 class="panel-title">Nro de Anticipos otorgados</h4>
                 </div>
-                <div class="col-md-7">
-                    <div class="input-group">
-                        <span class="input-group-addon">Buscar</span>
-                        <input name="txtTerm" class="form-control" onkeyup="filtrar(this, '<%=gv_anticipos.ClientID %>')" placeholder="ingrese texto buscado" type="text">
-                    </div>
-                </div>
+               
             </div>
         </div>
         <div class="panel-body"><%--style="height: 300px; overflow-y: scroll;"--%>
-            <asp:GridView ID="gv_anticipos_otorgados" runat="server" EmptyDataText="No existen registros para mostrar." ForeColor="#717171"
+            <asp:GridView ID="gv_anticipos_otorgados" runat="server" OnPreRender="gv_anticipos_otorgados_PreRender"  ForeColor="#717171"
                 AutoGenerateColumns="False" GridLines="None" CssClass="mGrid table-condensed" AlternatingRowStyle-CssClass="alt">
                 <Columns>
                     <asp:BoundField DataField="f1214_id" HeaderText="F3168 N°" ReadOnly="true" SortExpression="f1214_id" />
@@ -442,23 +422,93 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="contentScripts" runat="server">
     <script>
 
-        function filtrar(phrase, _id) {
-            var words = phrase.value.toLowerCase().split(" ");
-            var table = document.getElementById(_id);
-            var ele;
-            for (var r = 1; r < table.rows.length; r++) {
-                ele = table.rows[r].innerHTML.replace(/<[^>]+>/g, "");
-                var displayStyle = 'none';
-                for (var i = 0; i < words.length; i++) {
-                    if (ele.toLowerCase().indexOf(words[i]) >= 0)
-                        displayStyle = '';
-                    else {
-                        displayStyle = 'none';
-                        break;
+       
+        $(document).ready(function () {
+
+            $('#<%= gv_pendientes.ClientID %>').DataTable({
+                "paging": true,
+                "language": {
+                    "search": "Buscar:",
+                    "lengthMenu": "Mostrar _MENU_ agentes por página",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrando _START_ de _END_ de _TOTAL_ registros",
+                    "infoEmpty": "No hay registros disponibles",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
                     }
-                }
-                table.rows[r].style.display = displayStyle;
-            }
-        }
+                },
+                "order": [[0, 'asc']]
+            });
+
+            $('#<%= gv_otras_solicitudes.ClientID %>').DataTable({
+                "paging": true,
+                "language": {
+                    "search": "Buscar:",
+                    "lengthMenu": "Mostrar _MENU_ agentes por página",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrando _START_ de _END_ de _TOTAL_ registros",
+                    "infoEmpty": "No hay registros disponibles",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                },
+                "order": [[0, 'asc']]
+            });
+
+            $('#<%= gv_anticipos.ClientID %>').DataTable({
+                "paging": true,
+                "language": {
+                    "search": "Buscar:",
+                    "lengthMenu": "Mostrar _MENU_ agentes por página",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrando _START_ de _END_ de _TOTAL_ registros",
+                    "infoEmpty": "No hay registros disponibles",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                },
+                "order": [[0, 'asc']]
+            });
+
+
+            $('#<%= gv_anticipos_otorgados.ClientID %>').DataTable({
+                "paging": true,
+                "language": {
+                    "search": "Buscar:",
+                    "lengthMenu": "Mostrar _MENU_ agentes por página",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrando _START_ de _END_ de _TOTAL_ registros",
+                    "infoEmpty": "No hay registros disponibles",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                },
+                "order": [[0, 'asc']]
+            });
+
+        });
+
+
+ 
     </script>
+
+    
+
+
 </asp:Content>

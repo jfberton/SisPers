@@ -57,6 +57,8 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
+                                 <li><a href="../Aplicativo/Jefe_Ag_AutorizaRemoto.aspx" >Autorizar remoto</a></li>
+                                <li class="divider"></li>
                                 <li><a href="../Aplicativo/Personal_Huellas.aspx">Marcaciones</a></li>
                                 <li><a href="../Aplicativo/Personal_Cerrar_EntradaSalida.aspx">Marcaciones manuales</a></li>
                                 <li><a href="../Aplicativo/Personal_Marcaciones_Procesar_Agente.aspx">Procesar mes agente</a></li>
@@ -108,6 +110,7 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="../Aplicativo/MainJefe.aspx">Pantalla Jefe</a></li>
                                 <li><a href="../Aplicativo/Ag_Detalle.aspx">Mis Horas</a></li>
+                                <li><a href="../Aplicativo/Jefe_Ag_EntradaSalida.aspx">Enviar entrada salida</a></li>
                                 <li><a href="../Aplicativo/ag_dias_mes.aspx">Detalle mensual agente</a></li>
                                 <li><a href="../Aplicativo/Jefe_UltimosMovimientos.aspx">Ultimos movimientos</a></li>
                             </ul>

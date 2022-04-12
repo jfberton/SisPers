@@ -193,7 +193,13 @@ namespace SisPer.Aplicativo
                     ag.Legajo_datos_personales = new Legajo_datos_personales();
                 }
                 ag.Legajo_datos_personales.DNI = tb_DNI.Text;
+                ag.Legajo_datos_personales.Sexo = (rb_Masculino.Checked) ? "M" : "F";
+                ag.Legajo_datos_personales.Domicilio = tb_Domicilio.Text;
+                ag.Legajo_datos_personales.EstadoCivil = "Sin definir";
+                ag.Legajo_datos_personales.DomicilioObservaciones = "";
+                ag.Legajo_datos_personales.Domicilio_localidad = "";
                 ag.Legajo_datos_laborales.Email = tb_Mail.Text;
+
                 ag.Legajo_datos_laborales.FechaIngresoAminPub = Convert.ToDateTime(tb_IngresoAdmPub.Text);
                 ag.Legajo_datos_personales.FechaNacimiento = Convert.ToDateTime(tb_Nacimiento.Text);
                 ag.Legajo_datos_laborales.FechaIngresoATP = Convert.ToDateTime(tb_IngresoAPlanta.Text);
@@ -405,6 +411,11 @@ namespace SisPer.Aplicativo
         protected void CV_JefeTemporalFecha_ServerValidate(object source, ServerValidateEventArgs args)
         {
             args.IsValid = (tb_JefetemporalHasta.Visible && tb_JefetemporalHasta.Text.Length > 0) || tb_JefetemporalHasta.Visible == false;
+        }
+
+        protected void cv_area_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = Ddl_Areas1.AreaSeleccionado != null;
         }
     }
 }

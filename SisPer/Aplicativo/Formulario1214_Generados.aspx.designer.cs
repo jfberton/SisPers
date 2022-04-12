@@ -51,15 +51,6 @@ namespace SisPer.Aplicativo
         protected global::SisPer.Aplicativo.Menues.MenuPersonalJefe MenuPersonalJefe;
 
         /// <summary>
-        /// Control gv_form1214.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gv_form1214;
-
-        /// <summary>
         /// Control panel_enviados.
         /// </summary>
         /// <remarks>
@@ -76,5 +67,32 @@ namespace SisPer.Aplicativo
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gv_Form1214_enviados;
+
+        /// <summary>
+        /// Control gv_form1214.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gv_form1214;
+
+        /// <summary>
+        /// Control panel_aprobados.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl panel_aprobados;
+
+        /// <summary>
+        /// Control gv_aprobados.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gv_aprobados;
     }
 }

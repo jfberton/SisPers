@@ -50,8 +50,8 @@ namespace SisPer.Aplicativo
         {
             Area area = Session["AreaMarcacionManual"] as Area;
 
-            if (area.Interior == true)
-            {
+            //if (area.Interior == true)
+            //{
                 div_edificioCentral.Visible = false;
                 div_FueraDelEdificio.Visible = true;
 
@@ -59,12 +59,12 @@ namespace SisPer.Aplicativo
                 CargarAgentes();
 
                 btn_Guardar.Enabled = GridView1.Enabled = (VerificarSiPuedeGuardar() && Calendario.SelectedDate <= DateTime.Today);
-            }
-            else
-            {
-                div_edificioCentral.Visible = true;
-                div_FueraDelEdificio.Visible = false;
-            }
+            //}
+            //else
+            //{
+            //    div_edificioCentral.Visible = true;
+            //    div_FueraDelEdificio.Visible = false;
+            //}
         }
 
         private void CargarAreasDependientes(Area area)
@@ -93,6 +93,10 @@ namespace SisPer.Aplicativo
 
         private struct ItemGrilla
         {
+            public int Id_ES { get; set; }
+            public string btn_enviar_ES_text { get; set; }
+            public bool btn_enviar_ES_enabled { get; set; }
+
             public int Id { get; set; }
             public string Legajo { get; set; }
             public string Nombre { get; set; }
@@ -119,19 +123,25 @@ namespace SisPer.Aplicativo
             foreach (Agente item in agentes)
             {
                 Agente agente = cxt.Agentes.First(a => a.Id == item.Id);
-                ResumenDiario rdag = agente.ResumenesDiarios.FirstOrDefault(rd3 => rd3.Dia == diaBuscado);
                 EntradaSalida e_s = agente.EntradasSalidas.FirstOrDefault(es => es.Fecha == diaBuscado);
-                listado.Add(new ItemGrilla()
+
+                //No muestro agentes que no hayan enviado entrada salida
+                if (e_s != null)
                 {
-                    Id = agente.Id,
-                    Legajo = agente.Legajo.ToString(),
-                    Nombre = agente.ApellidoYNombre,
-                    Hentrada = e_s != null ? e_s.Entrada : "00:00",
-                    HSalida = e_s != null ? e_s.Salida : "00:00",
-                    Enabled = rdag == null ? true : (rdag.Cerrado == null ? true : (rdag.Cerrado.Value == false ? true : false)),
-                    DireccionImagen = rdag == null ? "" : (rdag.Cerrado == null ? "" : (rdag.Cerrado.Value == false ? "" : "~/Imagenes/cancel.png")),
-                    Tooltip = rdag == null ? "" : (rdag.Cerrado == null ? "" : (rdag.Cerrado.Value == false ? "" : "El agente tiene las marcaciones cerradas para el dia, no se pueden modificar."))
-                });
+                    listado.Add(new ItemGrilla()
+                    {
+                        Id_ES = e_s.Id,
+                        btn_enviar_ES_text = e_s.CerradoPersonal == true? "Enviado":"Enviar",
+                        btn_enviar_ES_enabled = e_s.CerradoPersonal == true ? false : true,
+
+                        Id = agente.Id,
+                        Legajo = agente.Legajo.ToString(),
+                        Nombre = agente.ApellidoYNombre,
+                        Hentrada = e_s != null ? e_s.Entrada : "00:00",
+                        HSalida = e_s != null ? e_s.Salida : "00:00",
+                        Enabled = e_s.CerradoPersonal == true ? false : true,
+                    });
+                }
             }
 
             GridView1.DataSource = listado.OrderBy(s => s.Nombre).ToList();
@@ -176,7 +186,7 @@ namespace SisPer.Aplicativo
             Agente ag = Session["UsuarioLogueado"] as Agente;
             ///si el dia esta cerrado o no!!!
             ret = ret && !DiaCerrado();
-            ret = ret && (area.Interior == true);
+            //ret = ret && (area.Interior == true);
             ret = ret && (Calendario.SelectedDate.DayOfWeek != DayOfWeek.Saturday && Calendario.SelectedDate.DayOfWeek != DayOfWeek.Sunday);
             return ret;
         }
@@ -193,7 +203,7 @@ namespace SisPer.Aplicativo
 
             //dejo por defecto que el dia esta cerrado asi cuando el jefe 
             //no tenga agentes sale el día cerrado y no habilita el boton guardar
-            bool ret = true;
+            bool ret = false;
             DateTime diaSeleccionado = d != null ? d.Value : Calendario.SelectedDate;
 
             List<Agente> agentes = area.Agentes.ToList();
@@ -203,8 +213,12 @@ namespace SisPer.Aplicativo
                 EntradaSalida es = item.EntradasSalidas.FirstOrDefault(io => io.Fecha == diaSeleccionado);
                 if (es != null)
                 {
-                    ret = es.CerradoPersonal;
-                    break;
+                    if (es.CerradoPersonal == false)
+                    {
+                        ret = false;
+                        break;
+                    }
+                    
                 }
                 {
                     //tiene agentes subordinados pero no existen valores cargados el dia seleccionado
@@ -309,6 +323,7 @@ namespace SisPer.Aplicativo
                             e_s.AgenteId = ag.Id;
                             e_s.AgenteId1 = jefe.Id;
                             e_s.Enviado = true;
+                            e_s.CerradoPersonal = true;
                         }
                     }
                 }
@@ -321,8 +336,12 @@ namespace SisPer.Aplicativo
             {
                 Controles.MessageBox.Show(this, "Ocurrió un error al guardar los horarios de entrada y salida. Si el problema persiste informelo al sector Personal.", Controles.MessageBox.Tipo_MessageBox.Danger, "Error");
             }
+
+            CargarAgentes();
+            btn_Guardar.Enabled = GridView1.Enabled = (VerificarSiPuedeGuardar() && Calendario.SelectedDate <= DateTime.Today);
         }
 
+        #region Reporte
         protected void btn_Imprimir_Click(object sender, EventArgs e)
         {
             Reportes.HorarioIngresoEgresoMensual ds = GenerarDS();
@@ -543,6 +562,8 @@ namespace SisPer.Aplicativo
             e.DataSources.Add(new ReportDataSource("ds_Detalle", ds.DetalleDia.Rows));
         }
 
+        #endregion
+
         protected void Calendario_DayRender(object sender, DayRenderEventArgs e)
         {
             DateTime d = e.Day.Date;
@@ -589,6 +610,23 @@ namespace SisPer.Aplicativo
             div_Atencion.Visible = false;
         }
 
-       
+        protected void btn_enviar_es_Click(object sender, EventArgs e)
+        {
+            int id_es = Convert.ToInt32(((Button)sender).CommandArgument);
+
+            using (var cxt = new Model1Container())
+            {
+                EntradaSalida es = cxt.EntradasSalidas.FirstOrDefault(ss => ss.Id == id_es);
+                if (es != null)
+                {
+                    es.CerradoPersonal = true;
+                    es.Enviado = true;
+                    cxt.SaveChanges();
+                }
+            }
+
+            CargarAgentes();
+            btn_Guardar.Enabled = GridView1.Enabled = (VerificarSiPuedeGuardar() && Calendario.SelectedDate <= DateTime.Today);
+        }
     }
 }

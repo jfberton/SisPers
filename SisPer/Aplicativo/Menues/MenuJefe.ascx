@@ -35,15 +35,17 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="../Aplicativo/MainPandemia.aspx">Inicio</a></li>
-                        <li><a href="../Aplicativo/Jefe_Ag_EntradaSalida.aspx">Enviar entrada salida</a></li>
-                        <%--<li><a href="../Aplicativo/MainJefe.aspx">Inicio</a></li>
+                        <%--<li><a href="../Aplicativo/MainPandemia.aspx">Inicio</a></li>--%>
+                        <%--<li><a href="../Aplicativo/Jefe_Ag_EntradaSalida.aspx">Enviar entrada salida</a></li>--%>
+                        <li><a href="../Aplicativo/MainJefe.aspx">Inicio</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Horas
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="../Aplicativo/Ag_Detalle.aspx">Mis Horas</a></li>
+                                <li><a href="../Aplicativo/Jefe_Ag_AutorizaRemoto.aspx" >Autorizar remoto</a></li>
+                                <li class="divider"></li>
                                 <li><a href="../Aplicativo/ag_dias_mes.aspx">Detalle mensual agente</a></li>
                                 <li><a href="../Aplicativo/Jefe_Ag_EntradaSalida.aspx">Enviar entrada salida</a></li>
                             </ul>
@@ -61,7 +63,7 @@
                                 <li class="divider"></li>
                                 <li><a href="../Legislacion.aspx" target="_blank">Legislación</a></li>
                             </ul>
-                        </li>--%>
+                        </li>
 
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Form AT Nº 3168

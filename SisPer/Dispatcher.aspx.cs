@@ -37,17 +37,18 @@ namespace SisPer
                             break;
                         case PerfilUsuario.Agente:
                             /* MODIFICADO POR PANDEMIA UNICAMENTE SE UTILIZA PARA GESTION DE  COMISIONES*/
+                            //Response.Redirect("~/Aplicativo/MainPandemia.aspx");
                             if (u.Jefe == true || u.JefeTemporal)
                             {
                                 ProcesosGlobales.VerificarYAgregarNotificacionJefe(u.Id);
-                                //Response.Redirect("~/Aplicativo/MainJefe.aspx");
+                                Response.Redirect("~/Aplicativo/MainJefe.aspx");
                             }
                             else
                             {
                                 Session["IdAg"] = u.Id.ToString();
-                                //Response.Redirect("~/Aplicativo/MainAgente.aspx");
+                                Response.Redirect("~/Aplicativo/MainAgente.aspx");
                             }
-                            Response.Redirect("~/Aplicativo/MainPandemia.aspx");
+                            
 
                             break;
                         case PerfilUsuario.Personal:

@@ -94,9 +94,10 @@
                                 </ItemTemplate>
                                 <ItemStyle HorizontalAlign="Center"></ItemStyle>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="" ItemStyle-HorizontalAlign="Center">
+                             <asp:TemplateField HeaderText="Envio" ItemStyle-HorizontalAlign="Center">
                                 <ItemTemplate>
-                                    <asp:Image ImageUrl='<%#Eval("DireccionImagen") %>' ToolTip='<%#Eval("Tooltip") %>' runat="server" />
+                                    <asp:Button ID="btn_enviar_es" runat="server" CommandArgument='<%#Eval("Id_ES")%>'
+                                        ToolTip="Enviar marcaciones" Text='<%#Eval("btn_enviar_ES_text")%>' Enabled='<%#Eval("btn_enviar_ES_enabled")%>' OnClick="btn_enviar_es_Click" />
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>

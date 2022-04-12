@@ -35,19 +35,19 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="../Aplicativo/MainPandemia.aspx">Inicio</a></li>
-                        <%--<li><a href="../Aplicativo/MainAgente.aspx">Inicio</a></li>
+                        <%--<li><a href="../Aplicativo/MainPandemia.aspx">Inicio</a></li>--%>
+                        <li><a href="../aplicativo/mainagente.aspx">Inicio</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Mis horas
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="../Aplicativo/Ag_Detalle.aspx">Mis Horas</a></li>
-                                <li><a href="../Aplicativo/ag_dias_mes.aspx">Detalle mensual</a></li>
+                                <li><a href="../aplicativo/ag_detalle.aspx">Mis horas</a></li>
+                                <li><a href="../aplicativo/ag_dias_mes.aspx">Detalle mensual</a></li>
                             </ul>
                         </li>
-                        <li><a href="../Aplicativo/Ag_Memo17.aspx">Memo 17</a></li>
-                        <li><a href="../Legislacion.aspx" target="_blank">Legislación</a></li>--%>
+                        <li><a href="../aplicativo/ag_memo17.aspx">Memo 17</a></li>
+                        <li><a href="../legislacion.aspx" target="_blank">Legislación</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Form AT Nº 3168
                                 <span class="badge" runat="server" id="novedades214">

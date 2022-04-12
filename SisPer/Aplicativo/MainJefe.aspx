@@ -155,7 +155,7 @@
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Horarios vespertinos pendientes de aprobación</h3>
+                    <h3 class="panel-title">Horarios vespertinos pendientes de aprobación<br /><span class="small">Si se solicitó en día donde el agente marca manual, el HV deberá ser cerrado por usted una vez aprobado.</span></h3>
                 </div>
                 <div class="panel-body">
                     <asp:GridView ID="GridViewHVPendientesAprobar" runat="server" EmptyDataText="No existen registros para mostrar." ForeColor="#717171"
@@ -193,35 +193,31 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="panel panel-default">
+            <div class="panel panel-default" runat="server">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Francos compensatorios pendientes de aprobación</h3>
+                    <h3 class="panel-title">Horarios Vespertinos aprobados por cerrar <br /><span class="small">Aprobados por usted en día donde el agente realizó marcaciones manuales.</span></h3>
                 </div>
                 <div class="panel-body">
-                    <input type="hidden" id="MotivoRechazo" runat="server" value="" />
-                    <asp:GridView ID="GridViewFrancos" runat="server" EmptyDataText="No existen registros para mostrar." ForeColor="#717171"
-                        AutoGenerateColumns="False" GridLines="None" AllowPaging="true" OnPageIndexChanging="GridViewFrancosPendientesAprobar_PageIndexChanging"
+                    <asp:GridView ID="GridViewHVPorCerrar" runat="server" EmptyDataText="No existen registros para mostrar." ForeColor="#717171"
+                        AutoGenerateColumns="False" GridLines="None" AllowPaging="true" OnPageIndexChanging="GridViewHVPorCerrar_PageIndexChanging"
                         CssClass="mGrid table-condensed" PagerStyle-CssClass="pgr" AlternatingRowStyle-CssClass="alt">
                         <Columns>
                             <asp:BoundField DataField="Agente" HeaderText="Agente" ReadOnly="true" SortExpression="Agente" />
-                            <asp:BoundField DataField="Estado" HeaderText="Estado" ReadOnly="true" SortExpression="Estado" />
-                            <asp:BoundField DataField="Dia" HeaderText="Fecha solicitud" ReadOnly="true" SortExpression="Dia"
-                                DataFormatString="{0:dd/MM/yyyy}" />
-                            <asp:BoundField DataField="DiaInicial" HeaderText="Dia inicial" ReadOnly="true" SortExpression="DiaInicial"
-                                DataFormatString="{0:dd/MM/yyyy}" />
-                            <asp:BoundField DataField="CantidadDias" HeaderText="Dias" ReadOnly="true" SortExpression="CantidadDias" />
-                            <asp:BoundField DataField="Horas" HeaderText="Horas" ReadOnly="true" SortExpression="Horas" />
-                            <asp:TemplateField HeaderText="Aprobar" ItemStyle-HorizontalAlign="Center">
+                            <asp:BoundField DataField="Dia" HeaderText="Día" ReadOnly="true" SortExpression="Dia"
+                                DataFormatString="{0:D}" />
+                            <asp:BoundField DataField="Desde" HeaderText="Hora desde" ReadOnly="true" SortExpression="Desde" />
+                            <asp:BoundField DataField="Hasta" HeaderText="Hora hasta" ReadOnly="true" SortExpression="Hasta" />
+                            <asp:TemplateField HeaderText="Motivo" ItemStyle-HorizontalAlign="Center">
                                 <ItemTemplate>
-                                    <asp:ImageButton ID="btn_AprobarFranco" runat="server" CommandArgument='<%#Eval("Id")%>'
-                                        ToolTip="Aprobar" ImageUrl="~/Imagenes/accept.png" OnClick="btn_AprobarFranco_Click" />
+                                    <asp:Image ID="img_Motivo" ImageUrl="../Imagenes/help.png" ToolTip='<%#Eval("Motivo")%>'
+                                        runat="server" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Rechazar" ItemStyle-HorizontalAlign="Center">
+                            <asp:BoundField DataField="Horas" HeaderText="Horas" ReadOnly="true" SortExpression="Horas" />
+                            <asp:TemplateField HeaderText="Terminar" ItemStyle-HorizontalAlign="Center">
                                 <ItemTemplate>
-                                    <asp:ImageButton ID="btn_RechazarFranco" runat="server" CommandArgument='<%#Eval("Id")%>'
-                                        ToolTip="Rechazar" ImageUrl="~/Imagenes/cancel.png" OnClick="btn_RechazarFranco_Click"
-                                        OnClientClick="ConfirmaRechazo()" />
+                                    <asp:ImageButton ID="btn_TerminarHV" runat="server" CommandArgument='<%#Eval("Id")%>'
+                                        ToolTip="Terminar" ImageUrl="~/Imagenes/bullet_go.png" OnClick="btn_TerminarHV_Click" />
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
@@ -254,31 +250,35 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="panel panel-default" runat="server" id="panel_interior">
+            <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Horarios Vespertinos aprobados por cerrar <span class="small">aprobados por usted para confirmación.</span></h3>
+                    <h3 class="panel-title">Francos compensatorios pendientes de aprobación</h3>
                 </div>
                 <div class="panel-body">
-                    <asp:GridView ID="GridViewHVPorCerrar" runat="server" EmptyDataText="No existen registros para mostrar." ForeColor="#717171"
-                        AutoGenerateColumns="False" GridLines="None" AllowPaging="true" OnPageIndexChanging="GridViewHVPorCerrar_PageIndexChanging"
+                    <input type="hidden" id="MotivoRechazo" runat="server" value="" />
+                    <asp:GridView ID="GridViewFrancos" runat="server" EmptyDataText="No existen registros para mostrar." ForeColor="#717171"
+                        AutoGenerateColumns="False" GridLines="None" AllowPaging="true" OnPageIndexChanging="GridViewFrancosPendientesAprobar_PageIndexChanging"
                         CssClass="mGrid table-condensed" PagerStyle-CssClass="pgr" AlternatingRowStyle-CssClass="alt">
                         <Columns>
                             <asp:BoundField DataField="Agente" HeaderText="Agente" ReadOnly="true" SortExpression="Agente" />
-                            <asp:BoundField DataField="Dia" HeaderText="Día" ReadOnly="true" SortExpression="Dia"
-                                DataFormatString="{0:D}" />
-                            <asp:BoundField DataField="Desde" HeaderText="Hora desde" ReadOnly="true" SortExpression="Desde" />
-                            <asp:BoundField DataField="Hasta" HeaderText="Hora hasta" ReadOnly="true" SortExpression="Hasta" />
-                            <asp:TemplateField HeaderText="Motivo" ItemStyle-HorizontalAlign="Center">
+                            <asp:BoundField DataField="Estado" HeaderText="Estado" ReadOnly="true" SortExpression="Estado" />
+                            <asp:BoundField DataField="Dia" HeaderText="Fecha solicitud" ReadOnly="true" SortExpression="Dia"
+                                DataFormatString="{0:dd/MM/yyyy}" />
+                            <asp:BoundField DataField="DiaInicial" HeaderText="Dia inicial" ReadOnly="true" SortExpression="DiaInicial"
+                                DataFormatString="{0:dd/MM/yyyy}" />
+                            <asp:BoundField DataField="CantidadDias" HeaderText="Dias" ReadOnly="true" SortExpression="CantidadDias" />
+                            <asp:BoundField DataField="Horas" HeaderText="Horas" ReadOnly="true" SortExpression="Horas" />
+                            <asp:TemplateField HeaderText="Aprobar" ItemStyle-HorizontalAlign="Center">
                                 <ItemTemplate>
-                                    <asp:Image ID="img_Motivo" ImageUrl="../Imagenes/help.png" ToolTip='<%#Eval("Motivo")%>'
-                                        runat="server" />
+                                    <asp:ImageButton ID="btn_AprobarFranco" runat="server" CommandArgument='<%#Eval("Id")%>'
+                                        ToolTip="Aprobar" ImageUrl="~/Imagenes/accept.png" OnClick="btn_AprobarFranco_Click" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:BoundField DataField="Horas" HeaderText="Horas" ReadOnly="true" SortExpression="Horas" />
-                            <asp:TemplateField HeaderText="Terminar" ItemStyle-HorizontalAlign="Center">
+                            <asp:TemplateField HeaderText="Rechazar" ItemStyle-HorizontalAlign="Center">
                                 <ItemTemplate>
-                                    <asp:ImageButton ID="btn_TerminarHV" runat="server" CommandArgument='<%#Eval("Id")%>'
-                                        ToolTip="Terminar" ImageUrl="~/Imagenes/bullet_go.png" OnClick="btn_TerminarHV_Click" />
+                                    <asp:ImageButton ID="btn_RechazarFranco" runat="server" CommandArgument='<%#Eval("Id")%>'
+                                        ToolTip="Rechazar" ImageUrl="~/Imagenes/cancel.png" OnClick="btn_RechazarFranco_Click"
+                                        OnClientClick="ConfirmaRechazo()" />
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>

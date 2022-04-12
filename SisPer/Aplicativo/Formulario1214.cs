@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -11,8 +10,6 @@ using iText.Kernel.Geom;
 using iText.IO.Image;
 using Image = iText.Layout.Element.Image;
 using System.Configuration;
-using iText.Kernel.Font;
-using iText.IO.Font.Constants;
 using iText.Kernel.Pdf.Canvas;
 
 namespace SisPer.Aplicativo
@@ -36,7 +33,6 @@ namespace SisPer.Aplicativo
             return ret;
         }
 
-        [Obsolete]
         public Byte[] GenerarPDFSolicitud()
         {
             Byte[] res = null;
@@ -1127,7 +1123,7 @@ namespace SisPer.Aplicativo
                 Text t_leyenda = new Text(ConfigurationManager.AppSettings["Leyenda"]);
 
                 Paragraph leyenda = new Paragraph().Add(t_leyenda)
-                    .SetFontSize(9);
+                    .SetFontSize(8);
 
                 Image membrete = new Image(ImageDataFactory.Create(HttpContext.Current.Server.MapPath("../Imagenes/membrete.png"))).SetAutoScale(true);
 

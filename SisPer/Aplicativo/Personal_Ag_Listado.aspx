@@ -18,8 +18,8 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <br />
-    <asp:GridView ID="GridView1" runat="server" EmptyDataText="No existen registros para mostrar." OnPreRender="GridView1_PreRender"
-        OnRowDataBound="GridView1_RowDataBound" AutoGenerateColumns="false" GridLines="None" CssClass="compact stripe">
+    <asp:GridView ID="GridView1" runat="server" EmptyDataText="No existen registros para mostrar." 
+        AutoGenerateColumns="false" GridLines="None" CssClass="compact stripe" OnPreRender="GridView1_PreRender" OnRowDataBound="GridView1_RowDataBound" >
         <Columns>
             <asp:BoundField DataField="nombre_area" HeaderText="Area" ReadOnly="true" />
             <asp:BoundField DataField="nivel" HeaderText="Nivel" ReadOnly="true" />
@@ -33,7 +33,6 @@
                 </ItemTemplate>
                 <ItemStyle HorizontalAlign="Center"></ItemStyle>
             </asp:TemplateField>
-
         </Columns>
     </asp:GridView>
 

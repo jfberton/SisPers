@@ -103,6 +103,8 @@
     <script src="../assets/js/ie10-viewport-bug-workaround.js"></script>
 
     <asp:ContentPlaceHolder ID="contentScripts" runat="server">
+
+
     </asp:ContentPlaceHolder>
 
 </body>

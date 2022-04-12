@@ -78,6 +78,30 @@
                                     </asp:CalendarExtender>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="tb_Sexo">Sexo</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="col-md-6">
+                                        <asp:RadioButton ID="rb_Masculino" Text=" Masculino" Checked="true" CssClass="form-control" runat="server" GroupName="SexoAgente" AutoPostBack="true" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <asp:RadioButton ID="rb_Femenino" Text=" Femenino" Checked="true" CssClass="form-control" runat="server" GroupName="SexoAgente" AutoPostBack="true" />
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="tb_Domicilio">Domicilio</label>
+                                    <asp:RequiredFieldValidator ControlToValidate="tb_Domicilio" Text="<img src='../Imagenes/exclamation.gif' title='Debe ingresar el domicilio del agente' />"
+                                        ID="rfv_domicilio" runat="server" ErrorMessage="Debe ingresar el domicilio del agente"></asp:RequiredFieldValidator>
+                                </div>
+                                <div class="col-md-8">
+                                    <asp:TextBox ID="tb_Domicilio" CssClass="form-control" runat="server"></asp:TextBox>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -314,6 +338,9 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <label for="">Area donde se encuentra</label>
+                                    <asp:CustomValidator ID="cv_area" OnServerValidate="cv_area_ServerValidate" runat="server"
+                                                Text="<img src='../Imagenes/exclamation.gif' title='Seleccione el area donde prestará servicios el agente' />"
+                                                ErrorMessage="Seleccione el area donde prestará servicios el agente"></asp:CustomValidator>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="row">

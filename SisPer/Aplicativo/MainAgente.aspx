@@ -594,7 +594,9 @@
                         <h3 class="panel-title">Días por cerrar</h3>
                     </div>
                     <div class="panel-body">
-                        <asp:GridView ID="gv_dias_sin_cerrar" runat="server" EmptyDataText="Excelente!!! - No existen días por cerrar." OnPreRender="gv_dias_sin_cerrar_PreRender"
+                        <asp:GridView ID="gv_dias_sin_cerrar" runat="server" 
+                            EmptyDataText="Excelente!!! - No existen días por cerrar." 
+                            OnPreRender="gv_dias_sin_cerrar_PreRender"
                             AutoGenerateColumns="false" GridLines="None" CssClass="compact stripe">
                             <Columns>
                                 <asp:BoundField DataField="Id" />
@@ -629,11 +631,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
-
-
 
                     </div>
                 </div>
