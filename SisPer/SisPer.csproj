@@ -163,6 +163,7 @@
     <Content Include="Aplicativo\Guardia_Ag_Observacion.aspx" />
     <Content Include="Aplicativo\HuellasModel.edmx.sql" />
     <Content Include="Aplicativo\Inbox.aspx" />
+    <Content Include="Aplicativo\Jefe_Ag_AutorizaTurno.aspx" />
     <Content Include="Aplicativo\Jefe_Ag_AutorizaRemoto.aspx" />
     <Content Include="Aplicativo\Jefe_Ag_EntradaSalida.aspx" />
     <Content Include="Aplicativo\Jefe_Ag_SolicitarEstado.aspx" />
@@ -1281,6 +1282,13 @@
     </Compile>
     <Compile Include="Aplicativo\Inbox.aspx.designer.cs">
       <DependentUpon>Inbox.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Aplicativo\Jefe_Ag_AutorizaTurno.aspx.cs">
+      <DependentUpon>Jefe_Ag_AutorizaTurno.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Aplicativo\Jefe_Ag_AutorizaTurno.aspx.designer.cs">
+      <DependentUpon>Jefe_Ag_AutorizaTurno.aspx</DependentUpon>
     </Compile>
     <Compile Include="Aplicativo\Jefe_Ag_AutorizaRemoto.aspx.cs">
       <DependentUpon>Jefe_Ag_AutorizaRemoto.aspx</DependentUpon>

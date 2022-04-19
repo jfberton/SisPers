@@ -58,6 +58,7 @@
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                  <li><a href="../Aplicativo/Jefe_Ag_AutorizaRemoto.aspx" >Autorizar remoto</a></li>
+                                <li><a href="../Aplicativo/Jefe_Ag_AutorizaTurno.aspx" >Autorizar Turno</a></li>
                                 <li class="divider"></li>
                                 <li><a href="../Aplicativo/Personal_Huellas.aspx">Marcaciones</a></li>
                                 <li><a href="../Aplicativo/Personal_Cerrar_EntradaSalida.aspx">Marcaciones manuales</a></li>

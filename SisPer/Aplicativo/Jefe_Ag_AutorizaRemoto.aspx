@@ -60,7 +60,7 @@
                 </div>
             </div>
         </div>
-        <div class="panel-footer">Panel footer</div>
+        <div class="panel-footer"></div>
     </div>
 
 </asp:Content>

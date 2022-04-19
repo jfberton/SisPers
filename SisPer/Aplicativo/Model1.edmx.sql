@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 03/23/2022 11:35:37
+-- Date Created: 04/18/2022 11:50:36
 -- Generated from EDMX file: d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Model1.edmx
 -- --------------------------------------------------
 
@@ -1242,10 +1242,10 @@ GO
 CREATE TABLE [dbo].[TurnosIngresoPermitido] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [AgenteId] int  NOT NULL,
-    [DiasSemana] nvarchar(max)  NOT NULL,
-    [Turno] nvarchar(max)  NOT NULL,
-    [Desde] datetime  NOT NULL,
-    [Hasta] datetime  NOT NULL
+    [Dia] datetime  NOT NULL,
+    [Turno] nchar(2)  NOT NULL,
+    [Desde] nchar(5)  NOT NULL,
+    [Hasta] nchar(5)  NOT NULL
 );
 GO
 

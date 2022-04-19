@@ -45,6 +45,7 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="../Aplicativo/Ag_Detalle.aspx">Mis Horas</a></li>
                                 <li><a href="../Aplicativo/Jefe_Ag_AutorizaRemoto.aspx" >Autorizar remoto</a></li>
+                                <li><a href="../Aplicativo/Jefe_Ag_AutorizaTurno.aspx" >Autorizar Turno</a></li>
                                 <li class="divider"></li>
                                 <li><a href="../Aplicativo/ag_dias_mes.aspx">Detalle mensual agente</a></li>
                                 <li><a href="../Aplicativo/Jefe_Ag_EntradaSalida.aspx">Enviar entrada salida</a></li>
