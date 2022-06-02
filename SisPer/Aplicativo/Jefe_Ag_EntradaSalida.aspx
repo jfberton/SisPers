@@ -127,7 +127,7 @@
                     <asp:BoundField DataField="Nombre" HeaderText="Agentes con marcaciones incompletas" ReadOnly="true" />
                 </Columns>
             </asp:GridView>
-            <p>Seguro que decea continuar?</p>
+            <p>Seguro que desea continuar?</p>
             <asp:Button Text="Continuar y enviar" CssClass="btn btn-primary" runat="server" ID="btn_GuardarDeTodasFormas" OnClick="btn_GuardarDeTodasFormas_Click" />
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
         <asp:Button Text="Cancelar" runat="server" CssClass="btn btn-danger" ID="btn_CancelarGuardado" OnClick="btn_CancelarGuardado_Click" />

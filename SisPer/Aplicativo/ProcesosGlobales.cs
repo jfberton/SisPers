@@ -804,6 +804,16 @@ namespace SisPer.Aplicativo
                 {
                     var tipoLicencia = cxt.TiposDeLicencia.First(tl => tl.Tipo == "Licencia anual");
 
+
+                    //Si tiene dias usufructuados por licencia (del mismo tipo que quiero cargar) primero las elimino
+                    List<DiaUsufructado> dias_usufructuados_por_borrar = cxt.DiasUsufructuados.Where(uu => uu.Dia == d && uu.AgenteId == ag.Id && uu.TipoLicenciaId == tipoLicencia.Id).ToList();
+
+                    foreach (DiaUsufructado du in dias_usufructuados_por_borrar)
+                    {
+                        cxt.DiasUsufructuados.DeleteObject(du);
+                    }
+
+                    //Agrego el nuevo dia usufructuado
                     cxt.DiasUsufructuados.AddObject(new DiaUsufructado
                     {
                         AgenteId = ag.Id,

@@ -94,8 +94,8 @@ namespace SisPer.Aplicativo
                 DateTime ultimoDia = primerDia.AddMonths(1).AddDays(-1);
                 using (var cxt = new Model1Container())
                 {
-                    List<GvItem> gvItems = cxt.DiasAutorizadosRemoto.Where(dd => dd.AgenteId == agente.Id && dd.Dia >= primerDia && dd.Dia <= ultimoDia).ToList().Select(dd => new GvItem (dd.Id, dd.Agente.ApellidoYNombre, dd.Dia)).ToList();
-                        
+                    List<GvItem> gvItems = cxt.DiasAutorizadosRemoto.Where(dd => dd.AgenteId == agente.Id && dd.Dia >= primerDia && dd.Dia <= ultimoDia).ToList().Select(dd => new GvItem(dd.Id, dd.Agente.ApellidoYNombre, dd.Dia)).ToList();
+
                     ret = gvItems.Select(dd => dd.Fecha).ToList();
 
                     Session["gv_items"] = gvItems;
@@ -126,9 +126,10 @@ namespace SisPer.Aplicativo
             public string Agente { get; set; }
             public DateTime Fecha { get; set; }
 
-            public GvItem(int _Id, string _Agente, DateTime _Fecha) {
-                Id = _Id;   
-                Agente = _Agente;   
+            public GvItem(int _Id, string _Agente, DateTime _Fecha)
+            {
+                Id = _Id;
+                Agente = _Agente;
                 Fecha = _Fecha;
             }
         }
@@ -136,15 +137,22 @@ namespace SisPer.Aplicativo
 
         protected void Calendar1_SelectionChanged(object sender, EventArgs e)
         {
-            List<DateTime> list = (List<DateTime>)Session["DiasAutorizado"];
-
-            if (list.Contains(Calendar1.SelectedDate))
+            if (Calendar1.SelectedDate >= DateTime.Today)
             {
-                QuitarDia(Calendar1.SelectedDate);
+                List<DateTime> list = (List<DateTime>)Session["DiasAutorizado"];
+
+                if (list.Contains(Calendar1.SelectedDate))
+                {
+                    QuitarDia(Calendar1.SelectedDate);
+                }
+                else
+                {
+                    AgregarDia(Calendar1.SelectedDate);
+                }
             }
             else
             {
-                AgregarDia(Calendar1.SelectedDate);
+                MessageBox.Show(this, "Unicamente puede otorgar permiso remoto desde el día de la fecha en adelante.", MessageBox.Tipo_MessageBox.Warning);
             }
         }
 
@@ -164,7 +172,7 @@ namespace SisPer.Aplicativo
 
                     list.Add(selectedDate);
 
-                    List<GvItem> gvItems= Session["gv_items"] as List<GvItem>;
+                    List<GvItem> gvItems = Session["gv_items"] as List<GvItem>;
                     gvItems.Add(new GvItem(dia.Id, dia.Agente.ApellidoYNombre, dia.Dia));
                     Session["gv_items"] = gvItems;
 
@@ -214,7 +222,8 @@ namespace SisPer.Aplicativo
                         gv_autorizaciones.DataSource = gvItems;
                         gv_autorizaciones.DataBind();
                     }
-                    else {
+                    else
+                    {
                         MessageBox.Show(this.Page, "El movimiento que esta intentando eliminar ya posee marcaciones enviadas.", Controles.MessageBox.Tipo_MessageBox.Danger, "No se puede eliminar");
                     }
                 }

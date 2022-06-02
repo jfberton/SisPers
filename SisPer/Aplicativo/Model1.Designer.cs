@@ -1748,7 +1748,7 @@ namespace SisPer.Aplicativo
         /// <summary>
         /// No hay documentación de metadatos disponible.
         /// </summary>
-        /// <param name="iD_AGENTE">No hay documentación de metadatos disponible.</param>
+        /// <param name="ID_AGENTE">No hay documentación de metadatos disponible.</param>
         public ObjectResult<sp_obtener_datos_agente_Result> sp_obtener_datos_agente(Nullable<global::System.Int32> iD_AGENTE)
         {
             ObjectParameter iD_AGENTEParameter;

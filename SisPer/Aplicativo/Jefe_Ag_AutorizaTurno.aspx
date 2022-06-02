@@ -41,7 +41,9 @@
                     <table>
                         <tr>
                             <td>
-                                <h4>Autorizar turno</h4>
+                                <h4>
+                                    <asp:Label Text="Autorizar turno" ID="lbl_autorizar" runat="server" />
+                                </h4>
                             </td>
                             <td>
                                 <asp:DropDownList runat="server" ID="ddl_turno_seleccionado">

@@ -551,6 +551,29 @@ namespace SisPer.Aplicativo
             args.IsValid = ObtenerEstadoAgenteParaElDia(d) == null;
         }
 
+        protected void CustomValidator12_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            DateTime d = Convert.ToDateTime(tb_Dia.Value);
+            args.IsValid = !ExisteHorarioVespertinoDia(d);
+        }
+
+        private bool ExisteHorarioVespertinoDia(DateTime d)
+        {
+            Agente ag = Session["Agente"] as Agente;
+            bool ret = false;
+            using (var cxt = new Model1Container())
+            {
+                HorarioVespertino hvexiste = cxt.HorariosVespertinos.FirstOrDefault(
+                                                    hhv => hhv.Dia == d &&
+                                                    hhv.AgenteId == ag.Id
+                                                    );
+                ret = hvexiste != null;
+            }
+
+            return ret;
+        }
+
+
         #endregion
 
         #region Francos
@@ -1117,9 +1140,6 @@ namespace SisPer.Aplicativo
             Session["Agente"] = cxt.Agentes.FirstOrDefault(a => a.Id == ag.Id);
         }
 
-
-
-
         #endregion
 
         #region Días sin cerrar
@@ -1212,8 +1232,8 @@ namespace SisPer.Aplicativo
 
 
 
+
         #endregion
 
-       
     }
 }

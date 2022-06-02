@@ -31,6 +31,7 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container">
         <uc1:MensageBienvenida runat="server" ID="MensageBienvenida" />
+                    
         <uc1:DatosAgente ID="DatosAgente1" runat="server" />
 
         <div class="row">
@@ -38,7 +39,9 @@
                 <asp:Label ID="lbl_EstadoFuera" runat="server" CssClass="alert alert-danger" />
             </div>
         </div>
+
         <br />
+
         <div class="row">
             <div class="col-md-6">
                 <div class="panel panel-default">
@@ -180,6 +183,9 @@
                                             <asp:CustomValidator ID="CustomValidator8" ValidationGroup="HV" Text="<img src='../Imagenes/exclamation.gif' title='Imposible solicitar horario vespertino, tiene agendado franco o licencia esa fecha' />"
                                                 runat="server" ErrorMessage="Imposible solicitar horario vespertino, tiene agendado franco o licencia esa fecha"
                                                 OnServerValidate="CustomValidator8_ServerValidate"></asp:CustomValidator>
+                                            <asp:CustomValidator ID="CustomValidator12" ValidationGroup="HV" Text="<img src='../Imagenes/exclamation.gif' title='Imposible solicitar horario vespertino, solo puede solicitar una vez al día' />"
+                                                runat="server" ErrorMessage="Imposible solicitar horario vespertino, solo puede solicitar una vez al día"
+                                                OnServerValidate="CustomValidator12_ServerValidate"></asp:CustomValidator>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -539,11 +545,11 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <h3>Modificar E/S</h3>
+                                        <h3>E/S Jornada Laboral</h3>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">Estas marcaciones serán impactadas una vez que personal cierre el día.</td>
+                                    <td colspan="2">Se imputarán hasta un máximo de 06:30 horas por jornada laboral, la imputación de las horas exedentes trabajadas deberán ser solicitadas por Horario Vespertino </td>
                                 </tr>
                                 <tr>
                                     <td>Entrada</td>
@@ -587,6 +593,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
@@ -594,9 +601,7 @@
                         <h3 class="panel-title">Días por cerrar</h3>
                     </div>
                     <div class="panel-body">
-                        <asp:GridView ID="gv_dias_sin_cerrar" runat="server" 
-                            EmptyDataText="Excelente!!! - No existen días por cerrar." 
-                            OnPreRender="gv_dias_sin_cerrar_PreRender"
+                        <asp:GridView ID="gv_dias_sin_cerrar" runat="server" EmptyDataText="Excelente!!! - No existen días por cerrar." OnPreRender="gv_dias_sin_cerrar_PreRender"
                             AutoGenerateColumns="false" GridLines="None" CssClass="compact stripe">
                             <Columns>
                                 <asp:BoundField DataField="Id" />
@@ -631,13 +636,10 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
 </asp:Content>
 <asp:Content runat="server" ContentPlaceHolderID="contentScripts">
 

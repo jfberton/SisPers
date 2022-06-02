@@ -51,6 +51,15 @@ namespace SisPer.Aplicativo
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl p_horario;
 
         /// <summary>
+        /// Control lbl_autorizar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_autorizar;
+
+        /// <summary>
         /// Control ddl_turno_seleccionado.
         /// </summary>
         /// <remarks>

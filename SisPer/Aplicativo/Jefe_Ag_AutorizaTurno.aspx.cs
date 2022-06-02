@@ -70,7 +70,7 @@ namespace SisPer.Aplicativo
             using (var cxt = new Model1Container())
             {
                 int id_agente = int.Parse(ddl_agente.SelectedItem.Value);
-                agente = cxt.Agentes.FirstOrDefault(aa => aa.Id == id_agente);
+                agente = cxt.Agentes.Include("TipoHorariosFexible").FirstOrDefault(aa => aa.Id == id_agente);
             }
 
             if (agente != null)
@@ -101,11 +101,36 @@ namespace SisPer.Aplicativo
                     gv_autorizaciones.DataBind();
                 }
 
-                string horario = string.Format("Datos: H. Entrada: {0} - H. Salida: {1} - {2}", agente.HoraEntrada, agente.HoraSalida, agente.HorarioFlexible == true ? "Es Flexible" : "No es Flexible");
+                string horario = String.Empty;
+                if (agente.HorarioFlexible == true && agente.TipoHorariosFexible == null)
+                {
+                    MessageBox.Show(this, "El agente " + agente.ApellidoYNombre + " tiene horario flexible libre, no hace falta otorgar permiso", MessageBox.Tipo_MessageBox.Warning);
+                    horario = "El agente tiene horario flexible libre, no hace falta otorgar permiso";
+                    Calendar1.Visible = false;
+                    gv_autorizaciones.Visible = false;
+                    lbl_autorizar.Visible = false;
+                    ddl_turno_seleccionado.Visible = false; 
+                }
+                else
+                {
+                    if (agente.HorarioFlexible == true)
+                    {
+                        horario = string.Format("Tipo HF: {3} - H. Entrada: {0} - H. Salida: {1} - H. Jornada: {2} ", agente.TipoHorariosFexible.Hentrada, agente.TipoHorariosFexible.Hsalida, agente.TipoHorariosFexible.Hjornada,agente.TipoHorariosFexible.Tipo);
+                    }
+                    else
+                    {
+                        horario = string.Format("Datos: H. Entrada: {0} - H. Salida: {1} - {2}", agente.HoraEntrada, agente.HoraSalida, "No es Flexible");
+                    }
+                    
+                    Calendar1.Visible = true;
+                    gv_autorizaciones.Visible = true;
+                    lbl_autorizar.Visible = true;
+                    ddl_turno_seleccionado.Visible = true;
+                }
                 p_horario.InnerText = horario;
+
                 int horaentrada = int.Parse(agente.HoraEntrada.Substring(0, 2));
                 ddl_turno_seleccionado.SelectedValue = horaentrada < 13 ? "TT" : "TM";
-
             }
 
             Session["DiasAutorizado"] = ret;

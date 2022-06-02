@@ -111,7 +111,7 @@ namespace SisPer.Aplicativo
                     e.Row.ForeColor = Color.Blue;
                 }
 
-                if (e.Row.Cells[5].Text == "Sin datos")
+                if (e.Row.Cells[5].Text == "Sin datos" || e.Row.Cells[5].Text == "Remoto - Sin datos")
                 {
                     e.Row.ForeColor = Color.DarkRed;
                     e.Row.BackColor = Color.MistyRose;
