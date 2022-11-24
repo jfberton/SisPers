@@ -484,6 +484,7 @@ namespace SisPer.Aplicativo
                                                   fecha = mm.Fecha,
                                                   horas_anio_anterior = mm.HoraAnioAnterior,
                                                   horas_anio_actual = mm.HoraAnioActual,
+                                                  horas_mes = mm.HorasMes,
                                                   agente = mm.Agente.ApellidoYNombre
                                               }).ToList();
 

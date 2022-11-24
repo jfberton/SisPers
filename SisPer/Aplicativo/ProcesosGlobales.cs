@@ -556,9 +556,9 @@ namespace SisPer.Aplicativo
                     return true;
                 }
             }
-            catch 
-            { 
-                return false; 
+            catch
+            {
+                return false;
             }
         }
 
@@ -856,7 +856,7 @@ namespace SisPer.Aplicativo
                     {
                         sol_est.Estado = EstadoSolicitudDeEstado.Aprobado;
                         cxt.SaveChanges();
-           
+
                     }
 
                 }
@@ -1108,78 +1108,7 @@ namespace SisPer.Aplicativo
 
         #region Huellas
 
-        /// <summary>
-        /// Devuelve las marcaciones digitales y manuales del legajo solicitado en una fecha dada.
-        /// </summary>
-        /// <param name="fecha">Fecha buscada</param>
-        /// <param name="legajo">Legajo buscado</param>
-        /// <returns></returns>
-        public static DS_Marcaciones ObtenerMarcaciones(DateTime fecha, string legajo)
-        {
-            DS_Marcaciones ret = new DS_Marcaciones();
-            int pruebaLegajo = 0;
-            if (int.TryParse(legajo.ToString(), out pruebaLegajo))
-            {
-                //obtengo las marcaciones digitales de todo el personal en una fecha dada
-                #region Desmarcar
-                using (ClockCardEntities cxt = new ClockCardEntities())
-                {
-                    var marcacionesDigitales = (from h in cxt.FICHADA
-                                                where
-                                                h.FIC_FECHA == fecha && h.LEG_LEGAJO == pruebaLegajo
-                                                select new
-                                                {
-                                                    Legajo = h.LEG_LEGAJO,
-                                                    Fecha = h.FIC_FECHA,
-                                                    Hora = h.FIC_HORA
-                                                }).ToList();
 
-                    foreach (var item in marcacionesDigitales)
-                    {
-                        DS_Marcaciones.MarcacionRow dr = ret.Marcacion.NewMarcacionRow();
-                        dr.Legajo = item.Legajo.ToString();
-                        dr.Fecha = item.Fecha;
-                        dr.Hora = item.Hora;
-                        dr.MarcaManual = false;
-                        ret.Marcacion.Rows.Add(dr);
-                    }
-                }
-                #endregion
-
-                using (Model1Container cxt = new Model1Container())
-                {
-                    //Marcaciones.
-                    var resumenDiarioSinDigitalNiAnuladas = (from mm in cxt.Marcaciones
-                                                             where
-                                                             !mm.Anulada &&
-                                                             mm.ResumenDiario.Dia == fecha &&
-                                                             mm.ResumenDiario.Agente.Legajo == pruebaLegajo
-                                                             select new
-                                                             {
-                                                                 Legajo = mm.ResumenDiario.Agente.Legajo,
-                                                                 Fecha = mm.ResumenDiario.Dia,
-                                                                 Hora = mm.Hora,
-                                                                 Manual = mm.Manual
-                                                             }).ToList();
-
-                    foreach (var item in resumenDiarioSinDigitalNiAnuladas)
-                    {
-                        var result = ret.Marcacion.Select("Legajo = '" + legajo + "' AND Hora = '" + item.Hora + "'");
-                        //Evito cargar una hora que ya esté en el resumen
-                        if (result.Count() == 0)
-                        {
-                            DS_Marcaciones.MarcacionRow dr = ret.Marcacion.NewMarcacionRow();
-                            dr.Legajo = item.Legajo.ToString();
-                            dr.Fecha = item.Fecha;
-                            dr.Hora = item.Hora;
-                            dr.MarcaManual = item.Manual;
-                            ret.Marcacion.Rows.Add(dr);
-                        }
-                    }
-                }
-            }
-            return ret;
-        }
 
         /// <summary>
         /// Devuelve las marcaciones digitales y manuales del legajo solicitado en una fecha dada. 
@@ -1351,56 +1280,56 @@ namespace SisPer.Aplicativo
         public static DS_Marcaciones ObtenerMarcaciones(DateTime fecha)
         {
             DS_Marcaciones ret = new DS_Marcaciones();
-            //obtengo las marcaciones digitales de todo el personal en una fecha dada
-            using (ClockCardEntities cxt = new ClockCardEntities())
-            {
-                var marcacionesDigitales = (from h in cxt.FICHADA
-                                            where h.FIC_FECHA == fecha
-                                            select new
-                                            {
-                                                Legajo = h.LEG_LEGAJO,
-                                                Fecha = h.FIC_FECHA,
-                                                Hora = h.FIC_HORA
-                                            }).ToList();
 
-                foreach (var item in marcacionesDigitales)
+            List<Agente> agentes = new List<Agente>();
+
+            using (var cxt = new Model1Container())
+            {
+                //obtengo todos los agentes activos o con fecha baja posterior a la fecha buscada para obtener sus fichadas
+                agentes = cxt.Agentes.Where(aa => aa.FechaBaja == null || aa.FechaBaja > fecha).ToList();
+
+                foreach (Agente agente in agentes)
                 {
-                    DS_Marcaciones.MarcacionRow dr = ret.Marcacion.NewMarcacionRow();
-                    dr.Legajo = item.Legajo.ToString();
-                    dr.Fecha = item.Fecha;
-                    dr.Hora = item.Hora;
-                    dr.MarcaManual = false;
-                    ret.Marcacion.Rows.Add(dr);
+                    //al crear/obtenr me aseguro que se procesen las marcaciones
+                    ResumenDiario rd = cxt.sp_obtener_resumen_diario_agente_fecha(agente.Id, fecha.ToShortDateString()).First();
+                    foreach (Marcacion marcacion in rd.Marcaciones)
+                    {
+                        DS_Marcaciones.MarcacionRow dr = ret.Marcacion.NewMarcacionRow();
+                        dr.Legajo = agente.Legajo.ToString();
+                        dr.Fecha = fecha;
+                        dr.Hora = marcacion.Hora;
+                        dr.MarcaManual = marcacion.Manual;
+                        ret.Marcacion.Rows.Add(dr);
+                    }
                 }
             }
 
-            using (Model1Container cxt = new Model1Container())
+            return ret;
+        }
+
+        /// <summary>
+        /// Devuelve las marcaciones digitales y manuales del legajo solicitado en una fecha dada.
+        /// </summary>
+        /// <param name="fecha">Fecha buscada</param>
+        /// <param name="legajo">Legajo buscado</param>
+        /// <returns></returns>
+        public static DS_Marcaciones ObtenerMarcaciones(DateTime fecha, string legajo)
+        {
+            DS_Marcaciones ret = new DS_Marcaciones();
+            int pruebaLegajo = 0;
+            if (int.TryParse(legajo.ToString(), out pruebaLegajo))
             {
-
-                //Marcaciones .
-                var resumenDiarioSinDigitalNiAnuladas = (from mm in cxt.Marcaciones
-                                                         where
-                                                         !mm.Anulada &&
-                                                         mm.ResumenDiario.Dia == fecha
-                                                         select new
-                                                         {
-                                                             Legajo = mm.ResumenDiario.Agente.Legajo,
-                                                             Fecha = mm.ResumenDiario.Dia,
-                                                             Hora = mm.Hora,
-                                                             Manual = mm.Manual
-                                                         }).ToList();
-
-                foreach (var item in resumenDiarioSinDigitalNiAnuladas)
+                using (var cxt = new Model1Container())
                 {
-                    var result = ret.Marcacion.Select("Legajo = '" + item.Legajo + "' AND Hora = '" + item.Hora + "'");
-                    //Evito cargar una hora que ya esté en el resumen
-                    if (result.Count() == 0)
+                    //al crear/obtenr me aseguro que se procesen las marcaciones
+                    ResumenDiario rd = cxt.sp_obtener_resumen_diario_agente_fecha(pruebaLegajo, fecha.ToShortDateString()).First();
+                    foreach (Marcacion marcacion in rd.Marcaciones)
                     {
                         DS_Marcaciones.MarcacionRow dr = ret.Marcacion.NewMarcacionRow();
-                        dr.Legajo = item.Legajo.ToString();
-                        dr.Fecha = item.Fecha;
-                        dr.Hora = item.Hora;
-                        dr.MarcaManual = item.Manual;
+                        dr.Legajo = legajo;
+                        dr.Fecha = fecha;
+                        dr.Hora = marcacion.Hora;
+                        dr.MarcaManual = marcacion.Manual;
                         ret.Marcacion.Rows.Add(dr);
                     }
                 }
@@ -1417,57 +1346,32 @@ namespace SisPer.Aplicativo
         public static DS_Marcaciones ObtenerMarcaciones(DateTime fechaDesde, DateTime fechaHasta)
         {
             DS_Marcaciones ret = new DS_Marcaciones();
-            //obtengo las marcaciones digitales de todo el personal en una fecha dada
-            using (ClockCardEntities cxt = new ClockCardEntities())
+
+            List<Agente> agentes = new List<Agente>();
+
+            using (var cxt = new Model1Container())
             {
-                var marcacionesDigitales = (from h in cxt.FICHADA
-                                            where h.FIC_FECHA >= fechaDesde && h.FIC_FECHA <= fechaHasta
-                                            select new
-                                            {
-                                                Legajo = h.LEG_LEGAJO,
-                                                Fecha = h.FIC_FECHA,
-                                                Hora = h.FIC_HORA
-                                            }).ToList();
+                //obtengo todos los agentes activos o con fecha baja posterior a la fecha buscada para obtener sus fichadas
+                agentes = cxt.Agentes.Where(aa => aa.FechaBaja == null || aa.FechaBaja > fechaDesde).ToList();
 
-                foreach (var item in marcacionesDigitales)
+                foreach (Agente agente in agentes)
                 {
-                    DS_Marcaciones.MarcacionRow dr = ret.Marcacion.NewMarcacionRow();
-                    dr.Legajo = item.Legajo.ToString();
-                    dr.Fecha = item.Fecha;
-                    dr.Hora = item.Hora;
-                    dr.MarcaManual = false;
-                    ret.Marcacion.Rows.Add(dr);
-                }
-            }
+                    DateTime desde = fechaDesde;
 
-            using (Model1Container cxt = new Model1Container())
-            {
-
-                //Marcaciones .
-                var resumenDiarioSinDigitalNiAnuladas = (from mm in cxt.Marcaciones
-                                                         where
-                                                         !mm.Anulada &&
-                                                         mm.ResumenDiario.Dia >= fechaDesde && mm.ResumenDiario.Dia <= fechaHasta
-                                                         select new
-                                                         {
-                                                             Legajo = mm.ResumenDiario.Agente.Legajo,
-                                                             Fecha = mm.ResumenDiario.Dia,
-                                                             Hora = mm.Hora,
-                                                             Manual = mm.Manual
-                                                         }).ToList();
-
-                foreach (var item in resumenDiarioSinDigitalNiAnuladas)
-                {
-                    var result = ret.Marcacion.Select("Legajo = '" + item.Legajo + "' AND Hora = '" + item.Hora + "'");
-                    //Evito cargar una hora que ya esté en el resumen
-                    if (result.Count() == 0)
+                    while (desde <= fechaHasta)
                     {
-                        DS_Marcaciones.MarcacionRow dr = ret.Marcacion.NewMarcacionRow();
-                        dr.Legajo = item.Legajo.ToString();
-                        dr.Fecha = item.Fecha;
-                        dr.Hora = item.Hora;
-                        dr.MarcaManual = item.Manual;
-                        ret.Marcacion.Rows.Add(dr);
+                        ResumenDiario rd = cxt.sp_obtener_resumen_diario_agente_fecha(agente.Id, desde.ToShortDateString()).First();
+                        foreach (Marcacion marcacion in rd.Marcaciones)
+                        {
+                            DS_Marcaciones.MarcacionRow dr = ret.Marcacion.NewMarcacionRow();
+                            dr.Legajo = agente.Legajo.ToString();
+                            dr.Fecha = desde;
+                            dr.Hora = marcacion.Hora;
+                            dr.MarcaManual = marcacion.Manual;
+                            ret.Marcacion.Rows.Add(dr);
+                        }
+
+                        desde = desde.AddDays(1);
                     }
                 }
             }
@@ -1481,58 +1385,31 @@ namespace SisPer.Aplicativo
             int pruebaLegajo = 0;
             if (int.TryParse(legajo.ToString(), out pruebaLegajo))
             {
-                //obtengo las marcaciones digitales de todo el personal en una fecha dada
-                using (ClockCardEntities cxt = new ClockCardEntities())
+                List<Agente> agentes = new List<Agente>();
+
+                using (var cxt = new Model1Container())
                 {
-                    var marcacionesDigitales = (from h in cxt.FICHADA
-                                                where
-                                                h.FIC_FECHA >= fechaDesde && h.FIC_FECHA <= fechaHasta && h.LEG_LEGAJO == pruebaLegajo
-                                                select new
-                                                {
-                                                    Legajo = h.LEG_LEGAJO,
-                                                    Fecha = h.FIC_FECHA,
-                                                    Hora = h.FIC_HORA
-                                                }).ToList();
+                    //obtengo todos los agentes activos o con fecha baja posterior a la fecha buscada para obtener sus fichadas
+                    agentes = cxt.Agentes.Where(aa => (aa.FechaBaja == null || aa.FechaBaja > fechaDesde) && aa.Legajo == pruebaLegajo).ToList();
 
-                    foreach (var item in marcacionesDigitales)
+                    foreach (Agente agente in agentes)
                     {
-                        DS_Marcaciones.MarcacionRow dr = ret.Marcacion.NewMarcacionRow();
-                        dr.Legajo = item.Legajo.ToString();
-                        dr.Fecha = item.Fecha;
-                        dr.Hora = item.Hora;
-                        dr.MarcaManual = false;
-                        ret.Marcacion.Rows.Add(dr);
-                    }
-                }
+                        DateTime desde = fechaDesde;
 
-                using (Model1Container cxt = new Model1Container())
-                {
-                    //Marcaciones .
-                    var resumenDiarioSinDigitalNiAnuladas = (from mm in cxt.Marcaciones
-                                                             where
-                                                             !mm.Anulada &&
-                                                             mm.ResumenDiario.Dia >= fechaDesde && mm.ResumenDiario.Dia <= fechaHasta &&
-                                                             mm.ResumenDiario.Agente.Legajo == pruebaLegajo
-                                                             select new
-                                                             {
-                                                                 Legajo = mm.ResumenDiario.Agente.Legajo,
-                                                                 Fecha = mm.ResumenDiario.Dia,
-                                                                 Hora = mm.Hora,
-                                                                 Manual = mm.Manual
-                                                             }).ToList();
-
-                    foreach (var item in resumenDiarioSinDigitalNiAnuladas)
-                    {
-                        var result = ret.Marcacion.Select("Legajo = '" + legajo + "' AND Hora = '" + item.Hora + "'");
-                        //Evito cargar una hora que ya esté en el resumen
-                        if (result.Count() == 0)
+                        while (desde <= fechaHasta)
                         {
-                            DS_Marcaciones.MarcacionRow dr = ret.Marcacion.NewMarcacionRow();
-                            dr.Legajo = item.Legajo.ToString();
-                            dr.Fecha = item.Fecha;
-                            dr.Hora = item.Hora;
-                            dr.MarcaManual = item.Manual;
-                            ret.Marcacion.Rows.Add(dr);
+                            ResumenDiario rd = cxt.sp_obtener_resumen_diario_agente_fecha(agente.Id, desde.ToShortDateString()).First();
+                            foreach (Marcacion marcacion in rd.Marcaciones)
+                            {
+                                DS_Marcaciones.MarcacionRow dr = ret.Marcacion.NewMarcacionRow();
+                                dr.Legajo = agente.Legajo.ToString();
+                                dr.Fecha = desde;
+                                dr.Hora = marcacion.Hora;
+                                dr.MarcaManual = marcacion.Manual;
+                                ret.Marcacion.Rows.Add(dr);
+                            }
+
+                            desde = desde.AddDays(1);
                         }
                     }
                 }

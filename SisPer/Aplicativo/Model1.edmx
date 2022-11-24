@@ -135,6 +135,7 @@
           <Property Name="AgenteId" Type="int" Nullable="false" />
           <Property Name="HorasAnioAnterior" Type="nvarchar(max)" Nullable="false" />
           <Property Name="HorasAnioActual" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="HorasMes" Type="nvarchar(max)" Nullable="false" />
           <Property Name="FechaCierre" Type="datetime" Nullable="false" />
           <Property Name="Mes" Type="int" Nullable="false" />
           <Property Name="Anio" Type="int" Nullable="false" />
@@ -565,6 +566,7 @@
           <Property Name="CierreMensualId" Type="int" Nullable="false" />
           <Property Name="HoraAnioAnterior" Type="nvarchar(max)" Nullable="false" />
           <Property Name="HoraAnioActual" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="HorasMes" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="MovimientosFrancos">
           <Key>
@@ -1803,10 +1805,6 @@
         <Function Name="sp_obtener_suborinados_directos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id_agente" Type="int" Mode="In" />
         </Function>
-        <Function Name="sp_pd_AA_Proceso_automatico_de_cierre_caso_particular" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ID_AGENTE" Type="int" Mode="In" />
-          <Parameter Name="FECHA" Type="datetime" Mode="In" />
-        </Function>
         <EntityContainer Name="Model1StoreContainer">
           <EntitySet Name="AbrioDias" EntityType="Self.AbrioDias" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Agentes" EntityType="Self.Agentes" Schema="dbo" store:Type="Tables" />
@@ -2599,16 +2597,20 @@
             <End Role="TurnoIngresoPermitido" EntitySet="TurnosIngresoPermitido" />
           </AssociationSet>
           <FunctionImport Name="Estado_agente" ReturnType="Collection(String)">
-          <Parameter Name="id_agente" Mode="In" Type="Int32" />
+            <Parameter Name="id_agente" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_obtener_agentes_cascada" ReturnType="Collection(Model1.sp_obtener_agentes_cascada_Result1)">
+          <FunctionImport Name="sp_cerrar_dia" ReturnType="Collection(String)">
+            <Parameter Name="ID_AGENTE" Mode="In" Type="Int32" />
+            <Parameter Name="FECHA" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_obtener_agentes_cascada" ReturnType="Collection(Model1.sp_obtener_agentes_cascada_Result4)">
             <Parameter Name="id_agente" Mode="In" Type="Int32" />
             <Parameter Name="personal_como_agente" Mode="In" Type="Boolean" />
           </FunctionImport>
-          <FunctionImport Name="sp_obtener_datos_agente" ReturnType="Collection(Model1.sp_obtener_datos_agente_Result)">
-          <Parameter Name="ID_AGENTE" Mode="In" Type="Int32" />
+          <FunctionImport Name="sp_obtener_datos_agente" ReturnType="Collection(Model1.sp_obtener_datos_agente_Result4)">
+            <Parameter Name="ID_AGENTE" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_obtener_estado_agente_dia" ReturnType="Collection(Model1.sp_obtener_estado_agente_dia_Result)">
+          <FunctionImport Name="sp_obtener_estado_agente_dia" ReturnType="Collection(Model1.sp_obtener_estado_agente_dia_Result3)">
             <Parameter Name="id_agente" Mode="In" Type="Int32" />
             <Parameter Name="dia" Mode="In" Type="String" />
             <Parameter Name="muestra_finde" Mode="In" Type="Boolean" />
@@ -2621,12 +2623,8 @@
             <Parameter Name="id_agente" Mode="In" Type="Int32" />
             <Parameter Name="dia_hasta" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="sp_obtener_suborinados_directos" ReturnType="Collection(Model1.sp_obtener_suborinados_directos_Result)">
-          <Parameter Name="id_agente" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_cerrar_dia" ReturnType="Collection(String)">
-            <Parameter Name="ID_AGENTE" Mode="In" Type="Int32" />
-            <Parameter Name="FECHA" Mode="In" Type="DateTime" />
+          <FunctionImport Name="sp_obtener_suborinados_directos" EntitySet="Agentes" ReturnType="Collection(Model1.Agente)">
+            <Parameter Name="id_agente" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Agente">
@@ -4628,26 +4626,6 @@
           <Property Type="DateTime" Name="Dia" Nullable="false" Precision="23" />
           <Property Type="Int32" Name="AgenteId1" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="sp_obtener_resumenes_diarios_agente_mes1_Result">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="DateTime" Name="Dia" Nullable="false" Precision="23" />
-          <Property Type="String" Name="Horas" Nullable="false" />
-          <Property Type="Int32" Name="AgenteId" Nullable="false" />
-          <Property Type="String" Name="HEntrada" Nullable="false" />
-          <Property Type="String" Name="HSalida" Nullable="false" />
-          <Property Type="String" Name="HVEnt" Nullable="false" />
-          <Property Type="String" Name="HVSal" Nullable="false" />
-          <Property Type="Boolean" Name="MarcoTardanza" Nullable="false" />
-          <Property Type="Boolean" Name="MarcoProlongJornada" Nullable="false" />
-          <Property Type="Boolean" Name="Inconsistente" Nullable="false" />
-          <Property Type="String" Name="ObservacionInconsistente" Nullable="false" />
-          <Property Type="Boolean" Name="Cerrado" Nullable="true" />
-          <Property Type="String" Name="AcumuloHorasBonificacion" Nullable="true" />
-          <Property Type="String" Name="AcumuloHorasAnioActual" Nullable="true" />
-          <Property Type="String" Name="AcumuloHorasAnioAnterior" Nullable="true" />
-          <Property Type="String" Name="AcumuloHorasMes" Nullable="true" />
-          <Property Type="Int32" Name="AgenteId1" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="sp_obtener_suborinados_directos1_Result">
           <Property Type="Int32" Name="id_agente" Nullable="false" />
           <Property Type="String" Name="nombre_agente" Nullable="false" />
@@ -4845,46 +4823,6 @@
           <Property Type="DateTime" Name="Dia" Nullable="false" Precision="23" />
           <Property Type="Int32" Name="AgenteId1" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="sp_obtener_resumen_diario_agente_fecha_Result1">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="DateTime" Name="Dia" Nullable="false" Precision="23" />
-          <Property Type="String" Name="Horas" Nullable="false" />
-          <Property Type="Int32" Name="AgenteId" Nullable="false" />
-          <Property Type="String" Name="HEntrada" Nullable="false" />
-          <Property Type="String" Name="HSalida" Nullable="false" />
-          <Property Type="String" Name="HVEnt" Nullable="false" />
-          <Property Type="String" Name="HVSal" Nullable="false" />
-          <Property Type="Boolean" Name="MarcoTardanza" Nullable="false" />
-          <Property Type="Boolean" Name="MarcoProlongJornada" Nullable="false" />
-          <Property Type="Boolean" Name="Inconsistente" Nullable="false" />
-          <Property Type="String" Name="ObservacionInconsistente" Nullable="false" />
-          <Property Type="Boolean" Name="Cerrado" Nullable="true" />
-          <Property Type="String" Name="AcumuloHorasBonificacion" Nullable="true" />
-          <Property Type="String" Name="AcumuloHorasAnioActual" Nullable="true" />
-          <Property Type="String" Name="AcumuloHorasAnioAnterior" Nullable="true" />
-          <Property Type="String" Name="AcumuloHorasMes" Nullable="true" />
-          <Property Type="Int32" Name="AgenteId1" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_obtener_resumenes_diarios_agente_mes_Result1">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="DateTime" Name="Dia" Nullable="false" Precision="23" />
-          <Property Type="String" Name="Horas" Nullable="false" />
-          <Property Type="Int32" Name="AgenteId" Nullable="false" />
-          <Property Type="String" Name="HEntrada" Nullable="false" />
-          <Property Type="String" Name="HSalida" Nullable="false" />
-          <Property Type="String" Name="HVEnt" Nullable="false" />
-          <Property Type="String" Name="HVSal" Nullable="false" />
-          <Property Type="Boolean" Name="MarcoTardanza" Nullable="false" />
-          <Property Type="Boolean" Name="MarcoProlongJornada" Nullable="false" />
-          <Property Type="Boolean" Name="Inconsistente" Nullable="false" />
-          <Property Type="String" Name="ObservacionInconsistente" Nullable="false" />
-          <Property Type="Boolean" Name="Cerrado" Nullable="true" />
-          <Property Type="String" Name="AcumuloHorasBonificacion" Nullable="true" />
-          <Property Type="String" Name="AcumuloHorasAnioActual" Nullable="true" />
-          <Property Type="String" Name="AcumuloHorasAnioAnterior" Nullable="true" />
-          <Property Type="String" Name="AcumuloHorasMes" Nullable="true" />
-          <Property Type="Int32" Name="AgenteId1" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="sp_obtener_suborinados_directos_Result2">
           <Property Type="Int32" Name="id_agente" Nullable="false" />
           <Property Type="String" Name="nombre_agente" Nullable="false" />
@@ -4930,47 +4868,52 @@
           <Property Type="DateTime" Name="Dia" Nullable="false" Precision="23" />
           <Property Type="Int32" Name="AgenteId1" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="sp_obtener_resumen_diario_agente_fecha_Result2">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="DateTime" Name="Dia" Nullable="false" Precision="23" />
-          <Property Type="String" Name="Horas" Nullable="false" />
-          <Property Type="Int32" Name="AgenteId" Nullable="false" />
-          <Property Type="String" Name="HEntrada" Nullable="false" />
-          <Property Type="String" Name="HSalida" Nullable="false" />
-          <Property Type="String" Name="HVEnt" Nullable="false" />
-          <Property Type="String" Name="HVSal" Nullable="false" />
-          <Property Type="Boolean" Name="MarcoTardanza" Nullable="false" />
-          <Property Type="Boolean" Name="MarcoProlongJornada" Nullable="false" />
-          <Property Type="Boolean" Name="Inconsistente" Nullable="false" />
-          <Property Type="String" Name="ObservacionInconsistente" Nullable="false" />
-          <Property Type="Boolean" Name="Cerrado" Nullable="true" />
-          <Property Type="String" Name="AcumuloHorasBonificacion" Nullable="true" />
-          <Property Type="String" Name="AcumuloHorasAnioActual" Nullable="true" />
-          <Property Type="String" Name="AcumuloHorasAnioAnterior" Nullable="true" />
-          <Property Type="String" Name="AcumuloHorasMes" Nullable="true" />
-          <Property Type="Int32" Name="AgenteId1" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_obtener_resumenes_diarios_agente_mes_Result2">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="DateTime" Name="Dia" Nullable="false" Precision="23" />
-          <Property Type="String" Name="Horas" Nullable="false" />
-          <Property Type="Int32" Name="AgenteId" Nullable="false" />
-          <Property Type="String" Name="HEntrada" Nullable="false" />
-          <Property Type="String" Name="HSalida" Nullable="false" />
-          <Property Type="String" Name="HVEnt" Nullable="false" />
-          <Property Type="String" Name="HVSal" Nullable="false" />
-          <Property Type="Boolean" Name="MarcoTardanza" Nullable="false" />
-          <Property Type="Boolean" Name="MarcoProlongJornada" Nullable="false" />
-          <Property Type="Boolean" Name="Inconsistente" Nullable="false" />
-          <Property Type="String" Name="ObservacionInconsistente" Nullable="false" />
-          <Property Type="Boolean" Name="Cerrado" Nullable="true" />
-          <Property Type="String" Name="AcumuloHorasBonificacion" Nullable="true" />
-          <Property Type="String" Name="AcumuloHorasAnioActual" Nullable="true" />
-          <Property Type="String" Name="AcumuloHorasAnioAnterior" Nullable="true" />
-          <Property Type="String" Name="AcumuloHorasMes" Nullable="true" />
-          <Property Type="Int32" Name="AgenteId1" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="sp_obtener_suborinados_directos_Result3">
+          <Property Type="Int32" Name="id_agente" Nullable="false" />
+          <Property Type="String" Name="nombre_agente" Nullable="false" />
+          <Property Type="Int32" Name="legajo_agente" Nullable="false" />
+          <Property Type="Int32" Name="jefe_agente" Nullable="false" />
+          <Property Type="Int32" Name="id_area" Nullable="false" />
+          <Property Type="String" Name="nombre_area" Nullable="false" />
+          <Property Type="Int32" Name="id_padre_area" Nullable="true" />
+          <Property Type="Int32" Name="nivel" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_obtener_agentes_cascada_Result4">
+          <Property Type="Int32" Name="id_agente" Nullable="true" />
+          <Property Type="String" Name="nombre_area" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="nivel_para_ordenar" Nullable="true" />
+          <Property Type="String" Name="nivel" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="nombre_agente" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="legajo" Nullable="true" />
+          <Property Type="String" Name="mail" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="horas_bonificacion" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="estado_agente" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="dias_por_cerrar" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_obtener_datos_agente_Result4">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="ApellidoYNombre" Nullable="false" />
+          <Property Type="Int32" Name="Legajo" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="false" />
+          <Property Type="String" Name="Area" Nullable="false" />
+          <Property Type="Boolean" Name="HorarioFlexible" Nullable="true" />
+          <Property Type="Boolean" Name="PoseeBonificacion" Nullable="false" />
+          <Property Type="String" Name="horas_hf_acumuladas" Nullable="false" />
+          <Property Type="String" Name="Horas_bonificacion_resta_cumplir" Nullable="false" />
+          <Property Type="String" Name="HorasAcumuladasAnioAnterior" Nullable="false" />
+          <Property Type="String" Name="HorasAcumuladasAnioActual" Nullable="false" />
+          <Property Type="String" Name="Total_horas_disponible" Nullable="true" MaxLength="7" />
+          <Property Type="String" Name="Horas_tardanzas" Nullable="true" />
+          <Property Type="String" Name="Horas_HF_por_cumplir" Nullable="true" MaxLength="7" />
+        </ComplexType>
+        <ComplexType Name="sp_obtener_estado_agente_dia_Result3">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="AgenteId" Nullable="false" />
+          <Property Type="Int32" Name="TipoEstadoAgenteId" Nullable="false" />
+          <Property Type="DateTime" Name="Dia" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="AgenteId1" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_obtener_suborinados_directos_Result4">
           <Property Type="Int32" Name="id_agente" Nullable="false" />
           <Property Type="String" Name="nombre_agente" Nullable="false" />
           <Property Type="Int32" Name="legajo_agente" Nullable="false" />
@@ -5150,6 +5093,7 @@
           <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
           <ScalarProperty Name="HorasAnioAnterior" ColumnName="HorasAnioAnterior" />
           <ScalarProperty Name="HorasAnioActual" ColumnName="HorasAnioActual" />
+          <ScalarProperty Name="HorasMes" ColumnName="HorasMes" />
           <ScalarProperty Name="FechaCierre" ColumnName="FechaCierre" />
           <ScalarProperty Name="Mes" ColumnName="Mes" />
           <ScalarProperty Name="Anio" ColumnName="Anio" />
@@ -5691,6 +5635,7 @@
           <ScalarProperty Name="CierreMensualId" ColumnName="CierreMensualId" />
           <ScalarProperty Name="HoraAnioAnterior" ColumnName="HoraAnioAnterior" />
           <ScalarProperty Name="HoraAnioActual" ColumnName="HoraAnioActual" />
+          <ScalarProperty Name="HorasMes" ColumnName="HorasMes" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -5870,9 +5815,10 @@
       </EndProperty>
     </AssociationSetMapping>
           <FunctionImportMapping FunctionImportName="Estado_agente" FunctionName="Model1.Store.Estado_agente" />
+          <FunctionImportMapping FunctionImportName="sp_cerrar_dia" FunctionName="Model1.Store.sp_cerrar_dia" />
           <FunctionImportMapping FunctionImportName="sp_obtener_agentes_cascada" FunctionName="Model1.Store.sp_obtener_agentes_cascada">
-          <ResultMapping>
-              <ComplexTypeMapping TypeName="Model1.sp_obtener_agentes_cascada_Result1">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model1.sp_obtener_agentes_cascada_Result4">
                 <ScalarProperty Name="id_agente" ColumnName="id_agente" />
                 <ScalarProperty Name="nombre_area" ColumnName="nombre_area" />
                 <ScalarProperty Name="nivel_para_ordenar" ColumnName="nivel_para_ordenar" />
@@ -5887,15 +5833,15 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_obtener_datos_agente" FunctionName="Model1.Store.sp_obtener_datos_agente">
-          <ResultMapping>
-              <ComplexTypeMapping TypeName="Model1.sp_obtener_datos_agente_Result">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model1.sp_obtener_datos_agente_Result4">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ApellidoYNombre" ColumnName="ApellidoYNombre" />
-                <ScalarProperty Name="HorarioFlexible" ColumnName="HorarioFlexible" />
-                <ScalarProperty Name="PoseeBonificacion" ColumnName="PoseeBonificacion" />
-                <ScalarProperty Name="Area" ColumnName="Area" />
                 <ScalarProperty Name="Legajo" ColumnName="Legajo" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="HorarioFlexible" ColumnName="HorarioFlexible" />
+                <ScalarProperty Name="PoseeBonificacion" ColumnName="PoseeBonificacion" />
                 <ScalarProperty Name="horas_hf_acumuladas" ColumnName="horas_hf_acumuladas" />
                 <ScalarProperty Name="Horas_bonificacion_resta_cumplir" ColumnName="Horas_bonificacion_resta_cumplir" />
                 <ScalarProperty Name="HorasAcumuladasAnioAnterior" ColumnName="HorasAcumuladasAnioAnterior" />
@@ -5907,8 +5853,8 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_obtener_estado_agente_dia" FunctionName="Model1.Store.sp_obtener_estado_agente_dia">
-          <ResultMapping>
-              <ComplexTypeMapping TypeName="Model1.sp_obtener_estado_agente_dia_Result">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model1.sp_obtener_estado_agente_dia_Result3">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
                 <ScalarProperty Name="TipoEstadoAgenteId" ColumnName="TipoEstadoAgenteId" />
@@ -5922,20 +5868,7 @@
           <FunctionImportMapping FunctionImportName="sp_obtener_resumenes_diarios_agente_mes" FunctionName="Model1.Store.sp_obtener_resumenes_diarios_agente_mes">
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_obtener_suborinados_directos" FunctionName="Model1.Store.sp_obtener_suborinados_directos">
-          <ResultMapping>
-              <ComplexTypeMapping TypeName="Model1.sp_obtener_suborinados_directos_Result">
-                <ScalarProperty Name="id_agente" ColumnName="id_agente" />
-                <ScalarProperty Name="nombre_agente" ColumnName="nombre_agente" />
-                <ScalarProperty Name="legajo_agente" ColumnName="legajo_agente" />
-                <ScalarProperty Name="jefe_agente" ColumnName="jefe_agente" />
-                <ScalarProperty Name="id_area" ColumnName="id_area" />
-                <ScalarProperty Name="nombre_area" ColumnName="nombre_area" />
-                <ScalarProperty Name="id_padre_area" ColumnName="id_padre_area" />
-                <ScalarProperty Name="nivel" ColumnName="nivel" />
-              </ComplexTypeMapping>
-            </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_cerrar_dia" FunctionName="Model1.Store.sp_cerrar_dia" />
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

@@ -218,6 +218,7 @@
                                                                                         <asp:BoundField DataField="fecha" HeaderText="Fecha" ReadOnly="true" DataFormatString="{0:d}" />
                                                                                         <asp:BoundField DataField="horas_anio_anterior" HeaderText="Año ant." ReadOnly="true" />
                                                                                         <asp:BoundField DataField="horas_anio_actual" HeaderText="Año act." ReadOnly="true" />
+                                                                                        <asp:BoundField DataField="horas_mes" HeaderText="Horas mes" ReadOnly="true" />
                                                                                         <asp:TemplateField HeaderText="Agente" ItemStyle-HorizontalAlign="Center">
                                                                                             <ItemTemplate>
                                                                                                 <asp:Image ID="Image1" ImageUrl="~/Imagenes/user_gray.png" ToolTip='<%# Eval("agente")%>' runat="server" Height="16" Width="16" />

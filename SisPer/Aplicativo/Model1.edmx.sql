@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/18/2022 11:50:36
+-- Date Created: 11/24/2022 07:47:50
 -- Generated from EDMX file: d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Model1.edmx
 -- --------------------------------------------------
 
@@ -17,182 +17,8 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK_AgenteResumenDiario]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ResumenesDiarios] DROP CONSTRAINT [FK_AgenteResumenDiario];
-GO
-IF OBJECT_ID(N'[dbo].[FK_ResumenDiarioMovimientoHora]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[MovimientosHoras] DROP CONSTRAINT [FK_ResumenDiarioMovimientoHora];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteHorarioVespertino]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[HorariosVespertinos] DROP CONSTRAINT [FK_AgenteHorarioVespertino];
-GO
-IF OBJECT_ID(N'[dbo].[FK_FrancoDiaFranco]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[DiasFrancos] DROP CONSTRAINT [FK_FrancoDiaFranco];
-GO
-IF OBJECT_ID(N'[dbo].[FK_FrancoMovimientoFranco]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[MovimientosFrancos] DROP CONSTRAINT [FK_FrancoMovimientoFranco];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteFranco]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Francos] DROP CONSTRAINT [FK_AgenteFranco];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteMovimientoFranco]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[MovimientosFrancos] DROP CONSTRAINT [FK_AgenteMovimientoFranco];
-GO
-IF OBJECT_ID(N'[dbo].[FK_TipoMovimientoHoraMovimientoHora]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[MovimientosHoras] DROP CONSTRAINT [FK_TipoMovimientoHoraMovimientoHora];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AreaArea]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Areas] DROP CONSTRAINT [FK_AreaArea];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AreaAgente]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Agentes] DROP CONSTRAINT [FK_AreaAgente];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteSalida]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Salidas] DROP CONSTRAINT [FK_AgenteSalida];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteSalida1]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Salidas] DROP CONSTRAINT [FK_AgenteSalida1];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteHorarioVespertino1]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[HorariosVespertinos] DROP CONSTRAINT [FK_AgenteHorarioVespertino1];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteCierreMensual]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CierreMensual] DROP CONSTRAINT [FK_AgenteCierreMensual];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteMovimientoHora]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[MovimientosHoras] DROP CONSTRAINT [FK_AgenteMovimientoHora];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteEstadoAgente]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[EstadosAgente] DROP CONSTRAINT [FK_AgenteEstadoAgente];
-GO
-IF OBJECT_ID(N'[dbo].[FK_TipoEstadoAgenteEstadoAgente]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[EstadosAgente] DROP CONSTRAINT [FK_TipoEstadoAgenteEstadoAgente];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteEstadoAgente1]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[EstadosAgente] DROP CONSTRAINT [FK_AgenteEstadoAgente1];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteBonificacionOtorgada]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[BonificacionesOtorgadas] DROP CONSTRAINT [FK_AgenteBonificacionOtorgada];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteCambioPendiente]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CambiosPendientes] DROP CONSTRAINT [FK_AgenteCambioPendiente];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteObservacionGuardia]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ObservacionesGuardia] DROP CONSTRAINT [FK_AgenteObservacionGuardia];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteEntradaSalida]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[EntradasSalidas] DROP CONSTRAINT [FK_AgenteEntradaSalida];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteEntradaSalida1]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[EntradasSalidas] DROP CONSTRAINT [FK_AgenteEntradaSalida1];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteReasignacion]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Reasignaciones] DROP CONSTRAINT [FK_AgenteReasignacion];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AreaReasignacion]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Reasignaciones] DROP CONSTRAINT [FK_AreaReasignacion];
-GO
-IF OBJECT_ID(N'[dbo].[FK_ResumenDiarioMarcacion]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Marcaciones] DROP CONSTRAINT [FK_ResumenDiarioMarcacion];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteMarcacion]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Marcaciones] DROP CONSTRAINT [FK_AgenteMarcacion];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteSolicitudDeEstado]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[SolicitudesDeEstado] DROP CONSTRAINT [FK_AgenteSolicitudDeEstado];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteSolicitudDeEstado1]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[SolicitudesDeEstado] DROP CONSTRAINT [FK_AgenteSolicitudDeEstado1];
-GO
-IF OBJECT_ID(N'[dbo].[FK_TipoEstadoAgenteSolicitudDeEstado]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[SolicitudesDeEstado] DROP CONSTRAINT [FK_TipoEstadoAgenteSolicitudDeEstado];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteHAAnteriorEliminadas]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[HAAnteriorEliminadasSet] DROP CONSTRAINT [FK_AgenteHAAnteriorEliminadas];
-GO
-IF OBJECT_ID(N'[dbo].[FK_DirectorioArchivo]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Archivos] DROP CONSTRAINT [FK_DirectorioArchivo];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteImpresionReporte]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ImpresionReportes] DROP CONSTRAINT [FK_AgenteImpresionReporte];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteHorasMesHorarioFlexible]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[HorasMesHorarioFlexibles] DROP CONSTRAINT [FK_AgenteHorasMesHorarioFlexible];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteMovimientoSobreAgente]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[MovimientosSobreAgente] DROP CONSTRAINT [FK_AgenteMovimientoSobreAgente];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteMovimientoSobreAgente1]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[MovimientosSobreAgente] DROP CONSTRAINT [FK_AgenteMovimientoSobreAgente1];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteLicenciaAgente]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[LicenciasAgentes] DROP CONSTRAINT [FK_AgenteLicenciaAgente];
-GO
-IF OBJECT_ID(N'[dbo].[FK_TipoLicenciaLicenciaAgente]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[LicenciasAgentes] DROP CONSTRAINT [FK_TipoLicenciaLicenciaAgente];
-GO
-IF OBJECT_ID(N'[dbo].[FK_TipoLicenciaDiaUsufructado]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[DiasUsufructuados] DROP CONSTRAINT [FK_TipoLicenciaDiaUsufructado];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteDiaUsufructado]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[DiasUsufructuados] DROP CONSTRAINT [FK_AgenteDiaUsufructado];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteDiaUsufructado1]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[DiasUsufructuados] DROP CONSTRAINT [FK_AgenteDiaUsufructado1];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteSesion]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Sesiones] DROP CONSTRAINT [FK_AgenteSesion];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteMensaje]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Mensajes] DROP CONSTRAINT [FK_AgenteMensaje];
-GO
-IF OBJECT_ID(N'[dbo].[FK_MensajeDestinatario]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Destinatarios] DROP CONSTRAINT [FK_MensajeDestinatario];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteDestinatario]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Destinatarios] DROP CONSTRAINT [FK_AgenteDestinatario];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteResumenDiario1]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ResumenesDiarios] DROP CONSTRAINT [FK_AgenteResumenDiario1];
-GO
-IF OBJECT_ID(N'[dbo].[FK_TipoNotificacionNotificacion]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Notificaciones] DROP CONSTRAINT [FK_TipoNotificacionNotificacion];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteNotificacion]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Notificaciones] DROP CONSTRAINT [FK_AgenteNotificacion];
-GO
-IF OBJECT_ID(N'[dbo].[FK_NotificacionHistorialEstadosNotificacion]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Notificacion_Historiales] DROP CONSTRAINT [FK_NotificacionHistorialEstadosNotificacion];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteHistorialEstadosNotificacion]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Notificacion_Historiales] DROP CONSTRAINT [FK_AgenteHistorialEstadosNotificacion];
-GO
-IF OBJECT_ID(N'[dbo].[FK_Notificacion_EstadoNotificacion_Historial]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Notificacion_Historiales] DROP CONSTRAINT [FK_Notificacion_EstadoNotificacion_Historial];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteCorteLicenciaAnual]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CorteLicencia] DROP CONSTRAINT [FK_AgenteCorteLicenciaAnual];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteCorteLicenciaAnual1]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CorteLicencia] DROP CONSTRAINT [FK_AgenteCorteLicenciaAnual1];
-GO
-IF OBJECT_ID(N'[dbo].[FK_ResumenDiarioAbrioDia]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[AbrioDias] DROP CONSTRAINT [FK_ResumenDiarioAbrioDia];
-GO
 IF OBJECT_ID(N'[dbo].[FK_AgenteAbrioDia]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[AbrioDias] DROP CONSTRAINT [FK_AgenteAbrioDia];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AreaAsuetoParcial]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[AsuetosParciales] DROP CONSTRAINT [FK_AreaAsuetoParcial];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteFormulario1214]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Formularios1214] DROP CONSTRAINT [FK_AgenteFormulario1214];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteAgente1214]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Agentes1214] DROP CONSTRAINT [FK_AgenteAgente1214];
-GO
-IF OBJECT_ID(N'[dbo].[FK_Formulario1214Agente1214]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Agentes1214] DROP CONSTRAINT [FK_Formulario1214Agente1214];
 GO
 IF OBJECT_ID(N'[dbo].[FK_AgenteAgente_legajo_datos_laborales]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Legajos_datos_laborales] DROP CONSTRAINT [FK_AgenteAgente_legajo_datos_laborales];
@@ -200,38 +26,8 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_AgenteAgente_legajo_datos_personales]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Legajos_datos_personales] DROP CONSTRAINT [FK_AgenteAgente_legajo_datos_personales];
 GO
-IF OBJECT_ID(N'[dbo].[FK_Legajo_datos_personalesLegajo_historial_domicilio]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Legajo_historial_domicilios] DROP CONSTRAINT [FK_Legajo_datos_personalesLegajo_historial_domicilio];
-GO
-IF OBJECT_ID(N'[dbo].[FK_Legajo_datos_personalesLegajo_conyugue]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Legajos_conyuge] DROP CONSTRAINT [FK_Legajo_datos_personalesLegajo_conyugue];
-GO
-IF OBJECT_ID(N'[dbo].[FK_Legajo_datos_personalesLegajo_hijo]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Legajo_hijos] DROP CONSTRAINT [FK_Legajo_datos_personalesLegajo_hijo];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteLegajo_fojas_de_servicio]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Legajo_fojas_de_servicio] DROP CONSTRAINT [FK_AgenteLegajo_fojas_de_servicio];
-GO
-IF OBJECT_ID(N'[dbo].[FK_Legajo_datos_personalesLegajo_titulo_certificado]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Legajo_titulos_certificados] DROP CONSTRAINT [FK_Legajo_datos_personalesLegajo_titulo_certificado];
-GO
-IF OBJECT_ID(N'[dbo].[FK_Legajo_fojas_de_servicioLegajo_pago_subrrogancia_bonificacion_antiguedad]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Legajo_pagos_subrrogancia_bonificacion_antiguedad] DROP CONSTRAINT [FK_Legajo_fojas_de_servicioLegajo_pago_subrrogancia_bonificacion_antiguedad];
-GO
-IF OBJECT_ID(N'[dbo].[FK_Legajo_fojas_de_servicioLegajo_otro_evento]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Legajo_otros_eventos] DROP CONSTRAINT [FK_Legajo_fojas_de_servicioLegajo_otro_evento];
-GO
-IF OBJECT_ID(N'[dbo].[FK_Legajo_foja_de_servicioLegajo_afectacion_designacion]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Legajos_afectaciones_designaciones] DROP CONSTRAINT [FK_Legajo_foja_de_servicioLegajo_afectacion_designacion];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteModificacion_cierre_mes]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Modificaciones_cierres_meses] DROP CONSTRAINT [FK_AgenteModificacion_cierre_mes];
-GO
-IF OBJECT_ID(N'[dbo].[FK_CierreMensualModificacion_cierre_mes]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Modificaciones_cierres_meses] DROP CONSTRAINT [FK_CierreMensualModificacion_cierre_mes];
-GO
-IF OBJECT_ID(N'[dbo].[FK_Legajo_foja_de_servicioLegajo_carrera_administrativa]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Legajos_carreras_administrativas] DROP CONSTRAINT [FK_Legajo_foja_de_servicioLegajo_carrera_administrativa];
+IF OBJECT_ID(N'[dbo].[FK_AgenteAgente1214]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Agentes1214] DROP CONSTRAINT [FK_AgenteAgente1214];
 GO
 IF OBJECT_ID(N'[dbo].[FK_AgenteAgente12142]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Agentes1214] DROP CONSTRAINT [FK_AgenteAgente12142];
@@ -239,166 +35,346 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_AgenteAgente12143]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Agentes1214] DROP CONSTRAINT [FK_AgenteAgente12143];
 GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteValidacion_email]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Validaciones_email] DROP CONSTRAINT [FK_AgenteValidacion_email];
+IF OBJECT_ID(N'[dbo].[FK_AgenteBonificacionOtorgada]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[BonificacionesOtorgadas] DROP CONSTRAINT [FK_AgenteBonificacionOtorgada];
 GO
 IF OBJECT_ID(N'[dbo].[FK_AgenteCambioClave]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[CambiosDeClave] DROP CONSTRAINT [FK_AgenteCambioClave];
 GO
-IF OBJECT_ID(N'[dbo].[FK_AgenteMemo_17_DDJJ]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Memo_17_DDJJs] DROP CONSTRAINT [FK_AgenteMemo_17_DDJJ];
+IF OBJECT_ID(N'[dbo].[FK_AgenteCambioPendiente]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CambiosPendientes] DROP CONSTRAINT [FK_AgenteCambioPendiente];
 GO
-IF OBJECT_ID(N'[dbo].[FK_Memo_17_DDJJMemo_17_DDJJ_Hijo]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Memo_17_DDJJ_Hijos] DROP CONSTRAINT [FK_Memo_17_DDJJMemo_17_DDJJ_Hijo];
+IF OBJECT_ID(N'[dbo].[FK_AgenteCierreMensual]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CierreMensual] DROP CONSTRAINT [FK_AgenteCierreMensual];
 GO
-IF OBJECT_ID(N'[dbo].[FK_TipoHorariosFexibleAgente]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Agentes] DROP CONSTRAINT [FK_TipoHorariosFexibleAgente];
+IF OBJECT_ID(N'[dbo].[FK_AgenteCorteLicenciaAnual]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CorteLicencia] DROP CONSTRAINT [FK_AgenteCorteLicenciaAnual];
 GO
-IF OBJECT_ID(N'[dbo].[FK_Estrato1214Formulario1214]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Formularios1214] DROP CONSTRAINT [FK_Estrato1214Formulario1214];
+IF OBJECT_ID(N'[dbo].[FK_AgenteCorteLicenciaAnual1]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CorteLicencia] DROP CONSTRAINT [FK_AgenteCorteLicenciaAnual1];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteDestinatario]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Destinatarios] DROP CONSTRAINT [FK_AgenteDestinatario];
 GO
 IF OBJECT_ID(N'[dbo].[FK_AgenteDiaAutorizadoRemoto]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[DiasAutorizadosRemoto] DROP CONSTRAINT [FK_AgenteDiaAutorizadoRemoto];
 GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteDiaUsufructado]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[DiasUsufructuados] DROP CONSTRAINT [FK_AgenteDiaUsufructado];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteDiaUsufructado1]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[DiasUsufructuados] DROP CONSTRAINT [FK_AgenteDiaUsufructado1];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteEntradaSalida]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[EntradasSalidas] DROP CONSTRAINT [FK_AgenteEntradaSalida];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteEntradaSalida1]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[EntradasSalidas] DROP CONSTRAINT [FK_AgenteEntradaSalida1];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteEstadoAgente]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[EstadosAgente] DROP CONSTRAINT [FK_AgenteEstadoAgente];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteEstadoAgente1]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[EstadosAgente] DROP CONSTRAINT [FK_AgenteEstadoAgente1];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteFormulario1214]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Formularios1214] DROP CONSTRAINT [FK_AgenteFormulario1214];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteFranco]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Francos] DROP CONSTRAINT [FK_AgenteFranco];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteHAAnteriorEliminadas]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[HAAnteriorEliminadasSet] DROP CONSTRAINT [FK_AgenteHAAnteriorEliminadas];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteHistorialEstadosNotificacion]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Notificacion_Historiales] DROP CONSTRAINT [FK_AgenteHistorialEstadosNotificacion];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteHorarioVespertino]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[HorariosVespertinos] DROP CONSTRAINT [FK_AgenteHorarioVespertino];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteHorarioVespertino1]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[HorariosVespertinos] DROP CONSTRAINT [FK_AgenteHorarioVespertino1];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteHorasMesHorarioFlexible]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[HorasMesHorarioFlexibles] DROP CONSTRAINT [FK_AgenteHorasMesHorarioFlexible];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteImpresionReporte]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ImpresionReportes] DROP CONSTRAINT [FK_AgenteImpresionReporte];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteLegajo_fojas_de_servicio]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Legajo_fojas_de_servicio] DROP CONSTRAINT [FK_AgenteLegajo_fojas_de_servicio];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteLicenciaAgente]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[LicenciasAgentes] DROP CONSTRAINT [FK_AgenteLicenciaAgente];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteMarcacion]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Marcaciones] DROP CONSTRAINT [FK_AgenteMarcacion];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteMemo_17_DDJJ]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Memo_17_DDJJs] DROP CONSTRAINT [FK_AgenteMemo_17_DDJJ];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteMensaje]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Mensajes] DROP CONSTRAINT [FK_AgenteMensaje];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteModificacion_cierre_mes]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Modificaciones_cierres_meses] DROP CONSTRAINT [FK_AgenteModificacion_cierre_mes];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteMovimientoFranco]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[MovimientosFrancos] DROP CONSTRAINT [FK_AgenteMovimientoFranco];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteMovimientoHora]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[MovimientosHoras] DROP CONSTRAINT [FK_AgenteMovimientoHora];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteMovimientoSobreAgente]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[MovimientosSobreAgente] DROP CONSTRAINT [FK_AgenteMovimientoSobreAgente];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteMovimientoSobreAgente1]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[MovimientosSobreAgente] DROP CONSTRAINT [FK_AgenteMovimientoSobreAgente1];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteNotificacion]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Notificaciones] DROP CONSTRAINT [FK_AgenteNotificacion];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteObservacionGuardia]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ObservacionesGuardia] DROP CONSTRAINT [FK_AgenteObservacionGuardia];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteReasignacion]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Reasignaciones] DROP CONSTRAINT [FK_AgenteReasignacion];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteResumenDiario]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ResumenesDiarios] DROP CONSTRAINT [FK_AgenteResumenDiario];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteResumenDiario1]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ResumenesDiarios] DROP CONSTRAINT [FK_AgenteResumenDiario1];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteSalida]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Salidas] DROP CONSTRAINT [FK_AgenteSalida];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteSalida1]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Salidas] DROP CONSTRAINT [FK_AgenteSalida1];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteSesion]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Sesiones] DROP CONSTRAINT [FK_AgenteSesion];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteSolicitudDeEstado]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[SolicitudesDeEstado] DROP CONSTRAINT [FK_AgenteSolicitudDeEstado];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteSolicitudDeEstado1]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[SolicitudesDeEstado] DROP CONSTRAINT [FK_AgenteSolicitudDeEstado1];
+GO
 IF OBJECT_ID(N'[dbo].[FK_AgenteTurnoIngresoPermitido]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[TurnosIngresoPermitido] DROP CONSTRAINT [FK_AgenteTurnoIngresoPermitido];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AgenteValidacion_email]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Validaciones_email] DROP CONSTRAINT [FK_AgenteValidacion_email];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AreaAgente]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Agentes] DROP CONSTRAINT [FK_AreaAgente];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AreaArea]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Areas] DROP CONSTRAINT [FK_AreaArea];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AreaAsuetoParcial]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AsuetosParciales] DROP CONSTRAINT [FK_AreaAsuetoParcial];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AreaReasignacion]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Reasignaciones] DROP CONSTRAINT [FK_AreaReasignacion];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CierreMensualModificacion_cierre_mes]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Modificaciones_cierres_meses] DROP CONSTRAINT [FK_CierreMensualModificacion_cierre_mes];
+GO
+IF OBJECT_ID(N'[dbo].[FK_DirectorioArchivo]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Archivos] DROP CONSTRAINT [FK_DirectorioArchivo];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Estrato1214Formulario1214]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Formularios1214] DROP CONSTRAINT [FK_Estrato1214Formulario1214];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Formulario1214Agente1214]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Agentes1214] DROP CONSTRAINT [FK_Formulario1214Agente1214];
+GO
+IF OBJECT_ID(N'[dbo].[FK_FrancoDiaFranco]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[DiasFrancos] DROP CONSTRAINT [FK_FrancoDiaFranco];
+GO
+IF OBJECT_ID(N'[dbo].[FK_FrancoMovimientoFranco]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[MovimientosFrancos] DROP CONSTRAINT [FK_FrancoMovimientoFranco];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Legajo_datos_personalesLegajo_conyugue]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Legajos_conyuge] DROP CONSTRAINT [FK_Legajo_datos_personalesLegajo_conyugue];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Legajo_datos_personalesLegajo_hijo]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Legajo_hijos] DROP CONSTRAINT [FK_Legajo_datos_personalesLegajo_hijo];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Legajo_datos_personalesLegajo_historial_domicilio]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Legajo_historial_domicilios] DROP CONSTRAINT [FK_Legajo_datos_personalesLegajo_historial_domicilio];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Legajo_datos_personalesLegajo_titulo_certificado]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Legajo_titulos_certificados] DROP CONSTRAINT [FK_Legajo_datos_personalesLegajo_titulo_certificado];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Legajo_foja_de_servicioLegajo_afectacion_designacion]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Legajos_afectaciones_designaciones] DROP CONSTRAINT [FK_Legajo_foja_de_servicioLegajo_afectacion_designacion];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Legajo_foja_de_servicioLegajo_carrera_administrativa]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Legajos_carreras_administrativas] DROP CONSTRAINT [FK_Legajo_foja_de_servicioLegajo_carrera_administrativa];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Legajo_fojas_de_servicioLegajo_otro_evento]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Legajo_otros_eventos] DROP CONSTRAINT [FK_Legajo_fojas_de_servicioLegajo_otro_evento];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Legajo_fojas_de_servicioLegajo_pago_subrrogancia_bonificacion_antiguedad]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Legajo_pagos_subrrogancia_bonificacion_antiguedad] DROP CONSTRAINT [FK_Legajo_fojas_de_servicioLegajo_pago_subrrogancia_bonificacion_antiguedad];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Memo_17_DDJJMemo_17_DDJJ_Hijo]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Memo_17_DDJJ_Hijos] DROP CONSTRAINT [FK_Memo_17_DDJJMemo_17_DDJJ_Hijo];
+GO
+IF OBJECT_ID(N'[dbo].[FK_MensajeDestinatario]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Destinatarios] DROP CONSTRAINT [FK_MensajeDestinatario];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Notificacion_EstadoNotificacion_Historial]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Notificacion_Historiales] DROP CONSTRAINT [FK_Notificacion_EstadoNotificacion_Historial];
+GO
+IF OBJECT_ID(N'[dbo].[FK_NotificacionHistorialEstadosNotificacion]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Notificacion_Historiales] DROP CONSTRAINT [FK_NotificacionHistorialEstadosNotificacion];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ResumenDiarioAbrioDia]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AbrioDias] DROP CONSTRAINT [FK_ResumenDiarioAbrioDia];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ResumenDiarioMarcacion]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Marcaciones] DROP CONSTRAINT [FK_ResumenDiarioMarcacion];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ResumenDiarioMovimientoHora]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[MovimientosHoras] DROP CONSTRAINT [FK_ResumenDiarioMovimientoHora];
+GO
+IF OBJECT_ID(N'[dbo].[FK_TipoEstadoAgenteEstadoAgente]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[EstadosAgente] DROP CONSTRAINT [FK_TipoEstadoAgenteEstadoAgente];
+GO
+IF OBJECT_ID(N'[dbo].[FK_TipoEstadoAgenteSolicitudDeEstado]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[SolicitudesDeEstado] DROP CONSTRAINT [FK_TipoEstadoAgenteSolicitudDeEstado];
+GO
+IF OBJECT_ID(N'[dbo].[FK_TipoHorariosFexibleAgente]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Agentes] DROP CONSTRAINT [FK_TipoHorariosFexibleAgente];
+GO
+IF OBJECT_ID(N'[dbo].[FK_TipoLicenciaDiaUsufructado]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[DiasUsufructuados] DROP CONSTRAINT [FK_TipoLicenciaDiaUsufructado];
+GO
+IF OBJECT_ID(N'[dbo].[FK_TipoLicenciaLicenciaAgente]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[LicenciasAgentes] DROP CONSTRAINT [FK_TipoLicenciaLicenciaAgente];
+GO
+IF OBJECT_ID(N'[dbo].[FK_TipoMovimientoHoraMovimientoHora]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[MovimientosHoras] DROP CONSTRAINT [FK_TipoMovimientoHoraMovimientoHora];
+GO
+IF OBJECT_ID(N'[dbo].[FK_TipoNotificacionNotificacion]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Notificaciones] DROP CONSTRAINT [FK_TipoNotificacionNotificacion];
 GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[AbrioDias]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[AbrioDias];
+GO
 IF OBJECT_ID(N'[dbo].[Agentes]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Agentes];
 GO
-IF OBJECT_ID(N'[dbo].[Areas]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Areas];
-GO
-IF OBJECT_ID(N'[dbo].[ResumenesDiarios]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[ResumenesDiarios];
-GO
-IF OBJECT_ID(N'[dbo].[MovimientosHoras]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[MovimientosHoras];
-GO
-IF OBJECT_ID(N'[dbo].[HorariosVespertinos]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[HorariosVespertinos];
-GO
-IF OBJECT_ID(N'[dbo].[Salidas]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Salidas];
-GO
-IF OBJECT_ID(N'[dbo].[Francos]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Francos];
-GO
-IF OBJECT_ID(N'[dbo].[DiasFrancos]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[DiasFrancos];
-GO
-IF OBJECT_ID(N'[dbo].[MovimientosFrancos]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[MovimientosFrancos];
-GO
-IF OBJECT_ID(N'[dbo].[TiposMovimientosHora]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[TiposMovimientosHora];
-GO
-IF OBJECT_ID(N'[dbo].[VariablesGlobales]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[VariablesGlobales];
-GO
-IF OBJECT_ID(N'[dbo].[CierreMensual]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[CierreMensual];
-GO
-IF OBJECT_ID(N'[dbo].[EstadosAgente]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[EstadosAgente];
-GO
-IF OBJECT_ID(N'[dbo].[TiposEstadoAgente]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[TiposEstadoAgente];
-GO
-IF OBJECT_ID(N'[dbo].[Feriados]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Feriados];
-GO
-IF OBJECT_ID(N'[dbo].[BonificacionesOtorgadas]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[BonificacionesOtorgadas];
-GO
-IF OBJECT_ID(N'[dbo].[CambiosPendientes]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[CambiosPendientes];
-GO
-IF OBJECT_ID(N'[dbo].[ObservacionesGuardia]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[ObservacionesGuardia];
-GO
-IF OBJECT_ID(N'[dbo].[EntradasSalidas]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[EntradasSalidas];
-GO
-IF OBJECT_ID(N'[dbo].[Reasignaciones]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Reasignaciones];
-GO
-IF OBJECT_ID(N'[dbo].[Marcaciones]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Marcaciones];
-GO
-IF OBJECT_ID(N'[dbo].[DiasProcesados]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[DiasProcesados];
-GO
-IF OBJECT_ID(N'[dbo].[SolicitudesDeEstado]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[SolicitudesDeEstado];
-GO
-IF OBJECT_ID(N'[dbo].[HAAnteriorEliminadasSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[HAAnteriorEliminadasSet];
+IF OBJECT_ID(N'[dbo].[Agentes1214]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Agentes1214];
 GO
 IF OBJECT_ID(N'[dbo].[Archivos]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Archivos];
 GO
-IF OBJECT_ID(N'[dbo].[Directorios]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Directorios];
-GO
-IF OBJECT_ID(N'[dbo].[ImpresionReportes]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[ImpresionReportes];
-GO
-IF OBJECT_ID(N'[dbo].[HorasMesHorarioFlexibles]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[HorasMesHorarioFlexibles];
-GO
-IF OBJECT_ID(N'[dbo].[MovimientosSobreAgente]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[MovimientosSobreAgente];
-GO
-IF OBJECT_ID(N'[dbo].[TiposDeLicencia]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[TiposDeLicencia];
-GO
-IF OBJECT_ID(N'[dbo].[LicenciasAgentes]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[LicenciasAgentes];
-GO
-IF OBJECT_ID(N'[dbo].[DiasUsufructuados]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[DiasUsufructuados];
-GO
-IF OBJECT_ID(N'[dbo].[Sesiones]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Sesiones];
-GO
-IF OBJECT_ID(N'[dbo].[Mensajes]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Mensajes];
-GO
-IF OBJECT_ID(N'[dbo].[Destinatarios]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Destinatarios];
-GO
-IF OBJECT_ID(N'[dbo].[Notificaciones]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Notificaciones];
-GO
-IF OBJECT_ID(N'[dbo].[Notificacion_Tipos]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Notificacion_Tipos];
-GO
-IF OBJECT_ID(N'[dbo].[Notificacion_Historiales]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Notificacion_Historiales];
-GO
-IF OBJECT_ID(N'[dbo].[Notificacion_Estados]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Notificacion_Estados];
-GO
-IF OBJECT_ID(N'[dbo].[CorteLicencia]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[CorteLicencia];
-GO
-IF OBJECT_ID(N'[dbo].[AbrioDias]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[AbrioDias];
+IF OBJECT_ID(N'[dbo].[Areas]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Areas];
 GO
 IF OBJECT_ID(N'[dbo].[AsuetosParciales]', 'U') IS NOT NULL
     DROP TABLE [dbo].[AsuetosParciales];
 GO
+IF OBJECT_ID(N'[dbo].[BonificacionesOtorgadas]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[BonificacionesOtorgadas];
+GO
+IF OBJECT_ID(N'[dbo].[CambiosDeClave]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CambiosDeClave];
+GO
+IF OBJECT_ID(N'[dbo].[CambiosPendientes]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CambiosPendientes];
+GO
+IF OBJECT_ID(N'[dbo].[CierreMensual]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CierreMensual];
+GO
+IF OBJECT_ID(N'[dbo].[CorteLicencia]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CorteLicencia];
+GO
+IF OBJECT_ID(N'[dbo].[Destinatarios]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Destinatarios];
+GO
+IF OBJECT_ID(N'[dbo].[DiasAutorizadosRemoto]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[DiasAutorizadosRemoto];
+GO
+IF OBJECT_ID(N'[dbo].[DiasFrancos]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[DiasFrancos];
+GO
+IF OBJECT_ID(N'[dbo].[DiasProcesados]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[DiasProcesados];
+GO
+IF OBJECT_ID(N'[dbo].[DiasUsufructuados]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[DiasUsufructuados];
+GO
+IF OBJECT_ID(N'[dbo].[Directorios]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Directorios];
+GO
+IF OBJECT_ID(N'[dbo].[EntradasSalidas]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[EntradasSalidas];
+GO
+IF OBJECT_ID(N'[dbo].[EstadosAgente]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[EstadosAgente];
+GO
+IF OBJECT_ID(N'[dbo].[Estratos1214]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Estratos1214];
+GO
+IF OBJECT_ID(N'[dbo].[Feriados]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Feriados];
+GO
 IF OBJECT_ID(N'[dbo].[Formularios1214]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Formularios1214];
 GO
-IF OBJECT_ID(N'[dbo].[Agentes1214]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Agentes1214];
+IF OBJECT_ID(N'[dbo].[Francos]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Francos];
+GO
+IF OBJECT_ID(N'[dbo].[HAAnteriorEliminadasSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[HAAnteriorEliminadasSet];
+GO
+IF OBJECT_ID(N'[dbo].[HorariosVespertinos]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[HorariosVespertinos];
+GO
+IF OBJECT_ID(N'[dbo].[HorasMesHorarioFlexibles]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[HorasMesHorarioFlexibles];
+GO
+IF OBJECT_ID(N'[dbo].[ImpresionReportes]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ImpresionReportes];
+GO
+IF OBJECT_ID(N'[dbo].[Legajo_fojas_de_servicio]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Legajo_fojas_de_servicio];
+GO
+IF OBJECT_ID(N'[dbo].[Legajo_hijos]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Legajo_hijos];
+GO
+IF OBJECT_ID(N'[dbo].[Legajo_historial_domicilios]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Legajo_historial_domicilios];
+GO
+IF OBJECT_ID(N'[dbo].[Legajo_otros_eventos]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Legajo_otros_eventos];
+GO
+IF OBJECT_ID(N'[dbo].[Legajo_pagos_subrrogancia_bonificacion_antiguedad]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Legajo_pagos_subrrogancia_bonificacion_antiguedad];
+GO
+IF OBJECT_ID(N'[dbo].[Legajo_titulos_certificados]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Legajo_titulos_certificados];
+GO
+IF OBJECT_ID(N'[dbo].[Legajos_afectaciones_designaciones]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Legajos_afectaciones_designaciones];
+GO
+IF OBJECT_ID(N'[dbo].[Legajos_carreras_administrativas]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Legajos_carreras_administrativas];
+GO
+IF OBJECT_ID(N'[dbo].[Legajos_conyuge]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Legajos_conyuge];
 GO
 IF OBJECT_ID(N'[dbo].[Legajos_datos_laborales]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Legajos_datos_laborales];
@@ -406,59 +382,83 @@ GO
 IF OBJECT_ID(N'[dbo].[Legajos_datos_personales]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Legajos_datos_personales];
 GO
-IF OBJECT_ID(N'[dbo].[Legajo_historial_domicilios]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Legajo_historial_domicilios];
+IF OBJECT_ID(N'[dbo].[LicenciasAgentes]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[LicenciasAgentes];
 GO
-IF OBJECT_ID(N'[dbo].[Legajos_conyuge]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Legajos_conyuge];
-GO
-IF OBJECT_ID(N'[dbo].[Legajo_hijos]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Legajo_hijos];
-GO
-IF OBJECT_ID(N'[dbo].[Legajo_fojas_de_servicio]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Legajo_fojas_de_servicio];
-GO
-IF OBJECT_ID(N'[dbo].[Legajo_titulos_certificados]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Legajo_titulos_certificados];
-GO
-IF OBJECT_ID(N'[dbo].[Legajo_pagos_subrrogancia_bonificacion_antiguedad]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Legajo_pagos_subrrogancia_bonificacion_antiguedad];
-GO
-IF OBJECT_ID(N'[dbo].[Legajo_otros_eventos]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Legajo_otros_eventos];
-GO
-IF OBJECT_ID(N'[dbo].[Legajos_afectaciones_designaciones]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Legajos_afectaciones_designaciones];
-GO
-IF OBJECT_ID(N'[dbo].[Modificaciones_cierres_meses]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Modificaciones_cierres_meses];
-GO
-IF OBJECT_ID(N'[dbo].[Legajos_carreras_administrativas]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Legajos_carreras_administrativas];
-GO
-IF OBJECT_ID(N'[dbo].[Validaciones_email]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Validaciones_email];
-GO
-IF OBJECT_ID(N'[dbo].[CambiosDeClave]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[CambiosDeClave];
-GO
-IF OBJECT_ID(N'[dbo].[Memo_17_DDJJs]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Memo_17_DDJJs];
+IF OBJECT_ID(N'[dbo].[Marcaciones]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Marcaciones];
 GO
 IF OBJECT_ID(N'[dbo].[Memo_17_DDJJ_Hijos]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Memo_17_DDJJ_Hijos];
 GO
+IF OBJECT_ID(N'[dbo].[Memo_17_DDJJs]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Memo_17_DDJJs];
+GO
+IF OBJECT_ID(N'[dbo].[Mensajes]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Mensajes];
+GO
+IF OBJECT_ID(N'[dbo].[Modificaciones_cierres_meses]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Modificaciones_cierres_meses];
+GO
+IF OBJECT_ID(N'[dbo].[MovimientosFrancos]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[MovimientosFrancos];
+GO
+IF OBJECT_ID(N'[dbo].[MovimientosHoras]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[MovimientosHoras];
+GO
+IF OBJECT_ID(N'[dbo].[MovimientosSobreAgente]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[MovimientosSobreAgente];
+GO
+IF OBJECT_ID(N'[dbo].[Notificacion_Estados]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Notificacion_Estados];
+GO
+IF OBJECT_ID(N'[dbo].[Notificacion_Historiales]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Notificacion_Historiales];
+GO
+IF OBJECT_ID(N'[dbo].[Notificacion_Tipos]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Notificacion_Tipos];
+GO
+IF OBJECT_ID(N'[dbo].[Notificaciones]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Notificaciones];
+GO
+IF OBJECT_ID(N'[dbo].[ObservacionesGuardia]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ObservacionesGuardia];
+GO
+IF OBJECT_ID(N'[dbo].[Reasignaciones]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Reasignaciones];
+GO
+IF OBJECT_ID(N'[dbo].[ResumenesDiarios]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ResumenesDiarios];
+GO
+IF OBJECT_ID(N'[dbo].[Salidas]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Salidas];
+GO
+IF OBJECT_ID(N'[dbo].[Sesiones]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Sesiones];
+GO
+IF OBJECT_ID(N'[dbo].[SolicitudesDeEstado]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[SolicitudesDeEstado];
+GO
+IF OBJECT_ID(N'[dbo].[TiposDeLicencia]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[TiposDeLicencia];
+GO
+IF OBJECT_ID(N'[dbo].[TiposEstadoAgente]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[TiposEstadoAgente];
+GO
 IF OBJECT_ID(N'[dbo].[TiposHorariosFexibles]', 'U') IS NOT NULL
     DROP TABLE [dbo].[TiposHorariosFexibles];
 GO
-IF OBJECT_ID(N'[dbo].[Estratos1214]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Estratos1214];
-GO
-IF OBJECT_ID(N'[dbo].[DiasAutorizadosRemoto]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[DiasAutorizadosRemoto];
+IF OBJECT_ID(N'[dbo].[TiposMovimientosHora]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[TiposMovimientosHora];
 GO
 IF OBJECT_ID(N'[dbo].[TurnosIngresoPermitido]', 'U') IS NOT NULL
     DROP TABLE [dbo].[TurnosIngresoPermitido];
+GO
+IF OBJECT_ID(N'[dbo].[Validaciones_email]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Validaciones_email];
+GO
+IF OBJECT_ID(N'[dbo].[VariablesGlobales]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[VariablesGlobales];
 GO
 
 -- --------------------------------------------------
@@ -617,6 +617,7 @@ CREATE TABLE [dbo].[CierreMensual] (
     [AgenteId] int  NOT NULL,
     [HorasAnioAnterior] nvarchar(max)  NOT NULL,
     [HorasAnioActual] nvarchar(max)  NOT NULL,
+    [HorasMes] nvarchar(max)  NOT NULL,
     [FechaCierre] datetime  NOT NULL,
     [Mes] int  NOT NULL,
     [Anio] int  NOT NULL,
@@ -1119,7 +1120,8 @@ CREATE TABLE [dbo].[Modificaciones_cierres_meses] (
     [AgenteId_modificacion] int  NOT NULL,
     [CierreMensualId] int  NOT NULL,
     [HoraAnioAnterior] nvarchar(max)  NOT NULL,
-    [HoraAnioActual] nvarchar(max)  NOT NULL
+    [HoraAnioActual] nvarchar(max)  NOT NULL,
+    [HorasMes] nvarchar(max)  NOT NULL
 );
 GO
 

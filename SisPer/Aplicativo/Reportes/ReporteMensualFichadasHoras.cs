@@ -242,7 +242,7 @@ namespace SisPer.Aplicativo.Reportes
                                         horas_masStr = rd.Horas;
                                     }
 
-                                    
+                                    total_periodo_horas = HorasString.SumarHoras(new string[] { total_periodo_horas, rd.Horas });
 
                                     total_periodo_tardanzas = HorasString.SumarHoras(new string[] { total_periodo_tardanzas, tardanzaStr });
                                     total_periodo_trabajadas = HorasString.SumarHoras(new string[] { total_periodo_trabajadas, horas_trabajadasStr });

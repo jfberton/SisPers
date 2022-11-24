@@ -17997,3 +17997,28 @@ STACKTRACE:    en System.Data.Mapping.StorageMappingItemCollection.ViewDictionar
 
 
 ******************************************************************
+ 
+
+******************************************************************
+
+DATE: 24/11/2022 07:50:08
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La importación de funciones 'Model1Container.Estado_agente' no se puede ejecutar porque no está asignada a una función de almacenamiento.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainPersonal.aspx
+
+TARGETSITE: System.Data.Mapping.FunctionImportMappingNonComposable GetTargetFunctionMapping(System.Data.Common.CommandTrees.DbFunctionCommandTree)
+
+STACKTRACE:    en System.Data.EntityClient.EntityCommandDefinition.GetTargetFunctionMapping(DbFunctionCommandTree functionCommandTree)
+   en System.Data.EntityClient.EntityCommandDefinition..ctor(DbProviderFactory storeProviderFactory, DbCommandTree commandTree)
+
+
+******************************************************************

@@ -16,6 +16,7 @@ namespace SisPer.Aplicativo
             if (!IsPostBack)
             {
                 Agente ag = Session["UsuarioLogueado"] as Agente;
+                Session["ConsultaGenerada"] = new ConsultaGenerada();
 
                 if (ag == null)
                 {
@@ -38,6 +39,15 @@ namespace SisPer.Aplicativo
             }
         }
 
+        private struct ConsultaGenerada
+        {
+            public DateTime fechaDesde;
+            public DateTime? fechaHasta;
+            public int? legajo;
+            public DS_Marcaciones datosObtenidos;
+        }
+
+
         private void CargarDDLAnio()
         {
             for (int i = 2013; i <= DateTime.Today.Year; i++)
@@ -51,6 +61,7 @@ namespace SisPer.Aplicativo
 
         private void CargarMarcacionesFecha()
         {
+            ConsultaGenerada con = (ConsultaGenerada)Session["ConsultaGenerada"];
 
             int legajo = 0;
             int.TryParse(tb_Legajo.Value, out legajo);
@@ -61,18 +72,37 @@ namespace SisPer.Aplicativo
 
             if (legajo != 0)
             {
-                using (var cxt = new Model1Container())
+                if(con.fechaDesde == fechaSeleccionada && con.fechaHasta == null && con.legajo == legajo)
                 {
-                    Agente ag = cxt.Agentes.FirstOrDefault(aagg => aagg.Legajo == legajo && aagg.FechaBaja == null);
-                    cxt.sp_obtener_resumen_diario_agente_fecha(ag.Id, fechaSeleccionada.ToShortDateString()).First();
+                    ds = con.datosObtenidos;
                 }
-                    
-                ds = ProcesosGlobales.ObtenerMarcaciones(fechaSeleccionada, legajo.ToString());
+                else
+                {
+                    ds = ProcesosGlobales.ObtenerMarcaciones(fechaSeleccionada, legajo.ToString());
+                    con.fechaDesde = fechaSeleccionada;
+                    con.fechaHasta = null;
+                    con.legajo = legajo;
+                    con.datosObtenidos = ds;
+                    Session["ConsultaGenerada"] = con;
+                }
+                
                 lbl_tituloGrilla.Text += " - Legajo " + legajo.ToString();
             }
             else
             {
-                ds = ProcesosGlobales.ObtenerMarcaciones(fechaSeleccionada);
+                if (con.fechaDesde == fechaSeleccionada && con.fechaHasta == null && con.legajo == null)
+                {
+                    ds = con.datosObtenidos;
+                }
+                else
+                {
+                    ds = ProcesosGlobales.ObtenerMarcaciones(fechaSeleccionada);
+                    con.fechaDesde = fechaSeleccionada;
+                    con.fechaHasta = null;
+                    con.legajo = null;
+                    con.datosObtenidos = ds;
+                    Session["ConsultaGenerada"] = con;
+                }
             }
 
             var marcaciones = (from h in ds.Marcacion
@@ -98,7 +128,8 @@ namespace SisPer.Aplicativo
             int mesSeleccionado = Convert.ToInt32(ddl_Mes.SelectedValue);
             int anioSeleccionado = Convert.ToInt32(ddl_Anio.SelectedValue);
 
-             
+            ConsultaGenerada con = (ConsultaGenerada)Session["ConsultaGenerada"];
+
 
             int legajo = 0;
             int.TryParse(tb_Legajo.Value, out legajo);
@@ -110,12 +141,37 @@ namespace SisPer.Aplicativo
 
             if (legajo != 0)
             {
-                ds = ProcesosGlobales.ObtenerMarcaciones(desde, hasta, legajo.ToString());
+                if (con.fechaDesde == desde && con.fechaHasta == hasta && con.legajo == legajo)
+                {
+                    ds = con.datosObtenidos;
+                }
+                else
+                {
+                    ds = ProcesosGlobales.ObtenerMarcaciones(desde, hasta, legajo.ToString());
+                    con.fechaDesde = desde;
+                    con.fechaHasta = hasta;
+                    con.legajo = legajo;
+                    con.datosObtenidos = ds;
+                    Session["ConsultaGenerada"] = con;
+                }
+                
                 lbl_tituloGrilla.Text += " - Legajo " + legajo.ToString();
             }
             else
             {
-                ds = ProcesosGlobales.ObtenerMarcaciones(desde, hasta);
+                if (con.fechaDesde == desde && con.fechaHasta == hasta && con.legajo == null)
+                {
+                    ds = con.datosObtenidos;
+                }
+                else
+                {
+                    ds = ProcesosGlobales.ObtenerMarcaciones(desde, hasta);
+                    con.fechaDesde = desde;
+                    con.fechaHasta = hasta;
+                    con.legajo = null;
+                    con.datosObtenidos = ds;
+                    Session["ConsultaGenerada"] = con;
+                }
             }
 
 
