@@ -157,7 +157,7 @@ namespace SisPer.Aplicativo
                                 horasBonificacion = HorasString.SumarHoras(new string[] { horasBonificacion, "-" + rd.AcumuloHorasBonificacion });
                                 horasAActual = HorasString.SumarHoras(new string[] { horasAActual, rd.AcumuloHorasAnioActual });
                                 horasAAnterior = HorasString.SumarHoras(new string[] { horasAAnterior, rd.AcumuloHorasAnioAnterior });
-                                horasMes = HorasString.SumarHoras(new string[] { horasMes, rd.AcumuloHorasMes });
+                                horasMes = HorasString.SumarHoras(new string[] { horasMes, rd.Horas });
                             }
 
                             //La variable ya esta en false o el agente no es de horario flexible o el resumen diario no esta cerrado
@@ -319,13 +319,12 @@ namespace SisPer.Aplicativo
                 int legajo = Convert.ToInt32(txt_agente.Text);
                 Agente ag = cxt.Agentes.First(a => a.Legajo == legajo && !a.FechaBaja.HasValue);
                 DateTime dia = Convert.ToDateTime(((ImageButton)sender).CommandArgument);
-                ResumenDiario rd = cxt.sp_obtener_resumen_diario_agente_fecha(ag.Id, dia.ToShortDateString()).First();//ag.ResumenesDiarios.FirstOrDefault(rrdd => rrdd.Dia == dia);
+                //ResumenDiario rd = cxt.sp_obtener_resumen_diario_agente_fecha(ag.Id, dia.ToShortDateString()).First();//ag.ResumenesDiarios.FirstOrDefault(rrdd => rrdd.Dia == dia);
 
                 AdministrarDiaAgente.LoadControl("~/Aplicativo/Controles/AdministrarDiaAgente.ascx");
 
                 AdministrarDiaAgente.AgenteBuscado = ag;
                 AdministrarDiaAgente.DiaBuscado = dia;
-                AdministrarDiaAgente.ResumenDiarioBuscado = rd;
                 AdministrarDiaAgente.CargarValores();
 
                 AdministrarDiaAgente.Visible = true;
@@ -338,14 +337,14 @@ namespace SisPer.Aplicativo
         {
             Actualizar_Resumendiario_en_listado(AdministrarDiaAgente.ResumenDiarioBuscado);
             CargarGrillaMes();
-            AdministrarDiaAgente.Visible = false;
+            //AdministrarDiaAgente.Visible = false;
         }
 
         protected void AdministrarDiaAgente_PrecionoVolver(object sender, EventArgs e)
         {
             Actualizar_Resumendiario_en_listado(AdministrarDiaAgente.ResumenDiarioBuscado);
             CargarGrillaMes();
-            AdministrarDiaAgente.Visible = false;
+            //AdministrarDiaAgente.Visible = false;
         }
 
         private void Actualizar_Resumendiario_en_listado(ResumenDiario resumenDiarioBuscado)
@@ -421,7 +420,7 @@ namespace SisPer.Aplicativo
 
             Actualizar_Resumendiario_en_listado(AdministrarDiaAgente.ResumenDiarioBuscado);
             CargarGrillaMes();
-            AdministrarDiaAgente.Visible = false;
+            //AdministrarDiaAgente.Visible = false;
         }
 
         protected void btn_cerrar_mes_Click(object sender, EventArgs e)

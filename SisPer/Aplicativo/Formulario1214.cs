@@ -1126,6 +1126,7 @@ namespace SisPer.Aplicativo
                     .SetFontSize(8);
 
                 Image membrete = new Image(ImageDataFactory.Create(HttpContext.Current.Server.MapPath("../Imagenes/membrete.png"))).SetAutoScale(true);
+                
 
                 //Actualizo nuevamente el margen que voy a utilizar como punto para agregar la linea de titulo
                 margenSuperior = ((float)5 * puntos_por_centimetro);

@@ -116,6 +116,7 @@
                                 </td>
                             </tr>
                         </table>
+                        <asp:Button id="btn_cerrar" Text="Cerrar día" CssClass="btn btn-success" runat="server" OnClick="btn_cerrar_Click" />
                     </div>
                 </div>
             </div>

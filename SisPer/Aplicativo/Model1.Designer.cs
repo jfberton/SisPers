@@ -1748,7 +1748,7 @@ namespace SisPer.Aplicativo
         /// <summary>
         /// No hay documentación de metadatos disponible.
         /// </summary>
-        /// <param name="ID_AGENTE">No hay documentación de metadatos disponible.</param>
+        /// <param name="iD_AGENTE">No hay documentación de metadatos disponible.</param>
         public ObjectResult<sp_obtener_datos_agente_Result> sp_obtener_datos_agente(Nullable<global::System.Int32> iD_AGENTE)
         {
             ObjectParameter iD_AGENTEParameter;
@@ -1808,61 +1808,61 @@ namespace SisPer.Aplicativo
         /// <summary>
         /// No hay documentación de metadatos disponible.
         /// </summary>
-        /// <param name="id_agente">No hay documentación de metadatos disponible.</param>
-        /// <param name="dia">No hay documentación de metadatos disponible.</param>
-        public ObjectResult<ResumenDiario> sp_obtener_resumen_diario_agente_fecha(Nullable<global::System.Int32> id_agente, global::System.String dia)
+        /// <param name="iD_AGENTE">No hay documentación de metadatos disponible.</param>
+        /// <param name="dIA">No hay documentación de metadatos disponible.</param>
+        public ObjectResult<ResumenDiario> sp_obtener_resumen_diario_agente_fecha(Nullable<global::System.Int32> iD_AGENTE, global::System.String dIA)
         {
-            ObjectParameter id_agenteParameter;
-            if (id_agente.HasValue)
+            ObjectParameter iD_AGENTEParameter;
+            if (iD_AGENTE.HasValue)
             {
-                id_agenteParameter = new ObjectParameter("id_agente", id_agente);
+                iD_AGENTEParameter = new ObjectParameter("ID_AGENTE", iD_AGENTE);
             }
             else
             {
-                id_agenteParameter = new ObjectParameter("id_agente", typeof(global::System.Int32));
+                iD_AGENTEParameter = new ObjectParameter("ID_AGENTE", typeof(global::System.Int32));
             }
     
-            ObjectParameter diaParameter;
-            if (dia != null)
+            ObjectParameter dIAParameter;
+            if (dIA != null)
             {
-                diaParameter = new ObjectParameter("dia", dia);
+                dIAParameter = new ObjectParameter("DIA", dIA);
             }
             else
             {
-                diaParameter = new ObjectParameter("dia", typeof(global::System.String));
+                dIAParameter = new ObjectParameter("DIA", typeof(global::System.String));
             }
     
-            return base.ExecuteFunction<ResumenDiario>("sp_obtener_resumen_diario_agente_fecha", id_agenteParameter, diaParameter);
+            return base.ExecuteFunction<ResumenDiario>("sp_obtener_resumen_diario_agente_fecha", iD_AGENTEParameter, dIAParameter);
         }
         /// <summary>
         /// No hay documentación de metadatos disponible.
         /// </summary>
         /// <param name="mergeOption"></param>
-        /// <param name="id_agente">No hay documentación de metadatos disponible.</param>
-        /// <param name="dia">No hay documentación de metadatos disponible.</param>
-        public ObjectResult<ResumenDiario> sp_obtener_resumen_diario_agente_fecha(Nullable<global::System.Int32> id_agente, global::System.String dia, MergeOption mergeOption)
+        /// <param name="iD_AGENTE">No hay documentación de metadatos disponible.</param>
+        /// <param name="dIA">No hay documentación de metadatos disponible.</param>
+        public ObjectResult<ResumenDiario> sp_obtener_resumen_diario_agente_fecha(Nullable<global::System.Int32> iD_AGENTE, global::System.String dIA, MergeOption mergeOption)
         {
-            ObjectParameter id_agenteParameter;
-            if (id_agente.HasValue)
+            ObjectParameter iD_AGENTEParameter;
+            if (iD_AGENTE.HasValue)
             {
-                id_agenteParameter = new ObjectParameter("id_agente", id_agente);
+                iD_AGENTEParameter = new ObjectParameter("ID_AGENTE", iD_AGENTE);
             }
             else
             {
-                id_agenteParameter = new ObjectParameter("id_agente", typeof(global::System.Int32));
+                iD_AGENTEParameter = new ObjectParameter("ID_AGENTE", typeof(global::System.Int32));
             }
     
-            ObjectParameter diaParameter;
-            if (dia != null)
+            ObjectParameter dIAParameter;
+            if (dIA != null)
             {
-                diaParameter = new ObjectParameter("dia", dia);
+                dIAParameter = new ObjectParameter("DIA", dIA);
             }
             else
             {
-                diaParameter = new ObjectParameter("dia", typeof(global::System.String));
+                dIAParameter = new ObjectParameter("DIA", typeof(global::System.String));
             }
     
-            return base.ExecuteFunction<ResumenDiario>("sp_obtener_resumen_diario_agente_fecha", mergeOption, id_agenteParameter, diaParameter);
+            return base.ExecuteFunction<ResumenDiario>("sp_obtener_resumen_diario_agente_fecha", mergeOption, iD_AGENTEParameter, dIAParameter);
         }
     
         /// <summary>
@@ -1942,6 +1942,36 @@ namespace SisPer.Aplicativo
             }
     
             return base.ExecuteFunction<sp_obtener_suborinados_directos_Result>("sp_obtener_suborinados_directos", id_agenteParameter);
+        }
+    
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        /// <param name="iD_AGENTE">No hay documentación de metadatos disponible.</param>
+        /// <param name="fECHA">No hay documentación de metadatos disponible.</param>
+        public ObjectResult<global::System.String> sp_cerrar_dia(Nullable<global::System.Int32> iD_AGENTE, Nullable<global::System.DateTime> fECHA)
+        {
+            ObjectParameter iD_AGENTEParameter;
+            if (iD_AGENTE.HasValue)
+            {
+                iD_AGENTEParameter = new ObjectParameter("ID_AGENTE", iD_AGENTE);
+            }
+            else
+            {
+                iD_AGENTEParameter = new ObjectParameter("ID_AGENTE", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter fECHAParameter;
+            if (fECHA.HasValue)
+            {
+                fECHAParameter = new ObjectParameter("FECHA", fECHA);
+            }
+            else
+            {
+                fECHAParameter = new ObjectParameter("FECHA", typeof(global::System.DateTime));
+            }
+    
+            return base.ExecuteFunction<global::System.String>("sp_cerrar_dia", iD_AGENTEParameter, fECHAParameter);
         }
 
         #endregion
@@ -5819,17 +5849,19 @@ namespace SisPer.Aplicativo
         /// <param name="agenteId">Valor inicial de la propiedad AgenteId.</param>
         /// <param name="horasAnioAnterior">Valor inicial de la propiedad HorasAnioAnterior.</param>
         /// <param name="horasAnioActual">Valor inicial de la propiedad HorasAnioActual.</param>
+        /// <param name="horasMes">Valor inicial de la propiedad HorasMes.</param>
         /// <param name="fechaCierre">Valor inicial de la propiedad FechaCierre.</param>
         /// <param name="mes">Valor inicial de la propiedad Mes.</param>
         /// <param name="anio">Valor inicial de la propiedad Anio.</param>
         /// <param name="tiene_que_modificar">Valor inicial de la propiedad Tiene_que_modificar.</param>
-        public static CierreMensual CreateCierreMensual(global::System.Int32 id, global::System.Int32 agenteId, global::System.String horasAnioAnterior, global::System.String horasAnioActual, global::System.DateTime fechaCierre, global::System.Int32 mes, global::System.Int32 anio, global::System.Boolean tiene_que_modificar)
+        public static CierreMensual CreateCierreMensual(global::System.Int32 id, global::System.Int32 agenteId, global::System.String horasAnioAnterior, global::System.String horasAnioActual, global::System.String horasMes, global::System.DateTime fechaCierre, global::System.Int32 mes, global::System.Int32 anio, global::System.Boolean tiene_que_modificar)
         {
             CierreMensual cierreMensual = new CierreMensual();
             cierreMensual.Id = id;
             cierreMensual.AgenteId = agenteId;
             cierreMensual.HorasAnioAnterior = horasAnioAnterior;
             cierreMensual.HorasAnioActual = horasAnioActual;
+            cierreMensual.HorasMes = horasMes;
             cierreMensual.FechaCierre = fechaCierre;
             cierreMensual.Mes = mes;
             cierreMensual.Anio = anio;
@@ -5939,6 +5971,30 @@ namespace SisPer.Aplicativo
         private global::System.String _HorasAnioActual;
         partial void OnHorasAnioActualChanging(global::System.String value);
         partial void OnHorasAnioActualChanged();
+    
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String HorasMes
+        {
+            get
+            {
+                return _HorasMes;
+            }
+            set
+            {
+                OnHorasMesChanging(value);
+                ReportPropertyChanging("HorasMes");
+                _HorasMes = StructuralObject.SetValidValue(value, false, "HorasMes");
+                ReportPropertyChanged("HorasMes");
+                OnHorasMesChanged();
+            }
+        }
+        private global::System.String _HorasMes;
+        partial void OnHorasMesChanging(global::System.String value);
+        partial void OnHorasMesChanged();
     
         /// <summary>
         /// 
@@ -15438,7 +15494,8 @@ namespace SisPer.Aplicativo
         /// <param name="cierreMensualId">Valor inicial de la propiedad CierreMensualId.</param>
         /// <param name="horaAnioAnterior">Valor inicial de la propiedad HoraAnioAnterior.</param>
         /// <param name="horaAnioActual">Valor inicial de la propiedad HoraAnioActual.</param>
-        public static Modificacion_cierre_mes CreateModificacion_cierre_mes(global::System.Int32 id, global::System.DateTime fecha, global::System.Int32 agenteId_modificacion, global::System.Int32 cierreMensualId, global::System.String horaAnioAnterior, global::System.String horaAnioActual)
+        /// <param name="horasMes">Valor inicial de la propiedad HorasMes.</param>
+        public static Modificacion_cierre_mes CreateModificacion_cierre_mes(global::System.Int32 id, global::System.DateTime fecha, global::System.Int32 agenteId_modificacion, global::System.Int32 cierreMensualId, global::System.String horaAnioAnterior, global::System.String horaAnioActual, global::System.String horasMes)
         {
             Modificacion_cierre_mes modificacion_cierre_mes = new Modificacion_cierre_mes();
             modificacion_cierre_mes.Id = id;
@@ -15447,6 +15504,7 @@ namespace SisPer.Aplicativo
             modificacion_cierre_mes.CierreMensualId = cierreMensualId;
             modificacion_cierre_mes.HoraAnioAnterior = horaAnioAnterior;
             modificacion_cierre_mes.HoraAnioActual = horaAnioActual;
+            modificacion_cierre_mes.HorasMes = horasMes;
             return modificacion_cierre_mes;
         }
 
@@ -15600,6 +15658,30 @@ namespace SisPer.Aplicativo
         private global::System.String _HoraAnioActual;
         partial void OnHoraAnioActualChanging(global::System.String value);
         partial void OnHoraAnioActualChanged();
+    
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String HorasMes
+        {
+            get
+            {
+                return _HorasMes;
+            }
+            set
+            {
+                OnHorasMesChanging(value);
+                ReportPropertyChanging("HorasMes");
+                _HorasMes = StructuralObject.SetValidValue(value, false, "HorasMes");
+                ReportPropertyChanged("HorasMes");
+                OnHorasMesChanged();
+            }
+        }
+        private global::System.String _HorasMes;
+        partial void OnHorasMesChanging(global::System.String value);
+        partial void OnHorasMesChanged();
 
         #endregion
 

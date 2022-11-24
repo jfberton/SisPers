@@ -16822,3 +16822,1178 @@ STACKTRACE:    en System.Data.Objects.Internal.ObjectFullSpanRewriter.ConvertSpa
 
 
 ******************************************************************
+ 
+
+******************************************************************
+
+DATE: 1/9/2022 11:11:30
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Referencia a objeto no establecida como instancia de un objeto.
+
+SOURCE: SisPer
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainAgente.aspx
+
+TARGETSITE: Byte[] GenerarPDFAsistenciaMensual()
+
+STACKTRACE:    en SisPer.Aplicativo.Reportes.ReporteMensualFichadasHoras.GenerarPDFAsistenciaMensual() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Reportes\ReporteMensualFichadasHoras.cs:línea 90
+   en SisPer.Aplicativo.MainAgente.ImprirPlanilla_Click(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\MainAgente.aspx.cs:línea 1246
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 1/9/2022 12:33:55
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La instancia de ObjectContext se ha desechado y ya no se puede usar para operaciones que requieren una conexión.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainAgente.aspx
+
+TARGETSITE: Void EnsureConnection()
+
+STACKTRACE:    en System.Data.Objects.ObjectContext.EnsureConnection()
+   en System.Data.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   en System.Data.Objects.DataClasses.EntityCollection`1.Load(List`1 collection, MergeOption mergeOption)
+   en System.Data.Objects.DataClasses.RelatedEnd.DeferredLoad()
+   en System.Data.Objects.DataClasses.EntityCollection`1.get_Count()
+   en SisPer.Aplicativo.Reportes.ReporteMensualFichadasHoras.GenerarPDFAsistenciaMensual() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Reportes\ReporteMensualFichadasHoras.cs:línea 161
+   en SisPer.Aplicativo.MainAgente.ImprirPlanilla_Click(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\MainAgente.aspx.cs:línea 1246
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 1/9/2022 12:52:13
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La subconsulta ha devuelto más de un valor, lo que no es correcto cuando va a continuación de =, !=, <, <=, >, >= o cuando se utiliza como expresión.
+
+SOURCE: .Net SqlClient Data Provider
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainAgente.aspx
+
+TARGETSITE: Void OnError(System.Data.SqlClient.SqlException, Boolean, System.Action`1[System.Action])
+
+STACKTRACE:    en System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   en System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   en System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   en System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   en System.Data.SqlClient.SqlDataReader.get_MetaData()
+   en System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   en System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   en System.Data.EntityClient.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 1/9/2022 12:52:57
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La subconsulta ha devuelto más de un valor, lo que no es correcto cuando va a continuación de =, !=, <, <=, >, >= o cuando se utiliza como expresión.
+
+SOURCE: .Net SqlClient Data Provider
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainAgente.aspx
+
+TARGETSITE: Void OnError(System.Data.SqlClient.SqlException, Boolean, System.Action`1[System.Action])
+
+STACKTRACE:    en System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   en System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   en System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   en System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   en System.Data.SqlClient.SqlDataReader.get_MetaData()
+   en System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   en System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   en System.Data.EntityClient.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 1/9/2022 13:05:02
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Tiempo de espera de la operación de espera agotado
+
+SOURCE: 
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainAgente.aspx
+
+TARGETSITE: 
+
+STACKTRACE: 
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 1/9/2022 13:51:45
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Tiempo de espera de la operación de espera agotado
+
+SOURCE: 
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainAgente.aspx
+
+TARGETSITE: 
+
+STACKTRACE: 
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 2/9/2022 12:04:09
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Se produjo una excepción de tipo 'System.OutOfMemoryException'.
+
+SOURCE: mscorlib
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainAgente.aspx
+
+TARGETSITE: Void set_Capacity(Int32)
+
+STACKTRACE:    en System.Collections.Generic.List`1.set_Capacity(Int32 value)
+   en System.Collections.Generic.List`1.EnsureCapacity(Int32 min)
+   en System.Collections.Generic.List`1.Add(T item)
+   en iText.Layout.Element.Table.AddCell(Cell cell)
+   en SisPer.Aplicativo.Reportes.ReporteMensualFichadasHoras.GenerarPDFAsistenciaMensual() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Reportes\ReporteMensualFichadasHoras.cs:línea 153
+   en SisPer.Aplicativo.MainAgente.ImprirPlanilla_Click(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\MainAgente.aspx.cs:línea 1246
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 2/9/2022 12:51:11
+
+MESSAGE: El sistema no puede encontrar el archivo especificado
+
+SOURCE: 
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/default.aspx
+
+TARGETSITE: 
+
+STACKTRACE: 
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 6/9/2022 11:17:01
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Referencia a objeto no establecida como instancia de un objeto.
+
+SOURCE: itext.layout
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_Informe_SalidasVarias.aspx
+
+TARGETSITE: Void Flush()
+
+STACKTRACE:    en iText.Layout.Document.Flush()
+   en SisPer.Aplicativo.Reportes.ReporteMensualFichadasHoras.GenerarPDFAsistenciaMensual() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Reportes\ReporteMensualFichadasHoras.cs:línea 299
+   en SisPer.Aplicativo.Personal_Informe_SalidasVarias.GenerarInformeFichadasMes() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Informe_SalidasVarias.aspx.cs:línea 873
+   en SisPer.Aplicativo.Personal_Informe_SalidasVarias.GenerarInforme() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Informe_SalidasVarias.aspx.cs:línea 210
+   en SisPer.Aplicativo.Personal_Informe_SalidasVarias.btn_Buscar_Click(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Informe_SalidasVarias.aspx.cs:línea 162
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 7/9/2022 06:46:17
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: El lector de datos es incompatible con el 'Model1.ResumenDiario' especificado. Un miembro del tipo, 'Id', no tiene una columna correspondiente en el lector de datos con el mismo nombre.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_Marcaciones_Procesar_Agente.aspx
+
+TARGETSITE: Int32 GetMemberOrdinalFromReader(System.Data.Common.DbDataReader, System.Data.Metadata.Edm.EdmMember, System.Data.Metadata.Edm.EdmType, System.Collections.Generic.Dictionary`2[System.String,System.Data.Mapping.FunctionImportReturnTypeStructuralTypeColumnRenameMapping])
+
+STACKTRACE:    en System.Data.Query.InternalTrees.ColumnMapFactory.GetMemberOrdinalFromReader(DbDataReader storeDataReader, EdmMember member, EdmType currentType, Dictionary`2 renameList)
+   en System.Data.Query.InternalTrees.ColumnMapFactory.GetColumnMapsForType(DbDataReader storeDataReader, EdmType edmType, Dictionary`2 renameList)
+   en System.Data.Query.InternalTrees.ColumnMapFactory.CreateColumnMapFromReaderAndType(DbDataReader storeDataReader, EdmType edmType, EntitySet entitySet, Dictionary`2 renameList)
+   en System.Data.Query.InternalTrees.ColumnMapFactory.CreateFunctionImportStructuralTypeColumnMap(DbDataReader storeDataReader, FunctionImportMappingNonComposable mapping, Int32 resultSetIndex, EntitySet entitySet, StructuralType baseStructuralType)
+   en System.Data.EntityClient.EntityCommandDefinition.FunctionColumnMapGenerator.System.Data.EntityClient.EntityCommandDefinition.IColumnMapGenerator.CreateColumnMap(DbDataReader reader)
+   en System.Data.Objects.ObjectContext.MaterializedDataRecord[TElement](EntityCommand entityCommand, DbDataReader storeReader, Int32 resultSetIndex, ReadOnlyMetadataCollection`1 entitySets, EdmType[] edmTypes, MergeOption mergeOption)
+   en System.Data.Objects.ObjectContext.CreateFunctionObjectResult[TElement](EntityCommand entityCommand, ReadOnlyMetadataCollection`1 entitySets, EdmType[] edmTypes, MergeOption mergeOption)
+   en System.Data.Objects.ObjectContext.ExecuteFunction[TElement](String functionName, MergeOption mergeOption, ObjectParameter[] parameters)
+   en System.Data.Objects.ObjectContext.ExecuteFunction[TElement](String functionName, ObjectParameter[] parameters)
+   en SisPer.Aplicativo.Model1Container.sp_obtener_resumen_diario_agente_fecha(Nullable`1 id_agente, String dia) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Model1.Designer.cs:línea 1835
+   en SisPer.Aplicativo.Controles.AdministrarDiaAgente.CargarValores() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Controles\AdministrarDiaAgente.ascx.cs:línea 127
+   en SisPer.Aplicativo.Personal_Marcaciones_Procesar_Agente.btn_AnalizarInconsistencia_Click(Object sender, ImageClickEventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Marcaciones_Procesar_Agente.aspx.cs:línea 328
+   en System.Web.UI.WebControls.ImageButton.OnClick(ImageClickEventArgs e)
+   en System.Web.UI.WebControls.ImageButton.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 7/9/2022 08:19:35
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: El lector de datos es incompatible con el 'Model1.ResumenDiario' especificado. Un miembro del tipo, 'Id', no tiene una columna correspondiente en el lector de datos con el mismo nombre.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_Marcaciones_Procesar_Agente.aspx
+
+TARGETSITE: Int32 GetMemberOrdinalFromReader(System.Data.Common.DbDataReader, System.Data.Metadata.Edm.EdmMember, System.Data.Metadata.Edm.EdmType, System.Collections.Generic.Dictionary`2[System.String,System.Data.Mapping.FunctionImportReturnTypeStructuralTypeColumnRenameMapping])
+
+STACKTRACE:    en System.Data.Query.InternalTrees.ColumnMapFactory.GetMemberOrdinalFromReader(DbDataReader storeDataReader, EdmMember member, EdmType currentType, Dictionary`2 renameList)
+   en System.Data.Query.InternalTrees.ColumnMapFactory.GetColumnMapsForType(DbDataReader storeDataReader, EdmType edmType, Dictionary`2 renameList)
+   en System.Data.Query.InternalTrees.ColumnMapFactory.CreateColumnMapFromReaderAndType(DbDataReader storeDataReader, EdmType edmType, EntitySet entitySet, Dictionary`2 renameList)
+   en System.Data.Query.InternalTrees.ColumnMapFactory.CreateFunctionImportStructuralTypeColumnMap(DbDataReader storeDataReader, FunctionImportMappingNonComposable mapping, Int32 resultSetIndex, EntitySet entitySet, StructuralType baseStructuralType)
+   en System.Data.EntityClient.EntityCommandDefinition.FunctionColumnMapGenerator.System.Data.EntityClient.EntityCommandDefinition.IColumnMapGenerator.CreateColumnMap(DbDataReader reader)
+   en System.Data.Objects.ObjectContext.MaterializedDataRecord[TElement](EntityCommand entityCommand, DbDataReader storeReader, Int32 resultSetIndex, ReadOnlyMetadataCollection`1 entitySets, EdmType[] edmTypes, MergeOption mergeOption)
+   en System.Data.Objects.ObjectContext.CreateFunctionObjectResult[TElement](EntityCommand entityCommand, ReadOnlyMetadataCollection`1 entitySets, EdmType[] edmTypes, MergeOption mergeOption)
+   en System.Data.Objects.ObjectContext.ExecuteFunction[TElement](String functionName, MergeOption mergeOption, ObjectParameter[] parameters)
+   en System.Data.Objects.ObjectContext.ExecuteFunction[TElement](String functionName, ObjectParameter[] parameters)
+   en SisPer.Aplicativo.Model1Container.sp_obtener_resumenes_diarios_agente_mes(Nullable`1 id_agente, String dia_hasta) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Model1.Designer.cs:línea 1895
+   en SisPer.Aplicativo.Personal_Marcaciones_Procesar_Agente.CargarGrillaMes() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Marcaciones_Procesar_Agente.aspx.cs:línea 135
+   en SisPer.Aplicativo.Personal_Marcaciones_Procesar_Agente.btn_buscar_Click(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Marcaciones_Procesar_Agente.aspx.cs:línea 62
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 7/9/2022 08:23:47
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: El lector de datos es incompatible con el 'Model1.ResumenDiario' especificado. Un miembro del tipo, 'Id', no tiene una columna correspondiente en el lector de datos con el mismo nombre.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_Marcaciones_Procesar_Agente.aspx
+
+TARGETSITE: Int32 GetMemberOrdinalFromReader(System.Data.Common.DbDataReader, System.Data.Metadata.Edm.EdmMember, System.Data.Metadata.Edm.EdmType, System.Collections.Generic.Dictionary`2[System.String,System.Data.Mapping.FunctionImportReturnTypeStructuralTypeColumnRenameMapping])
+
+STACKTRACE:    en System.Data.Query.InternalTrees.ColumnMapFactory.GetMemberOrdinalFromReader(DbDataReader storeDataReader, EdmMember member, EdmType currentType, Dictionary`2 renameList)
+   en System.Data.Query.InternalTrees.ColumnMapFactory.GetColumnMapsForType(DbDataReader storeDataReader, EdmType edmType, Dictionary`2 renameList)
+   en System.Data.Query.InternalTrees.ColumnMapFactory.CreateColumnMapFromReaderAndType(DbDataReader storeDataReader, EdmType edmType, EntitySet entitySet, Dictionary`2 renameList)
+   en System.Data.Query.InternalTrees.ColumnMapFactory.CreateFunctionImportStructuralTypeColumnMap(DbDataReader storeDataReader, FunctionImportMappingNonComposable mapping, Int32 resultSetIndex, EntitySet entitySet, StructuralType baseStructuralType)
+   en System.Data.EntityClient.EntityCommandDefinition.FunctionColumnMapGenerator.System.Data.EntityClient.EntityCommandDefinition.IColumnMapGenerator.CreateColumnMap(DbDataReader reader)
+   en System.Data.Objects.ObjectContext.MaterializedDataRecord[TElement](EntityCommand entityCommand, DbDataReader storeReader, Int32 resultSetIndex, ReadOnlyMetadataCollection`1 entitySets, EdmType[] edmTypes, MergeOption mergeOption)
+   en System.Data.Objects.ObjectContext.CreateFunctionObjectResult[TElement](EntityCommand entityCommand, ReadOnlyMetadataCollection`1 entitySets, EdmType[] edmTypes, MergeOption mergeOption)
+   en System.Data.Objects.ObjectContext.ExecuteFunction[TElement](String functionName, MergeOption mergeOption, ObjectParameter[] parameters)
+   en System.Data.Objects.ObjectContext.ExecuteFunction[TElement](String functionName, ObjectParameter[] parameters)
+   en SisPer.Aplicativo.Model1Container.sp_obtener_resumenes_diarios_agente_mes(Nullable`1 id_agente, String dia_hasta) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Model1.Designer.cs:línea 1895
+   en SisPer.Aplicativo.Personal_Marcaciones_Procesar_Agente.CargarGrillaMes() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Marcaciones_Procesar_Agente.aspx.cs:línea 135
+   en SisPer.Aplicativo.Personal_Marcaciones_Procesar_Agente.btn_buscar_Click(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Marcaciones_Procesar_Agente.aspx.cs:línea 62
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 7/9/2022 08:26:19
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: El lector de datos devuelto por el proveedor de datos de almacenamiento no tiene bastantes columnas para la consulta solicitada.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_Marcaciones_Procesar_Agente.aspx
+
+TARGETSITE: System.Data.Query.InternalTrees.ColumnMap System.Data.EntityClient.EntityCommandDefinition.IColumnMapGenerator.CreateColumnMap(System.Data.Common.DbDataReader)
+
+STACKTRACE:    en System.Data.EntityClient.EntityCommandDefinition.ConstantColumnMapGenerator.System.Data.EntityClient.EntityCommandDefinition.IColumnMapGenerator.CreateColumnMap(DbDataReader reader)
+   en System.Data.Objects.ObjectContext.MaterializedDataRecord[TElement](EntityCommand entityCommand, DbDataReader storeReader, Int32 resultSetIndex, ReadOnlyMetadataCollection`1 entitySets, EdmType[] edmTypes, MergeOption mergeOption)
+   en System.Data.Objects.ObjectContext.CreateFunctionObjectResult[TElement](EntityCommand entityCommand, ReadOnlyMetadataCollection`1 entitySets, EdmType[] edmTypes, MergeOption mergeOption)
+   en System.Data.Objects.ObjectContext.ExecuteFunction[TElement](String functionName, MergeOption mergeOption, ObjectParameter[] parameters)
+   en System.Data.Objects.ObjectContext.ExecuteFunction[TElement](String functionName, ObjectParameter[] parameters)
+   en SisPer.Aplicativo.Model1Container.sp_pd_AA_Proceso_automatico_de_cierre_caso_particular(Nullable`1 iD_AGENTE, Nullable`1 fECHA) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Model1.Designer.cs:línea 1974
+   en SisPer.Aplicativo.Controles.AdministrarDiaAgente.btn_cerrar_Click(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Controles\AdministrarDiaAgente.ascx.cs:línea 1159
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 7/9/2022 08:37:40
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: El lector de datos devuelto por el proveedor de datos de almacenamiento no tiene bastantes columnas para la consulta solicitada.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_Marcaciones_Procesar_Agente.aspx
+
+TARGETSITE: System.Data.Query.InternalTrees.ColumnMap System.Data.EntityClient.EntityCommandDefinition.IColumnMapGenerator.CreateColumnMap(System.Data.Common.DbDataReader)
+
+STACKTRACE:    en System.Data.EntityClient.EntityCommandDefinition.ConstantColumnMapGenerator.System.Data.EntityClient.EntityCommandDefinition.IColumnMapGenerator.CreateColumnMap(DbDataReader reader)
+   en System.Data.Objects.ObjectContext.MaterializedDataRecord[TElement](EntityCommand entityCommand, DbDataReader storeReader, Int32 resultSetIndex, ReadOnlyMetadataCollection`1 entitySets, EdmType[] edmTypes, MergeOption mergeOption)
+   en System.Data.Objects.ObjectContext.CreateFunctionObjectResult[TElement](EntityCommand entityCommand, ReadOnlyMetadataCollection`1 entitySets, EdmType[] edmTypes, MergeOption mergeOption)
+   en System.Data.Objects.ObjectContext.ExecuteFunction[TElement](String functionName, MergeOption mergeOption, ObjectParameter[] parameters)
+   en System.Data.Objects.ObjectContext.ExecuteFunction[TElement](String functionName, ObjectParameter[] parameters)
+   en SisPer.Aplicativo.Model1Container.sp_pd_AA_Proceso_automatico_de_cierre_caso_particular(Nullable`1 iD_AGENTE, Nullable`1 fECHA) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Model1.Designer.cs:línea 1974
+   en SisPer.Aplicativo.Controles.AdministrarDiaAgente.btn_cerrar_Click(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Controles\AdministrarDiaAgente.ascx.cs:línea 1159
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 7/9/2022 08:38:58
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: El lector de datos devuelto por el proveedor de datos de almacenamiento no tiene bastantes columnas para la consulta solicitada.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_Marcaciones_Procesar_Agente.aspx
+
+TARGETSITE: System.Data.Query.InternalTrees.ColumnMap System.Data.EntityClient.EntityCommandDefinition.IColumnMapGenerator.CreateColumnMap(System.Data.Common.DbDataReader)
+
+STACKTRACE:    en System.Data.EntityClient.EntityCommandDefinition.ConstantColumnMapGenerator.System.Data.EntityClient.EntityCommandDefinition.IColumnMapGenerator.CreateColumnMap(DbDataReader reader)
+   en System.Data.Objects.ObjectContext.MaterializedDataRecord[TElement](EntityCommand entityCommand, DbDataReader storeReader, Int32 resultSetIndex, ReadOnlyMetadataCollection`1 entitySets, EdmType[] edmTypes, MergeOption mergeOption)
+   en System.Data.Objects.ObjectContext.CreateFunctionObjectResult[TElement](EntityCommand entityCommand, ReadOnlyMetadataCollection`1 entitySets, EdmType[] edmTypes, MergeOption mergeOption)
+   en System.Data.Objects.ObjectContext.ExecuteFunction[TElement](String functionName, MergeOption mergeOption, ObjectParameter[] parameters)
+   en System.Data.Objects.ObjectContext.ExecuteFunction[TElement](String functionName, ObjectParameter[] parameters)
+   en SisPer.Aplicativo.Model1Container.sp_pd_AA_Proceso_automatico_de_cierre_caso_particular(Nullable`1 iD_AGENTE, Nullable`1 fECHA) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Model1.Designer.cs:línea 1974
+   en SisPer.Aplicativo.Controles.AdministrarDiaAgente.btn_cerrar_Click(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Controles\AdministrarDiaAgente.ascx.cs:línea 1159
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 7/9/2022 08:45:11
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: El lector de datos devuelto por el proveedor de datos de almacenamiento no tiene bastantes columnas para la consulta solicitada.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_Marcaciones_Procesar_Agente.aspx
+
+TARGETSITE: System.Data.Query.InternalTrees.ColumnMap System.Data.EntityClient.EntityCommandDefinition.IColumnMapGenerator.CreateColumnMap(System.Data.Common.DbDataReader)
+
+STACKTRACE:    en System.Data.EntityClient.EntityCommandDefinition.ConstantColumnMapGenerator.System.Data.EntityClient.EntityCommandDefinition.IColumnMapGenerator.CreateColumnMap(DbDataReader reader)
+   en System.Data.Objects.ObjectContext.MaterializedDataRecord[TElement](EntityCommand entityCommand, DbDataReader storeReader, Int32 resultSetIndex, ReadOnlyMetadataCollection`1 entitySets, EdmType[] edmTypes, MergeOption mergeOption)
+   en System.Data.Objects.ObjectContext.CreateFunctionObjectResult[TElement](EntityCommand entityCommand, ReadOnlyMetadataCollection`1 entitySets, EdmType[] edmTypes, MergeOption mergeOption)
+   en System.Data.Objects.ObjectContext.ExecuteFunction[TElement](String functionName, MergeOption mergeOption, ObjectParameter[] parameters)
+   en System.Data.Objects.ObjectContext.ExecuteFunction[TElement](String functionName, ObjectParameter[] parameters)
+   en SisPer.Aplicativo.Model1Container.sp_pd_AA_Proceso_automatico_de_cierre_caso_particular(Nullable`1 iD_AGENTE, Nullable`1 fECHA) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Model1.Designer.cs:línea 1974
+   en SisPer.Aplicativo.Controles.AdministrarDiaAgente.btn_cerrar_Click(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Controles\AdministrarDiaAgente.ascx.cs:línea 1159
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 20/9/2022 11:08:03
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Referencia a objeto no establecida como instancia de un objeto.
+
+SOURCE: SisPer
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_TerminarHV.aspx
+
+TARGETSITE: Void ActualizarTituloResumen()
+
+STACKTRACE:    en SisPer.Aplicativo.Personal_TerminarHV.ActualizarTituloResumen() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 295
+   en SisPer.Aplicativo.Personal_TerminarHV.Registrar_Inicio_HV(String h_inicio) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 289
+   en SisPer.Aplicativo.Personal_TerminarHV.btn_usar_marcacion_entrada_Click(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 259
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 20/9/2022 12:01:36
+
+AGENTE: Motter, Mariela Verónica
+
+MESSAGE: Etiqueta de servidor incorrecta.
+
+SOURCE: System.Web
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_TerminarHV.aspx
+
+TARGETSITE: Void ProcessError(System.String)
+
+STACKTRACE:    en System.Web.UI.TemplateParser.ProcessError(String message)
+   en System.Web.UI.TemplateParser.ParseStringInternal(String text, Encoding fileEncoding)
+   en System.Web.UI.TemplateParser.ParseString(String text, VirtualPath virtualPath, Encoding fileEncoding)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 20/9/2022 12:01:49
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Etiqueta de servidor incorrecta.
+
+SOURCE: System.Web
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_TerminarHV.aspx
+
+TARGETSITE: Void ProcessError(System.String)
+
+STACKTRACE:    en System.Web.UI.TemplateParser.ProcessError(String message)
+   en System.Web.UI.TemplateParser.ParseStringInternal(String text, Encoding fileEncoding)
+   en System.Web.UI.TemplateParser.ParseString(String text, VirtualPath virtualPath, Encoding fileEncoding)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 20/9/2022 12:47:32
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Índice fuera de los límites de la matriz.
+
+SOURCE: SisPer
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_TerminarHV.aspx
+
+TARGETSITE: Boolean AMayorQueB(System.String, System.String)
+
+STACKTRACE:    en SisPer.Aplicativo.HorasString.AMayorQueB(String a, String b) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\HorasString.cs:línea 326
+   en SisPer.Aplicativo.Personal_TerminarHV.Registrar_Inicio_HV(String h_inicio) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 310
+   en SisPer.Aplicativo.Personal_TerminarHV.btn_usar_marcacion_entrada_Click(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 276
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 21/9/2022 11:01:11
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La instancia de ObjectContext se ha desechado y ya no se puede usar para operaciones que requieren una conexión.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_TerminarHV.aspx
+
+TARGETSITE: Void EnsureConnection()
+
+STACKTRACE:    en System.Data.Objects.ObjectContext.EnsureConnection()
+   en System.Data.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   en System.Data.Objects.DataClasses.EntityCollection`1.Load(List`1 collection, MergeOption mergeOption)
+   en System.Data.Objects.DataClasses.RelatedEnd.DeferredLoad()
+   en System.Data.Objects.DataClasses.EntityCollection`1.GetEnumerator()
+   en System.Linq.Enumerable.FirstOrDefault[TSource](IEnumerable`1 source, Func`2 predicate)
+   en SisPer.Aplicativo.Agente.MarcaManual(DateTime dia) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Agente.cs:línea 24
+   en SisPer.Aplicativo.Personal_TerminarHV.CargarComboboxes() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 103
+   en SisPer.Aplicativo.Personal_TerminarHV.Page_Load(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 78
+   en System.Web.UI.Control.OnLoad(EventArgs e)
+   en System.Web.UI.Control.LoadRecursive()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 21/9/2022 11:01:38
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La instancia de ObjectContext se ha desechado y ya no se puede usar para operaciones que requieren una conexión.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_TerminarHV.aspx
+
+TARGETSITE: Void EnsureConnection()
+
+STACKTRACE:    en System.Data.Objects.ObjectContext.EnsureConnection()
+   en System.Data.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   en System.Data.Objects.DataClasses.EntityCollection`1.Load(List`1 collection, MergeOption mergeOption)
+   en System.Data.Objects.DataClasses.RelatedEnd.DeferredLoad()
+   en System.Data.Objects.DataClasses.EntityCollection`1.GetEnumerator()
+   en System.Linq.Enumerable.FirstOrDefault[TSource](IEnumerable`1 source, Func`2 predicate)
+   en SisPer.Aplicativo.Agente.MarcaManual(DateTime dia) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Agente.cs:línea 24
+   en SisPer.Aplicativo.Personal_TerminarHV.CargarComboboxes() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 103
+   en SisPer.Aplicativo.Personal_TerminarHV.Page_Load(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 78
+   en System.Web.UI.Control.OnLoad(EventArgs e)
+   en System.Web.UI.Control.LoadRecursive()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 21/9/2022 11:04:48
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La instancia de ObjectContext se ha desechado y ya no se puede usar para operaciones que requieren una conexión.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_TerminarHV.aspx
+
+TARGETSITE: Void EnsureConnection()
+
+STACKTRACE:    en System.Data.Objects.ObjectContext.EnsureConnection()
+   en System.Data.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   en System.Data.Objects.DataClasses.EntityCollection`1.Load(List`1 collection, MergeOption mergeOption)
+   en System.Data.Objects.DataClasses.RelatedEnd.DeferredLoad()
+   en System.Data.Objects.DataClasses.EntityCollection`1.GetEnumerator()
+   en System.Linq.Enumerable.FirstOrDefault[TSource](IEnumerable`1 source, Func`2 predicate)
+   en SisPer.Aplicativo.Agente.MarcaManual(DateTime dia) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Agente.cs:línea 24
+   en SisPer.Aplicativo.Personal_TerminarHV.CargarComboboxes() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 105
+   en SisPer.Aplicativo.Personal_TerminarHV.Page_Load(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 78
+   en System.Web.UI.Control.OnLoad(EventArgs e)
+   en System.Web.UI.Control.LoadRecursive()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 21/9/2022 12:07:34
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La instancia de ObjectContext se ha desechado y ya no se puede usar para operaciones que requieren una conexión.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_TerminarHV.aspx
+
+TARGETSITE: Void EnsureConnection()
+
+STACKTRACE:    en System.Data.Objects.ObjectContext.EnsureConnection()
+   en System.Data.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   en System.Data.Objects.DataClasses.EntityCollection`1.Load(List`1 collection, MergeOption mergeOption)
+   en System.Data.Objects.DataClasses.RelatedEnd.DeferredLoad()
+   en System.Data.Objects.DataClasses.EntityCollection`1.GetEnumerator()
+   en System.Linq.Enumerable.FirstOrDefault[TSource](IEnumerable`1 source, Func`2 predicate)
+   en SisPer.Aplicativo.Agente.MarcaManual(DateTime dia) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Agente.cs:línea 24
+   en SisPer.Aplicativo.Personal_TerminarHV.CargarComboboxes() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 105
+   en SisPer.Aplicativo.Personal_TerminarHV.Page_Load(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 78
+   en System.Web.UI.Control.OnLoad(EventArgs e)
+   en System.Web.UI.Control.LoadRecursive()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 21/9/2022 12:19:03
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La instancia de ObjectContext se ha desechado y ya no se puede usar para operaciones que requieren una conexión.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_TerminarHV.aspx
+
+TARGETSITE: Void EnsureConnection()
+
+STACKTRACE:    en System.Data.Objects.ObjectContext.EnsureConnection()
+   en System.Data.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   en System.Data.Objects.DataClasses.EntityCollection`1.Load(List`1 collection, MergeOption mergeOption)
+   en System.Data.Objects.DataClasses.RelatedEnd.DeferredLoad()
+   en System.Data.Objects.DataClasses.EntityCollection`1.GetEnumerator()
+   en System.Linq.Enumerable.FirstOrDefault[TSource](IEnumerable`1 source, Func`2 predicate)
+   en SisPer.Aplicativo.Agente.MarcaManual(DateTime dia) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Agente.cs:línea 24
+   en SisPer.Aplicativo.Personal_TerminarHV.CargarComboboxes() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 112
+   en SisPer.Aplicativo.Personal_TerminarHV.Page_Load(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 78
+   en System.Web.UI.Control.OnLoad(EventArgs e)
+   en System.Web.UI.Control.LoadRecursive()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 21/9/2022 12:20:09
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La instancia de ObjectContext se ha desechado y ya no se puede usar para operaciones que requieren una conexión.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_TerminarHV.aspx
+
+TARGETSITE: Void EnsureConnection()
+
+STACKTRACE:    en System.Data.Objects.ObjectContext.EnsureConnection()
+   en System.Data.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   en System.Data.Objects.DataClasses.EntityCollection`1.Load(List`1 collection, MergeOption mergeOption)
+   en System.Data.Objects.DataClasses.RelatedEnd.DeferredLoad()
+   en System.Data.Objects.DataClasses.EntityCollection`1.GetEnumerator()
+   en System.Linq.Enumerable.FirstOrDefault[TSource](IEnumerable`1 source, Func`2 predicate)
+   en SisPer.Aplicativo.Agente.MarcaManual(DateTime dia) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Agente.cs:línea 24
+   en SisPer.Aplicativo.Personal_TerminarHV.CargarComboboxes() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 112
+   en SisPer.Aplicativo.Personal_TerminarHV.Page_Load(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 78
+   en System.Web.UI.Control.OnLoad(EventArgs e)
+   en System.Web.UI.Control.LoadRecursive()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 21/9/2022 12:24:03
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La instancia de ObjectContext se ha desechado y ya no se puede usar para operaciones que requieren una conexión.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_TerminarHV.aspx
+
+TARGETSITE: Void EnsureConnection()
+
+STACKTRACE:    en System.Data.Objects.ObjectContext.EnsureConnection()
+   en System.Data.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   en System.Data.Objects.DataClasses.EntityReference`1.Load(MergeOption mergeOption)
+   en System.Data.Objects.DataClasses.RelatedEnd.DeferredLoad()
+   en System.Data.Objects.DataClasses.EntityReference`1.get_Value()
+   en SisPer.Aplicativo.Agente.get_Area() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Model1.Designer.cs:línea 2852
+   en SisPer.Aplicativo.Agente.MarcaManual(DateTime dia) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Agente.cs:línea 28
+   en SisPer.Aplicativo.Personal_TerminarHV.CargarComboboxes() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 109
+   en SisPer.Aplicativo.Personal_TerminarHV.Page_Load(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 78
+   en System.Web.UI.Control.OnLoad(EventArgs e)
+   en System.Web.UI.Control.LoadRecursive()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 21/9/2022 12:26:31
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La instancia de ObjectContext se ha desechado y ya no se puede usar para operaciones que requieren una conexión.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_TerminarHV.aspx
+
+TARGETSITE: Void EnsureConnection()
+
+STACKTRACE:    en System.Data.Objects.ObjectContext.EnsureConnection()
+   en System.Data.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   en System.Data.Objects.DataClasses.EntityReference`1.Load(MergeOption mergeOption)
+   en System.Data.Objects.DataClasses.RelatedEnd.DeferredLoad()
+   en System.Data.Objects.DataClasses.EntityReference`1.get_Value()
+   en SisPer.Aplicativo.Agente.get_Area() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Model1.Designer.cs:línea 2852
+   en SisPer.Aplicativo.Agente.MarcaManual(DateTime dia) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Agente.cs:línea 28
+   en SisPer.Aplicativo.Personal_TerminarHV.CargarComboboxes() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 109
+   en SisPer.Aplicativo.Personal_TerminarHV.Page_Load(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 78
+   en System.Web.UI.Control.OnLoad(EventArgs e)
+   en System.Web.UI.Control.LoadRecursive()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 21/9/2022 12:27:01
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La instancia de ObjectContext se ha desechado y ya no se puede usar para operaciones que requieren una conexión.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_TerminarHV.aspx
+
+TARGETSITE: Void EnsureConnection()
+
+STACKTRACE:    en System.Data.Objects.ObjectContext.EnsureConnection()
+   en System.Data.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   en System.Data.Objects.DataClasses.EntityReference`1.Load(MergeOption mergeOption)
+   en System.Data.Objects.DataClasses.RelatedEnd.DeferredLoad()
+   en System.Data.Objects.DataClasses.EntityReference`1.get_Value()
+   en SisPer.Aplicativo.Agente.get_Area() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Model1.Designer.cs:línea 2852
+   en SisPer.Aplicativo.Agente.MarcaManual(DateTime dia) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Agente.cs:línea 28
+   en SisPer.Aplicativo.Personal_TerminarHV.CargarComboboxes() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 109
+   en SisPer.Aplicativo.Personal_TerminarHV.Page_Load(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 78
+   en System.Web.UI.Control.OnLoad(EventArgs e)
+   en System.Web.UI.Control.LoadRecursive()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 21/9/2022 12:28:06
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La instancia de ObjectContext se ha desechado y ya no se puede usar para operaciones que requieren una conexión.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_TerminarHV.aspx
+
+TARGETSITE: Void EnsureConnection()
+
+STACKTRACE:    en System.Data.Objects.ObjectContext.EnsureConnection()
+   en System.Data.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   en System.Data.Objects.DataClasses.EntityReference`1.Load(MergeOption mergeOption)
+   en System.Data.Objects.DataClasses.RelatedEnd.DeferredLoad()
+   en System.Data.Objects.DataClasses.EntityReference`1.get_Value()
+   en SisPer.Aplicativo.Agente.get_Area() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Model1.Designer.cs:línea 2852
+   en SisPer.Aplicativo.Agente.MarcaManual(DateTime dia) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Agente.cs:línea 28
+   en SisPer.Aplicativo.Personal_TerminarHV.CargarComboboxes() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 109
+   en SisPer.Aplicativo.Personal_TerminarHV.Page_Load(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 78
+   en System.Web.UI.Control.OnLoad(EventArgs e)
+   en System.Web.UI.Control.LoadRecursive()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 22/9/2022 11:44:52
+
+AGENTE: Motter, Mariela Verónica
+
+MESSAGE: La secuencia no contiene elementos
+
+SOURCE: System.Core
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_TerminarHV.aspx
+
+TARGETSITE: TSource First[TSource](System.Collections.Generic.IEnumerable`1[TSource])
+
+STACKTRACE:    en System.Linq.Enumerable.First[TSource](IEnumerable`1 source)
+   en SisPer.Aplicativo.Personal_TerminarHV.ObtenerMarcacionesResumenDiario(Int32 idAgente, DateTime dia) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 177
+   en SisPer.Aplicativo.Personal_TerminarHV.CargarComboboxes() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 155
+   en SisPer.Aplicativo.Personal_TerminarHV.Page_Load(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 58
+   en System.Web.UI.Control.OnLoad(EventArgs e)
+   en System.Web.UI.Control.LoadRecursive()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 22/9/2022 11:52:41
+
+AGENTE: Motter, Mariela Verónica
+
+MESSAGE: El método no estático necesita un destino.
+
+SOURCE: mscorlib
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_TerminarHV.aspx
+
+TARGETSITE: Void CheckConsistency(System.Object)
+
+STACKTRACE:    en System.Reflection.RuntimeMethodInfo.CheckConsistency(Object target)
+   en System.Reflection.RuntimeMethodInfo.InvokeArgumentsCheck(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   en System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   en System.Reflection.RuntimePropertyInfo.GetValue(Object obj, Object[] index)
+   en System.Data.Objects.ELinq.QueryParameterExpression.TryGetFieldOrPropertyValue(MemberExpression me, Object instance, Object& memberValue)
+   en System.Data.Objects.ELinq.QueryParameterExpression.TryEvaluatePath(Expression expression, ConstantExpression& constantExpression)
+   en System.Data.Objects.ELinq.QueryParameterExpression.EvaluateParameter(Object[] arguments)
+   en System.Data.Objects.ELinq.ELinqQueryState.GetExecutionPlan(Nullable`1 forMergeOption)
+   en System.Data.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   en System.Data.Objects.ObjectQuery`1.System.Collections.Generic.IEnumerable<T>.GetEnumerator()
+   en System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   en System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   en SisPer.Aplicativo.Personal_TerminarHV.ObtenerMarcacionesResumenDiario(Int32 idAgente, DateTime dia) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 181
+   en SisPer.Aplicativo.Personal_TerminarHV.CargarComboboxes() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 155
+   en SisPer.Aplicativo.Personal_TerminarHV.Page_Load(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 58
+   en System.Web.UI.Control.OnLoad(EventArgs e)
+   en System.Web.UI.Control.LoadRecursive()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 22/9/2022 11:55:17
+
+AGENTE: Motter, Mariela Verónica
+
+MESSAGE: Referencia a objeto no establecida como instancia de un objeto.
+
+SOURCE: SisPer
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_TerminarHV.aspx
+
+TARGETSITE: Void Page_Load(System.Object, System.EventArgs)
+
+STACKTRACE:    en SisPer.Aplicativo.Personal_TerminarHV.Page_Load(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 84
+   en System.Web.UI.Control.OnLoad(EventArgs e)
+   en System.Web.UI.Control.LoadRecursive()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 22/9/2022 12:43:49
+
+AGENTE: Fernandez, Alejandro Martín
+
+MESSAGE: Referencia a objeto no establecida como instancia de un objeto.
+
+SOURCE: SisPer
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/aplicativo/mainagente.aspx
+
+TARGETSITE: Void CargarMarcacionesFecha()
+
+STACKTRACE:    en SisPer.Aplicativo.MainAgente.CargarMarcacionesFecha() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\MainAgente.aspx.cs:línea 1018
+   en SisPer.Aplicativo.MainAgente.Calendar1_SelectionChanged(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\MainAgente.aspx.cs:línea 1009
+   en System.Web.UI.WebControls.Calendar.OnSelectionChanged()
+   en System.Web.UI.WebControls.Calendar.SelectRange(DateTime dateFrom, DateTime dateTo)
+   en System.Web.UI.WebControls.Calendar.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 22/9/2022 12:47:43
+
+AGENTE: Fernandez, Alejandro Martín
+
+MESSAGE: No se pudo cargar viewstate. El árbol de control en que se está cargando viewstate debe coincidir con el árbol de control que se utilizó para guardar viewstate durante la solicitud anterior. Por ejemplo, al agregar controles de forma dinámica, los controles agregados durante una devolución deben coincidir con el tipo y posición de los controles agregados durante la solicitud inicial.
+
+SOURCE: System.Web
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainAgente.aspx
+
+TARGETSITE: Void LoadViewStateRecursive(System.Object)
+
+STACKTRACE:    en System.Web.UI.Control.LoadViewStateRecursive(Object savedState)
+   en System.Web.UI.Control.LoadChildViewStateByIndex(ArrayList childState)
+   en System.Web.UI.Control.LoadViewStateRecursive(Object savedState)
+   en System.Web.UI.Control.LoadChildViewStateByIndex(ArrayList childState)
+   en System.Web.UI.Control.LoadViewStateRecursive(Object savedState)
+   en System.Web.UI.Control.LoadChildViewStateByIndex(ArrayList childState)
+   en System.Web.UI.Control.LoadViewStateRecursive(Object savedState)
+   en System.Web.UI.Control.LoadChildViewStateByIndex(ArrayList childState)
+   en System.Web.UI.Control.LoadViewStateRecursive(Object savedState)
+   en System.Web.UI.Page.LoadAllState()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 24/11/2022 07:46:09
+
+MESSAGE: 
+Aplicativo.Model1.msl(163,10) : error 3004: Hay un problema con los fragmentos de asignación a partir de la línea 163:No se especificó ninguna asignación para las propiedades CierreMensual.HorasMes en Establecer CierreMensual.
+Una entidad con clave (PK) no será de ida y vuelta cuando:
+  Entidad is type [Model1.CierreMensual]
+
+Aplicativo.Model1.msl(702,10) : error 3004: Hay un problema con los fragmentos de asignación a partir de la línea 702:No se especificó ninguna asignación para las propiedades Modificacion_cierre_mes.HorasMes en Establecer Modificaciones_cierres_meses.
+Una entidad con clave (PK) no será de ida y vuelta cuando:
+  Entidad is type [Model1.Modificacion_cierre_mes]
+
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/default.aspx
+
+TARGETSITE: Void SerializedGenerateViews(System.Data.Mapping.StorageEntityContainerMapping, System.Collections.Generic.Dictionary`2[System.Data.Metadata.Edm.EntitySetBase,System.Data.Mapping.ViewGeneration.GeneratedView])
+
+STACKTRACE:    en System.Data.Mapping.StorageMappingItemCollection.ViewDictionary.SerializedGenerateViews(StorageEntityContainerMapping entityContainerMap, Dictionary`2 resultDictionary)
+   en System.Data.Mapping.StorageMappingItemCollection.ViewDictionary.SerializedGetGeneratedViews(EntityContainer container)
+   en System.Data.Common.Utils.Memoizer`2.Result.GetValue()
+   en System.Data.Common.Utils.Memoizer`2.Evaluate(TArg arg)
+   en System.Data.Mapping.StorageMappingItemCollection.ViewDictionary.GetGeneratedView(EntitySetBase extent, MetadataWorkspace workspace, StorageMappingItemCollection storageMappingItemCollection)
+   en System.Data.Metadata.Edm.MetadataWorkspace.GetGeneratedView(EntitySetBase extent)
+   en System.Data.Query.PlanCompiler.PreProcessor.ExpandView(Node node, ScanTableOp scanTableOp, IsOfOp& typeFilter)
+   en System.Data.Query.PlanCompiler.PreProcessor.ProcessScanTable(Node scanTableNode, ScanTableOp scanTableOp, IsOfOp& typeFilter)
+   en System.Data.Query.PlanCompiler.PreProcessor.Visit(ScanTableOp op, Node n)
+   en System.Data.Query.PlanCompiler.SubqueryTrackingVisitor.VisitChildren(Node n)
+   en System.Data.Query.PlanCompiler.SubqueryTrackingVisitor.VisitRelOpDefault(RelOp op, Node n)
+   en System.Data.Query.PlanCompiler.SubqueryTrackingVisitor.VisitChildren(Node n)
+   en System.Data.Query.InternalTrees.BasicOpVisitorOfNode.VisitDefault(Node n)
+   en System.Data.Query.PlanCompiler.PreProcessor.Process(Dictionary`2& tvfResultKeys)
+   en System.Data.Query.PlanCompiler.PreProcessor.Process(PlanCompiler planCompilerState, StructuredTypeInfo& typeInfo, Dictionary`2& tvfResultKeys)
+   en System.Data.Query.PlanCompiler.PlanCompiler.Compile(List`1& providerCommands, ColumnMap& resultColumnMap, Int32& columnCount, Set`1& entitySets)
+   en System.Data.EntityClient.EntityCommandDefinition..ctor(DbProviderFactory storeProviderFactory, DbCommandTree commandTree)
+
+
+******************************************************************

@@ -904,6 +904,7 @@
     <Content Include="Imagenes\nuevo_logo.jpg" />
     <Content Include="Imagenes\ok.png" />
     <Content Include="Imagenes\page_white_add.png" />
+    <Content Include="Imagenes\page_white_gear.png" />
     <Content Include="Imagenes\pencil.png" />
     <Content Include="Imagenes\report_user.png" />
     <Content Include="Imagenes\time_add.png" />
@@ -1728,6 +1729,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RegistroDeFichadas_DS.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Aplicativo\Reportes\ReporteMensualFichadasHoras.cs" />
     <Compile Include="Aplicativo\Reportes\ReportePDF.aspx.cs">
       <DependentUpon>ReportePDF.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

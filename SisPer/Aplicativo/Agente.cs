@@ -13,6 +13,39 @@ namespace SisPer.Aplicativo
     public partial class Agente
     {
         /// <summary>
+        /// Determina si el agante puede registrar marcaciones con hora del servidor el dia pasado por parametro
+        /// </summary>
+        /// <param name="dia"></param>
+        /// <returns></returns>
+        public bool MarcaManual(DateTime dia)
+        {
+            bool ret = false;
+
+            using (var cxt = new Model1Container())
+            {
+                var aux = cxt.Agentes.Include("DiasAutorizadoRemoto").Include("Area").First(x => x.Id == this.Id);
+                ret = aux.DiasAutorizadoRemoto.FirstOrDefault(dar => dar.Dia == dia) != null;
+                ret = ret || aux.Area.Interior == true;
+            }
+            
+            return ret;
+        }
+
+
+        //Crear una funcion que determine si el agente es jefe de un agente dado
+        public bool EsJefeDe(int idAgentesubordinado)
+        {
+            bool ret = false;
+            if (this.Jefe || this.JefeTemporal)
+            {
+                List<Agente> agentesSubordinados = ObtenerAgentesSubordinadosCascada(true);
+                ret = agentesSubordinados.FirstOrDefault(a => a.Id == idAgentesubordinado) != null;
+            }
+
+            return ret;
+        }
+
+        /// <summary>
         /// Obtiene los agentes subordinados directos incluidos los jefes de las areas que depeden del mismo.
         /// </summary>
         /// <returns>Lista de agentes.</returns>
@@ -124,7 +157,7 @@ namespace SisPer.Aplicativo
 
         private string ObtenerEstadoActual(int id)
         {
-            string estado = string.Empty; 
+            string estado = string.Empty;
 
             using (var cxt = new Model1Container())
             {
@@ -220,7 +253,7 @@ namespace SisPer.Aplicativo
                         }
                     }
                     catch { }
-                    
+
 
                     if (estado == null && cxt.Feriados.FirstOrDefault(f => f.Dia == d) != null)
                     {
@@ -273,10 +306,15 @@ namespace SisPer.Aplicativo
             return estado;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dia"></param>
+        /// <returns></returns>
         public ResumenDiario ObtenerResumenDiario(DateTime dia)
         {
             Model1Container cxt = new Model1Container();
-            return cxt.ResumenesDiarios.FirstOrDefault(rd => rd.AgenteId == this.Id && rd.Dia == dia);
+            return cxt.ResumenesDiarios.Include("MovimientosHoras").Include("Marcaciones").FirstOrDefault(rd => rd.AgenteId == this.Id && rd.Dia == dia);
         }
 
         /// <summary>

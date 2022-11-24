@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SisPer.Aplicativo.Controles;
+using SisPer.Aplicativo.Reportes;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -573,6 +575,25 @@ namespace SisPer.Aplicativo
             return ret;
         }
 
+        protected void btn_administrar_hv_Click(object sender, ImageClickEventArgs e)
+        {
+            int id_hv = int.Parse(((ImageButton)sender).CommandArgument);
+
+            using (var cxt = new Model1Container())
+            {
+                HorarioVespertino hv = cxt.HorariosVespertinos.First(x=>x.Id == id_hv);
+
+                if (hv.Estado == EstadosHorarioVespertino.Aprobado)
+                {
+                    Session["Id"] = ((ImageButton)sender).CommandArgument;
+
+                    Response.Redirect("~/Aplicativo/Personal_TerminarHV.aspx");
+                }
+
+            }
+            MessageBox.Show(this, "Puede administrar únicamente horarios vespertinos con estado Aprobado.-", MessageBox.Tipo_MessageBox.Danger);
+            
+        }
 
         #endregion
 
@@ -811,7 +832,7 @@ namespace SisPer.Aplicativo
             Model1Container cxt = new Model1Container();
             Agente agenteDelContexto = cxt.Agentes.First(a => a.Id == ag.Id);
             TipoEstadoAgente tea = cxt.TiposEstadoAgente.FirstOrDefault(tt => tt.Estado == "Razones particulares");
-            
+
 
             var items = (from fc in agenteDelContexto.Francos
                          where ((fc.FechaSolicitud.Month == DateTime.Today.Month) && (fc.FechaSolicitud.Year == DateTime.Today.Year))
@@ -1010,58 +1031,53 @@ namespace SisPer.Aplicativo
                 gv_Huellas.DataBind();
 
                 EntradaSalida es = ag.EntradasSalidas.FirstOrDefault(eess => eess.Fecha == Calendar1.SelectedDate);
-                //Area area = ag.Area;
-                if (ag.DiasAutorizadoRemoto.FirstOrDefault(dar => dar.Dia == Calendar1.SelectedDate) != null)
+
+                if (ag.MarcaManual(Calendar1.SelectedDate))
                 {
-                    if ((es != null && !es.CerradoPersonal && (es.Enviado ?? false) == false) || es == null)
+                    div_ES.Visible = true;
+
+                    if (es != null)
                     {
-                        div_ES.Visible = true;
-                        if (es != null)
+                        if (es.Entrada == "00:00")
                         {
-                            h_entrada.Value = es.Entrada;
-                            h_salida.Value = es.Salida;
+                            btn_registrar_entrada_laboral.Visible = true;
+                            lbl_hora_entrada_manual_registrada.Visible = false;
                         }
                         else
                         {
-                            h_entrada.Value = string.Empty;
-                            h_salida.Value = string.Empty;
+                            btn_registrar_entrada_laboral.Visible = false;
+                            lbl_hora_entrada_manual_registrada.Visible = true;
+
+                            lbl_hora_entrada_manual_registrada.Text = es.Entrada;
+                        }
+
+                        if (es.Salida == "00:00")
+                        {
+                            btn_registrar_salida_laboral.Visible = true;
+                            lbl_hora_salida_manual_registrada.Visible = false;
+                        }
+                        else
+                        {
+                            btn_registrar_salida_laboral.Visible = false;
+                            lbl_hora_salida_manual_registrada.Visible = true;
+
+                            lbl_hora_salida_manual_registrada.Text = es.Salida;
                         }
                     }
                     else
                     {
-                        div_ES.Visible = false;
+                        btn_registrar_entrada_laboral.Visible = true;
+                        lbl_hora_entrada_manual_registrada.Visible = false;
+
+                        btn_registrar_salida_laboral.Visible = true;
+                        lbl_hora_salida_manual_registrada.Visible = false;
                     }
+
                 }
                 else
                 {
                     div_ES.Visible = false;
                 }
-
-                //if ((area.Interior ?? false) == true)
-                //{
-                //    if ((es != null && !es.CerradoPersonal && (es.Enviado ?? false) == false) || es == null)
-                //    {
-                //        div_ES.Visible = true;
-                //        if (es != null)
-                //        {
-                //            h_entrada.Value = es.Entrada;
-                //            h_salida.Value = es.Salida;
-                //        }
-                //        else
-                //        {
-                //            h_entrada.Value = string.Empty;
-                //            h_salida.Value = string.Empty;
-                //        }
-                //    }
-                //    else
-                //    {
-                //        div_ES.Visible = false;
-                //    }
-                //}
-                //else
-                //{
-                //    div_ES.Visible = false;
-                //}
             }
         }
 
@@ -1071,73 +1087,138 @@ namespace SisPer.Aplicativo
             CargarMarcacionesFecha();
         }
 
-        protected void btn_GuardarMarcacionES_Click(object sender, EventArgs e)
+        protected void btn_registrar_entrada_laboral_Click(object sender, EventArgs e)
         {
-            Page.Validate("MarcacionesES");
-            if (IsValid)
+            if (Calendar1.SelectedDate == DateTime.Today)
             {
-                GuardarES();
-                div_ES.Visible = false;
-            }
-        }
+                Model1Container cxt = new Model1Container();
+                Agente ag = Session["Agente"] as Agente;
+                Agente agCxt = cxt.Agentes.First(a => a.Id == ag.Id);
+                string hora_Entrada = DateTime.Now.ToString("hh:mm");
 
-        protected void cv_puedemodificar_ServerValidate(object source, ServerValidateEventArgs args)
-        {
-            Agente ag = Session["UsuarioLogueado"] as Agente;
-
-            List<Agente> agentes = ag.Area.Agentes.Where(aa => !aa.Jefe).ToList();
-
-            bool enviado = false;
-
-            DateTime diaSeleccionado = Calendar1.SelectedDate;
-
-            foreach (Agente item in agentes)
-            {
-                EntradaSalida es = item.EntradasSalidas.FirstOrDefault(io => io.Fecha == diaSeleccionado);
-                if (es != null)
+                ResumenDiario rd = agCxt.ObtenerResumenDiario(Calendar1.SelectedDate);
+                if (rd == null)
                 {
-                    enviado = (es.Enviado ?? false) == true;
-                    break;
+                    rd = new ResumenDiario()
+                    {
+                        Dia = Calendar1.SelectedDate,
+                        Horas = "00:00",
+                        AgenteId = ag.Id,
+                        HEntrada = "00:00",
+                        HSalida = "00:00",
+                        HVEnt = "00:00",
+                        HVSal = "00:00",
+                        MarcoTardanza = false,
+                        MarcoProlongJornada = false,
+                        Inconsistente = false,
+                        ObservacionInconsistente = "",
+                        Cerrado = false,
+                        AcumuloHorasBonificacion = "00:00",
+                        AcumuloHorasAnioActual = "00:00",
+                        AcumuloHorasMes = "00:00",
+                        AgenteId1 = null
+                    };
+
+                    cxt.ResumenesDiarios.AddObject(rd);
+                    cxt.SaveChanges();
                 }
-            }
+                
+                rd.HEntrada = hora_Entrada;
 
-            args.IsValid = !enviado;
-        }
+                Marcacion marcacion = new Marcacion()
+                {
+                    Hora = hora_Entrada,
+                    Manual = true,
+                    Anulada = false,
+                    ResumenDiarioId = rd.Id
+                };
+                
+                cxt.Marcaciones.AddObject(marcacion);
 
-        private void GuardarES()
-        {
-            Model1Container cxt = new Model1Container();
-            Agente ag = Session["Agente"] as Agente;
-            Agente agCxt = cxt.Agentes.First(a => a.Id == ag.Id);
+                EntradaSalida e_s = agCxt.EntradasSalidas.FirstOrDefault(io => io.Fecha == Calendar1.SelectedDate);
 
-            EntradaSalida e_s = agCxt.EntradasSalidas.FirstOrDefault(io => io.Fecha == Calendar1.SelectedDate);
+                if (e_s == null)
+                {
+                    e_s = new EntradaSalida();
+                    e_s.Fecha = Calendar1.SelectedDate;
+                    e_s.Entrada = "00:00";
+                    e_s.Salida = "00:00";
+                    cxt.EntradasSalidas.AddObject(e_s);
+                }
 
-            if (e_s == null)
-            {
-                e_s = new EntradaSalida();
-                cxt.EntradasSalidas.AddObject(e_s);
-            }
-
-            string hora_Entrada = h_entrada.Value.Length == 4 ? "0" + h_entrada.Value : h_entrada.Value;
-            string Hora_Salida = h_salida.Value.Length == 4 ? "0" + h_salida.Value : h_salida.Value;
-
-            h_entrada.Value = string.Empty;
-            h_salida.Value = string.Empty;
-
-            if (!e_s.CerradoPersonal)
-            {
-                e_s.Fecha = Calendar1.SelectedDate;
                 e_s.Entrada = hora_Entrada;
-                e_s.Salida = Hora_Salida;
                 e_s.AgenteId = ag.Id;
                 e_s.AgenteId1 = ag.Id;
-                e_s.Enviado = false;
-                e_s.CerradoPersonal = false;
+                e_s.Enviado = true;
+                e_s.CerradoPersonal = true;
+
+                cxt.SaveChanges();
+
+                btn_registrar_entrada_laboral.Visible = false;
+                lbl_hora_entrada_manual_registrada.Visible = true;
+                lbl_hora_entrada_manual_registrada.Text = e_s.Entrada;
+
+                Session["Agente"] = cxt.Agentes.FirstOrDefault(a => a.Id == ag.Id);
             }
+            else
+            {
+                MessageBox.Show(this, "No esta permitido ingresar registros en fechas distintas a la actual.", MessageBox.Tipo_MessageBox.Danger, "No es posible registrar movimiento");
+            }
+        }
 
-            cxt.SaveChanges();
+        protected void btn_registrar_salida_laboral_Click(object sender, EventArgs e)
+        {
+            if (Calendar1.SelectedDate == DateTime.Today)
+            {
+                Model1Container cxt = new Model1Container();
+                Agente ag = Session["Agente"] as Agente;
+                Agente agCxt = cxt.Agentes.First(a => a.Id == ag.Id);
 
-            Session["Agente"] = cxt.Agentes.FirstOrDefault(a => a.Id == ag.Id);
+                EntradaSalida e_s = agCxt.EntradasSalidas.FirstOrDefault(io => io.Fecha == Calendar1.SelectedDate);
+
+                if (e_s == null)
+                {
+                    MessageBox.Show(this, "Debe registrar primero la entrada!", MessageBox.Tipo_MessageBox.Danger);
+                }
+                else
+                {
+                    string hora_Entrada = e_s.Entrada;
+                    string Hora_Salida = DateTime.Now.ToString("hh:mm");
+
+                    ResumenDiario rd = agCxt.ObtenerResumenDiario(Calendar1.SelectedDate);
+                    rd.HSalida = Hora_Salida;
+
+                    Marcacion marcacion = new Marcacion()
+                    {
+                        Hora = Hora_Salida,
+                        Manual = true,
+                        Anulada = false,
+                        ResumenDiarioId = rd.Id
+                    };
+
+                    cxt.Marcaciones.AddObject(marcacion);
+
+                    e_s.Fecha = Calendar1.SelectedDate;
+                    e_s.Entrada = hora_Entrada;
+                    e_s.Salida = Hora_Salida;
+                    e_s.AgenteId = ag.Id;
+                    e_s.AgenteId1 = ag.Id;
+                    e_s.Enviado = true;
+                    e_s.CerradoPersonal = true;
+
+                    cxt.SaveChanges();
+
+                    btn_registrar_salida_laboral.Visible = false;
+                    lbl_hora_salida_manual_registrada.Visible = true;
+                    lbl_hora_salida_manual_registrada.Text = e_s.Salida;
+
+                    Session["Agente"] = cxt.Agentes.FirstOrDefault(a => a.Id == ag.Id);
+                }
+            }
+            else
+            {
+                MessageBox.Show(this, "No esta permitido ingresar registros en fechas distintas a la actual.", MessageBox.Tipo_MessageBox.Danger, "No es posible registrar movimiento");
+            }
         }
 
         #endregion
@@ -1198,7 +1279,7 @@ namespace SisPer.Aplicativo
             }
             else
             {//Si no es el mismo tiene que ser el jefe o alguien de Personal ver si puede editar algo o que quede en manos de personal unicamente
-                //por ahora lo dejo en manos de personal asi que cualquiera de los dos caminos muestra lo mismo
+             //por ahora lo dejo en manos de personal asi que cualquiera de los dos caminos muestra lo mismo
                 using (var cxt = new Model1Container())
                 {
                     int id_rd = Convert.ToInt32(((ImageButton)sender).CommandArgument);
@@ -1226,11 +1307,6 @@ namespace SisPer.Aplicativo
                 gv_dias_sin_cerrar.HeaderRow.TableSection = TableRowSection.TableHeader;
             }
         }
-
-
-
-
-
 
 
         #endregion

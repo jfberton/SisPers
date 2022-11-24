@@ -681,67 +681,40 @@ namespace SisPer.Aplicativo
         protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary5;
 
         /// <summary>
-        /// Control h_entrada.
+        /// Control btn_registrar_entrada_laboral.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText h_entrada;
+        protected global::System.Web.UI.WebControls.Button btn_registrar_entrada_laboral;
 
         /// <summary>
-        /// Control cv_puedemodificar.
+        /// Control lbl_hora_entrada_manual_registrada.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator cv_puedemodificar;
+        protected global::System.Web.UI.WebControls.Label lbl_hora_entrada_manual_registrada;
 
         /// <summary>
-        /// Control RequiredFieldValidator.
+        /// Control btn_registrar_salida_laboral.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator;
+        protected global::System.Web.UI.WebControls.Button btn_registrar_salida_laboral;
 
         /// <summary>
-        /// Control RegularExpressionValidator3.
+        /// Control lbl_hora_salida_manual_registrada.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator3;
-
-        /// <summary>
-        /// Control h_salida.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText h_salida;
-
-        /// <summary>
-        /// Control RegularExpressionValidator4.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator4;
-
-        /// <summary>
-        /// Control btn_GuardarMarcacionES.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_GuardarMarcacionES;
+        protected global::System.Web.UI.WebControls.Label lbl_hora_salida_manual_registrada;
 
         /// <summary>
         /// Control gv_dias_sin_cerrar.

@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Drawing;
 using Microsoft.Reporting.WebForms;
+using SisPer.Aplicativo.Reportes;
 
 namespace SisPer.Aplicativo
 {
@@ -612,5 +613,19 @@ namespace SisPer.Aplicativo
             return ret;
         }
 
+        protected void ImprirPlanilla_Click(object sender, EventArgs e)
+        {
+            Agente ag = DatosAgente1.Agente;
+            List<Agente> agentes = new List<Agente>();
+            agentes.Add(ag);
+            ReporteMensualFichadasHoras rp = new ReporteMensualFichadasHoras(agentes, Calendar1.SelectedDate.Month, Calendar1.SelectedDate.Year);
+
+            byte[] pdf = rp.GenerarPDFAsistenciaMensual();
+            Session["Bytes"] = pdf;
+
+            string script = "<script type='text/javascript'>window.open('Reportes/ReportePDF.aspx');</script>";
+            Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "VentanaPadre", script);
+
+        }
     }
 }

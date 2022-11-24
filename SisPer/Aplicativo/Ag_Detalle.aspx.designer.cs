@@ -7,11 +7,13 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace SisPer.Aplicativo {
-    
-    
-    public partial class Ag_Detalle {
-        
+namespace SisPer.Aplicativo
+{
+
+
+    public partial class Ag_Detalle
+    {
+
         /// <summary>
         /// Control MenuPersonalAgente1.
         /// </summary>
@@ -20,7 +22,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::SisPer.Aplicativo.Menues.MenuPersonalAgente MenuPersonalAgente1;
-        
+
         /// <summary>
         /// Control MenuPersonalJefe1.
         /// </summary>
@@ -29,7 +31,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::SisPer.Aplicativo.Menues.MenuPersonalJefe MenuPersonalJefe1;
-        
+
         /// <summary>
         /// Control MenuJefe1.
         /// </summary>
@@ -38,7 +40,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::SisPer.Aplicativo.Menues.MenuJefe MenuJefe1;
-        
+
         /// <summary>
         /// Control MenuAgente1.
         /// </summary>
@@ -47,7 +49,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::SisPer.Aplicativo.Menues.MenuAgente MenuAgente1;
-        
+
         /// <summary>
         /// Control DatosAgente1.
         /// </summary>
@@ -56,7 +58,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::SisPer.Aplicativo.Controles.DatosAgente DatosAgente1;
-        
+
         /// <summary>
         /// Control lbl_EstadoFuera.
         /// </summary>
@@ -65,7 +67,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_EstadoFuera;
-        
+
         /// <summary>
         /// Control lbl_mes.
         /// </summary>
@@ -74,7 +76,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_mes;
-        
+
         /// <summary>
         /// Control Calendar1.
         /// </summary>
@@ -83,7 +85,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Calendar Calendar1;
-        
+
         /// <summary>
         /// Control Label1.
         /// </summary>
@@ -92,7 +94,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label1;
-        
+
         /// <summary>
         /// Control lbl_cierre_mes_cerrado.
         /// </summary>
@@ -101,7 +103,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_cierre_mes_cerrado;
-        
+
         /// <summary>
         /// Control lbl_cierre_fecha_cierre.
         /// </summary>
@@ -110,7 +112,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_cierre_fecha_cierre;
-        
+
         /// <summary>
         /// Control lbl_cierre_horas_anio_anterior.
         /// </summary>
@@ -119,7 +121,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_cierre_horas_anio_anterior;
-        
+
         /// <summary>
         /// Control lbl_cierre_horas_anio_actual.
         /// </summary>
@@ -128,7 +130,16 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_cierre_horas_anio_actual;
-        
+
+        /// <summary>
+        /// Control ImprirPlanilla.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ImprirPlanilla;
+
         /// <summary>
         /// Control lbl_cierre_tardanzas.
         /// </summary>
@@ -137,7 +148,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_cierre_tardanzas;
-        
+
         /// <summary>
         /// Control gv_tardanzas_mes.
         /// </summary>
@@ -146,7 +157,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gv_tardanzas_mes;
-        
+
         /// <summary>
         /// Control lbl_cierre_acumulado_mes.
         /// </summary>
@@ -155,7 +166,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_cierre_acumulado_mes;
-        
+
         /// <summary>
         /// Control gv_detalle_movimiento.
         /// </summary>
@@ -164,7 +175,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gv_detalle_movimiento;
-        
+
         /// <summary>
         /// Control btn_imprimir_detalle_mes.
         /// </summary>
@@ -173,7 +184,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlButton btn_imprimir_detalle_mes;
-        
+
         /// <summary>
         /// Control div_modificaciones.
         /// </summary>
@@ -182,7 +193,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_modificaciones;
-        
+
         /// <summary>
         /// Control gv_modificaciones.
         /// </summary>
@@ -191,7 +202,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gv_modificaciones;
-        
+
         /// <summary>
         /// Control lbl_Dia.
         /// </summary>
@@ -200,7 +211,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_Dia;
-        
+
         /// <summary>
         /// Control GridViewHorasDia.
         /// </summary>
@@ -209,7 +220,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GridViewHorasDia;
-        
+
         /// <summary>
         /// Control lbl_totalHorasFechaSeleccionada.
         /// </summary>
@@ -218,7 +229,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_totalHorasFechaSeleccionada;
-        
+
         /// <summary>
         /// Control C_LicAnioAnterior.
         /// </summary>
@@ -227,7 +238,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::SisPer.Aplicativo.Controles.Licencia C_LicAnioAnterior;
-        
+
         /// <summary>
         /// Control C_LicAnioEnCurso.
         /// </summary>
@@ -236,7 +247,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::SisPer.Aplicativo.Controles.Licencia C_LicAnioEnCurso;
-        
+
         /// <summary>
         /// Control C_LicEspInvierno.
         /// </summary>
@@ -245,7 +256,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::SisPer.Aplicativo.Controles.Licencia C_LicEspInvierno;
-        
+
         /// <summary>
         /// Control C_LicEnfComun.
         /// </summary>
@@ -254,7 +265,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::SisPer.Aplicativo.Controles.Licencia C_LicEnfComun;
-        
+
         /// <summary>
         /// Control C_LicEnfFamiliar.
         /// </summary>
@@ -263,7 +274,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::SisPer.Aplicativo.Controles.Licencia C_LicEnfFamiliar;
-        
+
         /// <summary>
         /// Control lbl_EnfermedadCGFE.
         /// </summary>
@@ -272,7 +283,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_EnfermedadCGFE;
-        
+
         /// <summary>
         /// Control lbl_EnfermedadSGFE.
         /// </summary>

@@ -117,7 +117,8 @@
                                                             </div>
                                                         </div>
                                                         <br />
-                                                        <div class="row">
+                                                         <asp:Button Text="Imprimir detalle mensual" ID="ImprirPlanilla" CssClass="btn btn-btn-default" OnClick="ImprirPlanilla_Click" runat="server" />
+                                                        <div class="row" style="visibility:hidden">
                                                             <div class="col-md-6"><b>Tardanzas del mes</b></div>
                                                             <div class="col-md-6">
                                                                 <asp:Label Text="" ID="lbl_cierre_tardanzas" runat="server" />&nbsp;&nbsp;<a data-toggle="modal" data-target="#ver_tardanzas_mes"><img src="../Imagenes/bullet_go.png" /></a>
@@ -152,7 +153,7 @@
                                                             </div>
                                                         </div>
                                                         <br />
-                                                        <div class="row">
+                                                        <div class="row" style="visibility:hidden">
                                                             <div class="col-md-6"><b>Acumulado neto mes</b></div>
                                                             <div class="col-md-6">
                                                                 <asp:Label Text="" ID="lbl_cierre_acumulado_mes" runat="server" />&nbsp;&nbsp;<a data-toggle="modal" data-target="#ver_detalle_mes"><img src="../Imagenes/bullet_go.png" /></a>

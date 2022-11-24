@@ -61,6 +61,12 @@ namespace SisPer.Aplicativo
 
             if (legajo != 0)
             {
+                using (var cxt = new Model1Container())
+                {
+                    Agente ag = cxt.Agentes.FirstOrDefault(aagg => aagg.Legajo == legajo && aagg.FechaBaja == null);
+                    cxt.sp_obtener_resumen_diario_agente_fecha(ag.Id, fechaSeleccionada.ToShortDateString()).First();
+                }
+                    
                 ds = ProcesosGlobales.ObtenerMarcaciones(fechaSeleccionada, legajo.ToString());
                 lbl_tituloGrilla.Text += " - Legajo " + legajo.ToString();
             }

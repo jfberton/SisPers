@@ -1148,7 +1148,7 @@ namespace SisPer.Aplicativo
 
                 using (Model1Container cxt = new Model1Container())
                 {
-                    //Marcaciones .
+                    //Marcaciones.
                     var resumenDiarioSinDigitalNiAnuladas = (from mm in cxt.Marcaciones
                                                              where
                                                              !mm.Anulada &&
@@ -1664,7 +1664,7 @@ namespace SisPer.Aplicativo
                                 //Si no se acumulo el mes y el agente tenia agendado en el dia un movimiento de horas por cumplir antes de que se le agendara la justificacion de ausencia debo quitar el mismo y redistribuir las horas
                                 if ((hmf == null || (hmf.AcumuladoEnTotalAnual ?? false) == false))
                                 {
-                                    MovimientoHora mh = rd.MovimientosHoras.FirstOrDefault(m => m.Descripcion == "" && m.Tipo.Tipo == "Horas por trabajar");
+                                    MovimientoHora mh = rd.MovimientosHoras.FirstOrDefault(m => m.Descripcion == "" && m.Tipo.Tipo == "Horas jornada por trabajar");
                                     if (mh != null)
                                     {
                                         cxt.MovimientosHoras.DeleteObject(mh);
@@ -1687,11 +1687,11 @@ namespace SisPer.Aplicativo
                             {
                                 //si no tiene estado justificando ausencia (feriados, fin de semana, etc) debe cumplir xx:xx cantidad de horas diarias
 
-                                MovimientoHora mh = rd.MovimientosHoras.FirstOrDefault(m => m.Descripcion == "" && m.Tipo.Tipo == "Horas por trabajar");
+                                MovimientoHora mh = rd.MovimientosHoras.FirstOrDefault(m => m.Descripcion == "" && m.Tipo.Tipo == "Horas jornada por trabajar");
 
                                 if (mh == null)
                                 {
-                                    TipoMovimientoHora tmh = cxt.TiposMovimientosHora.FirstOrDefault(tm => tm.Tipo == "Horas por trabajar");
+                                    TipoMovimientoHora tmh = cxt.TiposMovimientosHora.FirstOrDefault(tm => tm.Tipo == "Horas jornada por trabajar");
                                     AgendarMovimientoHoraEnResumenDiario(rd.Dia, rd.Agente, rd.Agente, "06:30", tmh, "");
                                 }
 

@@ -224,6 +224,11 @@ namespace SisPer.Aplicativo
                 ret = "-" + CalcularRestaAMenosB(sustraendo, minuendo);
             }
 
+            if (ret == "-000:00")
+            {
+                ret = "00:00";
+            }
+            
             return ret;
         }
 

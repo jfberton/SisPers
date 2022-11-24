@@ -29,7 +29,7 @@ namespace SisPer.Aplicativo
         /// Método para encriptar un texto plano usando el algoritmo (Rijndael)
         /// </summary>
         /// <returns>Texto encriptado</returns>
-        public static string Encriptar(string textoQueEncriptaremos, string passBase, string saltValue, string hashAlgorithm, int passwordIterations, string initVector, int keySize)
+        private static string Encriptar(string textoQueEncriptaremos, string passBase, string saltValue, string hashAlgorithm, int passwordIterations, string initVector, int keySize)
         {
             byte[] initVectorBytes = Encoding.ASCII.GetBytes(initVector);
             byte[] saltValueBytes = Encoding.ASCII.GetBytes(saltValue);
@@ -69,7 +69,7 @@ namespace SisPer.Aplicativo
         /// Método para desencriptar un texto encriptado (Rijndael)
         /// </summary>
         /// <returns>Texto desencriptado</returns>
-        public static string Desencriptar(string textoEncriptado, string passBase, string saltValue, string hashAlgorithm, int passwordIterations, string initVector, int keySize)
+        private static string Desencriptar(string textoEncriptado, string passBase, string saltValue, string hashAlgorithm, int passwordIterations, string initVector, int keySize)
         {
             try
             {

@@ -11,27 +11,26 @@
 <%@ Register Src="~/Aplicativo/Controles/AdministrarDiaAgente.ascx" TagPrefix="uc1" TagName="AdministrarDiaAgente" %>
 <%@ Register Src="~/Aplicativo/Controles/VisualizarDiaAgente.ascx" TagPrefix="uc1" TagName="VisualizarDiaAgente" %>
 
-
-
-
 <script runat="server" type="text/c#">
     protected void Timer1_Tick(object sender, EventArgs e)
     {
         lbl_HorasCorridas.Text = SisPer.Aplicativo.HorasString.RestarHoras(DateTime.Now.ToString("HH:mm"), lbl_HoraSalida.Text);
     }
 </script>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderMenu" runat="server">
     <uc5:MenuPersonalJefe ID="MenuPersonalJefe1" runat="server" Visible="false" />
     <uc4:MenuPersonalAgente ID="MenuPersonalAgente1" runat="server" Visible="false" />
     <uc3:MenuJefe ID="MenuJefe1" runat="server" Visible="false" />
     <uc2:MenuAgente ID="MenuAgente1" runat="server" Visible="false" />
 </asp:Content>
+
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container">
         <uc1:MensageBienvenida runat="server" ID="MensageBienvenida" />
-                    
         <uc1:DatosAgente ID="DatosAgente1" runat="server" />
 
         <div class="row">
@@ -44,6 +43,7 @@
 
         <div class="row">
             <div class="col-md-6">
+                <%--Salidas diarias--%>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Salidas diarias</h3>
@@ -144,7 +144,9 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-md-6">
+                <%--Horarios vespertinos del mes--%>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Horarios vespertinos del mes</h3>
@@ -291,19 +293,30 @@
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:BoundField DataField="Horas" HeaderText="Horas" ReadOnly="true" SortExpression="Horas" />
-                                        <asp:TemplateField HeaderText="Eliminar" ItemStyle-HorizontalAlign="Center">
+
+                                        <%--      <asp:TemplateField HeaderText="Eliminar" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
                                                 <asp:ImageButton ID="btn_EliminarSolicitudHV" runat="server" CommandArgument='<%#Eval("Id")%>'
                                                     ToolTip="Eliminar solicitud" ImageUrl="~/Imagenes/delete.png" OnClick="btn_EliminarSolicitudHV_Click" />
                                             </ItemTemplate>
                                             <ItemStyle HorizontalAlign="Center"></ItemStyle>
+                                        </asp:TemplateField>--%>
+
+                                        <asp:TemplateField HeaderText="Administrar" ItemStyle-HorizontalAlign="Center">
+                                            <ItemTemplate>
+                                                <asp:ImageButton ID="btn_administrar_hv" runat="server" CommandArgument='<%#Eval("Id")%>'
+                                                    ToolTip="Administrar solicitud" ImageUrl="~/Imagenes/page_white_gear.png" OnClick="btn_administrar_hv_Click" />
+                                            </ItemTemplate>
+                                            <ItemStyle HorizontalAlign="Center"></ItemStyle>
                                         </asp:TemplateField>
+
                                         <asp:TemplateField HeaderText="Ult. Mod." ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
                                                 <asp:Image ID="UsuarioUltimaModificacion" ImageUrl="~/Imagenes/user_gray.png" ToolTip='<%#Eval("Jefe")%>' runat="server" />
                                             </ItemTemplate>
                                             <ItemStyle HorizontalAlign="Center"></ItemStyle>
                                         </asp:TemplateField>
+
                                     </Columns>
                                 </asp:GridView>
                             </div>
@@ -315,6 +328,7 @@
 
         <div class="row">
             <div class="col-md-6">
+                <%--Francos compensatorios/Art. 51 del mes--%>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Francos compensatorios/Art. 51 del mes</h3>
@@ -322,7 +336,7 @@
                     <div class="panel-body">
                         <asp:ValidationSummary ID="ValidationSummary3" runat="server" DisplayMode="BulletList"
                             ValidationGroup="Francos" CssClass="validationsummary panel panel-danger " HeaderText="<div class='panel-heading'>&nbsp;Corrija los siguientes errores antes de continuar:</div>" />
-                         <asp:ValidationSummary ID="ValidationSummary6" runat="server" DisplayMode="BulletList"
+                        <asp:ValidationSummary ID="ValidationSummary6" runat="server" DisplayMode="BulletList"
                             ValidationGroup="articulo" CssClass="validationsummary panel panel-danger " HeaderText="<div class='panel-heading'>&nbsp;Corrija los siguientes errores antes de continuar:</div>" />
                         <asp:ValidationSummary ID="ValidationSummary4" runat="server" DisplayMode="BulletList"
                             ValidationGroup="AprobarFrancos" CssClass="validationsummary panel panel-danger" HeaderText="<div class='panel-heading'>&nbsp;Corrija los siguientes errores antes de continuar:</div>" />
@@ -498,6 +512,7 @@
                 </div>
             </div>
             <div class="col-md-6">
+                <%--Marcaciones entrada - salida--%>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Marcaciones entrada - salida</h3>
@@ -535,6 +550,7 @@
                                 </td>
                             </tr>
                         </table>
+
                         <div runat="server" id="div_ES" visible="false">
                             <table class="table-condensed">
                                 <tr>
@@ -554,46 +570,33 @@
                                 <tr>
                                     <td>Entrada</td>
                                     <td>
-                                        <div id="datetimepicker5" class="input-group date">
-                                            <input id="h_entrada" runat="server" class="form-control" type="text" />
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-time"></span>
-                                            </span>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <asp:Button ID="btn_registrar_entrada_laboral" runat="server" class="btn btn-sm btn-primary" OnClick="btn_registrar_entrada_laboral_Click" Text="Registrar ingreso" />
+                                                <asp:Label Text="" ID="lbl_hora_entrada_manual_registrada" runat="server" />
+                                            </div>
                                         </div>
-                                        <asp:CustomValidator ID="cv_puedemodificar" runat="server"
-                                            ErrorMessage="No se puede modificar debido a que el jefe ya ha enviado las marcaciones del día a personal" OnServerValidate="cv_puedemodificar_ServerValidate"
-                                            Text="&lt;img src='../Imagenes/exclamation.gif' title='No se puede modificar debido a que el jefe ya ha enviado las marcaciones del día a personal' /&gt;"
-                                            ValidationGroup="MarcacionesES"></asp:CustomValidator>
-                                        <asp:RequiredFieldValidator ControlToValidate="h_entrada" Text="<img src='../Imagenes/exclamation.gif' title='El campo es obligatorio' />"
-                                            ID="RequiredFieldValidator" runat="server" ValidationGroup="MarcacionesES" ErrorMessage="El campo es obligatorio"></asp:RequiredFieldValidator>
-                                        <asp:RegularExpressionValidator ID="RegularExpressionValidator3" runat="server" ValidationGroup="MarcacionesES"
-                                            Text="<img src='../Imagenes/exclamation.gif' title='La hora ingresada no es correcta xx:xx' />"
-                                            ControlToValidate="h_entrada" ValidationExpression="(([0-9]|2[0-3]):[0-5][0-9])|([0-1][0-9]|2[0-3]):[0-5][0-9]"
-                                            ErrorMessage="La hora ingresada no es correcta xx:xx"></asp:RegularExpressionValidator></td>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Salida</td>
                                     <td>
-                                        <div id="datetimepicker6" class="input-group date">
-                                            <input id="h_salida" runat="server" class="form-control" type="text" />
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-time"></span>
-                                            </span>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <asp:Button ID="btn_registrar_salida_laboral" runat="server" class="btn btn-sm btn-primary" OnClick="btn_registrar_salida_laboral_Click" Text=" Registrar  egreso " />
+                                                <asp:Label Text="" ID="lbl_hora_salida_manual_registrada" runat="server" />
+                                            </div>
                                         </div>
-                                        <asp:RegularExpressionValidator ID="RegularExpressionValidator4" runat="server" ValidationGroup="MarcacionesES"
-                                            Text="<img src='../Imagenes/exclamation.gif' title='La hora ingresada no es correcta xx:xx' />"
-                                            ControlToValidate="h_salida" ValidationExpression="(([0-9]|2[0-3]):[0-5][0-9])|([0-1][0-9]|2[0-3]):[0-5][0-9]"
-                                            ErrorMessage="La hora ingresada no es correcta xx:xx"></asp:RegularExpressionValidator>
                                     </td>
                                 </tr>
                             </table>
-                            <asp:Button Text="Guardar" class="btn btn-primary" runat="server" ID="btn_GuardarMarcacionES" OnClick="btn_GuardarMarcacionES_Click" />
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <%--Días por cerrar--%>
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
@@ -641,6 +644,7 @@
             </div>
         </div>
 </asp:Content>
+
 <asp:Content runat="server" ContentPlaceHolderID="contentScripts">
 
     <script type="text/javascript">
@@ -718,7 +722,7 @@
             })
 
         function checkTimeSalida(i) {
-            if (i < 10) { i = "0" + i };  // add zero in front of numbers < 10
+            if (i < 10) { i = "0" + i };  //add zero in front of numbers < 10
             return i;
         }
     </script>
@@ -778,4 +782,5 @@
             });
         });
     </script>
+
 </asp:Content>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Reporting.WebForms;
+using SisPer.Aplicativo.Controles;
 using SisPer.Aplicativo.Reportes;
 using System;
 using System.Collections.Generic;
@@ -817,7 +818,7 @@ namespace SisPer.Aplicativo
 
         #endregion
 
-        #region informe fichadas mes
+        #region Informe fichadas mes
 
         private void GenerarInformeFichadasMes()
         {
@@ -833,19 +834,19 @@ namespace SisPer.Aplicativo
 
             if (rb_Dia.Checked)
             {//esta chequeado el dia
-                //mostrar error
+                MessageBox.Show(this, "El informe requerido es mensual unicamente, cambie la seleccion de fecha");
+                return;
             }
             else
             {
                 if (rb_Mes.Checked)
                 {//esta chequeado el mes
                     desde = new DateTime(Convert.ToInt16(ddl_Anio.Text), Convert.ToInt16(ddl_Mes.SelectedValue), 1);
-                    hasta = new DateTime(Convert.ToInt16(ddl_Anio.Text), Convert.ToInt16(ddl_Mes.SelectedValue), DateTime.DaysInMonth(desde.Year, desde.Month));
-                    labelDiaReporte = "MES DE " + ddl_Mes.SelectedItem.Text + " DE " + ddl_Anio.Text;
                 }
                 else
                 {//esta chequeado desde hasta
-                    //mostrar error
+                    MessageBox.Show(this, "El informe requerido es mensual unicamente, cambie la seleccion de fecha");
+                    return;
                 }
             }
 
@@ -866,220 +867,20 @@ namespace SisPer.Aplicativo
                 agentesBuscados = Session["AgentesInforme"] as List<Agente>;
             }
 
-            Reportes.HorarioIngresoEgresoMensual ret = new Reportes.HorarioIngresoEgresoMensual();
 
-            foreach (Agente agente in agentesBuscados)
+            if (agentesBuscados.Count > 0 && desde != null)
             {
-                string total_horas_trabajadas = "00:00";
-                string total_horas_mas = "00:00";
-                string total_horas_menos = "00:00";
-                string total_horas_tardanza = "00:00";
+                RegistrarImpresionReporteFichadasMensuales();
 
-                for (DateTime i = desde; i <= hasta; i = i.AddDays(1))
-                {
-                    DateTime dia = new DateTime();
+                ReporteMensualFichadasHoras rp = new ReporteMensualFichadasHoras(agentesBuscados, desde.Month, desde.Year);
 
-                    try
-                    {
-                        dia = i;
-                        Reportes.HorarioIngresoEgresoMensual.DetalleDiaRow dr = ObtenerDetalle(agente, dia, ret);
-                        ret.DetalleDia.Rows.Add(dr);
+                byte[] pdf = rp.GenerarPDFAsistenciaMensual();
+                Session["Bytes"] = pdf;
 
-                        total_horas_mas = HorasString.SumarHoras(new string[] { total_horas_mas, dr.HorasMas });
-                        total_horas_menos = HorasString.SumarHoras(new string[] { total_horas_menos, dr.HorasMenos });
-                        total_horas_trabajadas = HorasString.SumarHoras(new string[] { total_horas_trabajadas, dr.HorasTrabajadas });
-                        total_horas_tardanza = HorasString.SumarHoras(new string[] { total_horas_tardanza, dr.Tardanzas });
-                    }
-                    catch
-                    {
-                        Reportes.HorarioIngresoEgresoMensual.DetalleDiaRow dr = ret.DetalleDia.NewDetalleDiaRow();
-                        dr.Dia = i.Day;
-                        dr.AgenteId = agente.Id;
-                        dr.IngresoMan = "-";
-                        dr.EgresoMan = "-";
-                        dr.IngresoTar = "-";
-                        dr.EngresoTar = "-";
-                        dr.Tardanzas = "-";
-                        dr.HorasMas = "-";
-                        dr.HorasMenos = "-";
-                        dr.HorasTrabajadas = "-";
-                        dr.Observacion = "---";
-                        ret.DetalleDia.Rows.Add(dr);
-                    }
-                }
-
-                Reportes.HorarioIngresoEgresoMensual.AgenteRow ar = ret.Agente.NewAgenteRow();
-                ar.Id = agente.Id;
-                ar.Legajo = agente.Legajo.ToString();
-                ar.Nombre = agente.ApellidoYNombre;
-                ar.Area = agente.Area.Nombre;
-                ar.Total_horas_mas = total_horas_mas;
-                ar.Total_horas_menos = total_horas_menos;
-                ar.Total_horas_trabajadas = total_horas_trabajadas;
-                ar.Total_horas_tardanza = total_horas_tardanza;
-                ar.Total_horas = HorasString.RestarHoras(total_horas_mas, total_horas_menos);
-                ret.Agente.Rows.Add(ar);
-
+                string script = "<script type='text/javascript'>window.open('Reportes/ReportePDF.aspx');</script>";
+                Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "VentanaPadre", script);
             }
-
-            Reportes.HorarioIngresoEgresoMensual.GeneralRow gr = ret.General.NewGeneralRow();
-            gr.Anio = ddl_Anio.SelectedItem.Text;
-            gr.Mes = ddl_Mes.SelectedItem.Text;
-
-            ret.General.Rows.Add(gr);
-
-            RenderReportInformeFichadasMensual(ret);
-        }
-
-        private Reportes.HorarioIngresoEgresoMensual.DetalleDiaRow ObtenerDetalle(Agente a, DateTime dia, Reportes.HorarioIngresoEgresoMensual ds)
-        {
-            Reportes.HorarioIngresoEgresoMensual.DetalleDiaRow dr = ds.DetalleDia.NewDetalleDiaRow();
-
-            using (var cxt = new Model1Container())
-            {
-                dr.Dia = dia.Day;
-                dr.AgenteId = a.Id;
-                dr.IngresoMan = "00:00";
-                dr.EgresoMan = "00:00";
-                dr.IngresoTar = "00:00";
-                dr.EngresoTar = "00:00";
-                dr.Tardanzas = "00:00";
-                dr.HorasMas = "00:00";
-                dr.HorasMenos = "00:00";
-                dr.HorasTrabajadas = "00:00";
-                dr.Observacion = "";
-
-                if (dia.DayOfWeek != DayOfWeek.Saturday && dia.DayOfWeek != DayOfWeek.Sunday)
-                {
-                    Feriado feriado = cxt.Feriados.FirstOrDefault(f => f.Dia == dia);
-                    if (feriado != null)
-                    {
-                        dr.Observacion = "FERIADO: " + feriado.Motivo;
-                    }
-                    else
-                    {
-                        EstadoAgente estado = a.EstadosPorDiaAgente.FirstOrDefault(e => e.Dia == dia);
-                        if (estado != null)
-                        {
-                            dr.Observacion = estado.TipoEstado.Estado;
-                        }
-                        else
-                        {
-                            Franco franco = a.Francos.FirstOrDefault(f => f.DiasFranco.FirstOrDefault(d => d.Dia == dia) != null);
-                            if (franco != null && franco.Estado == EstadosFrancos.Aprobado)
-                            {
-                                dr.Observacion = "FRANCO COMPENSATORIO";
-                            }
-                            else
-                            {
-                                ResumenDiario rd = cxt.ResumenesDiarios.FirstOrDefault(rrdd => rrdd.Dia == dia && rrdd.AgenteId == a.Id);
-                                if (rd == null || !(rd.Cerrado ?? false))
-                                {
-                                    dr.Observacion = "Día sin cerrar";
-                                }
-                                else
-                                {
-                                    string horas_trabajadas = "00:00";
-                                    string horas_tardanza = "00:00";
-                                    string horas_mas = "00:00";
-                                    string horas_menos = "00:00";
-
-                                    MovimientoHora tardanza = cxt.MovimientosHoras.FirstOrDefault(mh => mh.AgenteId == a.Id && mh.ResumenDiario.Dia == dia && mh.TipoMovimientoHoraId == 1);
-                                    if (tardanza != null)
-                                    {
-                                        horas_tardanza = tardanza.Horas;
-                                    }
-
-                                    //EntradaSalida Es = cxt.EntradasSalidas.FirstOrDefault(es => es.Agente.Id == a.Id && es.Fecha == dia);//e=> a.EntradasSalidasMarcadas.FirstOrDefault(es => es.Fecha == dia);
-
-
-                                    dr.IngresoMan = rd.HEntrada;
-                                    string hora_entrada_para_calculo = HorasString.AMayorQueB(rd.HEntrada, a.HoraEntrada) ? rd.HEntrada : a.HoraEntrada;
-                                    dr.EgresoMan = rd.HSalida;
-                                    horas_trabajadas = HorasString.SumarHoras(new string[] { horas_trabajadas, HorasString.RestarHoras(rd.HSalida, hora_entrada_para_calculo) });
-
-                                    HorarioVespertino hv = a.HorariosVespertinos.FirstOrDefault(h => h.Dia == dia);
-                                    if (hv != null && hv.Estado == EstadosHorarioVespertino.Terminado)
-                                    {
-                                        dr.IngresoTar = hv.HoraInicio;
-                                        dr.EngresoTar = hv.HoraFin;
-                                        horas_trabajadas = HorasString.SumarHoras(new string[] { horas_trabajadas, hv.Horas });
-                                    }
-                                    else
-                                    {
-                                        dr.IngresoTar = "00:00";
-                                        dr.EngresoTar = "00:00";
-                                    }
-
-                                    string diferencia_horas = HorasString.RestarHoras(horas_trabajadas, "06:30");
-                                    if (diferencia_horas.Contains("-"))
-                                    {
-                                        horas_mas = "00:00";
-                                        horas_menos = diferencia_horas.Replace("-", "");
-                                    }
-                                    else
-                                    {
-                                        horas_mas = diferencia_horas;
-                                        horas_menos = "00:00";
-                                    }
-
-                                    dr.HorasMas = horas_mas;
-                                    dr.HorasMenos = horas_menos;
-                                    dr.HorasTrabajadas = horas_trabajadas;
-                                    dr.Tardanzas = horas_tardanza;
-                                }
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    dr.Observacion = dia.DayOfWeek == DayOfWeek.Saturday ? "SABADO" : "DOMINGO";
-                }
-            }
-
-            return dr;
-        }
-
-        private void RenderReportInformeFichadasMensual(Reportes.HorarioIngresoEgresoMensual fichadas_ds)
-        {
-            ReportViewer viewer = new ReportViewer();
-            viewer.ProcessingMode = ProcessingMode.Local;
-            viewer.LocalReport.EnableExternalImages = true;
-            viewer.LocalReport.ReportPath = Server.MapPath("~/Aplicativo/Reportes/HorariosMensualesAgentesArea.rdlc");
-            Session["DS"] = fichadas_ds;
-            Reportes.HorarioIngresoEgresoMensual ds = ((Reportes.HorarioIngresoEgresoMensual)Session["DS"]);
-            ReportDataSource general = new ReportDataSource("ds_General", ds.General.Rows);
-            ReportDataSource agentes = new ReportDataSource("ds_Agentes", ds.Agente.Rows);
-
-            viewer.LocalReport.DataSources.Add(general);
-            viewer.LocalReport.DataSources.Add(agentes);
-
-            viewer.LocalReport.SubreportProcessing += LocalReport_SubreportProcessing;
-
-            Microsoft.Reporting.WebForms.Warning[] warnings = null;
-            string[] streamids = null;
-            string mimeType = null;
-            string encoding = null;
-            string extension = null;
-            string deviceInfo = null;
-            byte[] bytes = null;
-
-            deviceInfo = "<DeviceInfo><SimplePageHeaders>True</SimplePageHeaders></DeviceInfo>";
-
-            //Render the report
-            RegistrarImpresionReporteFichadasMensuales();
-            bytes = viewer.LocalReport.Render("PDF", deviceInfo, out  mimeType, out encoding, out extension, out streamids, out warnings);
-            Session["Bytes"] = bytes;
-
-            string script = "<script type='text/javascript'>window.open('Reportes/ReportePDF.aspx');</script>";
-            Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "VentanaPadre", script);
-        }
-
-        private void LocalReport_SubreportProcessing(object sender, SubreportProcessingEventArgs e)
-        {
-            Reportes.HorarioIngresoEgresoMensual ds = ((Reportes.HorarioIngresoEgresoMensual)Session["DS"]);
-            e.DataSources.Add(new ReportDataSource("ds_Detalle", ds.DetalleDia.Rows));
+            
         }
 
         private void RegistrarImpresionReporteFichadasMensuales()

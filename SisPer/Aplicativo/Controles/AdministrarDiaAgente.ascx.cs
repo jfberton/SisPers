@@ -122,6 +122,11 @@ namespace SisPer.Aplicativo.Controles
                 Agente agenteBuscado = AgenteBuscado;
                 DateTime diaBuscado = DiaBuscado;
 
+                using (var cxt = new Model1Container())
+                { 
+                    ResumenDiarioBuscado = cxt.sp_obtener_resumen_diario_agente_fecha(agenteBuscado.Id, diaBuscado.ToShortDateString()).First();
+                }
+
                 lbl_hEntrada.Text = " (" + agenteBuscado.ObtenerHoraEntradaLaboral(diabuscado) + ")";
                 lbl_hSalida.Text = " (" + agenteBuscado.ObtenerHoraSalidaLaboral(diabuscado) + ")";
 
@@ -132,17 +137,19 @@ namespace SisPer.Aplicativo.Controles
                 DivMovimiento.Visible = lbl_Movimiento.Text.Length > 0;
 
                 panel_movimiento.Visible = !ReadOnly;
-                //btn_CerrarDia.Visible = !ReadOnly;
+                btn_cerrar.Visible = !ReadOnly;
                 //btn_abrir_dia.Visible = !ReadOnly;
                 gv_Marcaciones.Enabled = !ReadOnly;
-               
-                CargarGrillaMarcaciones();
+
+
                 CargarValoresResumenDiario();
+                CargarGrillaMarcaciones();
                 CargarHVS();
                 CargarGrillaDeHorasFechaSeleccionada();
                 CargarGrillaEstados();
                 CargarGrillaSolicitudesEstados();
                 CargarDropDownList();
+
                 if ((resumendiariobuscado.Cerrado ?? false) == true)
                 {
                     panel_estado_dia.Visible = false;
@@ -159,6 +166,9 @@ namespace SisPer.Aplicativo.Controles
                     btn_GuardarComoCorrecto.Enabled = true;
                 }
             }
+
+            if (this.PrecionoVolver != null)
+                this.PrecionoVolver(this, new EventArgs());
         }
 
         struct ItemList
@@ -192,22 +202,25 @@ namespace SisPer.Aplicativo.Controles
         {
             try
             {
-                Model1Container cxt = Session["CXT"] as Model1Container;
-                List<ItemList> lista = new List<ItemList>();
-                ItemList item = new ItemList(0, "Ninguno");
-                lista.Add(item);
-                var items = from pp in cxt.TiposMovimientosHora
-                            where (pp.Manual == true)
-                            select new { Id = pp.Id, Valor = pp.Tipo };
-
-                foreach (var i in items)
+                using (var cxt = new Model1Container())
                 {
-                    lista.Add(new ItemList(i.Id, i.Valor));
+                    List<ItemList> lista = new List<ItemList>();
+                    ItemList item = new ItemList(0, "Ninguno");
+                    lista.Add(item);
+
+                    var items = from pp in cxt.TiposMovimientosHora
+                                where (pp.Manual == true)
+                                select new { Id = pp.Id, Valor = pp.Tipo };
+
+                    foreach (var i in items)
+                    {
+                        lista.Add(new ItemList(i.Id, i.Valor));
+                    }
+                    DropDownList1.DataValueField = "Id";
+                    DropDownList1.DataTextField = "Valor";
+                    DropDownList1.DataSource = lista;
+                    DropDownList1.DataBind();
                 }
-                DropDownList1.DataValueField = "Id";
-                DropDownList1.DataTextField = "Valor";
-                DropDownList1.DataSource = lista;
-                DropDownList1.DataBind();
             }
             catch { }
         }
@@ -328,7 +341,7 @@ namespace SisPer.Aplicativo.Controles
                     if ((agBuscado.HorarioFlexible ?? false) == true && !ObtenerDiaProcesado().Cerrado)
                     {
                         //El agente posee horario flexible y no se cerro el dia, tengo que calcular las horas trabajadas y sumarlas 
-                        TipoMovimientoHora tmh = cxt.TiposMovimientosHora.First(mh => mh.Tipo == "Horas trabajadas");
+                        TipoMovimientoHora tmh = cxt.TiposMovimientosHora.First(mh => mh.Tipo == "Horas jornada trabajadas");
                         horasDia.HEntrada = ddl_HoraEntrada.Text != null && ddl_HoraEntrada.Text.Length == 5 ? ddl_HoraEntrada.Text : "00:00";
                         horasDia.HSalida = ddl_HoraSalida.Text != null && ddl_HoraEntrada.Text.Length == 5 ? ddl_HoraSalida.Text : "00:00";
                         bool toma630 = HorasString.AMayorQueB("06:30", horasDia.HEntrada);
@@ -394,11 +407,13 @@ namespace SisPer.Aplicativo.Controles
 
         private string Recortar000(string p)
         {
-            if (p.Split(':')[0].Substring(0, 1) == "0")
+            if(p.Length >= 6)
             {
-                p = p.Substring(1, 5);
+                if (p.Split(':')[0].Substring(0, 1) == "0")
+                {
+                    p = p.Substring(1, 5);
+                }
             }
-
             return p;
         }
 
@@ -727,7 +742,7 @@ namespace SisPer.Aplicativo.Controles
 
             fs_AgrenarMarcacion.Visible = !dp.Cerrado;
 
-            //btn_CerrarDia.Visible = !dp.Cerrado && !rdCxt.Inconsistente;
+            btn_cerrar.Visible = !dp.Cerrado && !rdCxt.Inconsistente;
 
             //btn_abrir_dia.Visible = dp.Cerrado && agLogueado.Perfil == PerfilUsuario.Personal && (agLogueado.Jefe || agLogueado.JefeTemporal);
 
@@ -1029,7 +1044,7 @@ namespace SisPer.Aplicativo.Controles
         //        if ((horasDia.Agente.HorarioFlexible ?? false) == true && !ObtenerDiaProcesado().Cerrado && ag.ObtenerEstadoAgenteParaElDia(dia) == null)
         //        {
         //            //El agente posee horario flexible y no se cerro el dia, tengo que calcular las horas trabajadas y sumarlas 
-        //            TipoMovimientoHora tmh = cxt.TiposMovimientosHora.First(mh => mh.Tipo == "Horas trabajadas");
+        //            TipoMovimientoHora tmh = cxt.TiposMovimientosHora.First(mh => mh.Tipo == "Horas jornada trabajadas");
 
         //            horasDia.HEntrada = ddl_HoraEntrada.Text != null ? ddl_HoraEntrada.Text : "00:00";
         //            horasDia.HSalida = ddl_HoraSalida.Text != null ? ddl_HoraSalida.Text : "00:00";
@@ -1137,6 +1152,22 @@ namespace SisPer.Aplicativo.Controles
         protected void chk_considera_prolongacion_CheckedChanged(object sender, EventArgs e)
         {
             CargarGrillaDeHorasFechaSeleccionada();
+        }
+
+        protected void btn_cerrar_Click(object sender, EventArgs e)
+        {
+            DateTime dia = DiaBuscado;
+            Agente ag = AgenteBuscado;
+
+            using (var cxt = new Model1Container())
+            { 
+                cxt.sp_cerrar_dia(ag.Id, dia);
+            }
+
+            CargarValores();
+
+            if (this.CerroElDia != null)
+                this.CerroElDia(this, new EventArgs());
         }
     }
 }

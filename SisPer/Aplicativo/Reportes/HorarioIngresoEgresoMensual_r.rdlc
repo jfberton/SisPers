@@ -2543,7 +2543,6 @@
             <Source>Embedded</Source>
             <Value>logocompleto</Value>
             <Sizing>FitProportional</Sizing>
-            <Left>0cm</Left>
             <Height>1.64993cm</Height>
             <Width>5.37118cm</Width>
             <ZIndex>6</ZIndex>
