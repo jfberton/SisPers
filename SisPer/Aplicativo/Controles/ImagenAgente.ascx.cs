@@ -53,6 +53,7 @@ namespace SisPer.Aplicativo.Controles
         {
             if (agente != null)
             {
+                EstadoAgente estado = agente.ObtenerEstadoAgenteParaElDia(DateTime.Now, true);
                 if (Directory.Exists(pathImagenesDisco + agente.Legajo))
                 {
                     if (File.Exists(pathImagenesDisco + agente.Legajo + "\\Original.jpg"))

@@ -1758,6 +1758,7 @@
     <Compile Include="Aplicativo\Reportes\ReportePDF_combinado.aspx.designer.cs">
       <DependentUpon>ReportePDF_combinado.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Aplicativo\Reportes\Reporte_anual_legajo.cs" />
     <Compile Include="Aplicativo\Reportes\TardanzasMes_DS.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

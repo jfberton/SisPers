@@ -1,9 +1,12 @@
-﻿using System;
+﻿using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
+using SisPer.Aplicativo.Controles;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace SisPer.Aplicativo
 {
@@ -351,7 +354,7 @@ namespace SisPer.Aplicativo
                 }
 
                 int diasUsufructuados = ProcesosGlobales.ObtenerDiasUsufructuados(licencia);
-                lbl_Mensaje.Text = "<b>El agente ya lleva tomado " + diasUsufructuados.ToString() + " días de licencia anual del " + ddl_Encuadre.Text + " de los " + licencia.DiasOtorgados.ToString() + " días disponibles.</b>";
+                lbl_Mensaje.Text = "<b>El agente ya lleva tomado " + diasUsufructuados.ToString() + " días de licencia anual del " + ddl_Encuadre.Text + " de los " + licencia.DiasOtorgados.ToString() + " días otorgados. Quedan "+ (licencia.DiasOtorgados  - diasUsufructuados).ToString() + " días disponibles</b>";
 
 
                 p_DatosExtra.Visible = true;
@@ -392,7 +395,7 @@ namespace SisPer.Aplicativo
                     }
 
                     int diasUsufructuados = ProcesosGlobales.ObtenerDiasUsufructuados(licencia);
-                    lbl_Mensaje.Text = "<b>El agente ya lleva tomado " + diasUsufructuados.ToString() + " días de licencia anual del " + ddl_Encuadre.Text + " de los " + licencia.DiasOtorgados.ToString() + " días disponibles.</b>";
+                    lbl_Mensaje.Text = "<b>El agente ya lleva tomado " + diasUsufructuados.ToString() + " días de licencia anual del " + ddl_Encuadre.Text + " de los " + licencia.DiasOtorgados.ToString() + " días otorgados. Quedan " + (licencia.DiasOtorgados - diasUsufructuados).ToString() + " días disponibles</b>";
 
                 }
             }
@@ -597,5 +600,43 @@ namespace SisPer.Aplicativo
             }
         }
 
+        protected void cv_VerificarSiTieneDiasLicenciaAnteriorAnticipo_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            bool valido = true;
+            
+            //aca controlar licencia anticipo, si tiene saldo licencia año anterior no puede tomar licencia anticipo
+            using (var cxt = new Model1Container())
+            {
+                int tipoEstadoId = Convert.ToInt32(ddl_TipoMovimiento.SelectedValue);
+                TipoEstadoAgente tea = cxt.TiposEstadoAgente.FirstOrDefault(t => t.Id == tipoEstadoId);
+                string textoSeleccionado = ddl_Encuadre.Text;
+                int year = 0;
+                int id = Convert.ToInt32(Request.QueryString["Usr"]);
+                var agente = cxt.Agentes.First(a => a.Id == id);
+                DateTime desde = Convert.ToDateTime(tb_desde.Value);
+                DateTime hasta = Convert.ToDateTime(tb_hasta.Value);
+                int diasSolicitados = Convert.ToInt32((hasta - desde).TotalDays + 1);
+                TipoLicencia tli = new TipoLicencia();
+                LicenciaAgente licencia = new LicenciaAgente();
+                int diasUsufructuados = 0;
+
+                if (tea.Estado == "Licencia Anual (Anticipo)")
+                {
+                    year = Convert.ToInt32(ddl_Encuadre.Text) - 1;
+
+                    tli = cxt.TiposDeLicencia.First(tl => tl.Tipo == "Licencia anual");
+                    licencia = agente.Licencias.FirstOrDefault(l => l.Anio == year && l.Tipo.Id == tli.Id);
+                    if (licencia != null)
+                    {
+                        diasUsufructuados = ProcesosGlobales.ObtenerDiasUsufructuados(licencia);
+                    }
+                    valido = (licencia == null || diasUsufructuados == 0);
+                }
+                        
+            }
+
+            args.IsValid = valido;
+            
+        }
     }
 }

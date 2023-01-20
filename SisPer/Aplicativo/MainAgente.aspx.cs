@@ -372,7 +372,7 @@ namespace SisPer.Aplicativo
             Agente ag = Session["Agente"] as Agente;
             DateTime d = DateTime.Today;
 
-            if (((TipoSalida)Convert.ToInt32(Ddl_TipoSalida.SelectedValue)) == TipoSalida.Oficial)
+            if (((TipoSalida)Convert.ToInt32(Ddl_TipoSalida.SelectedValue)) == TipoSalida.Oficial || ((TipoSalida)Convert.ToInt32(Ddl_TipoSalida.SelectedValue)) == TipoSalida.Particular)
             {
                 args.IsValid = tb_DestinoSalida.Text.Length > 0;
             }
@@ -824,7 +824,6 @@ namespace SisPer.Aplicativo
             modalHistMov.Attributes["class"] = "modal fade";
             modalHistMov.Attributes["style"] = "display: none;";
         }
-
 
         private void CargarGrillaFrancos()
         {

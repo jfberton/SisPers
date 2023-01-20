@@ -68,6 +68,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <asp:Button Text="Generar informe movimientos anuales" CssClass="btn btn-primary" ID="btn_movimientosAnuales" runat="server" OnClick="btn_movimientosAnuales_Click" />
+                    <asp:Button Text="Generar nuevo informe movimientos anuales" CssClass="btn btn-primary" ID="btn_inf_mov_anuales" runat="server" OnClick="btn_inf_mov_anuales_Click" />
                 </div>
             </div>
         </div>

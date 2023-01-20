@@ -135,11 +135,11 @@
           <Property Name="AgenteId" Type="int" Nullable="false" />
           <Property Name="HorasAnioAnterior" Type="nvarchar(max)" Nullable="false" />
           <Property Name="HorasAnioActual" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="HorasMes" Type="nvarchar(max)" Nullable="false" />
           <Property Name="FechaCierre" Type="datetime" Nullable="false" />
           <Property Name="Mes" Type="int" Nullable="false" />
           <Property Name="Anio" Type="int" Nullable="false" />
           <Property Name="Tiene_que_modificar" Type="bit" Nullable="false" />
+          <Property Name="HorasMes" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="CorteLicencia">
           <Key>
@@ -2597,7 +2597,7 @@
             <End Role="TurnoIngresoPermitido" EntitySet="TurnosIngresoPermitido" />
           </AssociationSet>
           <FunctionImport Name="Estado_agente" ReturnType="Collection(String)">
-            <Parameter Name="id_agente" Mode="In" Type="Int32" />
+          <Parameter Name="id_agente" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_cerrar_dia" ReturnType="Collection(String)">
             <Parameter Name="ID_AGENTE" Mode="In" Type="Int32" />
@@ -2608,23 +2608,23 @@
             <Parameter Name="personal_como_agente" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="sp_obtener_datos_agente" ReturnType="Collection(Model1.sp_obtener_datos_agente_Result4)">
-            <Parameter Name="ID_AGENTE" Mode="In" Type="Int32" />
+          <Parameter Name="ID_AGENTE" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_obtener_estado_agente_dia" ReturnType="Collection(Model1.sp_obtener_estado_agente_dia_Result3)">
             <Parameter Name="id_agente" Mode="In" Type="Int32" />
             <Parameter Name="dia" Mode="In" Type="String" />
             <Parameter Name="muestra_finde" Mode="In" Type="Boolean" />
           </FunctionImport>
-          <FunctionImport Name="sp_obtener_resumen_diario_agente_fecha" EntitySet="ResumenesDiarios" ReturnType="Collection(Model1.ResumenDiario)">
-            <Parameter Name="ID_AGENTE" Mode="In" Type="Int32" />
-            <Parameter Name="DIA" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="sp_obtener_resumenes_diarios_agente_mes" EntitySet="ResumenesDiarios" ReturnType="Collection(Model1.ResumenDiario)">
             <Parameter Name="id_agente" Mode="In" Type="Int32" />
             <Parameter Name="dia_hasta" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_obtener_suborinados_directos" EntitySet="Agentes" ReturnType="Collection(Model1.Agente)">
-            <Parameter Name="id_agente" Mode="In" Type="Int32" />
+          <Parameter Name="id_agente" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_obtener_resumen_diario_agente_fecha" EntitySet="ResumenesDiarios" ReturnType="Collection(Model1.ResumenDiario)">
+            <Parameter Name="ID_AGENTE" Mode="In" Type="Int32" />
+            <Parameter Name="DIA" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Agente">
@@ -5863,12 +5863,11 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_obtener_resumen_diario_agente_fecha" FunctionName="Model1.Store.sp_obtener_resumen_diario_agente_fecha">
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_obtener_resumenes_diarios_agente_mes" FunctionName="Model1.Store.sp_obtener_resumenes_diarios_agente_mes">
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_obtener_suborinados_directos" FunctionName="Model1.Store.sp_obtener_suborinados_directos">
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_obtener_resumen_diario_agente_fecha" FunctionName="Model1.Store.sp_obtener_resumen_diario_agente_fecha" />
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

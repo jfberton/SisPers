@@ -347,212 +347,15 @@ namespace SisPer.Aplicativo
                     mh.AgenteId = agendadoPor.Id;
                     mh.Descripcion = descripcion;
                     mh.Horas = horas;
+                    mh.ResumenDiarioId = rd.Id;
 
-                    /*
-                    //Si el agente no tiene horario flexible agenda normalmente haciendo las discriminaciones de bonificacion y demas
-                    //si el agente tiene horario flexible agenda el moimiento como viene. 
-                    //Los totales y ajustes de horas bonificacion, año anterior, año actual se van a calcular al momento del cierre del día.
-                    if (!(ag.HorarioFlexible.HasValue && ag.HorarioFlexible == true))
-                    {
-                        //El movimiento resta horas
-                        if (!tipoMovimiento.Suma)
-                        {
-                            #region el movimiento RESTA las horas pasadas por parámetro
-
-                            //tiene horas año anterior que cubre la el gasto?
-                            if (!agCxt.HorasAcumuladasAnioAnterior.Contains("-") && !HorasString.RestarHoras(ag.HorasAcumuladasAnioAnterior, horas).Contains("-"))
-                            {
-                                //las resto del año anterior
-                                mh.DescontoDeAcumuladoAnioAnterior = true;
-                                if (AcumulaInmediatamente(tipoMovimiento))
-                                { agCxt.HorasAcumuladasAnioAnterior = HorasString.RestarHoras(agCxt.HorasAcumuladasAnioAnterior, horas); }
-                            }
-                            else
-                            {
-                                //Si tiene algo del año anterior se hace un movimiento para ese saldo y 
-                                //se modifica las horas del mov para restarle las horas restantes
-                                //a este año y se actualizan los acumulados en el agente
-                                if (!agCxt.HorasAcumuladasAnioAnterior.Contains("-") && agCxt.HorasAcumuladasAnioAnterior != "000:00")
-                                {
-                                    MovimientoHora mh1 = new MovimientoHora();
-                                    mh1.TipoMovimientoHoraId = tipoMovimiento.Id;
-                                    mh1.Horas = agCxt.HorasAcumuladasAnioAnterior;
-                                    mh1.DescontoDeAcumuladoAnioAnterior = true;
-                                    mh1.AgenteId = agendadoPor.Id;
-                                    mh1.Descripcion = descripcion;
-                                    rd.MovimientosHoras.Add(mh1);
-
-                                    mh.Horas = HorasString.RestarHoras(horas, mh1.Horas);
-
-                                    if (AcumulaInmediatamente(tipoMovimiento))
-                                    { agCxt.HorasAcumuladasAnioAnterior = "000:00"; }
-                                }
-
-                                //las resto del año actual las horas o el resto de las horas que no cubrio
-                                //lo del año anterior.
-                                mh.DescontoDeAcumuladoAnioAnterior = false;
-                                //Dependiendo de las horas acumuladas del año en curso
-                                if (!agCxt.HorasAcumuladasAnioActual.Contains("-"))
-                                {//el normal de los casos
-                                    if (AcumulaInmediatamente(tipoMovimiento))
-                                    { agCxt.HorasAcumuladasAnioActual = HorasString.RestarHoras(agCxt.HorasAcumuladasAnioActual, mh.Horas); }
-                                }
-                                else
-                                { //Posee horas acumuladas pero en contra. Entonces las sumo y las niego :P
-                                    if (AcumulaInmediatamente(tipoMovimiento))
-                                    { agCxt.HorasAcumuladasAnioActual = "-" + HorasString.SumarHoras(new string[2] { agCxt.HorasAcumuladasAnioActual.Replace("-", ""), mh.Horas }); }
-                                }
-                            }
-
-                            #endregion
-                        }
-                        else
-                        {
-                            #region el movimiento SUMA las horas padas por parámetro
-
-                            //Primero se verifica si no tiene horaspor cubrir por alguna bonificacion
-
-                            BonificacionOtorgada Bo = agCxt.BonificacionesOtorgadas.FirstOrDefault(bo => bo.Mes == d.Month && bo.Anio == d.Year);
-
-                            if (Bo != null && Bo.HorasAdeudadas != "000:00")
-                            {
-                                #region tiene horas bonificables por cubrir en el mes que esta por agregar el movimiento
-
-                                if (HorasString.RestarHoras(horas, Bo.HorasAdeudadas.Replace("-", "")).Contains("-"))
-                                {   //debe mas horas que las que hizo
-                                    //marco todo el movimiento como que entro a horas bonificables por cubrir
-                                    mh.DescontoDeHorasBonificables = true;
-                                    //resto y vuelvo a poner el signo negativo a las horas por devolver
-                                    Bo.HorasAdeudadas = "-" + HorasString.RestarHoras(Bo.HorasAdeudadas.Replace("-", ""), horas);
-                                }
-                                else
-                                {
-                                    //hizo mas horas que las que tenia que devolver.
-                                    //creo un movimiento nuevo con las horas que cubrio
-                                    MovimientoHora mh1 = new MovimientoHora();
-                                    mh1.Horas = Bo.HorasAdeudadas.Replace("-", "");
-                                    mh1.TipoMovimientoHoraId = tipoMovimiento.Id;
-                                    mh1.DescontoDeHorasBonificables = true;
-                                    mh1.AgenteId = agendadoPor.Id;
-                                    mh1.Descripcion = descripcion;
-                                    rd.MovimientosHoras.Add(mh1);
-                                    //paso el resto de las horas a sumar las horas a favor del agente
-                                    mh.Horas = HorasString.RestarHoras(horas, mh1.Horas);
-                                    //pongo a cero las horas a cubrir por bonificación
-                                    Bo.HorasAdeudadas = "000:00";
-
-                                    //Actualizo las horas acumuladas del agente
-                                    #region Verifico horas año anterior (lo mismo que en el caso de que no tuviera horas bonificables por cubrir)
-
-                                    if (agCxt.HorasAcumuladasAnioAnterior.Contains("-") && HorasString.SumarHoras(new string[] { ag.HorasAcumuladasAnioAnterior, mh.Horas }).Contains("-"))
-                                    {
-                                        //las resto del año anterior
-                                        mh.DescontoDeAcumuladoAnioAnterior = true;
-                                        if (AcumulaInmediatamente(tipoMovimiento))
-                                        { agCxt.HorasAcumuladasAnioAnterior = HorasString.SumarHoras(new string[] { ag.HorasAcumuladasAnioAnterior, mh.Horas }); }
-                                    }
-                                    else
-                                    {
-                                        //Si tiene algo del año anterior se hace un movimiento para ese saldo y 
-                                        //se modifica las horas del mov para restarle las horas restantes
-                                        //a este año y se actualizan los acumulados en el agente
-                                        if (agCxt.HorasAcumuladasAnioAnterior.Contains("-") && agCxt.HorasAcumuladasAnioAnterior != "-000:00")
-                                        {
-                                            MovimientoHora mh2 = new MovimientoHora();
-                                            mh2.TipoMovimientoHoraId = tipoMovimiento.Id;
-                                            mh2.Horas = agCxt.HorasAcumuladasAnioAnterior.Replace("-", "");
-                                            mh2.DescontoDeAcumuladoAnioAnterior = true;
-                                            mh2.AgenteId = agendadoPor.Id;
-                                            mh2.Descripcion = descripcion;
-                                            rd.MovimientosHoras.Add(mh2);
-
-                                            mh.Horas = HorasString.RestarHoras(mh.Horas, mh2.Horas);
-
-                                            if (AcumulaInmediatamente(tipoMovimiento))
-                                            { agCxt.HorasAcumuladasAnioAnterior = "000:00"; }
-                                        }
-
-                                        //las resto del año actual las horas o el resto de las horas que no cubrio
-                                        //lo del año anterior.
-                                        mh.DescontoDeAcumuladoAnioAnterior = false;
-                                        //Dependiendo de las horas acumuladas del año en curso
-                                        if (agCxt.HorasAcumuladasAnioActual.Contains("-"))
-                                        {//En caso de tener horas negativas, resto las horas que suman menos las que restan :P jejeje
-                                            if (AcumulaInmediatamente(tipoMovimiento))
-                                            { agCxt.HorasAcumuladasAnioActual = HorasString.RestarHoras(mh.Horas, agCxt.HorasAcumuladasAnioActual.Replace("-", "")); }
-                                        }
-                                        else
-                                        { //el normal de los casos (no tiene horas en contra en el año) sumo normalmente.
-                                            if (AcumulaInmediatamente(tipoMovimiento))
-                                            { agCxt.HorasAcumuladasAnioActual = HorasString.SumarHoras(new string[2] { agCxt.HorasAcumuladasAnioActual, mh.Horas }); }
-                                        }
-                                    }
-
-                                    #endregion
-                                }
-
-                                #endregion
-                            }
-                            else
-                            {
-                                #region No tiene horas por cubrir de bonificacion asi que a verificar si tiene horas por cubrir del año anterior
-                                //las horas por cubrir del año anterior superan las que se estan por cargar
-                                if (agCxt.HorasAcumuladasAnioAnterior.Contains("-") && HorasString.SumarHoras(new string[] { ag.HorasAcumuladasAnioAnterior, horas }).Contains("-"))
-                                {
-                                    //las resto del año anterior
-                                    mh.DescontoDeAcumuladoAnioAnterior = true;
-                                    if (AcumulaInmediatamente(tipoMovimiento))
-                                    { agCxt.HorasAcumuladasAnioAnterior = HorasString.SumarHoras(new string[] { ag.HorasAcumuladasAnioAnterior, horas }); }
-                                }
-                                else
-                                {
-                                    //Si tiene algo del año anterior se hace un movimiento para ese saldo y 
-                                    //se modifica las horas del mov para restarle las horas restantes
-                                    //a este año y se actualizan los acumulados en el agente
-                                    if (agCxt.HorasAcumuladasAnioAnterior.Contains("-") && agCxt.HorasAcumuladasAnioAnterior != "-000:00")
-                                    {
-                                        MovimientoHora mh1 = new MovimientoHora();
-                                        mh1.TipoMovimientoHoraId = tipoMovimiento.Id;
-                                        mh1.Horas = agCxt.HorasAcumuladasAnioAnterior.Replace("-", "");
-                                        mh1.DescontoDeAcumuladoAnioAnterior = true;
-                                        mh1.AgenteId = agendadoPor.Id;
-                                        mh1.Descripcion = descripcion;
-                                        rd.MovimientosHoras.Add(mh1);
-
-                                        mh.Horas = HorasString.RestarHoras(horas, mh1.Horas);
-
-                                        if (AcumulaInmediatamente(tipoMovimiento))
-                                        { agCxt.HorasAcumuladasAnioAnterior = "000:00"; }
-                                    }
-
-                                    //las resto del año actual las horas o el resto de las horas que no cubrio
-                                    //lo del año anterior.
-                                    mh.DescontoDeAcumuladoAnioAnterior = false;
-                                    //Dependiendo de las horas acumuladas del año en curso
-                                    if (agCxt.HorasAcumuladasAnioActual.Contains("-"))
-                                    {//En caso de tener horas negativas, resto las horas que suman menos las que restan :P jejeje
-                                        if (AcumulaInmediatamente(tipoMovimiento))
-                                        { agCxt.HorasAcumuladasAnioActual = HorasString.RestarHoras(mh.Horas, agCxt.HorasAcumuladasAnioActual.Replace("-", "")); }
-                                    }
-                                    else
-                                    { //el normal de los casos (no tiene horas en contra en el año) sumo normalmente.
-                                        if (AcumulaInmediatamente(tipoMovimiento))
-                                        { agCxt.HorasAcumuladasAnioActual = HorasString.SumarHoras(new string[2] { agCxt.HorasAcumuladasAnioActual, mh.Horas }); }
-                                    }
-                                }
-
-                                #endregion
-                            }
-
-                            #endregion
-                        }
-                    }
-                    */
-
-                    rd.MovimientosHoras.Add(mh);
-                    rd.Horas = HorasString.TotalizarMovimientosHorasDiarias(rd.MovimientosHoras);
-
+                    cxt.MovimientosHoras.AddObject(mh);
                     cxt.SaveChanges();
+                    
+                    rd = cxt.ResumenesDiarios.Include("MovimientosHoras").FirstOrDefault(rd1 => rd1.AgenteId == ag.Id && rd1.Dia == d);
+                    rd.Horas = HorasString.TotalizarMovimientosHorasDiarias(rd.MovimientosHoras);
+                    cxt.SaveChanges();
+
                     return true;
                 }
             }
@@ -783,91 +586,106 @@ namespace SisPer.Aplicativo
         {
             try
             {
-
-                Model1Container cxt = new Model1Container();
-
-                SolicitudDeEstado solest = (
-                                            from se in cxt.SolicitudesDeEstado
-                                            where
-                                                se.FechaDesde >= d &&
-                                                se.FechaHasta <= d &&
-                                                //se.TipoEstadoAgenteId == ea.Id &&
-                                                se.AgenteId == ag.Id
-                                            select
-                                                se).FirstOrDefault();
-                if (solest != null)
+                using (var cxt = new Model1Container())
                 {
-                    solest.Estado = EstadoSolicitudDeEstado.Aprobado;
-                }
-
-                if (ea.Estado == "Licencia Anual" || ea.Estado == "Licencia Anual (Saldo)" || ea.Estado == "Licencia Anual (Anticipo)")
-                {
-                    var tipoLicencia = cxt.TiposDeLicencia.First(tl => tl.Tipo == "Licencia anual");
-
-
-                    //Si tiene dias usufructuados por licencia (del mismo tipo que quiero cargar) primero las elimino
-                    List<DiaUsufructado> dias_usufructuados_por_borrar = cxt.DiasUsufructuados.Where(uu => uu.Dia == d && uu.AgenteId == ag.Id && uu.TipoLicenciaId == tipoLicencia.Id).ToList();
-
-                    foreach (DiaUsufructado du in dias_usufructuados_por_borrar)
+                    if (ea.Estado == "Licencia Anual" || ea.Estado == "Licencia Anual (Saldo)" || ea.Estado == "Licencia Anual (Anticipo)")
                     {
-                        cxt.DiasUsufructuados.DeleteObject(du);
-                    }
+                        var tipoLicencia = cxt.TiposDeLicencia.First(tl => tl.Tipo == "Licencia anual");
 
-                    //Agrego el nuevo dia usufructuado
-                    cxt.DiasUsufructuados.AddObject(new DiaUsufructado
-                    {
-                        AgenteId = ag.Id,
-                        AgentePersonalId = agendadoPor.Id,
-                        Anio = year,
-                        Dia = d,
-                        TipoLicenciaId = tipoLicencia.Id
-                    });
-                }
 
-                EstadoAgente eag = new EstadoAgente();
-                eag.TipoEstado = cxt.TiposEstadoAgente.First(te => te.Id == ea.Id);
-                eag.AgendadoPor = cxt.Agentes.First(a => a.Id == agendadoPor.Id);
-                eag.Agente = cxt.Agentes.First(a => a.Id == ag.Id);
-                eag.Dia = d;
+                        //Si tiene dias usufructuados por licencia (del mismo tipo que quiero cargar) primero las elimino
+                        List<DiaUsufructado> dias_usufructuados_por_borrar = cxt.DiasUsufructuados.Where(uu => uu.Dia == d && uu.AgenteId == ag.Id && uu.TipoLicenciaId == tipoLicencia.Id).ToList();
 
-                cxt.EstadosAgente.AddObject(eag);
-                cxt.SaveChanges();
-
-                #region Verificar y aprobar solicitud si existe
-                //obtengo la solicitud
-                SolicitudDeEstado sol_est = cxt.SolicitudesDeEstado.FirstOrDefault(ssee => ssee.AgenteId == ag.Id && ssee.FechaDesde <= d && ssee.FechaHasta >= d);
-
-                //si existe la solicitud recorro los dias que pertenecen a la misma y si todos tienen agendado algun estado la apruebo y listo
-                if (sol_est != null)
-                {
-                    bool aprobar_solicitud = true;
-
-                    for (DateTime i = sol_est.FechaDesde; i <= sol_est.FechaHasta; i = i.AddDays(1))
-                    {
-                        if (cxt.EstadosAgente.FirstOrDefault(eeaa => eeaa.AgenteId == ag.Id && eeaa.Dia == i) == null)
+                        foreach (DiaUsufructado du in dias_usufructuados_por_borrar)
                         {
-                            //si en alguno de los dias que forman parte de la solicitud no tiene estado agendado no debo aprobarla
-                            aprobar_solicitud = false;
-                            break;
+                            cxt.DiasUsufructuados.DeleteObject(du);
                         }
+
+                        //Agrego el nuevo dia usufructuado
+                        cxt.DiasUsufructuados.AddObject(new DiaUsufructado
+                        {
+                            AgenteId = ag.Id,
+                            AgentePersonalId = agendadoPor.Id,
+                            Anio = year,
+                            Dia = d,
+                            TipoLicenciaId = tipoLicencia.Id
+                        });
                     }
 
-                    if (aprobar_solicitud)
+                    if (ea.Estado == "Razones particulares")
                     {
-                        sol_est.Estado = EstadoSolicitudDeEstado.Aprobado;
+                        TipoMovimientoHora tmh = cxt.TiposMovimientosHora.First(t => t.Tipo == "Salida particular");
+
+                        Salida s = new Salida()
+                        {
+                            AgenteId = ag.Id,
+                            Dia = d,
+                            Destino = "Art. 50 R.P.",
+                            HoraDesde = "06:30",
+                            HoraHasta = "13:00",
+                            AgenteId1 = agendadoPor.Id,
+                            Tipo = TipoSalida.Particular
+                        };
+                        
+                        cxt.Salidas.AddObject(s);
                         cxt.SaveChanges();
 
+                        AgendarMovimientoHoraEnResumenDiario(d, ag, agendadoPor, "06:30", tmh, "Art. 50 R.P.");
+                        
+                        ResumenDiario rd = cxt.ResumenesDiarios.FirstOrDefault(rrdd => rrdd.AgenteId == ag.Id && rrdd.Dia == d);
+                        rd = cxt.ResumenesDiarios.FirstOrDefault(rrdd => rrdd.AgenteId == ag.Id && rrdd.Dia == d);
+                        rd = cxt.ResumenesDiarios.FirstOrDefault(rrdd => rrdd.AgenteId == ag.Id && rrdd.Dia == d);
+                        rd.ObservacionInconsistente = "Art. 50 R.P.";
+                        rd.AgenteId1 = agendadoPor.Id;
+                        rd.Inconsistente = false;
+                        cxt.SaveChanges();
                     }
 
-                }
+                    EstadoAgente eag = new EstadoAgente();
+                    eag.TipoEstado = cxt.TiposEstadoAgente.First(te => te.Id == ea.Id);
+                    eag.AgendadoPor = cxt.Agentes.First(a => a.Id == agendadoPor.Id);
+                    eag.Agente = cxt.Agentes.First(a => a.Id == ag.Id);
+                    eag.Dia = d;
 
-                #endregion
+                    cxt.EstadosAgente.AddObject(eag);
+                    cxt.SaveChanges();
 
-                ResumenDiario rd = ag.ResumenesDiarios.FirstOrDefault(rdiario => rdiario.Dia == d);
+                    #region Verificar y aprobar solicitud si existe
+                    
+                    //obtengo la solicitud
+                    SolicitudDeEstado sol_est = cxt.SolicitudesDeEstado.FirstOrDefault(ssee => ssee.AgenteId == ag.Id && ssee.FechaDesde <= d && ssee.FechaHasta >= d);
 
-                if (rd != null)
-                {
-                    AnalizarResumenDiario(rd);
+                    //si existe la solicitud recorro los dias que pertenecen a la misma y si todos tienen agendado algun estado la apruebo y listo
+                    if (sol_est != null)
+                    {
+                        bool aprobar_solicitud = true;
+
+                        for (DateTime i = sol_est.FechaDesde; i <= sol_est.FechaHasta; i = i.AddDays(1))
+                        {
+                            if (cxt.EstadosAgente.FirstOrDefault(eeaa => eeaa.AgenteId == ag.Id && eeaa.Dia == i) == null)
+                            {
+                                //si en alguno de los dias que forman parte de la solicitud no tiene estado agendado no debo aprobarla
+                                aprobar_solicitud = false;
+                                break;
+                            }
+                        }
+
+                        if (aprobar_solicitud)
+                        {
+                            sol_est.Estado = EstadoSolicitudDeEstado.Aprobado;
+                            cxt.SaveChanges();
+
+                        }
+
+                    }
+
+                    #endregion
+                    
+                    ResumenDiario _rd = cxt.ResumenesDiarios.FirstOrDefault(rrdd => rrdd.AgenteId == ag.Id && rrdd.Dia == d);
+                    if (_rd != null)
+                    {
+                        AnalizarResumenDiario(_rd);
+                    }
                 }
 
                 return true;
@@ -884,16 +702,37 @@ namespace SisPer.Aplicativo
             try
             {
 
-                Model1Container cxt = new Model1Container();
-
-                EstadoAgente eag1 = cxt.EstadosAgente.FirstOrDefault(_ea => _ea.Dia == d && _ea.Agente.Id == ag.Id && _ea.TipoEstadoAgenteId == ea.Id);
-
-                if (eag1 != null)
+                using (var cxt =  new Model1Container())
                 {
-                    cxt.EstadosAgente.DeleteObject(eag1);
-                }
+                    EstadoAgente eag1 = cxt.EstadosAgente.FirstOrDefault(_ea => _ea.Dia == d && _ea.Agente.Id == ag.Id && _ea.TipoEstadoAgenteId == ea.Id);
 
-                cxt.SaveChanges();
+                    if (eag1 != null)
+                    {
+                        cxt.EstadosAgente.DeleteObject(eag1);
+                    }
+
+                    if (ea.Estado == "Razones particulares")
+                    {
+
+                        cxt.Salidas.DeleteObject(cxt.Salidas.FirstOrDefault(s => s.AgenteId == ag.Id && s.Dia == d && s.HoraDesde == "06:30" && s.HoraHasta == "13:00"));
+                        ResumenDiario rd = cxt.ResumenesDiarios.FirstOrDefault(r => r.AgenteId == ag.Id && r.Dia == d);
+                        
+                        cxt.MovimientosHoras.DeleteObject(cxt.MovimientosHoras.FirstOrDefault(m => m.ResumenDiarioId == rd.Id && m.Descripcion == "Art. 50 R.P."));
+
+                        if (rd.Cerrado == true)
+                        {
+                            AbrirDiaCerrado(ag.Id, d, ag.Id);
+                        }
+
+                        rd.Cerrado = false;
+                        rd.Horas = "00:00";
+                        rd.ObservacionInconsistente = "";
+                        rd.AgenteId1 = null;
+                    }
+
+                    cxt.SaveChanges();
+                }
+                
 
 
                 return true;
@@ -1322,15 +1161,20 @@ namespace SisPer.Aplicativo
                 using (var cxt = new Model1Container())
                 {
                     //al crear/obtenr me aseguro que se procesen las marcaciones
-                    ResumenDiario rd = cxt.sp_obtener_resumen_diario_agente_fecha(pruebaLegajo, fecha.ToShortDateString()).First();
-                    foreach (Marcacion marcacion in rd.Marcaciones)
+                    Agente agenteLegajo = cxt.Agentes.FirstOrDefault(aa => aa.Legajo == pruebaLegajo && aa.FechaBaja == null);
+                    if (agenteLegajo != null)
                     {
-                        DS_Marcaciones.MarcacionRow dr = ret.Marcacion.NewMarcacionRow();
-                        dr.Legajo = legajo;
-                        dr.Fecha = fecha;
-                        dr.Hora = marcacion.Hora;
-                        dr.MarcaManual = marcacion.Manual;
-                        ret.Marcacion.Rows.Add(dr);
+
+                        ResumenDiario rd = cxt.sp_obtener_resumen_diario_agente_fecha(agenteLegajo.Id, fecha.ToShortDateString()).First();
+                        foreach (Marcacion marcacion in rd.Marcaciones)
+                        {
+                            DS_Marcaciones.MarcacionRow dr = ret.Marcacion.NewMarcacionRow();
+                            dr.Legajo = legajo;
+                            dr.Fecha = fecha;
+                            dr.Hora = marcacion.Hora;
+                            dr.MarcaManual = marcacion.Manual;
+                            ret.Marcacion.Rows.Add(dr);
+                        }
                     }
                 }
             }
@@ -1440,6 +1284,7 @@ namespace SisPer.Aplicativo
                         rd.ObservacionInconsistente = string.Empty;
 
                         #region Analizo marcaciones
+
                         if (rd.Marcaciones.Count(m => !m.Anulada) % 2 != 0)
                         {
                             //cantidad de marcaciones impares
@@ -1502,27 +1347,9 @@ namespace SisPer.Aplicativo
                                 }
 
                                 entradaSalida = entradaSalida.OrderBy(es => es.Hora).ToList();
-                                //HorasTrabajadas: es la diferencia de horas entre la segunda marcacion y la primera
-                                //string horasTrabajadas = HorasString.RestarHoras(entradaSalida[1].Hora, entradaSalida[0].Hora);
-                                //int horas = 0;
-                                //int minutos = 0;
+                                
                                 rd.HEntrada = entradaSalida[0].Hora;
-                                ////    rd.HSalida = entradaSalida[1].Hora;
-
-                                //if ((int.TryParse(horasTrabajadas.Split(':')[0], out horas) && horas == 0) && (int.TryParse(horasTrabajadas.Split(':')[0], out minutos) && minutos <= 59))
-                                //{
-                                //    rd.Inconsistente = true;
-                                //    rd.ObservacionInconsistente = "Trabajo menos de una hora.";
-                                //    rd.HEntrada = entradaSalida[0].Hora;
-                                //    rd.HSalida = entradaSalida[1].Hora;
-                                //}
-                                //else
-                                //{
-                                //    rd.HEntrada = entradaSalida[0].Hora;
-                                //    rd.HSalida = entradaSalida[1].Hora;
-                                //    rd.Inconsistente = false;
-                                //    rd.ObservacionInconsistente = string.Empty;
-                                //}
+                                
                             }
                         }
                         #endregion
@@ -1535,7 +1362,6 @@ namespace SisPer.Aplicativo
                             {
                                 rd.Inconsistente = false;
                                 rd.ObservacionInconsistente = ea.TipoEstado.Estado;
-                                rd.Cerrado = true;
 
                                 HorasMesHorarioFlexible hmf = rd.Agente.HorasMesHorarioFlexibles.FirstOrDefault(hhmm => hhmm.Anio == rd.Dia.Year && hhmm.Mes == rd.Dia.Month);
                                 //Si no se acumulo el mes y el agente tenia agendado en el dia un movimiento de horas por cumplir antes de que se le agendara la justificacion de ausencia debo quitar el mismo y redistribuir las horas
@@ -1558,7 +1384,6 @@ namespace SisPer.Aplicativo
                                         return cxta.ResumenesDiarios.First(rrdd => rrdd.Id == rd.Id);
                                     }
                                 }
-
                             }
                             else
                             {
@@ -1580,19 +1405,6 @@ namespace SisPer.Aplicativo
                         #endregion
 
                         cxt.SaveChanges();
-                    }
-
-                    //si esta cerrado, es flexible y no se acumuló
-                    if (rd.Cerrado.HasValue && rd.Cerrado == true &&
-                        ag.HorarioFlexible.HasValue && ag.HorarioFlexible == true &&
-                        rd.Horas.Replace("-", "").Replace("000", "00") != "00:00" &&
-                        rd.AcumuloHorasMes == null &&
-                        rd.AcumuloHorasBonificacion == null &&
-                        rd.AcumuloHorasAnioAnterior == null &&
-                        rd.AcumuloHorasAnioActual == null)
-                    {
-                        ProcesosGlobales.DistribuirHorasCierreDiaHorarioFlexible(rd);
-                        rd = cxt.ResumenesDiarios.FirstOrDefault(rrdd => rrdd.Id == rd.Id);
                     }
 
                     return rd;

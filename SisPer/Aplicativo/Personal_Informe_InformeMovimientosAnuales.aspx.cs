@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -33,7 +34,7 @@ namespace SisPer.Aplicativo
                     MenuPersonalJefe.Visible = (ag.Jefe || ag.JefeTemporal);
                     MenuPersonalAgente.Visible = !(ag.Jefe || ag.JefeTemporal);
 
-                    for (int i = 2014; i <= DateTime.Today.Year; i++)
+                    for (int i = 2022; i <= DateTime.Today.Year + 1; i++)
                     {
                         ddl_anio.Items.Add(i.ToString());
                     }
@@ -119,6 +120,35 @@ namespace SisPer.Aplicativo
             }
 
             return ds;
+        }
+
+        private List<Agente> ObtenerAgentesSolicitados()
+        {
+            int legajo;
+            Area area;
+            List<Agente> agentesBuscados = new List<Agente>();
+            Session["AgentesInforme"] = agentesBuscados;
+
+            using (var cxt = new Model1Container())
+            {
+                if (rb_Legajo.Checked)
+                {//seleccionado la busqueda por agente
+                    legajo = Convert.ToInt32(tb_Legajo.Text);
+                    Agente ag = cxt.Agentes.FirstOrDefault(a => a.Legajo == legajo);
+                    if (ag != null)
+                    {
+                        agentesBuscados.Add(ag);
+                    }
+                }
+                else
+                {//seleccionado la busqueda por sector
+                    area = Ddl_Areas.AreaSeleccionado;
+                    IncluirAgentes(area);
+                    agentesBuscados = Session["AgentesInforme"] as List<Agente>;
+                }
+            }
+
+            return agentesBuscados;
         }
 
         private void IncluirAgentes(Area area)
@@ -300,6 +330,23 @@ namespace SisPer.Aplicativo
         {
             int legajo = 0;
             args.IsValid = rb_Legajo.Checked ? int.TryParse(tb_Legajo.Text, out legajo) : true;
+        }
+
+        protected void btn_inf_mov_anuales_Click(object sender, EventArgs e)
+        {
+            List<Agente> agentesBuscados = ObtenerAgentesSolicitados();
+            int año = int.Parse(ddl_anio.SelectedValue);
+
+            if (agentesBuscados.Count > 0 && año >= 2022)
+            {
+                Reporte_anual_legajo rp = new Reporte_anual_legajo(agentesBuscados, año);
+
+                byte[] pdf = rp.Generar_pdf_legajo_anual();
+                Session["Bytes"] = pdf;
+
+                string script = "<script type='text/javascript'>window.open('Reportes/ReportePDF.aspx');</script>";
+                Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "VentanaPadre", script);
+            }
         }
     }
 }

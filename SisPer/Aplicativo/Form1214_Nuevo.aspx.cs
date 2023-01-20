@@ -721,7 +721,8 @@ namespace SisPer.Aplicativo
                         if (!(
                             ea.TipoEstado.Estado == "Marca Planilla" ||
                             ea.TipoEstado.Estado == "Fin de semana" ||
-                            ea.TipoEstado.Estado == "Natalicio"
+                            ea.TipoEstado.Estado == "Natalicio" ||
+                            ea.TipoEstado.Estado == "Feriado"
                             ))
                         {
                             ret = false;

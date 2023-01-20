@@ -1838,66 +1838,6 @@ namespace SisPer.Aplicativo
         /// <summary>
         /// No hay documentación de metadatos disponible.
         /// </summary>
-        /// <param name="iD_AGENTE">No hay documentación de metadatos disponible.</param>
-        /// <param name="dIA">No hay documentación de metadatos disponible.</param>
-        public ObjectResult<ResumenDiario> sp_obtener_resumen_diario_agente_fecha(Nullable<global::System.Int32> iD_AGENTE, global::System.String dIA)
-        {
-            ObjectParameter iD_AGENTEParameter;
-            if (iD_AGENTE.HasValue)
-            {
-                iD_AGENTEParameter = new ObjectParameter("ID_AGENTE", iD_AGENTE);
-            }
-            else
-            {
-                iD_AGENTEParameter = new ObjectParameter("ID_AGENTE", typeof(global::System.Int32));
-            }
-    
-            ObjectParameter dIAParameter;
-            if (dIA != null)
-            {
-                dIAParameter = new ObjectParameter("DIA", dIA);
-            }
-            else
-            {
-                dIAParameter = new ObjectParameter("DIA", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<ResumenDiario>("sp_obtener_resumen_diario_agente_fecha", iD_AGENTEParameter, dIAParameter);
-        }
-        /// <summary>
-        /// No hay documentación de metadatos disponible.
-        /// </summary>
-        /// <param name="mergeOption"></param>
-        /// <param name="iD_AGENTE">No hay documentación de metadatos disponible.</param>
-        /// <param name="dIA">No hay documentación de metadatos disponible.</param>
-        public ObjectResult<ResumenDiario> sp_obtener_resumen_diario_agente_fecha(Nullable<global::System.Int32> iD_AGENTE, global::System.String dIA, MergeOption mergeOption)
-        {
-            ObjectParameter iD_AGENTEParameter;
-            if (iD_AGENTE.HasValue)
-            {
-                iD_AGENTEParameter = new ObjectParameter("ID_AGENTE", iD_AGENTE);
-            }
-            else
-            {
-                iD_AGENTEParameter = new ObjectParameter("ID_AGENTE", typeof(global::System.Int32));
-            }
-    
-            ObjectParameter dIAParameter;
-            if (dIA != null)
-            {
-                dIAParameter = new ObjectParameter("DIA", dIA);
-            }
-            else
-            {
-                dIAParameter = new ObjectParameter("DIA", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<ResumenDiario>("sp_obtener_resumen_diario_agente_fecha", mergeOption, iD_AGENTEParameter, dIAParameter);
-        }
-    
-        /// <summary>
-        /// No hay documentación de metadatos disponible.
-        /// </summary>
         /// <param name="id_agente">No hay documentación de metadatos disponible.</param>
         /// <param name="dia_hasta">No hay documentación de metadatos disponible.</param>
         public ObjectResult<ResumenDiario> sp_obtener_resumenes_diarios_agente_mes(Nullable<global::System.Int32> id_agente, global::System.String dia_hasta)
@@ -1991,6 +1931,66 @@ namespace SisPer.Aplicativo
             }
     
             return base.ExecuteFunction<Agente>("sp_obtener_suborinados_directos", mergeOption, id_agenteParameter);
+        }
+    
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        /// <param name="iD_AGENTE">No hay documentación de metadatos disponible.</param>
+        /// <param name="dIA">No hay documentación de metadatos disponible.</param>
+        public ObjectResult<ResumenDiario> sp_obtener_resumen_diario_agente_fecha(Nullable<global::System.Int32> iD_AGENTE, global::System.String dIA)
+        {
+            ObjectParameter iD_AGENTEParameter;
+            if (iD_AGENTE.HasValue)
+            {
+                iD_AGENTEParameter = new ObjectParameter("ID_AGENTE", iD_AGENTE);
+            }
+            else
+            {
+                iD_AGENTEParameter = new ObjectParameter("ID_AGENTE", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter dIAParameter;
+            if (dIA != null)
+            {
+                dIAParameter = new ObjectParameter("DIA", dIA);
+            }
+            else
+            {
+                dIAParameter = new ObjectParameter("DIA", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<ResumenDiario>("sp_obtener_resumen_diario_agente_fecha", iD_AGENTEParameter, dIAParameter);
+        }
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="iD_AGENTE">No hay documentación de metadatos disponible.</param>
+        /// <param name="dIA">No hay documentación de metadatos disponible.</param>
+        public ObjectResult<ResumenDiario> sp_obtener_resumen_diario_agente_fecha(Nullable<global::System.Int32> iD_AGENTE, global::System.String dIA, MergeOption mergeOption)
+        {
+            ObjectParameter iD_AGENTEParameter;
+            if (iD_AGENTE.HasValue)
+            {
+                iD_AGENTEParameter = new ObjectParameter("ID_AGENTE", iD_AGENTE);
+            }
+            else
+            {
+                iD_AGENTEParameter = new ObjectParameter("ID_AGENTE", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter dIAParameter;
+            if (dIA != null)
+            {
+                dIAParameter = new ObjectParameter("DIA", dIA);
+            }
+            else
+            {
+                dIAParameter = new ObjectParameter("DIA", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<ResumenDiario>("sp_obtener_resumen_diario_agente_fecha", mergeOption, iD_AGENTEParameter, dIAParameter);
         }
 
         #endregion

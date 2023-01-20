@@ -181,6 +181,10 @@
                                         <asp:CustomValidator ID="cv_VerificarDiasDisponiblesLicencia" runat="server" ErrorMessage="El agente no puede tomarse mas dias de licencia en el año informado."
                                             Text="<img src='../Imagenes/exclamation.gif' title='El agente no puede tomarse mas dias de licencia en el año informado.' />"
                                             OnServerValidate="cv_VerificarDiasDisponiblesLicencia_ServerValidate"></asp:CustomValidator>
+                                        <asp:CustomValidator ID="cv_VerificarSiTieneDiasLicenciaAnteriorAnticipo" runat="server" ErrorMessage="No puede solicitar licencia (anticipo) teniendo saldo licencia año anterior."
+                                            Text="<img src='../Imagenes/exclamation.gif' title='No puede solicitar licencia (anticipo) teniendo saldo licencia año anterior.' />"
+                                            OnServerValidate="cv_VerificarSiTieneDiasLicenciaAnteriorAnticipo_ServerValidate"></asp:CustomValidator>
+
                                     </td>
                                 </tr>
                             </table>

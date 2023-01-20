@@ -249,7 +249,7 @@ namespace SisPer.Aplicativo
                 }
                 else
                 {
-                    if (ea.TipoEstado.Estado == "Licencia Anual")
+                    if (ea.TipoEstado.Estado == "Licencia Anual" || ea.TipoEstado.Estado == "Licencia Anual (Saldo)" || ea.TipoEstado.Estado == "Licencia Anual (Anticipo)")
                     {
                         DiaUsufructado du = cxt.DiasUsufructuados.FirstOrDefault(d => d.AgenteId == ag.Id && d.Dia == ea.Dia);
                         if (du != null)

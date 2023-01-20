@@ -74,7 +74,7 @@
                                             </div>
                                             <div class="col-md-10">
                                                 <asp:TextBox ID="tb_DestinoSalida" CssClass="form-control" runat="server" />
-                                                <asp:CustomValidator ID="CustomValidator11" runat="server" ErrorMessage="Si la salida es oficial debe especificar destino." OnServerValidate="CustomValidator11_ServerValidate" Text="&lt;img src='../Imagenes/exclamation.gif' title='Si la salida es oficial debe especificar destino.' /&gt;" ValidationGroup="Salida"></asp:CustomValidator>
+                                                <asp:CustomValidator ID="CustomValidator11" runat="server" ErrorMessage="La salida particular u oficial debe tener un destino." OnServerValidate="CustomValidator11_ServerValidate" Text="&lt;img src='../Imagenes/exclamation.gif' title='La salida particular u oficial debe tener un destino.' /&gt;" ValidationGroup="Salida"></asp:CustomValidator>
                                             </div>
                                         </div>
                                         <div class="row">

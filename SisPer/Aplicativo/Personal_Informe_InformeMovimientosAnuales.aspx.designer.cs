@@ -7,11 +7,13 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace SisPer.Aplicativo {
-    
-    
-    public partial class Personal_Informe_InformeMovimientosAnuales {
-        
+namespace SisPer.Aplicativo
+{
+
+
+    public partial class Personal_Informe_InformeMovimientosAnuales
+    {
+
         /// <summary>
         /// Control MenuPersonalAgente.
         /// </summary>
@@ -20,7 +22,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::SisPer.Aplicativo.Menues.MenuPersonalAgente MenuPersonalAgente;
-        
+
         /// <summary>
         /// Control MenuPersonalJefe.
         /// </summary>
@@ -29,7 +31,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::SisPer.Aplicativo.Menues.MenuPersonalJefe MenuPersonalJefe;
-        
+
         /// <summary>
         /// Control ddl_anio.
         /// </summary>
@@ -38,7 +40,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddl_anio;
-        
+
         /// <summary>
         /// Control Panel_Legajo.
         /// </summary>
@@ -47,7 +49,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Panel_Legajo;
-        
+
         /// <summary>
         /// Control rb_Legajo.
         /// </summary>
@@ -56,7 +58,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButton rb_Legajo;
-        
+
         /// <summary>
         /// Control cv_Legajo.
         /// </summary>
@@ -65,7 +67,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CustomValidator cv_Legajo;
-        
+
         /// <summary>
         /// Control tb_Legajo.
         /// </summary>
@@ -74,7 +76,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tb_Legajo;
-        
+
         /// <summary>
         /// Control Panel_Area.
         /// </summary>
@@ -83,7 +85,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Panel_Area;
-        
+
         /// <summary>
         /// Control rb_Area.
         /// </summary>
@@ -92,7 +94,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButton rb_Area;
-        
+
         /// <summary>
         /// Control Ddl_Areas.
         /// </summary>
@@ -101,7 +103,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::SisPer.Aplicativo.Controles.Ddl_Areas Ddl_Areas;
-        
+
         /// <summary>
         /// Control chk_Dependencias.
         /// </summary>
@@ -110,7 +112,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chk_Dependencias;
-        
+
         /// <summary>
         /// Control btn_movimientosAnuales.
         /// </summary>
@@ -119,5 +121,14 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btn_movimientosAnuales;
+
+        /// <summary>
+        /// Control btn_inf_mov_anuales.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_inf_mov_anuales;
     }
 }

@@ -185,9 +185,20 @@ namespace SisPer.Aplicativo.Reportes
                                     }
                                     else
                                     {
-                                        cell = new Cell(1, 8).Add(new Paragraph(rd.ObservacionInconsistente)).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY);
+                                        EstadoAgente ea = agente.ObtenerEstadoAgenteParaElDia(dia, true);
+                                        string estado = "";
+                                        if (ea != null)
+                                        {
+                                            estado = ea.TipoEstado.Estado;
+                                        }
+                                        else
+                                        {
+                                            estado = rd.ObservacionInconsistente;
+                                        }
+                                        
+                                        cell = new Cell(1, 8).Add(new Paragraph(estado)).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY);
 
-                                        switch (rd.ObservacionInconsistente)
+                                        switch (estado)
                                         {
                                             case "Licencia Anual":
                                                 cantidad_dias_licencia_anual++;

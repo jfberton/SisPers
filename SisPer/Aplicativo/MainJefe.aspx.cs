@@ -414,21 +414,32 @@ namespace SisPer.Aplicativo
             Agente ag = Session["UsuarioLogueado"] as Agente;
             var cxt = new Model1Container();
             HorarioVespertino hv = cxt.HorariosVespertinos.First(hvesp => hvesp.Id == id);
-
-            if (ag.Id != hv.AgenteId)
+            if (hv.Dia < DateTime.Today)
             {
-                ModificarEstadoHV(id, EstadosHorarioVespertino.Aprobado);
-                CargarHVS();
-
-                if (ag.Area.Interior == true)
-                {
-                    CargarHVPorCerrar();
-                }
+                Controles.MessageBox.Show(this, "No se puede aprobar un horario vespertino que ya paso", Controles.MessageBox.Tipo_MessageBox.Info);
+                return;
             }
-            else
+            
+            if (hv.Estado == EstadosHorarioVespertino.Aprobado)
+            {
+                Controles.MessageBox.Show(this, "El horario vespertino ya fue aprobado", Controles.MessageBox.Tipo_MessageBox.Info);
+                return;
+            }
+
+            if (ag.Id == hv.AgenteId)
             {
                 Controles.MessageBox.Show(this, "Usted no se puede aprobar los horarios vespertinos generados a si mismo.", Controles.MessageBox.Tipo_MessageBox.Info);
+                return;
             }
+
+            ModificarEstadoHV(id, EstadosHorarioVespertino.Aprobado);
+            CargarHVS();
+
+            if (ag.Area.Interior == true)
+            {
+                CargarHVPorCerrar();
+            }
+
         }
 
         protected void btn_RechazarHV_Click(object sender, ImageClickEventArgs e)
@@ -576,7 +587,7 @@ namespace SisPer.Aplicativo
             using (var cxt = new Model1Container())
             {
                 List<HorarioVespertino> horariosVespertinosAprobados = new List<HorarioVespertino>();
-                
+
                 //TODO: verificar como hacer esta consulta asi traigo unicamente los HV pendientes de cerrar para los jefes de los agentes que tenian autorizado remoto
                 //BUG: aca tira error!
                 foreach (var hv in cxt.HorariosVespertinos.Include("Agente").Where(hvs => hvs.Estado == EstadosHorarioVespertino.Aprobado))

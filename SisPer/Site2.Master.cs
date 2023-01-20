@@ -35,6 +35,10 @@ namespace SisPer
             {
                 lbl_AñoActual.Text = DateTime.Today.Year.ToString();
                 lbl_usuarios_logueados.Text = Global.CurrentNumberOfUsers.ToString();
+                using (var cxt = new Model1Container())
+                {
+                    lbl_db.Text = cxt.Connection.DataSource.ToString() + " - " + ((System.Data.SqlClient.SqlConnection)((System.Data.EntityClient.EntityConnection)cxt.Connection).StoreConnection).Database;
+                }
             }
         }
 

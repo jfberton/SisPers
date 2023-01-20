@@ -18022,3 +18022,596 @@ STACKTRACE:    en System.Data.EntityClient.EntityCommandDefinition.GetTargetFunc
 
 
 ******************************************************************
+ 
+
+******************************************************************
+
+DATE: 26/12/2022 09:40:11
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La cadena de entrada no tiene el formato correcto.
+
+SOURCE: mscorlib
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_Informe_InformeMovimientosAnuales.aspx
+
+TARGETSITE: Void StringToNumber(System.String, System.Globalization.NumberStyles, NumberBuffer ByRef, System.Globalization.NumberFormatInfo, Boolean)
+
+STACKTRACE:    en System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   en System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   en System.Convert.ToInt32(String value)
+   en SisPer.Aplicativo.Personal_Informe_InformeMovimientosAnuales.ObtenerAgentesSolicitados() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Informe_InformeMovimientosAnuales.aspx.cs:línea 136
+   en SisPer.Aplicativo.Personal_Informe_InformeMovimientosAnuales.btn_inf_mov_anuales_Click(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Informe_InformeMovimientosAnuales.aspx.cs:línea 337
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 27/12/2022 07:29:00
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Error de inicio de sesión del usuario 'atpadmin'. Motivo: la cuenta está deshabilitada.
+
+SOURCE: .Net SqlClient Data Provider
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainPersonal.aspx
+
+TARGETSITE: Void OnError(System.Data.SqlClient.SqlException, Boolean, System.Action`1[System.Action])
+
+STACKTRACE:    en System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   en System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   en System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   en System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   en System.Data.SqlClient.SqlDataReader.get_MetaData()
+   en System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   en System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   en System.Data.EntityClient.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 27/12/2022 07:29:10
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Error de inicio de sesión del usuario 'atpadmin'. Motivo: la cuenta está deshabilitada.
+
+SOURCE: .Net SqlClient Data Provider
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainPersonal.aspx
+
+TARGETSITE: Void OnError(System.Data.SqlClient.SqlException, Boolean, System.Action`1[System.Action])
+
+STACKTRACE:    en System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   en System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   en System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   en System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   en System.Data.SqlClient.SqlDataReader.get_MetaData()
+   en System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   en System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   en System.Data.EntityClient.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 27/12/2022 07:29:30
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Error de inicio de sesión del usuario 'atpadmin'. Motivo: la cuenta está deshabilitada.
+
+SOURCE: .Net SqlClient Data Provider
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainPersonal.aspx
+
+TARGETSITE: Void OnError(System.Data.SqlClient.SqlException, Boolean, System.Action`1[System.Action])
+
+STACKTRACE:    en System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   en System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   en System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   en System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   en System.Data.SqlClient.SqlDataReader.get_MetaData()
+   en System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   en System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   en System.Data.EntityClient.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 27/12/2022 07:30:46
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Error de inicio de sesión del usuario 'atpadmin'. Motivo: la cuenta está deshabilitada.
+
+SOURCE: .Net SqlClient Data Provider
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainPersonal.aspx
+
+TARGETSITE: Void OnError(System.Data.SqlClient.SqlException, Boolean, System.Action`1[System.Action])
+
+STACKTRACE:    en System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   en System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   en System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   en System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   en System.Data.SqlClient.SqlDataReader.get_MetaData()
+   en System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   en System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   en System.Data.EntityClient.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 27/12/2022 07:32:27
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Error de inicio de sesión del usuario 'atpadmin'. Motivo: la cuenta está deshabilitada.
+
+SOURCE: .Net SqlClient Data Provider
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainPersonal.aspx
+
+TARGETSITE: Void OnError(System.Data.SqlClient.SqlException, Boolean, System.Action`1[System.Action])
+
+STACKTRACE:    en System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   en System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   en System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   en System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   en System.Data.SqlClient.SqlDataReader.get_MetaData()
+   en System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   en System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   en System.Data.EntityClient.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 27/12/2022 07:35:39
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Error de inicio de sesión del usuario 'atpadmin'. Motivo: la cuenta está deshabilitada.
+
+SOURCE: .Net SqlClient Data Provider
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainPersonal.aspx
+
+TARGETSITE: Void OnError(System.Data.SqlClient.SqlException, Boolean, System.Action`1[System.Action])
+
+STACKTRACE:    en System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   en System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   en System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   en System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   en System.Data.SqlClient.SqlDataReader.get_MetaData()
+   en System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   en System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   en System.Data.EntityClient.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 27/12/2022 07:38:37
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Error de inicio de sesión del usuario 'atpadmin'. Motivo: la cuenta está deshabilitada.
+
+SOURCE: .Net SqlClient Data Provider
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainPersonal.aspx
+
+TARGETSITE: Void OnError(System.Data.SqlClient.SqlException, Boolean, System.Action`1[System.Action])
+
+STACKTRACE:    en System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   en System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   en System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   en System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   en System.Data.SqlClient.SqlDataReader.get_MetaData()
+   en System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   en System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   en System.Data.EntityClient.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 27/12/2022 07:39:01
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Error de inicio de sesión del usuario 'atpadmin'. Motivo: la cuenta está deshabilitada.
+
+SOURCE: .Net SqlClient Data Provider
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainPersonal.aspx
+
+TARGETSITE: Void OnError(System.Data.SqlClient.SqlException, Boolean, System.Action`1[System.Action])
+
+STACKTRACE:    en System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   en System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   en System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   en System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   en System.Data.SqlClient.SqlDataReader.get_MetaData()
+   en System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   en System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   en System.Data.EntityClient.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 27/12/2022 07:39:16
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Error de inicio de sesión del usuario 'atpadmin'. Motivo: la cuenta está deshabilitada.
+
+SOURCE: .Net SqlClient Data Provider
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainPersonal.aspx
+
+TARGETSITE: Void OnError(System.Data.SqlClient.SqlException, Boolean, System.Action`1[System.Action])
+
+STACKTRACE:    en System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   en System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   en System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   en System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   en System.Data.SqlClient.SqlDataReader.get_MetaData()
+   en System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   en System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   en System.Data.EntityClient.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 27/12/2022 07:40:56
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Error de inicio de sesión del usuario 'atpadmin'. Motivo: la cuenta está deshabilitada.
+
+SOURCE: .Net SqlClient Data Provider
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainPersonal.aspx
+
+TARGETSITE: Void OnError(System.Data.SqlClient.SqlException, Boolean, System.Action`1[System.Action])
+
+STACKTRACE:    en System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   en System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   en System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   en System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   en System.Data.SqlClient.SqlDataReader.get_MetaData()
+   en System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   en System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   en System.Data.EntityClient.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 27/12/2022 07:41:15
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Error de inicio de sesión del usuario 'atpadmin'. Motivo: la cuenta está deshabilitada.
+
+SOURCE: .Net SqlClient Data Provider
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainPersonal.aspx
+
+TARGETSITE: Void OnError(System.Data.SqlClient.SqlException, Boolean, System.Action`1[System.Action])
+
+STACKTRACE:    en System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   en System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   en System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   en System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   en System.Data.SqlClient.SqlDataReader.get_MetaData()
+   en System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   en System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   en System.Data.EntityClient.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 27/12/2022 07:42:56
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Error de inicio de sesión del usuario 'atpadmin'. Motivo: la cuenta está deshabilitada.
+
+SOURCE: .Net SqlClient Data Provider
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainPersonal.aspx
+
+TARGETSITE: Void OnError(System.Data.SqlClient.SqlException, Boolean, System.Action`1[System.Action])
+
+STACKTRACE:    en System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   en System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   en System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   en System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   en System.Data.SqlClient.SqlDataReader.get_MetaData()
+   en System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   en System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   en System.Data.EntityClient.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 27/12/2022 07:46:28
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Error de inicio de sesión del usuario 'atpadmin'. Motivo: la cuenta está deshabilitada.
+
+SOURCE: .Net SqlClient Data Provider
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainPersonal.aspx
+
+TARGETSITE: Void OnError(System.Data.SqlClient.SqlException, Boolean, System.Action`1[System.Action])
+
+STACKTRACE:    en System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   en System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   en System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   en System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   en System.Data.SqlClient.SqlDataReader.get_MetaData()
+   en System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   en System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   en System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   en System.Data.EntityClient.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 27/12/2022 07:55:49
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Referencia a objeto no establecida como instancia de un objeto.
+
+SOURCE: SisPer
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_Informe_SalidasVarias.aspx
+
+TARGETSITE: Byte[] GenerarPDFAsistenciaMensual()
+
+STACKTRACE:    en SisPer.Aplicativo.Reportes.ReporteMensualFichadasHoras.GenerarPDFAsistenciaMensual() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Reportes\ReporteMensualFichadasHoras.cs:línea 88
+   en SisPer.Aplicativo.Personal_Informe_SalidasVarias.GenerarInformeFichadasMes() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Informe_SalidasVarias.aspx.cs:línea 877
+   en SisPer.Aplicativo.Personal_Informe_SalidasVarias.GenerarInforme() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Informe_SalidasVarias.aspx.cs:línea 211
+   en SisPer.Aplicativo.Personal_Informe_SalidasVarias.btn_Buscar_Click(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Informe_SalidasVarias.aspx.cs:línea 154
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 29/12/2022 09:43:54
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La instancia de ObjectContext se ha desechado y ya no se puede usar para operaciones que requieren una conexión.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_Informe_InformeMovimientosAnuales.aspx
+
+TARGETSITE: Void EnsureConnection()
+
+STACKTRACE:    en System.Data.Objects.ObjectContext.EnsureConnection()
+   en System.Data.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   en System.Data.Objects.DataClasses.EntityReference`1.Load(MergeOption mergeOption)
+   en System.Data.Objects.DataClasses.RelatedEnd.DeferredLoad()
+   en System.Data.Objects.DataClasses.EntityReference`1.get_Value()
+   en SisPer.Aplicativo.Agente.get_Legajo_datos_personales() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Model1.Designer.cs:línea 3601
+   en SisPer.Aplicativo.Reportes.Reporte_anual_legajo.Generar_pdf_legajo_anual() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Reportes\Reporte_anual_legajo.cs:línea 155
+   en SisPer.Aplicativo.Personal_Informe_InformeMovimientosAnuales.btn_inf_mov_anuales_Click(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Informe_InformeMovimientosAnuales.aspx.cs:línea 344
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 29/12/2022 10:35:04
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Referencia a objeto no establecida como instancia de un objeto.
+
+SOURCE: SisPer
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_Informe_InformeMovimientosAnuales.aspx
+
+TARGETSITE: Byte[] Generar_pdf_legajo_anual()
+
+STACKTRACE:    en SisPer.Aplicativo.Reportes.Reporte_anual_legajo.Generar_pdf_legajo_anual() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Reportes\Reporte_anual_legajo.cs:línea 160
+   en SisPer.Aplicativo.Personal_Informe_InformeMovimientosAnuales.btn_inf_mov_anuales_Click(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Informe_InformeMovimientosAnuales.aspx.cs:línea 344
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 29/12/2022 10:37:08
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Referencia a objeto no establecida como instancia de un objeto.
+
+SOURCE: SisPer
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_Informe_InformeMovimientosAnuales.aspx
+
+TARGETSITE: Byte[] Generar_pdf_legajo_anual()
+
+STACKTRACE:    en SisPer.Aplicativo.Reportes.Reporte_anual_legajo.Generar_pdf_legajo_anual() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Reportes\Reporte_anual_legajo.cs:línea 168
+   en SisPer.Aplicativo.Personal_Informe_InformeMovimientosAnuales.btn_inf_mov_anuales_Click(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Informe_InformeMovimientosAnuales.aspx.cs:línea 344
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************

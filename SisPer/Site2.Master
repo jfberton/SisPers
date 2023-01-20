@@ -76,6 +76,7 @@
                     <table class="footerMaster">
                         <tr>
                             <td><small>Existen <asp:Label Text="" ID="lbl_usuarios_logueados" runat="server" /> usuarios conectados</small></td>
+                            <td><small>DB: <asp:Label Text="" ID="lbl_db" runat="server" /></small></td>
                             <td>&copy; DIRECCIÓN DE INFORMÁTICA - Departamento de desarrollo y administración de datos - 2013 -
                         <asp:Label Text="" ID="lbl_AñoActual" runat="server" />
                             </td>

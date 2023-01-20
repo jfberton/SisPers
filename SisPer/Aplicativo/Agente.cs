@@ -27,7 +27,7 @@ namespace SisPer.Aplicativo
                 ret = aux.DiasAutorizadoRemoto.FirstOrDefault(dar => dar.Dia == dia) != null;
                 ret = ret || aux.Area.Interior == true;
             }
-            
+
             return ret;
         }
 
@@ -181,7 +181,22 @@ namespace SisPer.Aplicativo
             if (SinFinDeSemana)
             {
                 #region Sin fin de semana (se usa para calendarios evitando el first or default cuando tienen fin de semana y licencia anual o algun otro estado)
-                estado = cxt.EstadosAgente.FirstOrDefault(ea => ea.Dia.Day == d.Day && ea.Dia.Month == d.Month && ea.Dia.Year == d.Year && ea.AgenteId == Id && ea.TipoEstado.Estado != "Fin de semana");
+                //obtengo todos los estados del dia seleccionado
+                List<EstadoAgente> estados_dia = cxt.EstadosAgente.Where(ea => ea.Dia.Day == d.Day && ea.Dia.Month == d.Month && ea.Dia.Year == d.Year && ea.AgenteId == Id && ea.TipoEstado.Estado != "Fin de semana").ToList();
+                foreach (EstadoAgente estadoAgente in estados_dia)
+                {
+                    if (estado == null)
+                    {
+                        estado = estadoAgente;
+                    }
+
+                    if ( estadoAgente.TipoEstado.Estado.Contains("Licencia") || estadoAgente.TipoEstado.Estado.Contains("Enfermedad"))
+                    {
+                        estado = estadoAgente;
+                    }
+                }
+
+
                 if (estado == null)
                 {
                     //verifico si no es el natalicio si es asi, LO GUARDO
