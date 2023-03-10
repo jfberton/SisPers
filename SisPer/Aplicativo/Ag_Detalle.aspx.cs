@@ -303,7 +303,7 @@ namespace SisPer.Aplicativo
                         }
                         else
                         {
-                            if (ea.TipoEstado.Estado == "Feriado")
+                            if (ea.TipoEstado.Estado == "Feriado" && feriado != null)
                             {
                                 e.Cell.BackColor = Color.DarkRed;
                                 e.Cell.ForeColor = Color.Azure;

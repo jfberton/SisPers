@@ -1093,7 +1093,7 @@ namespace SisPer.Aplicativo
                 Model1Container cxt = new Model1Container();
                 Agente ag = Session["Agente"] as Agente;
                 Agente agCxt = cxt.Agentes.First(a => a.Id == ag.Id);
-                string hora_Entrada = DateTime.Now.ToString("hh:mm");
+                string hora_Entrada = DateTime.Now.ToString("HH:mm");
 
                 ResumenDiario rd = agCxt.ObtenerResumenDiario(Calendar1.SelectedDate);
                 if (rd == null)
@@ -1182,7 +1182,7 @@ namespace SisPer.Aplicativo
                 else
                 {
                     string hora_Entrada = e_s.Entrada;
-                    string Hora_Salida = DateTime.Now.ToString("hh:mm");
+                    string Hora_Salida = DateTime.Now.ToString("HH:mm");
 
                     ResumenDiario rd = agCxt.ObtenerResumenDiario(Calendar1.SelectedDate);
                     rd.HSalida = Hora_Salida;

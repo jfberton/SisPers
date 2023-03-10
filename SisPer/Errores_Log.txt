@@ -18615,3 +18615,44 @@ STACKTRACE:    en SisPer.Aplicativo.Reportes.Reporte_anual_legajo.Generar_pdf_le
 
 
 ******************************************************************
+ 
+
+******************************************************************
+
+DATE: 20/1/2023 12:10:52
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Referencia a objeto no establecida como instancia de un objeto.
+
+SOURCE: SisPer
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Ag_Detalle.aspx
+
+TARGETSITE: Void Calendar1_DayRender(System.Object, System.Web.UI.WebControls.DayRenderEventArgs)
+
+STACKTRACE:    en SisPer.Aplicativo.Ag_Detalle.Calendar1_DayRender(Object sender, DayRenderEventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Ag_Detalle.aspx.cs:línea 311
+   en System.Web.UI.WebControls.Calendar.OnDayRender(TableCell cell, CalendarDay day)
+   en System.Web.UI.WebControls.Calendar.RenderDays(HtmlTextWriter writer, DateTime firstDay, DateTime visibleDate, CalendarSelectionMode selectionMode, Boolean buttonsActive, Boolean useAccessibleHeader)
+   en System.Web.UI.WebControls.Calendar.Render(HtmlTextWriter writer)
+   en System.Web.UI.Control.RenderControlInternal(HtmlTextWriter writer, ControlAdapter adapter)
+   en System.Web.UI.Control.RenderChildrenInternal(HtmlTextWriter writer, ICollection children)
+   en System.Web.UI.Control.RenderControlInternal(HtmlTextWriter writer, ControlAdapter adapter)
+   en System.Web.UI.Control.RenderChildrenInternal(HtmlTextWriter writer, ICollection children)
+   en System.Web.UI.HtmlControls.HtmlForm.RenderChildren(HtmlTextWriter writer)
+   en System.Web.UI.HtmlControls.HtmlContainerControl.Render(HtmlTextWriter writer)
+   en System.Web.UI.Control.RenderControlInternal(HtmlTextWriter writer, ControlAdapter adapter)
+   en System.Web.UI.HtmlControls.HtmlForm.RenderControl(HtmlTextWriter writer)
+   en System.Web.UI.Control.RenderChildrenInternal(HtmlTextWriter writer, ICollection children)
+   en System.Web.UI.Control.RenderControlInternal(HtmlTextWriter writer, ControlAdapter adapter)
+   en System.Web.UI.Control.RenderChildrenInternal(HtmlTextWriter writer, ICollection children)
+   en System.Web.UI.Page.Render(HtmlTextWriter writer)
+   en System.Web.UI.Control.RenderControlInternal(HtmlTextWriter writer, ControlAdapter adapter)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
