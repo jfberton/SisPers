@@ -351,7 +351,7 @@ namespace SisPer.Aplicativo
 
                     cxt.MovimientosHoras.AddObject(mh);
                     cxt.SaveChanges();
-                    
+
                     rd = cxt.ResumenesDiarios.Include("MovimientosHoras").FirstOrDefault(rd1 => rd1.AgenteId == ag.Id && rd1.Dia == d);
                     rd.Horas = HorasString.TotalizarMovimientosHorasDiarias(rd.MovimientosHoras);
                     cxt.SaveChanges();
@@ -626,12 +626,12 @@ namespace SisPer.Aplicativo
                             AgenteId1 = agendadoPor.Id,
                             Tipo = TipoSalida.Particular
                         };
-                        
+
                         cxt.Salidas.AddObject(s);
                         cxt.SaveChanges();
 
                         AgendarMovimientoHoraEnResumenDiario(d, ag, agendadoPor, "06:30", tmh, "Art. 50 R.P.");
-                        
+
                         ResumenDiario rd = cxt.ResumenesDiarios.FirstOrDefault(rrdd => rrdd.AgenteId == ag.Id && rrdd.Dia == d);
                         rd = cxt.ResumenesDiarios.FirstOrDefault(rrdd => rrdd.AgenteId == ag.Id && rrdd.Dia == d);
                         rd = cxt.ResumenesDiarios.FirstOrDefault(rrdd => rrdd.AgenteId == ag.Id && rrdd.Dia == d);
@@ -651,7 +651,7 @@ namespace SisPer.Aplicativo
                     cxt.SaveChanges();
 
                     #region Verificar y aprobar solicitud si existe
-                    
+
                     //obtengo la solicitud
                     SolicitudDeEstado sol_est = cxt.SolicitudesDeEstado.FirstOrDefault(ssee => ssee.AgenteId == ag.Id && ssee.FechaDesde <= d && ssee.FechaHasta >= d);
 
@@ -680,7 +680,7 @@ namespace SisPer.Aplicativo
                     }
 
                     #endregion
-                    
+
                     ResumenDiario _rd = cxt.ResumenesDiarios.FirstOrDefault(rrdd => rrdd.AgenteId == ag.Id && rrdd.Dia == d);
                     if (_rd != null)
                     {
@@ -702,7 +702,7 @@ namespace SisPer.Aplicativo
             try
             {
 
-                using (var cxt =  new Model1Container())
+                using (var cxt = new Model1Container())
                 {
                     EstadoAgente eag1 = cxt.EstadosAgente.FirstOrDefault(_ea => _ea.Dia == d && _ea.Agente.Id == ag.Id && _ea.TipoEstadoAgenteId == ea.Id);
 
@@ -716,7 +716,7 @@ namespace SisPer.Aplicativo
 
                         cxt.Salidas.DeleteObject(cxt.Salidas.FirstOrDefault(s => s.AgenteId == ag.Id && s.Dia == d && s.HoraDesde == "06:30" && s.HoraHasta == "13:00"));
                         ResumenDiario rd = cxt.ResumenesDiarios.FirstOrDefault(r => r.AgenteId == ag.Id && r.Dia == d);
-                        
+
                         cxt.MovimientosHoras.DeleteObject(cxt.MovimientosHoras.FirstOrDefault(m => m.ResumenDiarioId == rd.Id && m.Descripcion == "Art. 50 R.P."));
 
                         if (rd.Cerrado == true)
@@ -732,7 +732,7 @@ namespace SisPer.Aplicativo
 
                     cxt.SaveChanges();
                 }
-                
+
 
 
                 return true;
@@ -881,11 +881,17 @@ namespace SisPer.Aplicativo
 
                     foreach (var ag in agentesConBonificaciones)
                     {
-                        string horas = ag.BonificacionesOtorgadas.Last().HorasOtorgadas;
+                        if (ag.BonificacionesOtorgadas.Count > 0)
+                        {
+                            string horas = ag.BonificacionesOtorgadas.Last().HorasOtorgadas;
 
-                        ag.HorasBonificacionACubrir = "-" + horas;
-                        ag.BonificacionesOtorgadas.Add(new BonificacionOtorgada() { Anio = DateTime.Today.Year, Mes = DateTime.Today.Month, HorasOtorgadas = horas, HorasAdeudadas = horas });
-
+                            ag.HorasBonificacionACubrir = "-" + horas;
+                            ag.BonificacionesOtorgadas.Add(new BonificacionOtorgada() { Anio = DateTime.Today.Year, Mes = DateTime.Today.Month, HorasOtorgadas = horas, HorasAdeudadas = horas });
+                        }
+                        else
+                        {
+                            ag.BonificacionesOtorgadas.Add(new BonificacionOtorgada() { Anio = DateTime.Today.Year, Mes = DateTime.Today.Month, HorasOtorgadas = "05:00", HorasAdeudadas = "05:00" });
+                        }
                     }
                     cxt.SaveChanges();
                 }
@@ -946,8 +952,6 @@ namespace SisPer.Aplicativo
         #endregion
 
         #region Huellas
-
-
 
         /// <summary>
         /// Devuelve las marcaciones digitales y manuales del legajo solicitado en una fecha dada. 
@@ -1122,6 +1126,8 @@ namespace SisPer.Aplicativo
 
             List<Agente> agentes = new List<Agente>();
 
+            Eliminar_Marcaciones_No_hay_registro();
+
             using (var cxt = new Model1Container())
             {
                 //obtengo todos los agentes activos o con fecha baja posterior a la fecha buscada para obtener sus fichadas
@@ -1154,12 +1160,18 @@ namespace SisPer.Aplicativo
         /// <returns></returns>
         public static DS_Marcaciones ObtenerMarcaciones(DateTime fecha, string legajo)
         {
+            Eliminar_Marcaciones_No_hay_registro();
+
             DS_Marcaciones ret = new DS_Marcaciones();
             int pruebaLegajo = 0;
             if (int.TryParse(legajo.ToString(), out pruebaLegajo))
             {
                 using (var cxt = new Model1Container())
                 {
+
+
+
+
                     //al crear/obtenr me aseguro que se procesen las marcaciones
                     Agente agenteLegajo = cxt.Agentes.FirstOrDefault(aa => aa.Legajo == pruebaLegajo && aa.FechaBaja == null);
                     if (agenteLegajo != null)
@@ -1189,6 +1201,8 @@ namespace SisPer.Aplicativo
         /// <returns></returns>
         public static DS_Marcaciones ObtenerMarcaciones(DateTime fechaDesde, DateTime fechaHasta)
         {
+            Eliminar_Marcaciones_No_hay_registro();
+
             DS_Marcaciones ret = new DS_Marcaciones();
 
             List<Agente> agentes = new List<Agente>();
@@ -1225,6 +1239,8 @@ namespace SisPer.Aplicativo
 
         public static DS_Marcaciones ObtenerMarcaciones(DateTime fechaDesde, DateTime fechaHasta, string legajo)
         {
+            Eliminar_Marcaciones_No_hay_registro();
+            
             DS_Marcaciones ret = new DS_Marcaciones();
             int pruebaLegajo = 0;
             if (int.TryParse(legajo.ToString(), out pruebaLegajo))
@@ -1233,6 +1249,9 @@ namespace SisPer.Aplicativo
 
                 using (var cxt = new Model1Container())
                 {
+                    
+
+
                     //obtengo todos los agentes activos o con fecha baja posterior a la fecha buscada para obtener sus fichadas
                     agentes = cxt.Agentes.Where(aa => (aa.FechaBaja == null || aa.FechaBaja > fechaDesde) && aa.Legajo == pruebaLegajo).ToList();
 
@@ -1259,6 +1278,22 @@ namespace SisPer.Aplicativo
                 }
             }
             return ret;
+        }
+
+        private static void Eliminar_Marcaciones_No_hay_registro()
+        {
+            using (var cxt = new Model1Container())
+            {
+                //eliminar marcaciones cuyo texto sea igual a "No hay registros." dentro del campo Hora
+                var marcaciones_a_eliminar = cxt.Marcaciones.Where(mm => mm.Hora == "No hay registros.").ToList();
+
+                foreach (Marcacion item in marcaciones_a_eliminar)
+                {
+                    cxt.Marcaciones.DeleteObject(item);
+                }
+
+                cxt.SaveChanges();
+            }
         }
 
         #endregion
@@ -1347,9 +1382,9 @@ namespace SisPer.Aplicativo
                                 }
 
                                 entradaSalida = entradaSalida.OrderBy(es => es.Hora).ToList();
-                                
+
                                 rd.HEntrada = entradaSalida[0].Hora;
-                                
+
                             }
                         }
                         #endregion

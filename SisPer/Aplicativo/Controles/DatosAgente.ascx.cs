@@ -44,27 +44,27 @@ namespace SisPer.Aplicativo.Controles
                     lbl_legajoFlexible.Text = datos_agente.Legajo.ToString();
                     lbl_mailFlexible.Text = datos_agente.Email;
 
-                    lbl_HorasAnioActualFlexible.Text = "--";//datos_agente.HorasAcumuladasAnioActual;
-                    lbl_HorasAnioAnteriorFlexible.Text = "--";//datos_agente.HorasAcumuladasAnioAnterior;
-                    lbl_HorasAcumuladasMes.Text = "--";//datos_agente.horas_hf_acumuladas;
+                    lbl_HorasAnioActualFlexible.Text = datos_agente.HorasAcumuladasAnioActual;
+                    lbl_HorasAnioAnteriorFlexible.Text = datos_agente.HorasAcumuladasAnioAnterior;
+                    lbl_HorasAcumuladasMes.Text = datos_agente.horas_hf_acumuladas;
 
-                    lbl_HorasTotalesFlexible.Text = "--";//HorasString.SumarHoras(new string[] { lbl_HorasAnioActualFlexible.Text, lbl_HorasAnioAnteriorFlexible.Text, lbl_HorasAcumuladasMes.Text });
+                    lbl_HorasTotalesFlexible.Text = HorasString.SumarHoras(new string[] { lbl_HorasAnioActualFlexible.Text, lbl_HorasAnioAnteriorFlexible.Text, lbl_HorasAcumuladasMes.Text });
 
-                    lbl_BonificacionFlexible.Text = "--";//datos_agente.PoseeBonificacion ? "Si" : "No";
-                    lblHorasBonificacionACubrirFlexible.Text = "--";//datos_agente.Horas_bonificacion_resta_cumplir;
+                    lbl_BonificacionFlexible.Text = datos_agente.PoseeBonificacion ? "Si" : "No";
+                    lblHorasBonificacionACubrirFlexible.Text = datos_agente.Horas_bonificacion_resta_cumplir;
 
                     //tiene que hacer seis horas y media, de las cuales les resto las horas hechas hasta el momento
                     string horasQueRestanPorCumplir = datos_agente.Horas_HF_por_cumplir;
                     //si no hizo mas horas de las seis y media que tenia que hacer muestro cero unicamente.
                     if (!horasQueRestanPorCumplir.Contains("-"))
                     {
-                        lbl_HorasPorCumplirDiaFlexible.Text = "--";//horasQueRestanPorCumplir;
-                        //lbl_HorasPorCumplirDiaFlexible.ForeColor = Color.DarkRed;
+                        lbl_HorasPorCumplirDiaFlexible.Text = horasQueRestanPorCumplir;
+                        lbl_HorasPorCumplirDiaFlexible.ForeColor = Color.DarkRed;
                     }
                     else
                     {
-                        lbl_HorasPorCumplirDiaFlexible.Text = "--";//00:00";
-                        //lbl_HorasPorCumplirDiaFlexible.ForeColor = Color.Black;
+                        lbl_HorasPorCumplirDiaFlexible.Text = "00:00";
+                        lbl_HorasPorCumplirDiaFlexible.ForeColor = Color.Black;
                     }
 
                     p_AgenteComun.Visible = false;
@@ -76,14 +76,14 @@ namespace SisPer.Aplicativo.Controles
                     lbl_Legajo.Text = datos_agente.Legajo.ToString();
                     lbl_mail.Text = datos_agente.Email;
 
-                    lbl_HorasAnioActual.Text = "--";//datos_agente.HorasAcumuladasAnioActual;
-                    lbl_HorasAnioAnterior.Text = "--";//datos_agente.HorasAcumuladasAnioAnterior;
-                    lbl_HorasTotales.Text = "--";//datos_agente.Total_horas_disponible;
+                    lbl_HorasAnioActual.Text = datos_agente.HorasAcumuladasAnioActual;
+                    lbl_HorasAnioAnterior.Text = datos_agente.HorasAcumuladasAnioAnterior;
+                    lbl_HorasTotales.Text = datos_agente.Total_horas_disponible;
 
-                    lbl_Tardanzas.Text = "--";//datos_agente.Horas_tardanzas;
+                    lbl_Tardanzas.Text = datos_agente.Horas_tardanzas;
 
-                    lbl_Bonificacion.Text = "--";//agente.PoseeBonificacion ? "Si" : "No";
-                    lbl_HorasBonificacionACubrir.Text = "--";//datos_agente.Horas_bonificacion_resta_cumplir;
+                    lbl_Bonificacion.Text = agente.PoseeBonificacion ? "Si" : "No";
+                    lbl_HorasBonificacionACubrir.Text = datos_agente.Horas_bonificacion_resta_cumplir;
 
                     p_AgenteComun.Visible = true;
                     p_agenteFlexible.Visible = false;

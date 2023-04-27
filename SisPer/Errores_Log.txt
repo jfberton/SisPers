@@ -18656,3 +18656,505 @@ STACKTRACE:    en SisPer.Aplicativo.Ag_Detalle.Calendar1_DayRender(Object sender
 
 
 ******************************************************************
+ 
+
+******************************************************************
+
+DATE: 16/3/2023 08:48:50
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Error de conversión al tipo de valor 'Int32' porque el valor materializado es NULL. El parámetro genérico del tipo de resultado o la consulta deben usar un tipo que admite valores NULL.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Dispatcher.aspx
+
+TARGETSITE: T GetValue(System.Data.Common.DbDataReader, Int32)
+
+STACKTRACE:    en System.Data.Common.Internal.Materialization.Shaper.ErrorHandlingValueReader`1.GetValue(DbDataReader reader, Int32 ordinal)
+   en lambda_method(Closure , Shaper )
+   en System.Data.Common.Internal.Materialization.Coordinator`1.ReadNextElement(Shaper shaper)
+   en System.Data.Common.Internal.Materialization.Shaper`1.SimpleEnumerator.MoveNext()
+   en System.Linq.Enumerable.Single[TSource](IEnumerable`1 source)
+   en SisPer.Aplicativo.ProcesosGlobales.RegenerarBonificaciones() en D:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\ProcesosGlobales.cs:línea 871
+   en SisPer.Dispatcher.Page_Load(Object sender, EventArgs e) en D:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Dispatcher.aspx.cs:línea 56
+   en System.Web.UI.Control.OnLoad(EventArgs e)
+   en System.Web.UI.Control.LoadRecursive()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 16/3/2023 08:50:31
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Error de conversión al tipo de valor 'Int32' porque el valor materializado es NULL. El parámetro genérico del tipo de resultado o la consulta deben usar un tipo que admite valores NULL.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Dispatcher.aspx
+
+TARGETSITE: T GetValue(System.Data.Common.DbDataReader, Int32)
+
+STACKTRACE:    en System.Data.Common.Internal.Materialization.Shaper.ErrorHandlingValueReader`1.GetValue(DbDataReader reader, Int32 ordinal)
+   en lambda_method(Closure , Shaper )
+   en System.Data.Common.Internal.Materialization.Coordinator`1.ReadNextElement(Shaper shaper)
+   en System.Data.Common.Internal.Materialization.Shaper`1.SimpleEnumerator.MoveNext()
+   en System.Linq.Enumerable.Single[TSource](IEnumerable`1 source)
+   en SisPer.Aplicativo.ProcesosGlobales.RegenerarBonificaciones() en D:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\ProcesosGlobales.cs:línea 871
+   en SisPer.Dispatcher.Page_Load(Object sender, EventArgs e) en D:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Dispatcher.aspx.cs:línea 56
+   en System.Web.UI.Control.OnLoad(EventArgs e)
+   en System.Web.UI.Control.LoadRecursive()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 16/3/2023 09:21:57
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Error de conversión al tipo de valor 'Int32' porque el valor materializado es NULL. El parámetro genérico del tipo de resultado o la consulta deben usar un tipo que admite valores NULL.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Dispatcher.aspx
+
+TARGETSITE: T GetValue(System.Data.Common.DbDataReader, Int32)
+
+STACKTRACE:    en System.Data.Common.Internal.Materialization.Shaper.ErrorHandlingValueReader`1.GetValue(DbDataReader reader, Int32 ordinal)
+   en lambda_method(Closure , Shaper )
+   en System.Data.Common.Internal.Materialization.Coordinator`1.ReadNextElement(Shaper shaper)
+   en System.Data.Common.Internal.Materialization.Shaper`1.SimpleEnumerator.MoveNext()
+   en System.Linq.Enumerable.Single[TSource](IEnumerable`1 source)
+   en SisPer.Aplicativo.ProcesosGlobales.RegenerarBonificaciones() en D:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\ProcesosGlobales.cs:línea 871
+   en SisPer.Dispatcher.Page_Load(Object sender, EventArgs e) en D:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Dispatcher.aspx.cs:línea 56
+   en System.Web.UI.Control.OnLoad(EventArgs e)
+   en System.Web.UI.Control.LoadRecursive()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 16/3/2023 09:23:25
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Error de conversión al tipo de valor 'Int32' porque el valor materializado es NULL. El parámetro genérico del tipo de resultado o la consulta deben usar un tipo que admite valores NULL.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Dispatcher.aspx
+
+TARGETSITE: T GetValue(System.Data.Common.DbDataReader, Int32)
+
+STACKTRACE:    en System.Data.Common.Internal.Materialization.Shaper.ErrorHandlingValueReader`1.GetValue(DbDataReader reader, Int32 ordinal)
+   en lambda_method(Closure , Shaper )
+   en System.Data.Common.Internal.Materialization.Coordinator`1.ReadNextElement(Shaper shaper)
+   en System.Data.Common.Internal.Materialization.Shaper`1.SimpleEnumerator.MoveNext()
+   en System.Linq.Enumerable.Single[TSource](IEnumerable`1 source)
+   en SisPer.Aplicativo.ProcesosGlobales.RegenerarBonificaciones() en D:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\ProcesosGlobales.cs:línea 871
+   en SisPer.Dispatcher.Page_Load(Object sender, EventArgs e) en D:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Dispatcher.aspx.cs:línea 56
+   en System.Web.UI.Control.OnLoad(EventArgs e)
+   en System.Web.UI.Control.LoadRecursive()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 16/3/2023 09:26:18
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Error de conversión al tipo de valor 'Int32' porque el valor materializado es NULL. El parámetro genérico del tipo de resultado o la consulta deben usar un tipo que admite valores NULL.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Dispatcher.aspx
+
+TARGETSITE: T GetValue(System.Data.Common.DbDataReader, Int32)
+
+STACKTRACE:    en System.Data.Common.Internal.Materialization.Shaper.ErrorHandlingValueReader`1.GetValue(DbDataReader reader, Int32 ordinal)
+   en lambda_method(Closure , Shaper )
+   en System.Data.Common.Internal.Materialization.Coordinator`1.ReadNextElement(Shaper shaper)
+   en System.Data.Common.Internal.Materialization.Shaper`1.SimpleEnumerator.MoveNext()
+   en System.Linq.Enumerable.Single[TSource](IEnumerable`1 source)
+   en SisPer.Aplicativo.ProcesosGlobales.RegenerarBonificaciones() en D:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\ProcesosGlobales.cs:línea 871
+   en SisPer.Dispatcher.Page_Load(Object sender, EventArgs e) en D:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Dispatcher.aspx.cs:línea 56
+   en System.Web.UI.Control.OnLoad(EventArgs e)
+   en System.Web.UI.Control.LoadRecursive()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 13/4/2023 18:00:13
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La secuencia no contiene elementos
+
+SOURCE: System.Core
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Dispatcher.aspx
+
+TARGETSITE: TSource Last[TSource](System.Collections.Generic.IEnumerable`1[TSource])
+
+STACKTRACE:    en System.Linq.Enumerable.Last[TSource](IEnumerable`1 source)
+   en SisPer.Aplicativo.ProcesosGlobales.RegenerarBonificaciones() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\ProcesosGlobales.cs:línea 884
+   en SisPer.Dispatcher.Page_Load(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Dispatcher.aspx.cs:línea 56
+   en System.Web.UI.Control.OnLoad(EventArgs e)
+   en System.Web.UI.Control.LoadRecursive()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 13/4/2023 18:02:53
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La secuencia no contiene elementos
+
+SOURCE: System.Core
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Dispatcher.aspx
+
+TARGETSITE: TSource Last[TSource](System.Collections.Generic.IEnumerable`1[TSource])
+
+STACKTRACE:    en System.Linq.Enumerable.Last[TSource](IEnumerable`1 source)
+   en SisPer.Aplicativo.ProcesosGlobales.RegenerarBonificaciones() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\ProcesosGlobales.cs:línea 884
+   en SisPer.Dispatcher.Page_Load(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Dispatcher.aspx.cs:línea 56
+   en System.Web.UI.Control.OnLoad(EventArgs e)
+   en System.Web.UI.Control.LoadRecursive()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 13/4/2023 18:06:40
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La secuencia no contiene elementos
+
+SOURCE: System.Core
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Dispatcher.aspx
+
+TARGETSITE: TSource Last[TSource](System.Collections.Generic.IEnumerable`1[TSource])
+
+STACKTRACE:    en System.Linq.Enumerable.Last[TSource](IEnumerable`1 source)
+   en SisPer.Aplicativo.ProcesosGlobales.RegenerarBonificaciones()
+   en SisPer.Dispatcher.Page_Load(Object sender, EventArgs e)
+   en System.Web.UI.Control.OnLoad(EventArgs e)
+   en System.Web.UI.Control.LoadRecursive()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 14/4/2023 11:20:11
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La cadena de entrada no tiene el formato correcto.
+
+SOURCE: SisPer
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_Marcaciones_Procesar_Agente.aspx
+
+TARGETSITE: SisPer.Aplicativo.ResumenDiario AnalizarResumenDiario(SisPer.Aplicativo.ResumenDiario)
+
+STACKTRACE:    en SisPer.Aplicativo.ProcesosGlobales.AnalizarResumenDiario(ResumenDiario rdAg) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\ProcesosGlobales.cs:línea 1419
+   en SisPer.Aplicativo.Controles.AdministrarDiaAgente.CargarValoresResumenDiario() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Controles\AdministrarDiaAgente.ascx.cs:línea 672
+   en SisPer.Aplicativo.Controles.AdministrarDiaAgente.CargarValores() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Controles\AdministrarDiaAgente.ascx.cs:línea 145
+   en SisPer.Aplicativo.Personal_Marcaciones_Procesar_Agente.btn_AnalizarInconsistencia_Click(Object sender, ImageClickEventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Marcaciones_Procesar_Agente.aspx.cs:línea 328
+   en System.Web.UI.WebControls.ImageButton.OnClick(ImageClickEventArgs e)
+   en System.Web.UI.WebControls.ImageButton.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 14/4/2023 11:23:16
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La cadena de entrada no tiene el formato correcto.
+
+SOURCE: mscorlib
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_TerminarHV.aspx
+
+TARGETSITE: Void StringToNumber(System.String, System.Globalization.NumberStyles, NumberBuffer ByRef, System.Globalization.NumberFormatInfo, Boolean)
+
+STACKTRACE:    en System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   en System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   en System.Convert.ToInt32(String value)
+   en SisPer.Aplicativo.HorasString.AMayorQueB(String a, String b) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\HorasString.cs:línea 330
+   en SisPer.Aplicativo.Personal_TerminarHV.Registrar_Inicio_HV(String h_inicio) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 591
+   en SisPer.Aplicativo.Personal_TerminarHV.Page_Load(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 87
+   en System.Web.UI.Control.OnLoad(EventArgs e)
+   en System.Web.UI.Control.LoadRecursive()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 14/4/2023 11:27:18
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La cadena de entrada no tiene el formato correcto.
+
+SOURCE: mscorlib
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_TerminarHV.aspx
+
+TARGETSITE: Void StringToNumber(System.String, System.Globalization.NumberStyles, NumberBuffer ByRef, System.Globalization.NumberFormatInfo, Boolean)
+
+STACKTRACE:    en System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   en System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   en System.Convert.ToInt32(String value)
+   en SisPer.Aplicativo.HorasString.AMayorQueB(String a, String b) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\HorasString.cs:línea 330
+   en SisPer.Aplicativo.Personal_TerminarHV.Registrar_Inicio_HV(String h_inicio) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 591
+   en SisPer.Aplicativo.Personal_TerminarHV.Page_Load(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 87
+   en System.Web.UI.Control.OnLoad(EventArgs e)
+   en System.Web.UI.Control.LoadRecursive()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 14/4/2023 11:31:03
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La cadena de entrada no tiene el formato correcto.
+
+SOURCE: mscorlib
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_TerminarHV.aspx
+
+TARGETSITE: Void StringToNumber(System.String, System.Globalization.NumberStyles, NumberBuffer ByRef, System.Globalization.NumberFormatInfo, Boolean)
+
+STACKTRACE:    en System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   en System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   en System.Convert.ToInt32(String value)
+   en SisPer.Aplicativo.HorasString.AMayorQueB(String a, String b) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\HorasString.cs:línea 330
+   en SisPer.Aplicativo.Personal_TerminarHV.Registrar_Inicio_HV(String h_inicio) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 591
+   en SisPer.Aplicativo.Personal_TerminarHV.Page_Load(Object sender, EventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_TerminarHV.aspx.cs:línea 87
+   en System.Web.UI.Control.OnLoad(EventArgs e)
+   en System.Web.UI.Control.LoadRecursive()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 14/4/2023 11:34:51
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La cadena de entrada no tiene el formato correcto.
+
+SOURCE: SisPer
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_Marcaciones_Procesar_Agente.aspx
+
+TARGETSITE: SisPer.Aplicativo.ResumenDiario AnalizarResumenDiario(SisPer.Aplicativo.ResumenDiario)
+
+STACKTRACE:    en SisPer.Aplicativo.ProcesosGlobales.AnalizarResumenDiario(ResumenDiario rdAg) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\ProcesosGlobales.cs:línea 1419
+   en SisPer.Aplicativo.Controles.AdministrarDiaAgente.CargarValoresResumenDiario() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Controles\AdministrarDiaAgente.ascx.cs:línea 672
+   en SisPer.Aplicativo.Controles.AdministrarDiaAgente.CargarValores() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Controles\AdministrarDiaAgente.ascx.cs:línea 145
+   en SisPer.Aplicativo.Personal_Marcaciones_Procesar_Agente.btn_AnalizarInconsistencia_Click(Object sender, ImageClickEventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Marcaciones_Procesar_Agente.aspx.cs:línea 328
+   en System.Web.UI.WebControls.ImageButton.OnClick(ImageClickEventArgs e)
+   en System.Web.UI.WebControls.ImageButton.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 14/4/2023 11:40:41
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La cadena de entrada no tiene el formato correcto.
+
+SOURCE: SisPer
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_Marcaciones_Procesar_Agente.aspx
+
+TARGETSITE: SisPer.Aplicativo.ResumenDiario AnalizarResumenDiario(SisPer.Aplicativo.ResumenDiario)
+
+STACKTRACE:    en SisPer.Aplicativo.ProcesosGlobales.AnalizarResumenDiario(ResumenDiario rdAg) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\ProcesosGlobales.cs:línea 1419
+   en SisPer.Aplicativo.Controles.AdministrarDiaAgente.CargarValoresResumenDiario() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Controles\AdministrarDiaAgente.ascx.cs:línea 672
+   en SisPer.Aplicativo.Controles.AdministrarDiaAgente.CargarValores() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Controles\AdministrarDiaAgente.ascx.cs:línea 145
+   en SisPer.Aplicativo.Personal_Marcaciones_Procesar_Agente.btn_AnalizarInconsistencia_Click(Object sender, ImageClickEventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Marcaciones_Procesar_Agente.aspx.cs:línea 328
+   en System.Web.UI.WebControls.ImageButton.OnClick(ImageClickEventArgs e)
+   en System.Web.UI.WebControls.ImageButton.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 14/4/2023 11:44:40
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La cadena de entrada no tiene el formato correcto.
+
+SOURCE: SisPer
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_Marcaciones_Procesar_Agente.aspx
+
+TARGETSITE: SisPer.Aplicativo.ResumenDiario AnalizarResumenDiario(SisPer.Aplicativo.ResumenDiario)
+
+STACKTRACE:    en SisPer.Aplicativo.ProcesosGlobales.AnalizarResumenDiario(ResumenDiario rdAg) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\ProcesosGlobales.cs:línea 1419
+   en SisPer.Aplicativo.Controles.AdministrarDiaAgente.CargarValoresResumenDiario() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Controles\AdministrarDiaAgente.ascx.cs:línea 672
+   en SisPer.Aplicativo.Controles.AdministrarDiaAgente.CargarValores() en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Controles\AdministrarDiaAgente.ascx.cs:línea 145
+   en SisPer.Aplicativo.Personal_Marcaciones_Procesar_Agente.btn_AnalizarInconsistencia_Click(Object sender, ImageClickEventArgs e) en d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Marcaciones_Procesar_Agente.aspx.cs:línea 328
+   en System.Web.UI.WebControls.ImageButton.OnClick(ImageClickEventArgs e)
+   en System.Web.UI.WebControls.ImageButton.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 25/4/2023 12:14:01
+
+MESSAGE: Login failed for user 'AppFederico'.
+
+SOURCE: .Net SqlClient Data Provider
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/default.aspx
+
+TARGETSITE: Void .ctor(System.Data.ProviderBase.DbConnectionPoolIdentity, System.Data.SqlClient.SqlConnectionString, System.Data.SqlClient.SqlCredential, System.Object, System.String, System.Security.SecureString, Boolean, System.Data.SqlClient.SqlConnectionString, System.Data.SqlClient.SessionData, System.Data.ProviderBase.DbConnectionPool, System.String, Boolean, System.Data.SqlClient.SqlAuthenticationProviderManager)
+
+STACKTRACE:    en System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, DbConnectionPool pool, String accessToken, Boolean applyTransientFaultHandling, SqlAuthenticationProviderManager sqlAuthProviderManager)
+   en System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   en System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   en System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   en System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   en System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   en System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   en System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   en System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   en System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   en System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   en System.Data.SqlClient.SqlConnection.Open()
+   en System.Data.EntityClient.EntityConnection.OpenStoreConnectionIf(Boolean openCondition, DbConnection storeConnectionToOpen, DbConnection originalConnection, String exceptionCode, String attemptedOperation, Boolean& closeStoreConnectionOnFailure)
+
+
+******************************************************************

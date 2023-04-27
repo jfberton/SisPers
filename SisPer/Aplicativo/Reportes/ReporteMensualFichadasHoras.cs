@@ -74,7 +74,7 @@ namespace SisPer.Aplicativo.Reportes
                     Cell celldaEncabezado = new Cell(2,1).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                     tableEncabezado.AddCell(celldaEncabezado);
 
-                    celldaEncabezado = new Cell(1,1).Add(new Paragraph("PLANILLA DE ASISTENCIA")).SetUnderline().SetBold().SetTextAlignment(TextAlignment.CENTER).SetFontSize(12).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                    celldaEncabezado = new Cell(1, 1).Add(new Paragraph("PLANILLA DE ASISTENCIA")).SetBold().SetTextAlignment(TextAlignment.CENTER).SetFontSize(12);
                     tableEncabezado.AddCell(celldaEncabezado);
                     
                     celldaEncabezado = new Cell(2, 1).Add(new Paragraph(primer_dia_mes.ToString("MMMM").ToUpper() + " " + primer_dia_mes.ToString("yyyy")))
@@ -182,6 +182,7 @@ namespace SisPer.Aplicativo.Reportes
                                     if (rd.ObservacionInconsistente == "" || rd.ObservacionInconsistente == null)
                                     {
                                         cell = new Cell(1, 8).Add(new Paragraph("-- NO SE REGISTRAN MOVIMIENTOS --")).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY);
+                                        table.AddCell(cell);
                                     }
                                     else
                                     {
@@ -195,8 +196,32 @@ namespace SisPer.Aplicativo.Reportes
                                         {
                                             estado = rd.ObservacionInconsistente;
                                         }
+
+                                        if (estado != "Franco compensatorio" && estado != "Razones particulares")
+                                        {
+                                            cell = new Cell(1, 8).Add(new Paragraph(estado)).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY);
+                                            table.AddCell(cell);
+                                        }
+                                        else
+                                        {
+                                            if (estado == "Franco compensatorio")
+                                            {
+                                                cell = new Cell(1, 7).Add(new Paragraph(estado)).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY);
+                                                table.AddCell(cell);
+                                                table.AddCell("07:00");
+                                                total_periodo_horas_menos = HorasString.SumarHoras(new string[] { total_periodo_horas_menos, "07:00" });
+                                                total_periodo_horas = HorasString.SumarHoras(new string[] { total_periodo_horas, "-07:00" });
+                                            }
+                                            else
+                                            {
+                                                cell = new Cell(1, 7).Add(new Paragraph(estado)).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY);
+                                                table.AddCell(cell);
+                                                table.AddCell("06:30");
+                                                total_periodo_horas_menos = HorasString.SumarHoras(new string[] { total_periodo_horas_menos, "06:30" });
+                                                total_periodo_horas = HorasString.SumarHoras(new string[] { total_periodo_horas, "-06:30" });
+                                            }
+                                        }
                                         
-                                        cell = new Cell(1, 8).Add(new Paragraph(estado)).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY);
 
                                         switch (estado)
                                         {
@@ -206,14 +231,12 @@ namespace SisPer.Aplicativo.Reportes
                                             case "Licencia Anual (Saldo)":
                                                 cantidad_dias_licencia_anual_saldo++;
                                                 break;
-                                            
                                             case "Enfermedad común":
                                                 cantidad_dias_licencia_enfermedad++;
                                                 break;
                                             case "Enfermedad familiar":
                                                 cantidad_dias_licencia_enfermedad++;
                                                 break;
-
                                             case "Licencia especial invierno":
                                                 cantidad_dias_licencia_invierno++;
                                                 break;
@@ -221,7 +244,7 @@ namespace SisPer.Aplicativo.Reportes
                                                 break;
                                         }
                                     }
-                                    table.AddCell(cell);
+                                    
                                 }
                                 else
                                 {
@@ -285,9 +308,8 @@ namespace SisPer.Aplicativo.Reportes
                                             break;
 
                                         case "Marcaciones impares":
-                                            textoCelda += "Marcaciones impares. - MARCACIONES REGISTRADAS: " + rd.Marcaciones.Count;
+                                            textoCelda += "Marcaciones impares. - MARCACIONES REGISTRADAS: " + rd.Marcaciones.Where(m=>!m.Anulada).Count();
                                             break;
-
 
                                         default:
                                             textoCelda += rd.ObservacionInconsistente;
@@ -321,10 +343,10 @@ namespace SisPer.Aplicativo.Reportes
                     #region Agrego el pie de la tabla
 
                     cell = new Cell(1, 5); table.AddCell(cell);
-                    cell = new Cell(1, 1).Add(new Paragraph("Tot. tardanza")); table.AddCell(cell);
-                    cell = new Cell(1, 1).Add(new Paragraph("Tot trabaj.")); table.AddCell(cell);
-                    cell = new Cell(1, 1).Add(new Paragraph("Tot. horas +")); table.AddCell(cell);
-                    cell = new Cell(1, 1).Add(new Paragraph("Tot. horas -")); table.AddCell(cell);
+                    cell = new Cell(1, 1).Add(new Paragraph("Tot. tardanza").SetBold()); table.AddCell(cell);
+                    cell = new Cell(1, 1).Add(new Paragraph("Tot trabaj.").SetBold()); table.AddCell(cell);
+                    cell = new Cell(1, 1).Add(new Paragraph("Tot. horas +").SetBold()); table.AddCell(cell);
+                    cell = new Cell(1, 1).Add(new Paragraph("Tot. horas -").SetBold()); table.AddCell(cell);
 
 
                     cell = new Cell(1, 5).Add(new Paragraph("TOTALES DEL PERIODO - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - :")); table.AddCell(cell);
@@ -332,8 +354,8 @@ namespace SisPer.Aplicativo.Reportes
                     cell = new Cell(1, 1).Add(new Paragraph(total_periodo_trabajadas)); table.AddCell(cell);
                     cell = new Cell(1, 1).Add(new Paragraph(total_periodo_horas_mas)); table.AddCell(cell);
                     cell = new Cell(1, 1).Add(new Paragraph(total_periodo_horas_menos)); table.AddCell(cell);
-                    cell = new Cell(1, 8).Add(new Paragraph("TOTAL DE HORAS - - - - - - - - - - - - - - - - - - - - - - - - - -  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - :")); table.AddCell(cell);
-                    cell = new Cell(1, 1).Add(new Paragraph(total_periodo_horas)); table.AddCell(cell);
+                    cell = new Cell(1, 8).Add(new Paragraph("TOTAL DE HORAS - - - - - - - - - - - - - - - - - - - - - - - - - -  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - :").SetBold()); table.AddCell(cell);
+                    cell = new Cell(1, 1).Add(new Paragraph(total_periodo_horas).SetBold()); table.AddCell(cell);
 
                     cell = new Cell(1, 9).SetBorder(iText.Layout.Borders.Border.NO_BORDER); table.AddCell(cell);
                     cell = new Cell(1, 9).Add(new Paragraph(String.Format("Días licencia anual: {0}", cantidad_dias_licencia_anual.ToString()))).SetBorder(iText.Layout.Borders.Border.NO_BORDER); table.AddCell (cell);

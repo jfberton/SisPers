@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using System.Linq;
 using System.Web;
 
@@ -9,13 +10,30 @@ namespace SisPer.Aplicativo
     {
         public void AnularMarcacionesNulas()
         {
+            //eliminar marcaciones cuyo texto sea igual a "No hay registros." dentro del campo Hora
+            using (var cxt = new Model1Container())
+            {
+                var marcaciones_a_eliminar = cxt.Marcaciones.Where(mm => mm.Hora == "No hay registros." && mm.ResumenDiarioId == this.Id).ToList();
+
+                foreach (Marcacion item in marcaciones_a_eliminar)
+                {
+                    cxt.Marcaciones.DeleteObject(item);
+                }
+
+                cxt.SaveChanges();
+            }
+
+
             foreach (Marcacion item in this.Marcaciones)
             {
-                int iHora = Convert.ToInt16(item.Hora.Split(':')[0]);
-                int iMin = Convert.ToInt16(item.Hora.Split(':')[1]);
-                if (iHora + iMin == 0)
+                if (item.Hora != "No hay registros.")
                 {
-                    item.Anulada = true;
+                    int iHora = Convert.ToInt16(item.Hora.Split(':')[0]);
+                    int iMin = Convert.ToInt16(item.Hora.Split(':')[1]);
+                    if (iHora + iMin == 0)
+                    {
+                        item.Anulada = true;
+                    }
                 }
             }
         }

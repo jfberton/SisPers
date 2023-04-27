@@ -356,7 +356,7 @@ namespace SisPer.Aplicativo
             if (agentes.Count() > 0)
             {
                 //cancelo los horarios vespertinos solicitados del departamento del jefe que estan vencidos
-                ProcesosGlobales.CancelarSolicitudesHVPorVencimiento();
+                //ProcesosGlobales.CancelarSolicitudesHVPorVencimiento();
 
                 //Creo un lista de horarios vespertinos por aprobar
                 List<HorarioVespertino> horariosVespertinosSolicitados = new List<HorarioVespertino>();
@@ -414,11 +414,12 @@ namespace SisPer.Aplicativo
             Agente ag = Session["UsuarioLogueado"] as Agente;
             var cxt = new Model1Container();
             HorarioVespertino hv = cxt.HorariosVespertinos.First(hvesp => hvesp.Id == id);
-            if (hv.Dia < DateTime.Today)
-            {
-                Controles.MessageBox.Show(this, "No se puede aprobar un horario vespertino que ya paso", Controles.MessageBox.Tipo_MessageBox.Info);
-                return;
-            }
+            
+            //if (hv.Dia < DateTime.Today)
+            //{
+            //    Controles.MessageBox.Show(this, "No se puede aprobar un horario vespertino que ya paso", Controles.MessageBox.Tipo_MessageBox.Info);
+            //    return;
+            //}
             
             if (hv.Estado == EstadosHorarioVespertino.Aprobado)
             {

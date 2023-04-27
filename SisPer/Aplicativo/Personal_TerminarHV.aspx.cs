@@ -81,14 +81,14 @@ namespace SisPer.Aplicativo
                         btn_Rechazar.Visible = usuariologueado.Perfil == PerfilUsuario.Personal || (usuariologueado.Jefe || usuariologueado.JefeTemporal);
                         btn_Terminar.Enabled = false;
 
-                        if (rd != null && (rd.HVEnt != "00:00" && rd.Marcaciones.Count(x => x.Hora == rd.HVEnt && !x.Anulada) > 0))
+                        if (rd != null && (rd.HVEnt != "00:00" && rd.HVEnt != "No hay registros." && rd.Marcaciones.Count(x => x.Hora == rd.HVEnt && !x.Anulada) > 0))
                         {
                             //registro entrada 
                             Registrar_Inicio_HV(rd.HVEnt);
 
                         }
 
-                        if (rd != null && (rd.HVSal != "00:00" && rd.Marcaciones.Count(x => x.Hora == rd.HVSal && !x.Anulada) > 0))
+                        if (rd != null && (rd.HVSal != "00:00" && rd.HVSal != "No hay registros." && rd.Marcaciones.Count(x => x.Hora == rd.HVSal && !x.Anulada) > 0))
                         {
                             //registro salida
                             Registrar_Fin_HV(rd.HVSal);
@@ -150,6 +150,8 @@ namespace SisPer.Aplicativo
                 }
                 else
                 {
+                    if (ddl_marcaciones_desde.Enabled) ddl_marcaciones_desde.Items.Add(new ListItem("Seleccionar", "0"));
+                    if (ddl_marcaciones_hasta.Enabled) ddl_marcaciones_hasta.Items.Add(new ListItem("Seleccionar", "0"));
                     foreach (var marcacion in marcaciones)
                     {
                         if (ddl_marcaciones_desde.Enabled) ddl_marcaciones_desde.Items.Add(new ListItem() { Text = marcacion.Hora, Value = marcacion.Hora });
@@ -350,8 +352,16 @@ namespace SisPer.Aplicativo
         //toma como marcación de entrada salida alguna de las disponibles
         protected void btn_usar_marcacion_entrada_Click(object sender, EventArgs e)
         {
-            RegistrarMarcacionIngresoHV(ddl_marcaciones_desde.SelectedItem.Text, false);
-            Registrar_Inicio_HV(ddl_marcaciones_desde.SelectedItem.Text);
+            if (ddl_marcaciones_desde.SelectedValue != "0")
+            {
+                string h_inicio = ddl_marcaciones_desde.SelectedItem.Text;
+                RegistrarMarcacionIngresoHV(h_inicio, false);
+                Registrar_Inicio_HV(h_inicio);
+            }
+            else
+            {
+                MessageBox.Show(this, "Debe seleccionar una marcación de entrada", MessageBox.Tipo_MessageBox.Warning);
+            }
         }
 
         protected void btn_usar_marcacion_salida_Click(object sender, EventArgs e)
@@ -359,21 +369,28 @@ namespace SisPer.Aplicativo
             string h_fin = ddl_marcaciones_hasta.SelectedItem.Text;
             string h_inicio = Session["HV_Inicio"] != null ? Session["HV_Inicio"].ToString() : String.Empty;
 
-            if (h_inicio != String.Empty && !(HorasString.RestarHoras(h_fin, h_inicio).Contains("-") || HorasString.RestarHoras(h_fin, h_inicio) == "00:00"))
+            if (ddl_marcaciones_hasta.SelectedValue != "0")
             {
-                RegistrarMarcacionEgresoHV(h_fin, false);
-                Registrar_Fin_HV(h_fin);
-            }
-            else
-            {
-                if (h_inicio == String.Empty)
+                if (h_inicio != String.Empty && !(HorasString.RestarHoras(h_fin, h_inicio).Contains("-") || HorasString.RestarHoras(h_fin, h_inicio) == "00:00"))
                 {
-                    MessageBox.Show(this, "Primero debe registrar el horario de inicio del horario vespertino", MessageBox.Tipo_MessageBox.Warning);
+                    RegistrarMarcacionEgresoHV(h_fin, false);
+                    Registrar_Fin_HV(h_fin);
                 }
                 else
                 {
-                    MessageBox.Show(this, "La hora final debe ser mayor o igual a la hora inicial", MessageBox.Tipo_MessageBox.Danger);
+                    if (h_inicio == String.Empty)
+                    {
+                        MessageBox.Show(this, "Primero debe registrar el horario de inicio del horario vespertino", MessageBox.Tipo_MessageBox.Warning);
+                    }
+                    else
+                    {
+                        MessageBox.Show(this, "La hora de salida debe ser mayor o igual a la hora inicial", MessageBox.Tipo_MessageBox.Danger);
+                    }
                 }
+            }
+            else
+            {
+                MessageBox.Show(this, "Debe seleccionar una marcación de salida", MessageBox.Tipo_MessageBox.Warning);
             }
         }
 

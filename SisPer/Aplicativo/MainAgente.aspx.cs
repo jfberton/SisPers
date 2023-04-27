@@ -179,30 +179,24 @@ namespace SisPer.Aplicativo
             bool ret = true;
             ret = ret && (usuarioLogueado.Perfil == PerfilUsuario.Personal || usuarioLogueado.Jefe || usuarioLogueado.JefeTemporal);
             ret = ret && (usuarioLogueado.Perfil == PerfilUsuario.Personal || usuarioLogueado.Id != ag.Id);
+            //ret = ret || 
 
             return ret;
         }
 
         protected void btn_NuevaSalida_Click(object sender, EventArgs e)
         {
-            if (VerificarSiPuedeMarcarSalida())
-            {
-                Salida sal = ObtenerUltimaSalida();
 
-                if (((sal != null && sal.HoraHasta != null) || sal == null))
-                {
-                    PanelNuevaSalida.Visible = true;
-                    btn_NuevaSalida.Visible = false;
-                    Session["NuevaSalida"] = "Si";
-                }
-                else
-                {
-                    RefrescarModuloSalidas();
-                }
+            Salida sal = ObtenerUltimaSalida();
+
+            if (((sal != null && sal.HoraHasta != null) || sal == null))
+            {
+                PanelNuevaSalida.Visible = true;
+                btn_NuevaSalida.Visible = false;
+                Session["NuevaSalida"] = "Si";
             }
             else
             {
-                Controles.MessageBox.Show(this, "Solicite la marcación de salida a su jefe, superior o a personal.", Controles.MessageBox.Tipo_MessageBox.Info);
                 RefrescarModuloSalidas();
             }
         }
@@ -221,7 +215,6 @@ namespace SisPer.Aplicativo
 
                     Agente agCxt = cxt.Agentes.First(a => a.Id == ag.Id);
 
-
                     Salida sal = new Salida();
                     sal.AgenteId = ag.Id;
                     sal.Dia = DateTime.Today;
@@ -229,38 +222,42 @@ namespace SisPer.Aplicativo
                     sal.Tipo = (TipoSalida)Convert.ToInt32(Ddl_TipoSalida.SelectedValue);
                     sal.Destino = tb_DestinoSalida.Text;
 
-                    if (usuarioLogueado.Id != ag.Id || usuarioLogueado.Perfil == PerfilUsuario.Personal)
+                    if (VerificarSiPuedeMarcarSalida() || sal.Tipo == TipoSalida.Indisposición)
                     {
-                        //Le esta marcando la salida un jefe
-                        sal.AgenteId1 = usuarioLogueado.Id;
-                    }
+                        if (usuarioLogueado.Id != ag.Id || usuarioLogueado.Perfil == PerfilUsuario.Personal)
+                        {
+                            //Le esta marcando la salida un jefe
+                            sal.AgenteId1 = usuarioLogueado.Id;
+                        }
 
-                    if (sal.Tipo == TipoSalida.Indisposición)
+                        switch (Ddl_TipoSalida.SelectedItem.Text)
+                        {
+                            case "Particular":
+                                agCxt.Estado = EstadosAgente.Salida_Particular;
+                                break;
+                            case "Oficial":
+                                agCxt.Estado = EstadosAgente.Salida_Oficial;
+                                break;
+                            case "Indisposición":
+                                sal.HoraDesde = "10:00";
+                                sal.HoraHasta = "13:00";
+                                ProcesosGlobales.AgendarEstadoDiaAgente(Session["UsuarioLogueado"] as Agente, DatosAgente1.Agente, DateTime.Today, cxt.TiposEstadoAgente.First(te => te.Estado == "Indisposición"));
+
+                                break;
+                            default:
+                                break;
+                        }
+
+                        cxt.Salidas.AddObject(sal);
+                        cxt.SaveChanges();
+
+                        Session["Agente"] = agCxt;
+                    }
+                    else
                     {
-                        sal.HoraDesde = "10:00";
-                        sal.HoraHasta = "13:00";
-                        ProcesosGlobales.AgendarEstadoDiaAgente(Session["UsuarioLogueado"] as Agente, DatosAgente1.Agente, DateTime.Today, cxt.TiposEstadoAgente.First(te => te.Estado == "Indisposición"));
-
+                        Controles.MessageBox.Show(this, "Solicite la marcación de salida a su jefe, superior o a personal.", Controles.MessageBox.Tipo_MessageBox.Info);
+                        RefrescarModuloSalidas();
                     }
-
-                    switch (Ddl_TipoSalida.SelectedItem.Text)
-                    {
-                        case "Particular":
-                            agCxt.Estado = EstadosAgente.Salida_Particular;
-                            break;
-                        case "Oficial":
-                            agCxt.Estado = EstadosAgente.Salida_Oficial;
-                            break;
-                        case "Indisposición":
-                            break;
-                        default:
-                            break;
-                    }
-
-                    cxt.Salidas.AddObject(sal);
-                    cxt.SaveChanges();
-
-                    Session["Agente"] = agCxt;
                 }
             }
 
@@ -437,11 +434,17 @@ namespace SisPer.Aplicativo
 
         private void CargarGrillaHV()
         {
-            ProcesosGlobales.CancelarSolicitudesHVPorVencimiento();
+            //ProcesosGlobales.CancelarSolicitudesHVPorVencimiento();
 
             Agente ag = Session["Agente"] as Agente;
             Model1Container cxt = new Model1Container();
-            var hvs = cxt.HorariosVespertinos.Where(hv => hv.AgenteId == ag.Id && ((hv.Dia.Month == DateTime.Today.Month && hv.Dia.Year == DateTime.Today.Year) || hv.Estado == EstadosHorarioVespertino.Solicitado || hv.Estado == EstadosHorarioVespertino.Aprobado)).ToList();
+            var hvs = cxt.HorariosVespertinos.Where(
+                                        hv => hv.AgenteId == ag.Id && 
+                                        (
+                                            (hv.Dia.Month == DateTime.Today.Month && hv.Dia.Year == DateTime.Today.Year) 
+                                            || hv.Estado == EstadosHorarioVespertino.Solicitado 
+                                            || hv.Estado == EstadosHorarioVespertino.Aprobado)
+                                        ).ToList();
             var items = (from hv in hvs
                          select new
                          {
