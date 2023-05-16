@@ -9,6 +9,7 @@ using System.Net.Sockets;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
 
 namespace SisPer.Aplicativo
 {
@@ -32,6 +33,8 @@ namespace SisPer.Aplicativo
                     ddl_TiposDeInforme.Items.Add("Tardanzas mensuales");
                     ddl_TiposDeInforme.Items.Add("Fichadas mensuales");
                     ddl_TiposDeInforme.Items.Add("Listado de ausentes");
+                    ddl_TiposDeInforme.Items.Add("Listado de art 50 inc 4");
+                    ddl_TiposDeInforme.Items.Add("Listado de francos compensatorios");
                 }
                 else
                 {
@@ -58,7 +61,7 @@ namespace SisPer.Aplicativo
 
         private void CargarDDLAnio()
         {
-            for (int i = 2013; i <= DateTime.Now.Year; i++)
+            for (int i = 2022; i <= DateTime.Now.Year; i++)
             {
                 ddl_Anio.Items.Add(i.ToString());
             }
@@ -213,6 +216,13 @@ namespace SisPer.Aplicativo
                 case "Listado de ausentes":
                     GenerarInformeListadoAusentes();
                     break;
+                case "Listado de art 50 inc 4":
+                    GenerarInformeSolicitudesArt50Inc4();
+                        break;
+                case "Listado de francos compensatorios":
+                    GenerarInformeFrancos();
+                    break;
+
                 default:
                     break;
             }
@@ -234,6 +244,8 @@ namespace SisPer.Aplicativo
                     IncluirAgentes(areaSubordinada);
                 }
             }
+
+            Session["AgentesInforme"] = agentes;
         }
 
         #region Informe Salidas
@@ -1068,6 +1080,301 @@ namespace SisPer.Aplicativo
 
         #endregion
 
+      
+
+        #region Informe de solicitudes de art 50 inc 4 (ex art 51)
+
+        private void GenerarInformeSolicitudesArt50Inc4()
+        {
+            Validate();
+            if (IsValid)
+            {
+                byte[] bytes = null;
+
+                #region Obtener datos cargar el DataSet
+                ///Obtengo los datos
+                Model1Container cxt = new Model1Container();
+                DateTime desde; DateTime hasta; Area area; int legajo;
+                string labelDiaReporte = string.Empty;
+                List<Agente> agentesBuscados = new List<Agente>();
+                List<Salida> salidas_art_50 = new List<Salida>();
+                Session["AgentesInforme"] = agentesBuscados;
+
+                if (rb_Dia.Checked)
+                {//esta chequeado el dia
+                    desde = Convert.ToDateTime(tb_dia.Text);
+                    hasta = Convert.ToDateTime(tb_dia.Text);
+                    labelDiaReporte = "DIA: " + tb_dia.Text;
+                }
+                else
+                {
+                    if (rb_Mes.Checked)
+                    {//esta chequeado el mes
+                        desde = new DateTime(Convert.ToInt16(ddl_Anio.Text), Convert.ToInt16(ddl_Mes.SelectedValue), 1);
+                        hasta = new DateTime(Convert.ToInt16(ddl_Anio.Text), Convert.ToInt16(ddl_Mes.SelectedValue), DateTime.DaysInMonth(desde.Year, desde.Month));
+                        labelDiaReporte = "MES DE " + ddl_Mes.SelectedItem.Text + " DE " + ddl_Anio.Text;
+                    }
+                    else
+                    {//esta chequeado desde hasta
+                        desde = Convert.ToDateTime(tb_Desde.Text);
+                        hasta = Convert.ToDateTime(tb_Hasta.Text);
+                        labelDiaReporte = "DESDE " + tb_Desde.Text + " HASTA " + tb_Hasta.Text;
+                    }
+                }
+
+                if (rb_Legajo.Checked)
+                {//seleccionado la busqueda por agente
+                    legajo = Convert.ToInt32(tb_Legajo.Text);
+                    Agente ag = cxt.Agentes.FirstOrDefault(a => a.Legajo == legajo);
+                    if (ag != null)
+                    {
+                        agentesBuscados.Add(ag);
+                    }
+                }
+                else
+                {//seleccionado la busqueda por sector
+                    area = Ddl_Areas.AreaSeleccionado;
+                    IncluirAgentes(area);
+                    agentesBuscados = Session["AgentesInforme"] as List<Agente>;
+                }
+
+                foreach (Agente ag in agentesBuscados)
+                {
+                    foreach (Salida salida in ag.Salidas.Where(s => s.Dia >= desde &&
+                                                                    s.Dia <= hasta &&
+                                                                    s.Destino == "Art. 50 R.P." &&
+                                                                    s.HoraDesde == "06:30" &&
+                                                                    s.HoraHasta == "13:00"))
+                    {
+                        salidas_art_50.Add(salida);
+                    }
+                }
+
+                ///Armo el dataset
+                var items = (from s in salidas_art_50
+                             select new
+                             {
+                                 Area = s.Agente.Area.Nombre,
+                                 Jefe = cxt.Agentes.FirstOrDefault(a => a.Jefe && a.Area.Nombre == s.Agente.Area.Nombre) != null ?
+                                       cxt.Agentes.FirstOrDefault(a => a.Jefe && a.Area.Nombre == s.Agente.Area.Nombre).ApellidoYNombre : "El area no tiene jefe asignado",
+                                 Agente = s.Agente.ApellidoYNombre,
+                                 Legajo = s.Agente.Legajo,
+                                 Tipo = s.Tipo,
+                                 Desde = s.HoraDesde,
+                                 Hasta = s.HoraHasta != null ? s.HoraHasta : " no vuelve aún ",
+                                 MarcoJefe = s.Jefe != null ? s.Jefe.ApellidoYNombre : " - ",
+                                 Destino = s.Destino,
+                                 Fecha = s.Dia.ToString("dd/MM/yyyy")
+                             }).ToList().OrderBy(i => i.Legajo).ThenBy(i => i.Fecha).ThenBy(i => i.Hasta).ToList();
+
+                var itemsGroup = (from i in items
+                                  group i by i.Area into SalidasArea
+                                  select new
+                                  {
+                                      Area = SalidasArea.Key,
+                                      Salidas = SalidasArea.ToList()
+                                  }).ToList();
+
+                ListadoSalidas_DS ret = new ListadoSalidas_DS();
+
+                foreach (var grupo in itemsGroup)
+                {//agrego el sector
+                    ListadoSalidas_DS.GeneralRow dr = ret.General.NewGeneralRow();
+                    dr.Dia = labelDiaReporte;
+                    dr.Jefe = grupo.Salidas.First().Jefe;
+                    dr.Sector = grupo.Area;
+                    ret.General.AddGeneralRow(dr);
+
+                    foreach (var salida in grupo.Salidas)
+                    {//agrego las salidas del sector
+                        ListadoSalidas_DS.SalidasRow sr = ret.Salidas.NewSalidasRow();
+                        sr.Agente = salida.Agente;
+                        sr.Desde = salida.Desde;
+                        sr.Hasta = salida.Hasta;
+                        sr.Legajo = salida.Legajo.ToString();
+                        sr.Tipo = salida.Tipo.ToString();
+                        sr.Destino = salida.Destino;
+                        sr.Fecha = salida.Fecha;
+                        sr.Sector = grupo.Area;
+
+                        ret.Salidas.AddSalidasRow(sr);
+                    }
+                }
+
+                #endregion
+
+                if (ret.General.Count > 0)
+                {
+                    Informe_art_50_rp reporte = new Informe_art_50_rp(ret, desde, hasta);
+                    bytes = reporte.Generar_informe();
+                }
+
+                if (bytes != null)
+                {
+                    Session["Bytes"] = bytes;
+
+                    string script = "<script type='text/javascript'>window.open('Reportes/ReportePDF.aspx');</script>";
+                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "VentanaPadre", script);
+                }
+                else
+                {
+                    Controles.MessageBox.Show(this, "La búsqueda realizada no arrojó resultados", Controles.MessageBox.Tipo_MessageBox.Info);
+                }
+            }
+        }
+
+        #endregion
+
+        #region Informe de Francos compensatorios
+
+        private void GenerarInformeFrancos()
+        {
+            Validate();
+            if (IsValid)
+            {
+                byte[] bytes = null;
+
+                #region Obtener datos cargar el DataSet
+                ///Obtengo los datos
+                Model1Container cxt = new Model1Container();
+                DateTime desde; DateTime hasta; Area area; int legajo;
+                string labelDiaReporte = string.Empty;
+                List<Agente> agentesBuscados = new List<Agente>();
+                List<Franco> francos = new List<Franco>();
+                Session["AgentesInforme"] = agentesBuscados;
+
+                if (rb_Dia.Checked)
+                {//esta chequeado el dia
+                    desde = Convert.ToDateTime(tb_dia.Text);
+                    hasta = Convert.ToDateTime(tb_dia.Text);
+                    labelDiaReporte = "DIA: " + tb_dia.Text;
+                }
+                else
+                {
+                    if (rb_Mes.Checked)
+                    {//esta chequeado el mes
+                        desde = new DateTime(Convert.ToInt16(ddl_Anio.Text), Convert.ToInt16(ddl_Mes.SelectedValue), 1);
+                        hasta = new DateTime(Convert.ToInt16(ddl_Anio.Text), Convert.ToInt16(ddl_Mes.SelectedValue), DateTime.DaysInMonth(desde.Year, desde.Month));
+                        labelDiaReporte = "MES DE " + ddl_Mes.SelectedItem.Text + " DE " + ddl_Anio.Text;
+                    }
+                    else
+                    {//esta chequeado desde hasta
+                        desde = Convert.ToDateTime(tb_Desde.Text);
+                        hasta = Convert.ToDateTime(tb_Hasta.Text);
+                        labelDiaReporte = "DESDE " + tb_Desde.Text + " HASTA " + tb_Hasta.Text;
+                    }
+                }
+
+                if (rb_Legajo.Checked)
+                {//seleccionado la busqueda por agente
+                    legajo = Convert.ToInt32(tb_Legajo.Text);
+                    Agente ag = cxt.Agentes.FirstOrDefault(a => a.Legajo == legajo);
+                    if (ag != null)
+                    {
+                        agentesBuscados.Add(ag);
+                    }
+                }
+                else
+                {//seleccionado la busqueda por sector
+                    area = Ddl_Areas.AreaSeleccionado;
+                    IncluirAgentes(area);
+                    agentesBuscados = Session["AgentesInforme"] as List<Agente>;
+                }
+
+                foreach (Agente ag in agentesBuscados)
+                {
+                    List<Franco> francos_agente = (from franco in ag.Francos
+                                          where
+                                           franco.DiasFranco.Any(dia => dia.Dia >= desde && dia.Dia <= hasta) && franco.Estado == EstadosFrancos.Aprobado
+                                          select franco).ToList();
+
+                    foreach(Franco franco in francos_agente)
+                    {
+                        francos.Add(franco);
+                    }
+                }
+
+                ///Armo el dataset
+                var items = (from s in francos
+                             select new
+                             {
+                                 Area = s.Agente.Area.Nombre,
+                                 Jefe = cxt.Agentes.FirstOrDefault(a => a.Jefe && a.Area.Nombre == s.Agente.Area.Nombre) != null ?
+                                       cxt.Agentes.FirstOrDefault(a => a.Jefe && a.Area.Nombre == s.Agente.Area.Nombre).ApellidoYNombre : "El area no tiene jefe asignado",
+                                 Agente = s.Agente.ApellidoYNombre,
+                                 Legajo = s.Agente.Legajo,
+                                 Tipo = "Franco compensatorio",
+                                 Desde = "",
+                                 Hasta = "",
+                                 MarcoJefe = "",
+                                 Destino = "",
+                                 Fecha = s.DiasFranco.First().Dia.ToString("dd/MM/yyyy")
+                             }).ToList().OrderBy(i => i.Legajo).ThenBy(i => i.Fecha).ThenBy(i => i.Hasta).ToList();
+
+                var itemsGroup = (from i in items
+                                  group i by i.Area into SalidasArea
+                                  select new
+                                  {
+                                      Area = SalidasArea.Key,
+                                      Salidas = SalidasArea.ToList()
+                                  }).ToList();
+
+                ListadoSalidas_DS ret = new ListadoSalidas_DS();
+
+                foreach (var grupo in itemsGroup)
+                {//agrego el sector
+                    ListadoSalidas_DS.GeneralRow dr = ret.General.NewGeneralRow();
+                    dr.Dia = labelDiaReporte;
+                    dr.Jefe = grupo.Salidas.First().Jefe;
+                    dr.Sector = grupo.Area;
+                    ret.General.AddGeneralRow(dr);
+
+                    foreach (var salida in grupo.Salidas)
+                    {//agrego las salidas del sector
+                        ListadoSalidas_DS.SalidasRow sr = ret.Salidas.NewSalidasRow();
+                        sr.Agente = salida.Agente;
+                        sr.Desde = salida.Desde;
+                        sr.Hasta = salida.Hasta;
+                        sr.Legajo = salida.Legajo.ToString();
+                        sr.Tipo = salida.Tipo.ToString();
+                        sr.Destino = salida.Destino;
+                        sr.Fecha = salida.Fecha;
+                        sr.Sector = grupo.Area;
+
+                        ret.Salidas.AddSalidasRow(sr);
+                    }
+                }
+
+                #endregion
+
+                if (ret.General.Count > 0)
+                {
+                    Informe_francos_compensatorios reporte = new Informe_francos_compensatorios(ret, desde, hasta);
+                    bytes = reporte.Generar_informe();
+                }
+
+                if (bytes != null)
+                {
+                    Session["Bytes"] = bytes;
+
+                    string script = "<script type='text/javascript'>window.open('Reportes/ReportePDF.aspx');</script>";
+                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "VentanaPadre", script);
+                }
+                else
+                {
+                    Controles.MessageBox.Show(this, "La búsqueda realizada no arrojó resultados", Controles.MessageBox.Tipo_MessageBox.Info);
+                }
+            }
+        }
+
+        #endregion
+
+        #region Informe de trabajo remoto
+        #endregion
+
+        #region Informe de cambio de turno
+        #endregion
+
         protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
         {
             DateTime d;
@@ -1079,6 +1386,7 @@ namespace SisPer.Aplicativo
             int legajo = 0;
             args.IsValid = rb_Legajo.Checked ? int.TryParse(tb_Legajo.Text, out legajo) : true;
         }
+
         #endregion
 
     }

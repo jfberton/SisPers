@@ -19158,3 +19158,65 @@ STACKTRACE:    en System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnect
 
 
 ******************************************************************
+ 
+
+******************************************************************
+
+DATE: 16/5/2023 18:09:18
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Referencia a objeto no establecida como instancia de un objeto.
+
+SOURCE: itext.layout
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_Informe_SalidasVarias.aspx
+
+TARGETSITE: Void Flush()
+
+STACKTRACE:    en iText.Layout.Document.Flush()
+   en SisPer.Aplicativo.Reportes.Informe_art_50_rp.Generar_informe() en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Reportes\Informe_art_50_rp.cs:línea 99
+   en SisPer.Aplicativo.Personal_Informe_SalidasVarias.GenerarInformeSolicitudesArt50Inc4() en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Informe_SalidasVarias.aspx.cs:línea 1201
+   en SisPer.Aplicativo.Personal_Informe_SalidasVarias.GenerarInforme() en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Informe_SalidasVarias.aspx.cs:línea 219
+   en SisPer.Aplicativo.Personal_Informe_SalidasVarias.btn_Buscar_Click(Object sender, EventArgs e) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Informe_SalidasVarias.aspx.cs:línea 165
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 16/5/2023 18:10:52
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Referencia a objeto no establecida como instancia de un objeto.
+
+SOURCE: itext.layout
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_Informe_SalidasVarias.aspx
+
+TARGETSITE: Void Flush()
+
+STACKTRACE:    en iText.Layout.Document.Flush()
+   en SisPer.Aplicativo.Reportes.Informe_art_50_rp.Generar_informe() en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Reportes\Informe_art_50_rp.cs:línea 99
+   en SisPer.Aplicativo.Personal_Informe_SalidasVarias.GenerarInformeSolicitudesArt50Inc4() en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Informe_SalidasVarias.aspx.cs:línea 1201
+   en SisPer.Aplicativo.Personal_Informe_SalidasVarias.GenerarInforme() en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Informe_SalidasVarias.aspx.cs:línea 219
+   en SisPer.Aplicativo.Personal_Informe_SalidasVarias.btn_Buscar_Click(Object sender, EventArgs e) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Informe_SalidasVarias.aspx.cs:línea 165
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************

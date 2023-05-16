@@ -5888,7 +5888,7 @@
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram Name="Model1" ZoomLevel="124" xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+      <Diagram Name="Model1" ZoomLevel="107" xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
         <EntityTypeShape EntityType="Model1.Agente" Width="2.375" PointX="10" PointY="2.75" Height="7.1724251302083317" IsExpanded="true" />
         <EntityTypeShape EntityType="Model1.Area" Width="2.125" PointX="3.375" PointY="25.5" Height="2.1725878906249996" />
         <EntityTypeShape EntityType="Model1.ResumenDiario" Width="2.25" PointX="0.75" PointY="29.75" Height="2.172587890625" />

@@ -1688,6 +1688,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HorariosVespertinos_DS.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Aplicativo\Reportes\Informe_art_50_rp.cs" />
+    <Compile Include="Aplicativo\Reportes\Informe_francos_compensatorios.cs" />
     <Compile Include="Aplicativo\Reportes\ListadoAgentes_DS.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
