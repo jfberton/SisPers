@@ -206,6 +206,7 @@
     <Content Include="Aplicativo\Personal_Informe_AgentesPorArea.aspx" />
     <Content Include="Aplicativo\Personal_Informe_Bonificaciones.aspx" />
     <Content Include="Aplicativo\Personal_Informe_InformeMovimientosAnuales.aspx" />
+    <Content Include="Aplicativo\Personal_Informe_Cierres_Mensuales.aspx" />
     <Content Include="Aplicativo\Personal_Informe_SalidasVarias.aspx" />
     <Content Include="Aplicativo\Personal_Legajo.aspx" />
     <Content Include="Aplicativo\Personal_LegajosSinCerrar.aspx" />
@@ -1581,6 +1582,13 @@
     <Compile Include="Aplicativo\Personal_Informe_InformeMovimientosAnuales.aspx.designer.cs">
       <DependentUpon>Personal_Informe_InformeMovimientosAnuales.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Aplicativo\Personal_Informe_Cierres_Mensuales.aspx.cs">
+      <DependentUpon>Personal_Informe_Cierres_Mensuales.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Aplicativo\Personal_Informe_Cierres_Mensuales.aspx.designer.cs">
+      <DependentUpon>Personal_Informe_Cierres_Mensuales.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Aplicativo\Personal_Informe_SalidasVarias.aspx.cs">
       <DependentUpon>Personal_Informe_SalidasVarias.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1691,6 +1699,7 @@
     <Compile Include="Aplicativo\Reportes\Informe_art_50_rp.cs" />
     <Compile Include="Aplicativo\Reportes\Informe_francos_compensatorios.cs" />
     <Compile Include="Aplicativo\Reportes\Informe_cambio_de_turno.cs" />
+    <Compile Include="Aplicativo\Reportes\Informe_cierres_mensuales.cs" />
     <Compile Include="Aplicativo\Reportes\Informe_remotos_autorizados.cs" />
     <Compile Include="Aplicativo\Reportes\ListadoAgentes_DS.Designer.cs">
       <AutoGen>True</AutoGen>

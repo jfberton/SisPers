@@ -76,6 +76,7 @@
                                 <li><a href="../Aplicativo/Personal_Informe_AgentesPorArea.aspx">Listado de Agentes</a></li>
                                 <li><a href="../Aplicativo/Personal_Informe_Bonificaciones.aspx">Bonificaciones</a></li>
                                 <li><a href="../Aplicativo/Personal_Informe_SalidasVarias.aspx">Movimientos varios</a></li>
+                                <li><a href="../Aplicativo/Personal_Informe_Cierres_Mensuales.aspx">Informes cierres mensuales</a></li>
                                 <li><a href="../Aplicativo/Personal_Informe_InformeMovimientosAnuales.aspx">Movimientos anuales</a></li>
                                 <li class="divider"></li>
                                 <li><a href="../Legislacion.aspx" target="_blank">Legislación</a></li>

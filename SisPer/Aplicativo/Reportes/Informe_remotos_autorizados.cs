@@ -22,6 +22,7 @@ public class Informe_remotos_autorizados
         desde = _desde;
         hasta = _hasta;
     }
+
     private ListadoSalidas_DS datos;
     private DateTime desde;
     private DateTime hasta;
