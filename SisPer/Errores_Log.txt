@@ -19357,3 +19357,277 @@ STACKTRACE:    en System.Web.UI.Util.CheckVirtualFileExists(VirtualPath virtualP
 
 
 ******************************************************************
+ 
+
+******************************************************************
+
+DATE: 1/6/2023 12:43:27
+
+MESSAGE: 
+Aplicativo.Model1.msl(163,10) : error 3004: Hay un problema con los fragmentos de asignación a partir de la línea 163:No se especificó ninguna asignación para las propiedades CierreMensual.Dias_sin_cerrar en Establecer CierreMensual.
+Una entidad con clave (PK) no será de ida y vuelta cuando:
+  Entidad is type [Model1.CierreMensual]
+
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/default.aspx
+
+TARGETSITE: Void SerializedGenerateViews(System.Data.Mapping.StorageEntityContainerMapping, System.Collections.Generic.Dictionary`2[System.Data.Metadata.Edm.EntitySetBase,System.Data.Mapping.ViewGeneration.GeneratedView])
+
+STACKTRACE:    en System.Data.Mapping.StorageMappingItemCollection.ViewDictionary.SerializedGenerateViews(StorageEntityContainerMapping entityContainerMap, Dictionary`2 resultDictionary)
+   en System.Data.Mapping.StorageMappingItemCollection.ViewDictionary.SerializedGetGeneratedViews(EntityContainer container)
+   en System.Data.Common.Utils.Memoizer`2.Result.GetValue()
+   en System.Data.Common.Utils.Memoizer`2.Evaluate(TArg arg)
+   en System.Data.Mapping.StorageMappingItemCollection.ViewDictionary.GetGeneratedView(EntitySetBase extent, MetadataWorkspace workspace, StorageMappingItemCollection storageMappingItemCollection)
+   en System.Data.Metadata.Edm.MetadataWorkspace.GetGeneratedView(EntitySetBase extent)
+   en System.Data.Query.PlanCompiler.PreProcessor.ExpandView(Node node, ScanTableOp scanTableOp, IsOfOp& typeFilter)
+   en System.Data.Query.PlanCompiler.PreProcessor.ProcessScanTable(Node scanTableNode, ScanTableOp scanTableOp, IsOfOp& typeFilter)
+   en System.Data.Query.PlanCompiler.PreProcessor.Visit(ScanTableOp op, Node n)
+   en System.Data.Query.PlanCompiler.SubqueryTrackingVisitor.VisitChildren(Node n)
+   en System.Data.Query.PlanCompiler.SubqueryTrackingVisitor.VisitRelOpDefault(RelOp op, Node n)
+   en System.Data.Query.PlanCompiler.SubqueryTrackingVisitor.VisitChildren(Node n)
+   en System.Data.Query.InternalTrees.BasicOpVisitorOfNode.VisitDefault(Node n)
+   en System.Data.Query.PlanCompiler.PreProcessor.Process(Dictionary`2& tvfResultKeys)
+   en System.Data.Query.PlanCompiler.PreProcessor.Process(PlanCompiler planCompilerState, StructuredTypeInfo& typeInfo, Dictionary`2& tvfResultKeys)
+   en System.Data.Query.PlanCompiler.PlanCompiler.Compile(List`1& providerCommands, ColumnMap& resultColumnMap, Int32& columnCount, Set`1& entitySets)
+   en System.Data.EntityClient.EntityCommandDefinition..ctor(DbProviderFactory storeProviderFactory, DbCommandTree commandTree)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 13/6/2023 12:58:31
+
+AGENTE: INSAURRALDE, Ada Margarita
+
+MESSAGE: La importación de funciones 'Model1Container.Estado_agente' no se puede ejecutar porque no está asignada a una función de almacenamiento.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainPersonal.aspx
+
+TARGETSITE: System.Data.Mapping.FunctionImportMappingNonComposable GetTargetFunctionMapping(System.Data.Common.CommandTrees.DbFunctionCommandTree)
+
+STACKTRACE:    en System.Data.EntityClient.EntityCommandDefinition.GetTargetFunctionMapping(DbFunctionCommandTree functionCommandTree)
+   en System.Data.EntityClient.EntityCommandDefinition..ctor(DbProviderFactory storeProviderFactory, DbCommandTree commandTree)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 13/6/2023 12:59:03
+
+AGENTE: INSAURRALDE, Ada Margarita
+
+MESSAGE: La importación de funciones 'Model1Container.Estado_agente' no se puede ejecutar porque no está asignada a una función de almacenamiento.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainPersonal.aspx
+
+TARGETSITE: System.Data.Mapping.FunctionImportMappingNonComposable GetTargetFunctionMapping(System.Data.Common.CommandTrees.DbFunctionCommandTree)
+
+STACKTRACE:    en System.Data.EntityClient.EntityCommandDefinition.GetTargetFunctionMapping(DbFunctionCommandTree functionCommandTree)
+   en System.Data.EntityClient.EntityCommandDefinition..ctor(DbProviderFactory storeProviderFactory, DbCommandTree commandTree)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 14/6/2023 06:34:45
+
+AGENTE: INSAURRALDE, Ada Margarita
+
+MESSAGE: La importación de funciones 'Model1Container.Estado_agente' no se puede ejecutar porque no está asignada a una función de almacenamiento.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainPersonal.aspx
+
+TARGETSITE: System.Data.Mapping.FunctionImportMappingNonComposable GetTargetFunctionMapping(System.Data.Common.CommandTrees.DbFunctionCommandTree)
+
+STACKTRACE:    en System.Data.EntityClient.EntityCommandDefinition.GetTargetFunctionMapping(DbFunctionCommandTree functionCommandTree)
+   en System.Data.EntityClient.EntityCommandDefinition..ctor(DbProviderFactory storeProviderFactory, DbCommandTree commandTree)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 14/6/2023 06:35:47
+
+AGENTE: INSAURRALDE, Ada Margarita
+
+MESSAGE: Login failed for user 'AppFederico'.
+
+SOURCE: .Net SqlClient Data Provider
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/default.aspx
+
+TARGETSITE: Void .ctor(System.Data.ProviderBase.DbConnectionPoolIdentity, System.Data.SqlClient.SqlConnectionString, System.Data.SqlClient.SqlCredential, System.Object, System.String, System.Security.SecureString, Boolean, System.Data.SqlClient.SqlConnectionString, System.Data.SqlClient.SessionData, System.Data.ProviderBase.DbConnectionPool, System.String, Boolean, System.Data.SqlClient.SqlAuthenticationProviderManager)
+
+STACKTRACE:    en System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, DbConnectionPool pool, String accessToken, Boolean applyTransientFaultHandling, SqlAuthenticationProviderManager sqlAuthProviderManager)
+   en System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   en System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   en System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   en System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   en System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   en System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   en System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   en System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   en System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   en System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   en System.Data.SqlClient.SqlConnection.Open()
+   en System.Data.EntityClient.EntityConnection.OpenStoreConnectionIf(Boolean openCondition, DbConnection storeConnectionToOpen, DbConnection originalConnection, String exceptionCode, String attemptedOperation, Boolean& closeStoreConnectionOnFailure)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 14/6/2023 06:36:58
+
+AGENTE: INSAURRALDE, Ada Margarita
+
+MESSAGE: La importación de funciones 'Model1Container.Estado_agente' no se puede ejecutar porque no está asignada a una función de almacenamiento.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainPersonal.aspx
+
+TARGETSITE: System.Data.Mapping.FunctionImportMappingNonComposable GetTargetFunctionMapping(System.Data.Common.CommandTrees.DbFunctionCommandTree)
+
+STACKTRACE:    en System.Data.EntityClient.EntityCommandDefinition.GetTargetFunctionMapping(DbFunctionCommandTree functionCommandTree)
+   en System.Data.EntityClient.EntityCommandDefinition..ctor(DbProviderFactory storeProviderFactory, DbCommandTree commandTree)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 14/6/2023 06:53:24
+
+AGENTE: INSAURRALDE, Ada Margarita
+
+MESSAGE: Referencia a objeto no establecida como instancia de un objeto.
+
+SOURCE: SisPer
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_Informe_AgentesPorArea.aspx
+
+TARGETSITE: SisPer.Aplicativo.Reportes.ListadoAgentes_DS AgregarAgentesDelArea(SisPer.Aplicativo.Area, SisPer.Aplicativo.Reportes.ListadoAgentes_DS)
+
+STACKTRACE:    en SisPer.Aplicativo.Reportes.AgentesPorAreaUC.AgregarAgentesDelArea(Area area, ListadoAgentes_DS ds) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Reportes\AgentesPorAreaUC.ascx.cs:línea 161
+   en SisPer.Aplicativo.Reportes.AgentesPorAreaUC.AgregarAgentesDelArea(Area area, ListadoAgentes_DS ds) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Reportes\AgentesPorAreaUC.ascx.cs:línea 172
+   en SisPer.Aplicativo.Reportes.AgentesPorAreaUC.AgregarAgentesDelArea(Area area, ListadoAgentes_DS ds) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Reportes\AgentesPorAreaUC.ascx.cs:línea 172
+   en SisPer.Aplicativo.Reportes.AgentesPorAreaUC.GenerarDS() en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Reportes\AgentesPorAreaUC.ascx.cs:línea 119
+   en SisPer.Aplicativo.Reportes.AgentesPorAreaUC.RenderReport() en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Reportes\AgentesPorAreaUC.ascx.cs:línea 66
+   en SisPer.Aplicativo.Reportes.AgentesPorAreaUC.btn_Obtener_Click(Object sender, EventArgs e) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Reportes\AgentesPorAreaUC.ascx.cs:línea 55
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 14/6/2023 10:34:27
+
+AGENTE: INSAURRALDE, Ada Margarita
+
+MESSAGE: Referencia a objeto no establecida como instancia de un objeto.
+
+SOURCE: SisPer
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_Informe_Cierres_Mensuales.aspx
+
+TARGETSITE: <>f__AnonymousType62`12[System.String,System.String,System.Int32,System.Int32,System.String,System.String,System.Nullable`1[System.Int32],System.String,System.String,System.String,System.String,System.String] <Generar_informe_cierres_mensuales>b__6_0(SisPer.Aplicativo.CierreMensual)
+
+STACKTRACE:    en SisPer.Aplicativo.Personal_Informe_Cierres_Mensuales.<>c.<Generar_informe_cierres_mensuales>b__6_0(CierreMensual item) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Informe_Cierres_Mensuales.aspx.cs:línea 234
+   en System.Linq.Enumerable.WhereSelectListIterator`2.MoveNext()
+   en System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   en System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   en SisPer.Aplicativo.Personal_Informe_Cierres_Mensuales.Generar_informe_cierres_mensuales() en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Informe_Cierres_Mensuales.aspx.cs:línea 233
+   en SisPer.Aplicativo.Personal_Informe_Cierres_Mensuales.btn_Buscar_Click(Object sender, EventArgs e) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Informe_Cierres_Mensuales.aspx.cs:línea 90
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 14/6/2023 10:41:39
+
+AGENTE: INSAURRALDE, Ada Margarita
+
+MESSAGE: Referencia a objeto no establecida como instancia de un objeto.
+
+SOURCE: SisPer
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_Informe_Cierres_Mensuales.aspx
+
+TARGETSITE: <>f__AnonymousType62`12[System.String,System.String,System.Int32,System.Int32,System.String,System.String,System.Nullable`1[System.Int32],System.String,System.String,System.String,System.String,System.String] <Generar_informe_cierres_mensuales>b__0(SisPer.Aplicativo.CierreMensual)
+
+STACKTRACE:    en SisPer.Aplicativo.Personal_Informe_Cierres_Mensuales.<>c__DisplayClass6_0.<Generar_informe_cierres_mensuales>b__0(CierreMensual item) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Informe_Cierres_Mensuales.aspx.cs:línea 234
+   en System.Linq.Enumerable.WhereSelectListIterator`2.MoveNext()
+   en System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   en System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   en SisPer.Aplicativo.Personal_Informe_Cierres_Mensuales.Generar_informe_cierres_mensuales() en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Informe_Cierres_Mensuales.aspx.cs:línea 233
+   en SisPer.Aplicativo.Personal_Informe_Cierres_Mensuales.btn_Buscar_Click(Object sender, EventArgs e) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Informe_Cierres_Mensuales.aspx.cs:línea 90
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************

@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 11/24/2022 07:47:50
--- Generated from EDMX file: d:\Usuarios\jfberton\Mis Documentos\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Model1.edmx
+-- Date Created: 06/01/2023 12:43:56
+-- Generated from EDMX file: C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Model1.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [SisPer];
+USE [BackupPersonal];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -621,7 +621,8 @@ CREATE TABLE [dbo].[CierreMensual] (
     [FechaCierre] datetime  NOT NULL,
     [Mes] int  NOT NULL,
     [Anio] int  NOT NULL,
-    [Tiene_que_modificar] bit  NOT NULL
+    [Tiene_que_modificar] bit  NOT NULL,
+    [Dias_sin_cerrar] int  NULL
 );
 GO
 

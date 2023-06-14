@@ -73,55 +73,71 @@ namespace SisPer.Aplicativo
         /// </summary>
         /// <param name="hora">Coleccion de strings</param>
         /// <returns>string con formato hora (000:00)</returns>
-        public static string SumarHoras(string[] hora)
+        //public static string SumarHoras(string[] hora)
+        //{
+        //    string totalHoras = "00:00";
+
+        //    // A   B tengo que quitar siempre antes de cada operación el signo de la hora
+        //    //----------------------------
+        //    // + y + = SUMO   A + B
+        //    // + y - = RESTO  A - B
+        //    // - y + = RESTO  B - A
+        //    // - y - = SUMO   A + B y agrego signo negativo al final
+
+        //    foreach (string item in hora)
+        //    {
+        //        string a = item;
+        //        string b = totalHoras;
+
+        //        string A = a.Replace("-", "");
+        //        string B = b.Replace("-", "");
+
+        //        if (!a.Contains("-") && !b.Contains("-"))
+        //        {
+        //            totalHoras = SumarHorasString(new string[2] { A, B });
+        //        }
+        //        else
+        //        {
+        //            if (!a.Contains("-") && b.Contains("-"))
+        //            {
+        //                totalHoras = RestarHoras(A, B);
+        //            }
+        //            else
+        //            {
+
+        //                if (a.Contains("-") && !b.Contains("-"))
+        //                {
+        //                    totalHoras = RestarHoras(B, A);
+        //                }
+        //                else
+        //                {
+        //                    if (a.Contains("-") && b.Contains("-"))
+        //                    {
+        //                        totalHoras = "-" + SumarHorasString(new string[2] { A, B });
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    return totalHoras;
+
+        //}
+
+        public static string SumarHoras(string[] horas)
         {
-            string totalHoras = "00:00";
+            TimeSpan total = TimeSpan.Zero;
 
-            // A   B tengo que quitar siempre antes de cada operación el signo de la hora
-            //----------------------------
-            // + y + = SUMO   A + B
-            // + y - = RESTO  A - B
-            // - y + = RESTO  B - A
-            // - y - = SUMO   A + B y agrego signo negativo al final
-
-            foreach (string item in hora)
+            foreach (string hora in horas)
             {
-                string a = item;
-                string b = totalHoras;
-
-                string A = a.Replace("-", "");
-                string B = b.Replace("-", "");
-
-                if (!a.Contains("-") && !b.Contains("-"))
+                if (TimeSpan.TryParse(hora, out TimeSpan tiempo))
                 {
-                    totalHoras = SumarHorasString(new string[2] { A, B });
-                }
-                else
-                {
-                    if (!a.Contains("-") && b.Contains("-"))
-                    {
-                        totalHoras = RestarHoras(A, B);
-                    }
-                    else
-                    {
-
-                        if (a.Contains("-") && !b.Contains("-"))
-                        {
-                            totalHoras = RestarHoras(B, A);
-                        }
-                        else
-                        {
-                            if (a.Contains("-") && b.Contains("-"))
-                            {
-                                totalHoras = "-" + SumarHorasString(new string[2] { A, B });
-                            }
-                        }
-                    }
+                    total = total.Add(tiempo);
                 }
             }
 
-            return totalHoras;
-
+            string resultado = $"{(int)total.TotalHours:00}:{total.Minutes:00}";
+            return resultado.Replace(":-", ":");
         }
 
         public static string SumarHoras(List<string> hora)

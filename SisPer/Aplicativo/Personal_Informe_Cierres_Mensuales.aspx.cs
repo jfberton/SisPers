@@ -158,6 +158,9 @@ namespace SisPer.Aplicativo
             public string Legajo { get; set; }
             public string Area { get; set; }
             public string Periodo_str { get; set; }
+            public string Horas_bonificcion { get; set; }
+            public int Dias_sin_cerrar { get; set; }
+            public string Horas_acumuladas { get; set; }
             public int Periodo_int { get; set; }
             public string Hora_mes { get; set; }
             public string Hora_año_ant { get; set; }
@@ -236,6 +239,14 @@ namespace SisPer.Aplicativo
                                  Periodo_int = item.Anio * 100 + item.Mes,
                                  Periodo_str = new DateTime(item.Anio, item.Mes, 1).ToString("MMM yyyy"),
                                  Horas_mes = item.HorasMes,
+                                 Dias_sin_cerrar = item.Dias_sin_cerrar,
+                                 //tomo las horas de bonificacion del mes si no tiene traigo cero
+                                 Horas_bonificcion = cxt.BonificacionesOtorgadas.FirstOrDefault(bo => bo.AgenteId == item.AgenteId && bo.Mes == item.Mes && bo.Anio == item.Anio) != null ?
+                                                                        cxt.BonificacionesOtorgadas.FirstOrDefault(bo => bo.AgenteId == item.AgenteId && bo.Mes == item.Mes && bo.Anio == item.Anio).HorasOtorgadas : "00:00", 
+                                 //tomo las horas del mes y le resto las horas de bonificacion
+                                 Horas_acumuladas = HorasString.SumarHoras(new string[] { item.HorasMes,
+                                                                            string.Concat("-",  cxt.BonificacionesOtorgadas.FirstOrDefault(bo => bo.AgenteId == item.AgenteId && bo.Mes == item.Mes && bo.Anio == item.Anio) != null ?
+                                                                                        cxt.BonificacionesOtorgadas.FirstOrDefault(bo => bo.AgenteId == item.AgenteId && bo.Mes == item.Mes && bo.Anio == item.Anio).HorasOtorgadas : "00:00")}),
                                  Horas_año_ant =  item.HorasAnioAnterior,
                                  Horas_año_Act = item.HorasAnioActual,
                                  Fecha = item.FechaCierre.ToString("dd/MM/yyyy HH:mm:ss")
@@ -249,6 +260,9 @@ namespace SisPer.Aplicativo
                         Area = grupo.Area,
                         Periodo_str = grupo.Periodo_str,
                         Periodo_int = grupo.Periodo_int,
+                        Dias_sin_cerrar = grupo.Dias_sin_cerrar.Value,
+                        Horas_bonificcion = grupo.Horas_bonificcion,
+                        Horas_acumuladas = grupo.Horas_acumuladas,
                         Hora_mes = grupo.Horas_mes.ToString(),
                         Hora_año_ant = grupo.Horas_año_ant.ToString(),
                         Hora_año_act = grupo.Horas_año_Act.ToString(),

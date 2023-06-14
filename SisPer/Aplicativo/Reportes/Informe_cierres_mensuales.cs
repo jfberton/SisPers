@@ -15,6 +15,7 @@ using System.Web;
 using SisPer.Aplicativo.Reportes;
 using System.Data;
 using static SisPer.Aplicativo.Personal_Informe_Cierres_Mensuales;
+using System.Runtime.Serialization.Configuration;
 
 public class Informe_cierres_mensuales
 {
@@ -71,7 +72,7 @@ public class Informe_cierres_mensuales
                 Cell celldaEncabezado = new Cell(2, 1).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                 tableEncabezado.AddCell(celldaEncabezado);
 
-                celldaEncabezado = new Cell(1, 1).Add(new Paragraph("INFORME DE CIERRE MENSUAL")).SetBold().SetTextAlignment(TextAlignment.CENTER).SetFontSize(12);
+                celldaEncabezado = new Cell(1, 1).Add(new Paragraph("CIERRES MENSUALES")).SetBold().SetTextAlignment(TextAlignment.CENTER).SetFontSize(12);
                 tableEncabezado.AddCell(celldaEncabezado);
 
                 celldaEncabezado = new Cell(2, 1).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
@@ -101,7 +102,7 @@ public class Informe_cierres_mensuales
                     Paragraph desde_hasta = new Paragraph(String.Format("Datos del agente {0} - {1}", legajo, nombre.ToUpperInvariant()));
                     document.Add(desde_hasta);
 
-                    Table tabla_detalle = new Table(UnitValue.CreatePercentArray(new float[] { 20, 20, 20, 20, 20 })).UseAllAvailableWidth().SetFontSize(10);
+                    Table tabla_detalle = new Table(UnitValue.CreatePercentArray(new float[] { 20, 10, 10, 10, 10, 10, 10, 20 })).UseAllAvailableWidth().SetFontSize(10);
 
                     #region Encabezado tabla detalle
 
@@ -109,11 +110,17 @@ public class Informe_cierres_mensuales
                     tabla_detalle.AddCell(cell);
                     cell = new Cell(1, 1).Add(new Paragraph("Horas mes")).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY).SetTextAlignment(TextAlignment.CENTER);
                     tabla_detalle.AddCell(cell);
+                    cell = new Cell(1, 1).Add(new Paragraph("Horas bonificación")).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY).SetTextAlignment(TextAlignment.CENTER);
+                    tabla_detalle.AddCell(cell);
+                    cell = new Cell(1, 1).Add(new Paragraph("Horas acumuladas")).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY).SetTextAlignment(TextAlignment.CENTER);
+                    tabla_detalle.AddCell(cell);
+                    cell = new Cell(1, 1).Add(new Paragraph("Días sin cerrar")).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY).SetTextAlignment(TextAlignment.CENTER);
+                    tabla_detalle.AddCell(cell);
                     cell = new Cell(1, 1).Add(new Paragraph("Horas año ant")).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY).SetTextAlignment(TextAlignment.CENTER);
                     tabla_detalle.AddCell(cell);
                     cell = new Cell(1, 1).Add(new Paragraph("Horas año act")).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY).SetTextAlignment(TextAlignment.CENTER);
                     tabla_detalle.AddCell(cell);
-                    cell = new Cell(1, 1).Add(new Paragraph("Fecha actualización")).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY).SetTextAlignment(TextAlignment.CENTER);
+                    cell = new Cell(1, 1).Add(new Paragraph("Fecha actualicación")).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY).SetTextAlignment(TextAlignment.CENTER);
                     tabla_detalle.AddCell(cell);
 
                     #endregion
@@ -121,11 +128,20 @@ public class Informe_cierres_mensuales
                     #region Carga de valores detalle
                     ///Recorro los valores asociados al area y voy cargando en la tabla
                     ///
+                    string horas_anio_ant = "00:00";
+                    string horas_anio_act = "00:00";
+                    
                     foreach(Informe_cierres_agente cierre in datos.Where(c => c.Legajo == legajo).OrderBy(c=>c.Periodo_int))
                     {
                         cell = new Cell(1, 1).Add(new Paragraph(cierre.Periodo_str)).SetTextAlignment(TextAlignment.RIGHT);
                         tabla_detalle.AddCell(cell);
                         cell = new Cell(1, 1).Add(new Paragraph(cierre.Hora_mes)).SetTextAlignment(TextAlignment.RIGHT);
+                        tabla_detalle.AddCell(cell);
+                        cell = new Cell(1, 1).Add(new Paragraph(cierre.Horas_bonificcion)).SetTextAlignment(TextAlignment.RIGHT);
+                        tabla_detalle.AddCell(cell);
+                        cell = new Cell(1, 1).Add(new Paragraph(cierre.Horas_acumuladas)).SetTextAlignment(TextAlignment.RIGHT);
+                        tabla_detalle.AddCell(cell);
+                        cell = new Cell(1, 1).Add(new Paragraph(cierre.Dias_sin_cerrar.ToString())).SetTextAlignment(TextAlignment.RIGHT);
                         tabla_detalle.AddCell(cell);
                         cell = new Cell(1, 1).Add(new Paragraph(cierre.Hora_año_ant)).SetTextAlignment(TextAlignment.RIGHT);
                         tabla_detalle.AddCell(cell);
@@ -133,12 +149,31 @@ public class Informe_cierres_mensuales
                         tabla_detalle.AddCell(cell);
                         cell = new Cell(1, 1).Add(new Paragraph(cierre.Fecha_actualizacion)).SetTextAlignment(TextAlignment.RIGHT);
                         tabla_detalle.AddCell(cell);
+
+                        horas_anio_ant = cierre.Hora_año_ant;
+                        horas_anio_act = cierre.Hora_año_act;
                     }
 
                     document.Add(tabla_detalle);
 
-                    #endregion
 
+
+                    #endregion
+                    document.Add(new Paragraph(" "));
+
+                    Table tabla_pie_totales = new Table(UnitValue.CreatePercentArray(new float[] { 80, 20 })).SetWidth(300).SetFontSize(10);
+                    cell = new Cell(1, 1).Add(new Paragraph("Total de horas acumuladas del año anterior")).SetTextAlignment(TextAlignment.RIGHT).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                    tabla_pie_totales.AddCell(cell);
+                    cell = new Cell(1, 1).Add(new Paragraph().Add(new Text(horas_anio_ant).SetBold())).SetTextAlignment(TextAlignment.RIGHT).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                    tabla_pie_totales.AddCell(cell);
+                    cell = new Cell(1, 1).Add(new Paragraph("Total de horas acumuladas del año actual")).SetTextAlignment(TextAlignment.RIGHT).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                    tabla_pie_totales.AddCell(cell);
+                    cell = new Cell(1, 1).Add(new Paragraph().Add(new Text(horas_anio_act).SetBold())).SetTextAlignment(TextAlignment.RIGHT).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                    tabla_pie_totales.AddCell(cell);
+
+                    tabla_pie_totales.SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.RIGHT);
+
+                    document.Add(tabla_pie_totales);
                     #endregion
 
                 }
