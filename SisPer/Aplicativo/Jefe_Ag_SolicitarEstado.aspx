@@ -1,17 +1,23 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site2.Master" AutoEventWireup="true" CodeBehind="Jefe_Ag_SolicitarEstado.aspx.cs" Inherits="SisPer.Aplicativo.Jefe_Ag_SolicitarEstado" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+
+<%@ Register Src="~/Aplicativo/Menues/MenuAgente.ascx" TagPrefix="uc1" TagName="MenuAgente" %>
 <%@ Register Src="~/Aplicativo/Menues/MenuJefe.ascx" TagPrefix="uc1" TagName="MenuJefe" %>
 <%@ Register Src="~/Aplicativo/Menues/MenuPersonalAgente.ascx" TagPrefix="uc1" TagName="MenuPersonalAgente" %>
 <%@ Register Src="~/Aplicativo/Menues/MenuPersonalJefe.ascx" TagPrefix="uc1" TagName="MenuPersonalJefe" %>
+
 <%@ Register Src="~/Aplicativo/Controles/DatosAgente.ascx" TagPrefix="uc1" TagName="DatosAgente" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderMenu" runat="server">
-    <uc1:MenuPersonalJefe runat="server" ID="MenuPersonalJefe1" />
-    <uc1:MenuJefe runat="server" ID="MenuJefe1" />
+    <uc1:MenuAgente runat="server" Visible="false" ID="MenuAgente1" />
+    <uc1:MenuPersonalAgente runat="server" Visible="false" ID="MenuPersonalAgente1" />
+
+    <uc1:MenuPersonalJefe runat="server" Visible="false" ID="MenuPersonalJefe1" />
+    <uc1:MenuJefe runat="server" Visible="false" ID="MenuJefe1" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -45,10 +51,29 @@
                                             <td colspan="2">
                                                 <asp:CustomValidator ID="cv_tipoMovimiento" runat="server" ErrorMessage="Este movimiento puede ser informado únicamente hasta las 08:00hs de día a solicitar."
                                                     Text="<img src='../Imagenes/exclamation.gif' title='Este movimiento puede ser informado únicamente hasta las 08:00hs de día a solicitar.' />"
-                                                    OnServerValidate="cv_tipoMovimiento_ServerValidate"></asp:CustomValidator><label for="ddl_TipoMovimiento">Tipo</label>
+                                                    OnServerValidate="cv_tipoMovimiento_ServerValidate"></asp:CustomValidator>
+                                                <label for="ddl_TipoMovimiento" style="font-weight: 700">Tipo</label>
                                                 <asp:DropDownList ID="ddl_TipoMovimiento" CssClass="form-control" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddl_TipoMovimiento_SelectedIndexChanged">
                                                 </asp:DropDownList>
 
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <asp:CustomValidator ID="cv_domicilio" runat="server" ErrorMessage="Debe consignar el de domicilio del agente para poder continuar."
+                                                    Text="<img src='../Imagenes/exclamation.gif' title='Debe consignar el de domicilio del agente para poder continuar.' />"
+                                                    OnServerValidate="cv_domicilio_ServerValidate"></asp:CustomValidator>
+                                                <asp:Label ID="lbl_domicilio" Text="Domicilio" runat="server" style="font-weight: 700" />
+                                                <asp:TextBox ID="tb_domicilio" CssClass="form-control" runat="server" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <asp:CustomValidator ID="cv_localidad" runat="server" ErrorMessage="Debe consignar la localidad del agente para poder continuar."
+                                                    Text="<img src='../Imagenes/exclamation.gif' title='Debe consignar la localidad del agente para poder continuar.' />"
+                                                    OnServerValidate="cv_localidad_ServerValidate"></asp:CustomValidator>
+                                                <asp:Label ID="lbl_localidad" Text="Localidad" runat="server" style="font-weight: 700" />
+                                                <asp:TextBox ID="tb_localidad" CssClass="form-control" runat="server" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -57,18 +82,17 @@
                                                     <table id="MasDatosMovimiento" class="table-condensed">
                                                         <tr>
                                                             <td>
-                                                                <asp:Label Text="Datos extra solicitud" runat="server" Style="text-decoration: underline; font-weight: 700" /></td>
+                                                                <asp:Label Text="Datos extra solicitud" runat="server" Style="font-weight: 700" /></td>
                                                         </tr>
                                                         <tr>
                                                             <td>&nbsp;</td>
                                                             <td>Encuadre
-                           <asp:DropDownList runat="server" ID="ddl_Encuadre" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddl_Encuadre_SelectedIndexChanged">
-                           </asp:DropDownList>
+                                                               <asp:DropDownList runat="server" ID="ddl_Encuadre" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddl_Encuadre_SelectedIndexChanged">
+                                                               </asp:DropDownList>
                                                                 <asp:CustomValidator ID="cv_sanatorio" runat="server" ErrorMessage="Debe ingresar el sanatorio donde se encuentra internado."
                                                                     Text="<img src='../Imagenes/exclamation.gif' title='Debe ingresar el sanatorio donde se encuentra internado.' />"
                                                                     OnServerValidate="cv_sanatorio_ServerValidate"></asp:CustomValidator><asp:Label Text="Sanatorio" ID="lbl_Sanatorio" runat="server" />
                                                                 <asp:TextBox runat="server" ID="tb_sanatorio" CssClass="form-control" />
-
 
                                                                 <asp:CustomValidator ID="cv_habitacion" runat="server" ErrorMessage="Debe ingresar la habitación donde se encuentra internado."
                                                                     Text="<img src='../Imagenes/exclamation.gif' title='Debe ingresar el sanatorio donde se encuentra internado.' />"

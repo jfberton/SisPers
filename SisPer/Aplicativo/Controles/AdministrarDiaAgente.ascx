@@ -18,6 +18,7 @@
     <div class="panel-body">
         <div runat="server" id="DivMovimiento" class="alert alert-warning">
             <asp:Label Text="" ID="lbl_Movimiento" runat="server" />
+            <asp:Label Text="" ID="lbl_cambio_turno" runat="server" />
         </div>
         <div class="row">
             <div class="col-md-12">

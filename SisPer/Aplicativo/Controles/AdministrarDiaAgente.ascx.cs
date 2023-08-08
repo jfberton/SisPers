@@ -132,9 +132,11 @@ namespace SisPer.Aplicativo.Controles
 
                 lbl_Dia.Text = diaBuscado.ToLongDateString();
                 EstadoAgente ea = agenteBuscado.ObtenerEstadoAgenteParaElDia(diaBuscado);
+                TurnoIngresoPermitido tip = agenteBuscado.ObtenerTurnoIngresoPermitido(diaBuscado);
 
                 lbl_Movimiento.Text = ea != null ? "Movimiento agendado para la fecha: " + ea.TipoEstado.Estado : "";
-                DivMovimiento.Visible = lbl_Movimiento.Text.Length > 0;
+                lbl_cambio_turno.Text = tip != null ? String.Format("Cambio de turno agendado en el día. Turno {0} desde {1} hasta {2}.- ", tip.Turno, tip.Desde, tip.Hasta) : "";
+                DivMovimiento.Visible = lbl_Movimiento.Text.Length > 0 || lbl_cambio_turno.Text.Length > 0;
 
                 panel_movimiento.Visible = !ReadOnly;
                 btn_cerrar.Visible = !ReadOnly;
@@ -348,9 +350,25 @@ namespace SisPer.Aplicativo.Controles
 
                         if (horasDia.HEntrada != "00:00")
                         {
+
+                            string horas_trabajadas = toma630 ? 
+                                                        Recortar000(HorasString.RestarHoras(horasDia.HSalida, "06:30")) : 
+                                                        Recortar000(HorasString.RestarHoras(horasDia.HSalida, horasDia.HEntrada));
+
+                            //Si el agente tiene horario vespertino aprobado y ademas tiene dos marcaciones,
+                            //entonces quiere decir que trabajo de corrido por lo que debo restarle a las horas trabajadas las horas del horario vespertino.
+                            if(agBuscado.HorariosVespertinos.Where(hv => hv.Dia == d && hv.Estado == EstadosHorarioVespertino.Terminado).Count() > 0 && resumendiariobuscado.Marcaciones.Count==2)
+                            {
+                                HorarioVespertino hv = agBuscado.HorariosVespertinos.First(h => h.Dia == d);
+
+                                horas_trabajadas = HorasString.RestarHoras(horas_trabajadas, hv.Horas);
+                            }
+
+
+
                             horasDia.MovimientosHoras.Add(new MovimientoHora()
                             {
-                                Horas = toma630 ? Recortar000(HorasString.RestarHoras(horasDia.HSalida, "06:30")) : Recortar000(HorasString.RestarHoras(horasDia.HSalida, horasDia.HEntrada)),
+                                Horas = horas_trabajadas,
                                 Tipo = tmh,
                                 AgenteId = agBuscado.Id
                             });

@@ -322,12 +322,23 @@ namespace SisPer.Aplicativo
             Model1Container cxt = new Model1Container();
             Agente ag = Session["Agente"] as Agente;
             DateTime primerDiaDelMes = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+            List<Agente> agentes_subordinados = ag.ObtenerAgentesSubordinadosCascada();
+            List<SolicitudDeEstado> solicitudes_de_estado = new List<SolicitudDeEstado>();
 
-            var solicitudes = (from se in cxt.SolicitudesDeEstado
-                               where
-                                    se.FechaDesde >= primerDiaDelMes &&
-                                    //se.AgenteId1 == SolicitadoPor
-                                    se.AgenteId1 == ag.Id
+            if (agentes_subordinados != null)
+            {
+                foreach (Agente a in agentes_subordinados)
+                {
+                    solicitudes_de_estado.AddRange
+                        ((from se in cxt.SolicitudesDeEstado
+                          where
+                                se.Agente.Id == a.Id &&
+                               (se.FechaDesde >= primerDiaDelMes || se.Estado == EstadoSolicitudDeEstado.Solicitado)
+                          select se).ToList());
+                }
+            }
+
+            var solicitudes = (from se in solicitudes_de_estado
                                select new
                                {
                                    Id = se.Id,
@@ -414,13 +425,13 @@ namespace SisPer.Aplicativo
             Agente ag = Session["UsuarioLogueado"] as Agente;
             var cxt = new Model1Container();
             HorarioVespertino hv = cxt.HorariosVespertinos.First(hvesp => hvesp.Id == id);
-            
+
             //if (hv.Dia < DateTime.Today)
             //{
             //    Controles.MessageBox.Show(this, "No se puede aprobar un horario vespertino que ya paso", Controles.MessageBox.Tipo_MessageBox.Info);
             //    return;
             //}
-            
+
             if (hv.Estado == EstadosHorarioVespertino.Aprobado)
             {
                 Controles.MessageBox.Show(this, "El horario vespertino ya fue aprobado", Controles.MessageBox.Tipo_MessageBox.Info);

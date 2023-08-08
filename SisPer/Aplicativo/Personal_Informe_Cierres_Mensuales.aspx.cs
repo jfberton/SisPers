@@ -173,6 +173,7 @@ namespace SisPer.Aplicativo
             Validate();
             if (IsValid)
             {
+
                 byte[] bytes = null;
 
                 #region Obtener datos cargar el DataSet
@@ -221,6 +222,8 @@ namespace SisPer.Aplicativo
 
                 foreach (Agente ag in agentesBuscados)
                 {
+                    ag.GenerarCierresMensuales();
+
                     foreach (CierreMensual cierre in ag.CierresMensuales.Where(c =>
                                                                                     (c.Anio > año_desde || (c.Anio == año_desde && c.Mes >= mes_desde)) &&
                                                                                     (c.Anio < año_hasta || (c.Anio == año_hasta && c.Mes <= mes_hasta))

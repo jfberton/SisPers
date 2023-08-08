@@ -46,7 +46,8 @@
                                 <li><a href="../aplicativo/ag_dias_mes.aspx">Detalle mensual</a></li>
                             </ul>
                         </li>
-                        <li><a href="../aplicativo/ag_memo17.aspx">Memo 17</a></li>
+                        <%--<li><a href="../aplicativo/ag_memo17.aspx">Memo 17</a></li>--%>
+                        <li><a href="../aplicativo/Jefe_Ag_SolicitarEstado.aspx">Solicitud de estado</a></li>
                         <li><a href="../legislacion.aspx" target="_blank">Legislación</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Form AT Nº 3168

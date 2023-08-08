@@ -401,7 +401,14 @@ namespace SisPer.Aplicativo
 
             if (Convert.ToInt32(horasAcumuladas.Split(':')[0]) >= 40)
             {
-                args.IsValid = false;
+                if (((TipoSalida)Convert.ToInt32(Ddl_TipoSalida.SelectedValue)) == TipoSalida.Indisposición || ((TipoSalida)Convert.ToInt32(Ddl_TipoSalida.SelectedValue)) == TipoSalida.Oficial)
+                {
+                    args.IsValid = true;
+                }
+                else
+                {
+                    args.IsValid = false;
+                }
             }
             else
             {

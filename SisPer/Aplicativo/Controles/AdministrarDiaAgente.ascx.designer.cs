@@ -105,6 +105,15 @@ namespace SisPer.Aplicativo.Controles
         protected global::System.Web.UI.WebControls.Label lbl_Movimiento;
 
         /// <summary>
+        /// Control lbl_cambio_turno.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_cambio_turno;
+
+        /// <summary>
         /// Control lbl_hEntrada.
         /// </summary>
         /// <remarks>

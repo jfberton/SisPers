@@ -1,5 +1,7 @@
-﻿using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
+﻿using OfficeOpenXml;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
 using SisPer.Aplicativo.Controles;
+using SisPer.Aplicativo.Menues;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +14,12 @@ namespace SisPer.Aplicativo
 {
     public partial class Jefe_Ag_SolicitarEstado : System.Web.UI.Page
     {
+
+        private Model1Container cxt;
         protected void Page_Load(object sender, EventArgs e)
         {
+            cxt = new Model1Container();
+
             if (!IsPostBack)
             {
                 Agente ag = Session["UsuarioLogueado"] as Agente;
@@ -23,37 +29,72 @@ namespace SisPer.Aplicativo
                     Response.Redirect("~/Default.aspx?mode=session_end");
                 }
 
-                if (
-                   ag.Perfil != PerfilUsuario.Personal &&
-                   !ag.Jefe && !ag.JefeTemporal)
+                Cargar_datos_agente_a_solicitar();
+                
+                //Menues
+                if (ag.Perfil == PerfilUsuario.Personal)
                 {
-                    Response.Redirect("../default.aspx?mode=trucho");
+                    MenuPersonalAgente1.Visible = !(ag.Jefe || ag.JefeTemporal);
+                    MenuPersonalJefe1.Visible = (ag.Jefe || ag.JefeTemporal);
+                    MenuAgente1.Visible = false;
+                    MenuJefe1.Visible = false;
                 }
                 else
                 {
-                    MenuPersonalJefe1.Visible = (ag.Perfil == PerfilUsuario.Personal);
-                    MenuJefe1.Visible = !(ag.Perfil == PerfilUsuario.Personal);
-                    int id = Convert.ToInt32(Request.QueryString["Usr"]);
-                    Model1Container cxt = new Model1Container();
-
-                    Agente agente = cxt.Agentes.First(a => a.Id == id);
-
-                    DatosAgente.Agente = agente;
-
-                    tb_desde.Value = DateTime.Today.ToShortDateString();
-                    tb_hasta.Value = DateTime.Today.ToShortDateString();
-
-                    CargarTiposMovimientos();
-                    CargarGrillaMovimientosSolicitados();
+                    MenuPersonalAgente1.Visible = false;
+                    MenuPersonalJefe1.Visible = false;
+                    MenuAgente1.Visible = !(ag.Jefe || ag.JefeTemporal);
+                    MenuJefe1.Visible = (ag.Jefe || ag.JefeTemporal);
                 }
+
+                tb_desde.Value = DateTime.Today.ToShortDateString();
+                tb_hasta.Value = DateTime.Today.ToShortDateString();
+
+                CargarTiposMovimientos();
+                CargarGrillaMovimientosSolicitados();
             }
+        }
+
+        private void Cargar_datos_agente_a_solicitar()
+        {
+            Agente agente = Obtener_agente_a_solicitar();
+            DatosAgente.Agente = agente;
+            tb_domicilio.Text = agente.Legajo_datos_personales.Domicilio;
+            tb_localidad.Text = agente.Legajo_datos_personales.Domicilio_localidad;
+        }
+
+        private Agente Obtener_agente_a_solicitar()
+        {
+            Agente ag = Session["UsuarioLogueado"] as Agente;
+
+            Agente agente = null;
+
+            if (Request.QueryString["Usr"] != null)
+            {
+                int id = Convert.ToInt32(Request.QueryString["Usr"]);
+                agente = cxt.Agentes.Include("Legajo_datos_personales").FirstOrDefault(a => a.Id == id);
+            }
+            else
+            {
+                agente = ag;
+            }
+
+            return agente;
+        }
+
+        private Agente Obtener_Jefe_que_solicita()
+        {
+            Agente ag = Session["UsuarioLogueado"] as Agente;
+
+            Agente agente = ag;
+
+            return agente;
         }
 
         private void CargarGrillaMovimientosSolicitados()
         {
-            int id = Convert.ToInt32(Request.QueryString["Usr"]);
-            Model1Container cxt = new Model1Container();
-            Agente agente = cxt.Agentes.First(a => a.Id == id);
+            Agente agente = Obtener_agente_a_solicitar();
+
             DateTime primerDiaDelMes = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
 
             var solicitudes = (from se in agente.SolicitudesDeEstado
@@ -72,14 +113,34 @@ namespace SisPer.Aplicativo
             gv_EstadosSolicitados.DataBind();
         }
 
-
-
         private void CargarTiposMovimientos()
         {
-            Model1Container cxt = new Model1Container();
-            var tiposMovimientos = (from tm in cxt.TiposEstadoAgente.Where(mh => mh.MarcaJefe)
-                                    select tm).ToList();
-            ddl_TipoMovimiento.DataSource = tiposMovimientos;
+            Agente ag = Session["UsuarioLogueado"] as Agente;
+            List<TipoEstadoAgente> listado_movimientos_permitidos = new List<TipoEstadoAgente>();
+
+            if (ag.Jefe || ag.JefeTemporal)
+            {
+                listado_movimientos_permitidos = (from tm in cxt.TiposEstadoAgente.Where(mh => mh.MarcaJefe)
+                                                  select tm).ToList();
+            }
+            else
+            {
+                listado_movimientos_permitidos = (from tm in cxt.TiposEstadoAgente.Where(
+                                                                                            mh => mh.MarcaJefe && 
+                                                                                                    (
+                                                                                                        mh.Estado.Contains("Enfermedad") ||
+                                                                                                        mh.Estado.Contains("Pap, mamografia") ||
+                                                                                                        mh.Estado.Contains("Donación de sangre") ||
+                                                                                                        mh.Estado.Contains("Licencia examen") ||
+                                                                                                        mh.Estado.Contains("Fallecimiento Familiar") ||
+                                                                                                        mh.Estado.Contains("Maternidad") ||
+                                                                                                        mh.Estado.Contains("Curso/Capacitacion") 
+                                                                                                    )
+                                                                                        )
+                                                  select tm).ToList();
+            }
+
+            ddl_TipoMovimiento.DataSource = listado_movimientos_permitidos;
             ddl_TipoMovimiento.DataTextField = "Estado";
             ddl_TipoMovimiento.DataValueField = "Id";
             ddl_TipoMovimiento.DataBind();
@@ -98,25 +159,29 @@ namespace SisPer.Aplicativo
             Page.Validate();
             if (IsValid)
             {
-                Model1Container cxt = new Model1Container();
                 SolicitudDeEstado se = new SolicitudDeEstado();
-                int id = Convert.ToInt32(Request.QueryString["Usr"]);
-                Agente agente = cxt.Agentes.First(a => a.Id == id);
+                Agente agente = Obtener_agente_a_solicitar();
                 Agente ag = Session["UsuarioLogueado"] as Agente;
-                Agente jefe = cxt.Agentes.FirstOrDefault(a => a.Id == ag.Id);
-                int tipoEstadoId = Convert.ToInt32(ddl_TipoMovimiento.SelectedValue);
-                TipoEstadoAgente tea = cxt.TiposEstadoAgente.FirstOrDefault(t => t.Id == tipoEstadoId);
 
-                se.Agente = agente;
-                se.SolicitadoPor = jefe;
-                se.TipoEstadoAgente = tea;
+                Agente jefe = Obtener_Jefe_que_solicita();
+
+                agente.Legajo_datos_personales.Domicilio = tb_domicilio.Text;
+                agente.Legajo_datos_personales.Domicilio_localidad = tb_localidad.Text;
+
+                int tipoEstadoId = Convert.ToInt32(ddl_TipoMovimiento.SelectedValue);
+
+                se.AgenteId = agente.Id;
+                se.AgenteId1 = jefe.Id;
+                se.TipoEstadoAgenteId = tipoEstadoId;
                 se.FechaDesde = Convert.ToDateTime(tb_desde.Value);
                 se.FechaHasta = Convert.ToDateTime(tb_hasta.Value);
                 se.Estado = EstadoSolicitudDeEstado.Solicitado;
                 se.FechaHoraSolicitud = DateTime.Now;
                 if (p_DatosExtra.Visible)
                 {
-                    if (tea.Estado == "Licencia Anual" || tea.Estado == "Licencia Anual (Saldo)" || tea.Estado == "Licencia Anual (Anticipo)")
+                    if (ddl_TipoMovimiento.SelectedItem.Text == "Licencia Anual" 
+                        || ddl_TipoMovimiento.SelectedItem.Text == "Licencia Anual (Saldo)" 
+                        || ddl_TipoMovimiento.SelectedItem.Text == "Licencia Anual (Anticipo)")
                     {
                         se.TipoEnfermedad = Convert.ToInt32(ddl_Encuadre.Text);
                     }
@@ -152,7 +217,7 @@ namespace SisPer.Aplicativo
                 Notificacion notificacion = new Notificacion();
 
                 notificacion.Descripcion = "Presentar documentación respaldatoria de la solicitud \"" + se.TipoEstadoAgente.Estado + "\" para el/los día/s " + se.FechaDesde.ToString("dd/MM/yyyy") + " al " + se.FechaHasta.ToString("dd/MM/yyyy");
-                notificacion.Destinatario = destinatarioCxt;
+                notificacion.AgenteId = destinatarioCxt.Id;
                 notificacion.ObservacionPendienteRecibir = string.Empty;
 
                 notificacion.Tipo = nt;
@@ -160,24 +225,25 @@ namespace SisPer.Aplicativo
 
                 Notificacion_Historial notHist = new Notificacion_Historial()
                 {
-                    Agente = se.Agente,
+                    AgenteId = se.Agente.Id,
                     Estado = ne,
                     Fecha = DateTime.Now,
                     Notificacion = notificacion
                 };
+
 
                 cxt.Notificacion_Historiales.AddObject(notHist);
 
                 #endregion
 
                 cxt.SaveChanges();
+
                 CargarGrillaMovimientosSolicitados();
             }
         }
 
         protected void btn_Cancelar_Click(object sender, ImageClickEventArgs e)
         {
-            Model1Container cxt = new Model1Container();
             int idSol = Convert.ToInt32(((ImageButton)sender).CommandArgument);
             SolicitudDeEstado se = cxt.SolicitudesDeEstado.FirstOrDefault(s => s.Id == idSol);
             se.Estado = EstadoSolicitudDeEstado.Cancelado;
@@ -237,12 +303,8 @@ namespace SisPer.Aplicativo
         /// <returns></returns>
         private bool VerificarMovimientosOSolicitudesAgente(DateTime d)
         {
-            int id = Convert.ToInt32(Request.QueryString["Usr"]);
-            Model1Container cxt = new Model1Container();
-
             bool ret = false;
-
-            Agente agente = cxt.Agentes.First(a => a.Id == id);
+            Agente agente = Obtener_agente_a_solicitar();
             var solicitudesAgente = agente.SolicitudesDeEstado.Where(se =>
                                         se.Estado != EstadoSolicitudDeEstado.Rechazado &&
                                         se.Estado != EstadoSolicitudDeEstado.Cancelado);
@@ -296,11 +358,10 @@ namespace SisPer.Aplicativo
 
             lbl_Mensaje.Text = string.Empty;
 
-            Model1Container cxt = new Model1Container();
-            int tipoEstadoId = Convert.ToInt32(ddl_TipoMovimiento.SelectedValue);
-            TipoEstadoAgente tea = cxt.TiposEstadoAgente.FirstOrDefault(t => t.Id == tipoEstadoId);
 
-            int id = Convert.ToInt32(Request.QueryString["Usr"]);
+            int tipoEstadoId = Convert.ToInt32(ddl_TipoMovimiento.SelectedValue);
+            int id = Obtener_agente_a_solicitar().Id;
+            TipoEstadoAgente tea = cxt.TiposEstadoAgente.FirstOrDefault(t => t.Id == tipoEstadoId);
 
             if (tea.Estado == "Enfermedad común" || tea.Estado == "Enfermedad familiar")
             {
@@ -354,7 +415,7 @@ namespace SisPer.Aplicativo
                 }
 
                 int diasUsufructuados = ProcesosGlobales.ObtenerDiasUsufructuados(licencia);
-                lbl_Mensaje.Text = "<b>El agente ya lleva tomado " + diasUsufructuados.ToString() + " días de licencia anual del " + ddl_Encuadre.Text + " de los " + licencia.DiasOtorgados.ToString() + " días otorgados. Quedan "+ (licencia.DiasOtorgados  - diasUsufructuados).ToString() + " días disponibles</b>";
+                lbl_Mensaje.Text = "<b>El agente ya lleva tomado " + diasUsufructuados.ToString() + " días de licencia anual del " + ddl_Encuadre.Text + " de los " + licencia.DiasOtorgados.ToString() + " días otorgados. Quedan " + (licencia.DiasOtorgados - diasUsufructuados).ToString() + " días disponibles</b>";
 
 
                 p_DatosExtra.Visible = true;
@@ -363,41 +424,39 @@ namespace SisPer.Aplicativo
 
         protected void ddl_Encuadre_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int id = Convert.ToInt32(Request.QueryString["Usr"]);
-            using (var cxt = new Model1Container())
+            int id = Obtener_agente_a_solicitar().Id;
+
+            int tipoEstadoId = Convert.ToInt32(ddl_TipoMovimiento.SelectedValue);
+            TipoEstadoAgente tea = cxt.TiposEstadoAgente.FirstOrDefault(t => t.Id == tipoEstadoId);
+            if (tea.Estado == "Enfermedad común" || tea.Estado == "Enfermedad familiar")
             {
-                int tipoEstadoId = Convert.ToInt32(ddl_TipoMovimiento.SelectedValue);
-                TipoEstadoAgente tea = cxt.TiposEstadoAgente.FirstOrDefault(t => t.Id == tipoEstadoId);
-                if (tea.Estado == "Enfermedad común" || tea.Estado == "Enfermedad familiar")
-                {
-                    DatosInternacion();
-                }
+                DatosInternacion();
+            }
 
-                if (tea.Estado == "Licencia Anual" || tea.Estado == "Licencia Anual (Saldo)" || tea.Estado == "Licencia Anual (Anticipo)")
-                {
-                    int year = Convert.ToInt32(ddl_Encuadre.Text);
-                    TipoLicencia tli = cxt.TiposDeLicencia.First(tl => tl.Tipo == "Licencia anual");
-                    LicenciaAgente licencia = cxt.Agentes.First(a=>a.Id ==id).Licencias.FirstOrDefault(l => l.Anio == year && l.Tipo.Id == tli.Id);
+            if (tea.Estado == "Licencia Anual" || tea.Estado == "Licencia Anual (Saldo)" || tea.Estado == "Licencia Anual (Anticipo)")
+            {
+                int year = Convert.ToInt32(ddl_Encuadre.Text);
+                TipoLicencia tli = cxt.TiposDeLicencia.First(tl => tl.Tipo == "Licencia anual");
+                LicenciaAgente licencia = cxt.Agentes.First(a => a.Id == id).Licencias.FirstOrDefault(l => l.Anio == year && l.Tipo.Id == tli.Id);
 
-                    if (licencia == null)
+                if (licencia == null)
+                {
+                    licencia = new LicenciaAgente()
                     {
-                        licencia = new LicenciaAgente()
-                        {
-                            AgenteId = id,
-                            Anio = year,
-                            DiasOtorgados = ProcesosGlobales.ObtenerDiasLicenciaAnualAgente(cxt.Agentes.First(a => a.Id == id), year),
-                            DiasUsufructuadosIniciales = 0,
-                            TipoLicenciaId = tli.Id
-                        };
+                        AgenteId = id,
+                        Anio = year,
+                        DiasOtorgados = ProcesosGlobales.ObtenerDiasLicenciaAnualAgente(cxt.Agentes.First(a => a.Id == id), year),
+                        DiasUsufructuadosIniciales = 0,
+                        TipoLicenciaId = tli.Id
+                    };
 
-                        cxt.LicenciasAgentes.AddObject(licencia);
-                        cxt.SaveChanges();
-                    }
-
-                    int diasUsufructuados = ProcesosGlobales.ObtenerDiasUsufructuados(licencia);
-                    lbl_Mensaje.Text = "<b>El agente ya lleva tomado " + diasUsufructuados.ToString() + " días de licencia anual del " + ddl_Encuadre.Text + " de los " + licencia.DiasOtorgados.ToString() + " días otorgados. Quedan " + (licencia.DiasOtorgados - diasUsufructuados).ToString() + " días disponibles</b>";
-
+                    cxt.LicenciasAgentes.AddObject(licencia);
+                    cxt.SaveChanges();
                 }
+
+                int diasUsufructuados = ProcesosGlobales.ObtenerDiasUsufructuados(licencia);
+                lbl_Mensaje.Text = "<b>El agente ya lleva tomado " + diasUsufructuados.ToString() + " días de licencia anual del " + ddl_Encuadre.Text + " de los " + licencia.DiasOtorgados.ToString() + " días otorgados. Quedan " + (licencia.DiasOtorgados - diasUsufructuados).ToString() + " días disponibles</b>";
+
             }
         }
         protected void DatosInternacion()
@@ -465,178 +524,181 @@ namespace SisPer.Aplicativo
 
         protected void cv_VerificarDiasDisponiblesLicencia_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            using (var cxt = new Model1Container())
+            string textoSeleccionado = ddl_Encuadre.Text;
+            int year = 0;
+            Agente agente = Obtener_agente_a_solicitar();
+            int id = agente.Id;
+            DateTime desde = Convert.ToDateTime(tb_desde.Value);
+            DateTime hasta = Convert.ToDateTime(tb_hasta.Value);
+            int diasSolicitados = Convert.ToInt32((hasta - desde).TotalDays + 1);
+            TipoLicencia tli = new TipoLicencia();
+            LicenciaAgente licencia = new LicenciaAgente();
+            int diasUsufructuados = 0;
+
+            switch (ddl_TipoMovimiento.SelectedItem.Text)
             {
-                string textoSeleccionado = ddl_Encuadre.Text;
-                int year = 0;
-                int id = Convert.ToInt32(Request.QueryString["Usr"]);
-                var agente = cxt.Agentes.First(a => a.Id == id);
-                DateTime desde = Convert.ToDateTime(tb_desde.Value);
-                DateTime hasta = Convert.ToDateTime(tb_hasta.Value);
-                int diasSolicitados = Convert.ToInt32((hasta - desde).TotalDays + 1);
-                TipoLicencia tli = new TipoLicencia();
-                LicenciaAgente licencia = new LicenciaAgente();
-                int diasUsufructuados = 0;
-
-                switch (ddl_TipoMovimiento.SelectedItem.Text)
-                {
-                    case "Licencia especial invierno":
-                        tli = cxt.TiposDeLicencia.First(tl => tl.Tipo == "Licencia especial invierno");
-                        licencia = agente.Licencias.FirstOrDefault(l => l.Anio == year && l.Tipo.Id == tli.Id);
-                        if (licencia == null)
+                case "Licencia especial invierno":
+                    tli = cxt.TiposDeLicencia.First(tl => tl.Tipo == "Licencia especial invierno");
+                    licencia = agente.Licencias.FirstOrDefault(l => l.Anio == year && l.Tipo.Id == tli.Id);
+                    if (licencia == null)
+                    {
+                        licencia = new LicenciaAgente()
                         {
-                            licencia = new LicenciaAgente()
-                            {
-                                AgenteId = id,
-                                Anio = year,
-                                DiasOtorgados = 10,
-                                DiasUsufructuadosIniciales = 0,
-                                TipoLicenciaId = tli.Id
-                            };
+                            AgenteId = id,
+                            Anio = year,
+                            DiasOtorgados = 10,
+                            DiasUsufructuadosIniciales = 0,
+                            TipoLicenciaId = tli.Id
+                        };
 
-                            cxt.LicenciasAgentes.AddObject(licencia);
-                            cxt.SaveChanges();
-                        }
+                        cxt.LicenciasAgentes.AddObject(licencia);
+                        cxt.SaveChanges();
+                    }
 
-                        diasUsufructuados = ProcesosGlobales.ObtenerDiasUsufructuados(licencia);
-                        args.IsValid = (licencia.DiasOtorgados - (diasSolicitados + diasUsufructuados)) >= 0;
-                        break;
+                    diasUsufructuados = ProcesosGlobales.ObtenerDiasUsufructuados(licencia);
+                    args.IsValid = (licencia.DiasOtorgados - (diasSolicitados + diasUsufructuados)) >= 0;
+                    break;
 
-                    case "Enfermedad común":
-                        tli = cxt.TiposDeLicencia.First(tl => tl.Tipo == "Licencia enfermedad común");
-                        licencia = agente.Licencias.FirstOrDefault(l => l.Anio == year && l.Tipo.Id == tli.Id);
-                        if (licencia == null)
+                case "Enfermedad común":
+                    tli = cxt.TiposDeLicencia.First(tl => tl.Tipo == "Licencia enfermedad común");
+                    licencia = agente.Licencias.FirstOrDefault(l => l.Anio == year && l.Tipo.Id == tli.Id);
+                    if (licencia == null)
+                    {
+                        licencia = new LicenciaAgente()
                         {
-                            licencia = new LicenciaAgente()
-                            {
-                                AgenteId = id,
-                                Anio = year,
-                                DiasOtorgados = 45,
-                                DiasUsufructuadosIniciales = 0,
-                                TipoLicenciaId = tli.Id
-                            };
+                            AgenteId = id,
+                            Anio = year,
+                            DiasOtorgados = 45,
+                            DiasUsufructuadosIniciales = 0,
+                            TipoLicenciaId = tli.Id
+                        };
 
-                            cxt.LicenciasAgentes.AddObject(licencia);
-                            cxt.SaveChanges();
-                        }
+                        cxt.LicenciasAgentes.AddObject(licencia);
+                        cxt.SaveChanges();
+                    }
 
-                        diasUsufructuados = ProcesosGlobales.ObtenerDiasUsufructuados(licencia);
-                        args.IsValid = (licencia.DiasOtorgados - (diasSolicitados + diasUsufructuados)) >= 0;
-                        break;
+                    diasUsufructuados = ProcesosGlobales.ObtenerDiasUsufructuados(licencia);
+                    args.IsValid = (licencia.DiasOtorgados - (diasSolicitados + diasUsufructuados)) >= 0;
+                    break;
 
-                    case "Enfermedad familiar":
-                        tli = cxt.TiposDeLicencia.First(tl => tl.Tipo == "Licencia enfermedad familiar");
-                        licencia = agente.Licencias.FirstOrDefault(l => l.Anio == year && l.Tipo.Id == tli.Id);
-                        if (licencia == null)
+                case "Enfermedad familiar":
+                    tli = cxt.TiposDeLicencia.First(tl => tl.Tipo == "Licencia enfermedad familiar");
+                    licencia = agente.Licencias.FirstOrDefault(l => l.Anio == year && l.Tipo.Id == tli.Id);
+                    if (licencia == null)
+                    {
+                        licencia = new LicenciaAgente()
                         {
-                            licencia = new LicenciaAgente()
-                            {
-                                AgenteId = id,
-                                Anio = year,
-                                DiasOtorgados = 30,
-                                DiasUsufructuadosIniciales = 0,
-                                TipoLicenciaId = tli.Id
-                            };
+                            AgenteId = id,
+                            Anio = year,
+                            DiasOtorgados = 30,
+                            DiasUsufructuadosIniciales = 0,
+                            TipoLicenciaId = tli.Id
+                        };
 
-                            cxt.LicenciasAgentes.AddObject(licencia);
-                            cxt.SaveChanges();
-                        }
+                        cxt.LicenciasAgentes.AddObject(licencia);
+                        cxt.SaveChanges();
+                    }
 
-                        diasUsufructuados = ProcesosGlobales.ObtenerDiasUsufructuados(licencia);
-                        args.IsValid = (licencia.DiasOtorgados - (diasSolicitados + diasUsufructuados)) >= 0;
-                        break;
+                    diasUsufructuados = ProcesosGlobales.ObtenerDiasUsufructuados(licencia);
+                    args.IsValid = (licencia.DiasOtorgados - (diasSolicitados + diasUsufructuados)) >= 0;
+                    break;
 
-                    case "Licencia Anual (Saldo)":
-                        year = Convert.ToInt32(ddl_Encuadre.Text);
-                        tli = cxt.TiposDeLicencia.First(tl => tl.Tipo == "Licencia anual");
-                        licencia = agente.Licencias.FirstOrDefault(l => l.Anio == year && l.Tipo.Id == tli.Id);
+                case "Licencia Anual (Saldo)":
+                    year = Convert.ToInt32(ddl_Encuadre.Text);
+                    tli = cxt.TiposDeLicencia.First(tl => tl.Tipo == "Licencia anual");
+                    licencia = agente.Licencias.FirstOrDefault(l => l.Anio == year && l.Tipo.Id == tli.Id);
 
-                        if (licencia == null)
+                    if (licencia == null)
+                    {
+                        licencia = new LicenciaAgente()
                         {
-                            licencia = new LicenciaAgente()
-                            {
-                                AgenteId = id,
-                                Anio = year,
-                                DiasOtorgados = ProcesosGlobales.ObtenerDiasLicenciaAnualAgente(agente, year),
-                                DiasUsufructuadosIniciales = 0,
-                                TipoLicenciaId = tli.Id
-                            };
+                            AgenteId = id,
+                            Anio = year,
+                            DiasOtorgados = ProcesosGlobales.ObtenerDiasLicenciaAnualAgente(agente, year),
+                            DiasUsufructuadosIniciales = 0,
+                            TipoLicenciaId = tli.Id
+                        };
 
-                            cxt.LicenciasAgentes.AddObject(licencia);
-                            cxt.SaveChanges();
-                        }
+                        cxt.LicenciasAgentes.AddObject(licencia);
+                        cxt.SaveChanges();
+                    }
 
-                        diasUsufructuados = ProcesosGlobales.ObtenerDiasUsufructuados(licencia);
-                        args.IsValid = (licencia.DiasOtorgados - (diasSolicitados + diasUsufructuados)) >= 0;
-                        break;
+                    diasUsufructuados = ProcesosGlobales.ObtenerDiasUsufructuados(licencia);
+                    args.IsValid = (licencia.DiasOtorgados - (diasSolicitados + diasUsufructuados)) >= 0;
+                    break;
 
-                    case "Licencia Anual (Anticipo)":
-                        year = Convert.ToInt32(ddl_Encuadre.Text);
-                        tli = cxt.TiposDeLicencia.First(tl => tl.Tipo == "Licencia anual");
-                        licencia = agente.Licencias.FirstOrDefault(l => l.Anio == year && l.Tipo.Id == tli.Id);
-                        if (licencia == null)
+                case "Licencia Anual (Anticipo)":
+                    year = Convert.ToInt32(ddl_Encuadre.Text);
+                    tli = cxt.TiposDeLicencia.First(tl => tl.Tipo == "Licencia anual");
+                    licencia = agente.Licencias.FirstOrDefault(l => l.Anio == year && l.Tipo.Id == tli.Id);
+                    if (licencia == null)
+                    {
+                        licencia = new LicenciaAgente()
                         {
-                            licencia = new LicenciaAgente()
-                            {
-                                AgenteId = id,
-                                Anio = year,
-                                DiasOtorgados = ProcesosGlobales.ObtenerDiasLicenciaAnualAgente(agente, year),
-                                DiasUsufructuadosIniciales = 0,
-                                TipoLicenciaId = tli.Id
-                            };
+                            AgenteId = id,
+                            Anio = year,
+                            DiasOtorgados = ProcesosGlobales.ObtenerDiasLicenciaAnualAgente(agente, year),
+                            DiasUsufructuadosIniciales = 0,
+                            TipoLicenciaId = tli.Id
+                        };
 
-                            cxt.LicenciasAgentes.AddObject(licencia);
-                            cxt.SaveChanges();
-                        }
+                        cxt.LicenciasAgentes.AddObject(licencia);
+                        cxt.SaveChanges();
+                    }
 
-                        diasUsufructuados = ProcesosGlobales.ObtenerDiasUsufructuados(licencia);
-                        args.IsValid = (licencia.DiasOtorgados - (diasSolicitados + diasUsufructuados)) >= 0;
-                        break;
+                    diasUsufructuados = ProcesosGlobales.ObtenerDiasUsufructuados(licencia);
+                    args.IsValid = (licencia.DiasOtorgados - (diasSolicitados + diasUsufructuados)) >= 0;
+                    break;
 
-                    default:
-                        args.IsValid = true;
-                        break;
-                }
+                default:
+                    args.IsValid = true;
+                    break;
             }
         }
 
         protected void cv_VerificarSiTieneDiasLicenciaAnteriorAnticipo_ServerValidate(object source, ServerValidateEventArgs args)
         {
             bool valido = true;
-            
+
             //aca controlar licencia anticipo, si tiene saldo licencia año anterior no puede tomar licencia anticipo
-            using (var cxt = new Model1Container())
+            int tipoEstadoId = Convert.ToInt32(ddl_TipoMovimiento.SelectedValue);
+            TipoEstadoAgente tea = cxt.TiposEstadoAgente.FirstOrDefault(t => t.Id == tipoEstadoId);
+            string textoSeleccionado = ddl_Encuadre.Text;
+            int year = 0;
+            Agente agente = Obtener_agente_a_solicitar();
+            int id = agente.Id;
+            DateTime desde = Convert.ToDateTime(tb_desde.Value);
+            DateTime hasta = Convert.ToDateTime(tb_hasta.Value);
+            int diasSolicitados = Convert.ToInt32((hasta - desde).TotalDays + 1);
+            TipoLicencia tli = new TipoLicencia();
+            LicenciaAgente licencia = new LicenciaAgente();
+            int diasUsufructuados = 0;
+
+            if (tea.Estado == "Licencia Anual (Anticipo)")
             {
-                int tipoEstadoId = Convert.ToInt32(ddl_TipoMovimiento.SelectedValue);
-                TipoEstadoAgente tea = cxt.TiposEstadoAgente.FirstOrDefault(t => t.Id == tipoEstadoId);
-                string textoSeleccionado = ddl_Encuadre.Text;
-                int year = 0;
-                int id = Convert.ToInt32(Request.QueryString["Usr"]);
-                var agente = cxt.Agentes.First(a => a.Id == id);
-                DateTime desde = Convert.ToDateTime(tb_desde.Value);
-                DateTime hasta = Convert.ToDateTime(tb_hasta.Value);
-                int diasSolicitados = Convert.ToInt32((hasta - desde).TotalDays + 1);
-                TipoLicencia tli = new TipoLicencia();
-                LicenciaAgente licencia = new LicenciaAgente();
-                int diasUsufructuados = 0;
+                year = Convert.ToInt32(ddl_Encuadre.Text) - 1;
 
-                if (tea.Estado == "Licencia Anual (Anticipo)")
+                tli = cxt.TiposDeLicencia.First(tl => tl.Tipo == "Licencia anual");
+                licencia = agente.Licencias.FirstOrDefault(l => l.Anio == year && l.Tipo.Id == tli.Id);
+                if (licencia != null)
                 {
-                    year = Convert.ToInt32(ddl_Encuadre.Text) - 1;
-
-                    tli = cxt.TiposDeLicencia.First(tl => tl.Tipo == "Licencia anual");
-                    licencia = agente.Licencias.FirstOrDefault(l => l.Anio == year && l.Tipo.Id == tli.Id);
-                    if (licencia != null)
-                    {
-                        diasUsufructuados = ProcesosGlobales.ObtenerDiasUsufructuados(licencia);
-                    }
-                    valido = (licencia == null || diasUsufructuados == 0);
+                    diasUsufructuados = ProcesosGlobales.ObtenerDiasUsufructuados(licencia);
                 }
-                        
+                valido = (licencia == null || diasUsufructuados == 0);
             }
 
             args.IsValid = valido;
-            
+
+        }
+
+        protected void cv_domicilio_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid= tb_domicilio.Text.Length > 0;
+        }
+
+        protected void cv_localidad_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = tb_localidad.Text.Length > 0;
         }
     }
 }

@@ -19631,3 +19631,438 @@ STACKTRACE:    en SisPer.Aplicativo.Personal_Informe_Cierres_Mensuales.<>c__Disp
 
 
 ******************************************************************
+ 
+
+******************************************************************
+
+DATE: 14/7/2023 10:47:22
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Falta el atributo 'tagprefix' de la directiva.
+
+SOURCE: System.Web
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/jefe_ag_solicitarestado.aspx
+
+TARGETSITE: System.String GetAndRemoveNonEmptyAttribute(System.Collections.IDictionary, System.String, Boolean)
+
+STACKTRACE:    en System.Web.UI.Util.GetAndRemoveNonEmptyAttribute(IDictionary directives, String key, Boolean required)
+   en System.Web.UI.BaseTemplateParser.ProcessDirective(String directiveName, IDictionary directive)
+   en System.Web.UI.TemplateParser.ParseStringInternal(String text, Encoding fileEncoding)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 14/7/2023 10:50:22
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: El archivo '/Jefe_Ag_SolicitarEstado.aspx' no existe.
+
+SOURCE: System.Web
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Jefe_Ag_SolicitarEstado.aspx
+
+TARGETSITE: Void CheckVirtualFileExists(System.Web.VirtualPath)
+
+STACKTRACE:    en System.Web.UI.Util.CheckVirtualFileExists(VirtualPath virtualPath)
+   en System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   en System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   en System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(VirtualPath virtualPath, HttpContext context, Boolean allowCrossApp, Boolean throwIfNotFound)
+   en System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(VirtualPath virtualPath, Type requiredBaseType, HttpContext context, Boolean allowCrossApp)
+   en System.Web.UI.PageHandlerFactory.GetHandlerHelper(HttpContext context, String requestType, VirtualPath virtualPath, String physicalPath)
+   en System.Web.HttpApplication.MaterializeHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   en System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   en System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 14/7/2023 10:51:05
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Falta el atributo 'tagprefix' de la directiva.
+
+SOURCE: System.Web
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/aplicativo/Jefe_Ag_SolicitarEstado.aspx
+
+TARGETSITE: System.String GetAndRemoveNonEmptyAttribute(System.Collections.IDictionary, System.String, Boolean)
+
+STACKTRACE:    en System.Web.UI.Util.GetAndRemoveNonEmptyAttribute(IDictionary directives, String key, Boolean required)
+   en System.Web.UI.BaseTemplateParser.ProcessDirective(String directiveName, IDictionary directive)
+   en System.Web.UI.TemplateParser.ParseStringInternal(String text, Encoding fileEncoding)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 14/7/2023 10:57:45
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Falta el atributo 'tagprefix' de la directiva.
+
+SOURCE: System.Web
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/aplicativo/Jefe_Ag_SolicitarEstado.aspx
+
+TARGETSITE: System.String GetAndRemoveNonEmptyAttribute(System.Collections.IDictionary, System.String, Boolean)
+
+STACKTRACE:    en System.Web.UI.Util.GetAndRemoveNonEmptyAttribute(IDictionary directives, String key, Boolean required)
+   en System.Web.UI.BaseTemplateParser.ProcessDirective(String directiveName, IDictionary directive)
+   en System.Web.UI.TemplateParser.ParseStringInternal(String text, Encoding fileEncoding)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 14/7/2023 10:58:55
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Falta el atributo 'tagprefix' de la directiva.
+
+SOURCE: System.Web
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/aplicativo/Jefe_Ag_SolicitarEstado.aspx
+
+TARGETSITE: System.String GetAndRemoveNonEmptyAttribute(System.Collections.IDictionary, System.String, Boolean)
+
+STACKTRACE:    en System.Web.UI.Util.GetAndRemoveNonEmptyAttribute(IDictionary directives, String key, Boolean required)
+   en System.Web.UI.BaseTemplateParser.ProcessDirective(String directiveName, IDictionary directive)
+   en System.Web.UI.TemplateParser.ParseStringInternal(String text, Encoding fileEncoding)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 14/7/2023 11:03:00
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Falta el atributo 'tagprefix' de la directiva.
+
+SOURCE: System.Web
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/aplicativo/Jefe_Ag_SolicitarEstado.aspx
+
+TARGETSITE: System.String GetAndRemoveNonEmptyAttribute(System.Collections.IDictionary, System.String, Boolean)
+
+STACKTRACE:    en System.Web.UI.Util.GetAndRemoveNonEmptyAttribute(IDictionary directives, String key, Boolean required)
+   en System.Web.UI.BaseTemplateParser.ProcessDirective(String directiveName, IDictionary directive)
+   en System.Web.UI.TemplateParser.ParseStringInternal(String text, Encoding fileEncoding)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 14/7/2023 11:03:55
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La secuencia no contiene elementos
+
+SOURCE: System.Core
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/aplicativo/Jefe_Ag_SolicitarEstado.aspx
+
+TARGETSITE: TSource First[TSource](System.Collections.Generic.IEnumerable`1[TSource])
+
+STACKTRACE:    en System.Linq.Enumerable.First[TSource](IEnumerable`1 source)
+   en SisPer.Aplicativo.Jefe_Ag_SolicitarEstado.Analizar_Solicitar_Datos_Movimiento() en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Jefe_Ag_SolicitarEstado.aspx.cs:línea 332
+   en SisPer.Aplicativo.Jefe_Ag_SolicitarEstado.CargarTiposMovimientos() en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Jefe_Ag_SolicitarEstado.aspx.cs:línea 112
+   en SisPer.Aplicativo.Jefe_Ag_SolicitarEstado.Page_Load(Object sender, EventArgs e) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Jefe_Ag_SolicitarEstado.aspx.cs:línea 58
+   en System.Web.UI.Control.OnLoad(EventArgs e)
+   en System.Web.UI.Control.LoadRecursive()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 14/7/2023 11:48:48
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La secuencia no contiene ningún elemento coincidente
+
+SOURCE: System.Core
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/aplicativo/Jefe_Ag_SolicitarEstado.aspx
+
+TARGETSITE: TSource First[TSource](System.Collections.Generic.IEnumerable`1[TSource], System.Func`2[TSource,System.Boolean])
+
+STACKTRACE:    en System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   en SisPer.Aplicativo.Jefe_Ag_SolicitarEstado.btn_Solicitar_Click(Object sender, EventArgs e) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Jefe_Ag_SolicitarEstado.aspx.cs:línea 140
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 14/7/2023 12:03:03
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La secuencia no contiene elementos
+
+SOURCE: System.Core
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/aplicativo/Jefe_Ag_SolicitarEstado.aspx
+
+TARGETSITE: TSource First[TSource](System.Collections.Generic.IEnumerable`1[TSource])
+
+STACKTRACE:    en System.Linq.Enumerable.First[TSource](IEnumerable`1 source)
+   en SisPer.Aplicativo.Jefe_Ag_SolicitarEstado.Obtener_Jefe_que_solicita() en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Jefe_Ag_SolicitarEstado.aspx.cs:línea 91
+   en SisPer.Aplicativo.Jefe_Ag_SolicitarEstado.btn_Solicitar_Click(Object sender, EventArgs e) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Jefe_Ag_SolicitarEstado.aspx.cs:línea 166
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 14/7/2023 12:12:01
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: No se puede definir la relación entre dos objetos porque están asociados a objetos ObjectContext diferentes.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/aplicativo/Jefe_Ag_SolicitarEstado.aspx
+
+TARGETSITE: Void Add(System.Data.Objects.Internal.IEntityWrapper, Boolean, Boolean, Boolean, Boolean, Boolean)
+
+STACKTRACE:    en System.Data.Objects.DataClasses.RelatedEnd.Add(IEntityWrapper wrappedTarget, Boolean applyConstraints, Boolean addRelationshipAsUnchanged, Boolean relationshipAlreadyExists, Boolean allowModifyingOtherEndOfRelationship, Boolean forceForeignKeyChanges)
+   en System.Data.Objects.DataClasses.RelatedEnd.Add(IEntityWrapper wrappedEntity, Boolean applyConstraints)
+   en System.Data.Objects.DataClasses.EntityReference`1.set_ReferenceValue(IEntityWrapper value)
+   en System.Data.Objects.DataClasses.EntityReference`1.set_Value(TEntity value)
+   en SisPer.Aplicativo.SolicitudDeEstado.set_TipoEstadoAgente(TipoEstadoAgente value) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Model1.Designer.cs:línea 19417
+   en SisPer.Aplicativo.Jefe_Ag_SolicitarEstado.btn_Solicitar_Click(Object sender, EventArgs e) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Jefe_Ag_SolicitarEstado.aspx.cs:línea 156
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 14/7/2023 12:16:04
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: No se puede definir la relación entre dos objetos porque están asociados a objetos ObjectContext diferentes.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/aplicativo/Jefe_Ag_SolicitarEstado.aspx
+
+TARGETSITE: Void Add(System.Data.Objects.Internal.IEntityWrapper, Boolean, Boolean, Boolean, Boolean, Boolean)
+
+STACKTRACE:    en System.Data.Objects.DataClasses.RelatedEnd.Add(IEntityWrapper wrappedTarget, Boolean applyConstraints, Boolean addRelationshipAsUnchanged, Boolean relationshipAlreadyExists, Boolean allowModifyingOtherEndOfRelationship, Boolean forceForeignKeyChanges)
+   en System.Data.Objects.DataClasses.RelatedEnd.Add(IEntityWrapper wrappedEntity, Boolean applyConstraints)
+   en System.Data.Objects.DataClasses.EntityReference`1.set_ReferenceValue(IEntityWrapper value)
+   en System.Data.Objects.DataClasses.EntityReference`1.set_Value(TEntity value)
+   en SisPer.Aplicativo.SolicitudDeEstado.set_TipoEstadoAgente(TipoEstadoAgente value) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Model1.Designer.cs:línea 19417
+   en SisPer.Aplicativo.Jefe_Ag_SolicitarEstado.btn_Solicitar_Click(Object sender, EventArgs e) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Jefe_Ag_SolicitarEstado.aspx.cs:línea 152
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 14/7/2023 12:17:16
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: No se puede definir la relación entre dos objetos porque están asociados a objetos ObjectContext diferentes.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/aplicativo/Jefe_Ag_SolicitarEstado.aspx
+
+TARGETSITE: Void Add(System.Data.Objects.Internal.IEntityWrapper, Boolean, Boolean, Boolean, Boolean, Boolean)
+
+STACKTRACE:    en System.Data.Objects.DataClasses.RelatedEnd.Add(IEntityWrapper wrappedTarget, Boolean applyConstraints, Boolean addRelationshipAsUnchanged, Boolean relationshipAlreadyExists, Boolean allowModifyingOtherEndOfRelationship, Boolean forceForeignKeyChanges)
+   en System.Data.Objects.DataClasses.RelatedEnd.Add(IEntityWrapper wrappedEntity, Boolean applyConstraints)
+   en System.Data.Objects.DataClasses.EntityReference`1.set_ReferenceValue(IEntityWrapper value)
+   en System.Data.Objects.DataClasses.EntityReference`1.set_Value(TEntity value)
+   en SisPer.Aplicativo.SolicitudDeEstado.set_TipoEstadoAgente(TipoEstadoAgente value) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Model1.Designer.cs:línea 19417
+   en SisPer.Aplicativo.Jefe_Ag_SolicitarEstado.btn_Solicitar_Click(Object sender, EventArgs e) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Jefe_Ag_SolicitarEstado.aspx.cs:línea 152
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 14/7/2023 12:20:55
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Varias instancias de IEntityChangeTracker no pueden hacer referencia a un objeto entidad.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/aplicativo/Jefe_Ag_SolicitarEstado.aspx
+
+TARGETSITE: Void VerifyContextForAddOrAttach(System.Data.Objects.Internal.IEntityWrapper)
+
+STACKTRACE:    en System.Data.Objects.ObjectContext.VerifyContextForAddOrAttach(IEntityWrapper wrappedEntity)
+   en System.Data.Objects.ObjectContext.AddSingleObject(EntitySet entitySet, IEntityWrapper wrappedEntity, String argumentName)
+   en System.Data.Objects.ObjectContext.AddObject(String entitySetName, Object entity)
+   en SisPer.Aplicativo.Jefe_Ag_SolicitarEstado.btn_Solicitar_Click(Object sender, EventArgs e) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Jefe_Ag_SolicitarEstado.aspx.cs:línea 172
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 14/7/2023 12:24:12
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Varias instancias de IEntityChangeTracker no pueden hacer referencia a un objeto entidad.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/aplicativo/Jefe_Ag_SolicitarEstado.aspx
+
+TARGETSITE: Void VerifyContextForAddOrAttach(System.Data.Objects.Internal.IEntityWrapper)
+
+STACKTRACE:    en System.Data.Objects.ObjectContext.VerifyContextForAddOrAttach(IEntityWrapper wrappedEntity)
+   en System.Data.Objects.ObjectContext.AddSingleObject(EntitySet entitySet, IEntityWrapper wrappedEntity, String argumentName)
+   en System.Data.Objects.ObjectContext.AddObject(String entitySetName, Object entity)
+   en SisPer.Aplicativo.Jefe_Ag_SolicitarEstado.btn_Solicitar_Click(Object sender, EventArgs e) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Jefe_Ag_SolicitarEstado.aspx.cs:línea 174
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 14/7/2023 12:29:39
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Varias instancias de IEntityChangeTracker no pueden hacer referencia a un objeto entidad.
+
+SOURCE: System.Data.Entity
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/aplicativo/Jefe_Ag_SolicitarEstado.aspx
+
+TARGETSITE: Void VerifyContextForAddOrAttach(System.Data.Objects.Internal.IEntityWrapper)
+
+STACKTRACE:    en System.Data.Objects.ObjectContext.VerifyContextForAddOrAttach(IEntityWrapper wrappedEntity)
+   en System.Data.Objects.ObjectContext.AddSingleObject(EntitySet entitySet, IEntityWrapper wrappedEntity, String argumentName)
+   en System.Data.Objects.ObjectContext.AddObject(String entitySetName, Object entity)
+   en SisPer.Aplicativo.Jefe_Ag_SolicitarEstado.btn_Solicitar_Click(Object sender, EventArgs e) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Jefe_Ag_SolicitarEstado.aspx.cs:línea 177
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************

@@ -322,6 +322,35 @@ namespace SisPer.Aplicativo
         }
 
         /// <summary>
+        /// Proceso que produce la generación o actualización de los cierres mensuales.
+        /// </summary>
+        public void GenerarCierresMensuales()
+        {
+            using (var cxt = new Model1Container())
+            {
+                //este metodo tambien ejecuta la actualización de los cierres mensuales para su consulta.
+                cxt.sp_cerrar_dia(this.Id, DateTime.Today.AddDays(-2));
+            }
+        }
+
+        /// <summary>
+        /// Obtiene el turno de ingreso permitido para el dia indicado.
+        /// </summary>
+        /// <param name="d"></param>
+        /// <returns></returns>
+        public TurnoIngresoPermitido ObtenerTurnoIngresoPermitido(DateTime d)
+        {
+            TurnoIngresoPermitido tip = null;
+
+            using (var cxt = new Model1Container())
+            {
+                tip = cxt.TurnosIngresoPermitido.FirstOrDefault(dd => dd.AgenteId == this.Id && dd.Dia == d);
+            }
+
+            return tip;
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="dia"></param>
