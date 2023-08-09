@@ -7,11 +7,13 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace SisPer.Aplicativo {
-    
-    
-    public partial class Mensajes {
-        
+namespace SisPer.Aplicativo
+{
+
+
+    public partial class Mensajes
+    {
+
         /// <summary>
         /// Control MenuPersonalJefe.
         /// </summary>
@@ -20,7 +22,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::SisPer.Aplicativo.Menues.MenuPersonalJefe MenuPersonalJefe;
-        
+
         /// <summary>
         /// Control MenuPersonalAgente.
         /// </summary>
@@ -29,7 +31,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::SisPer.Aplicativo.Menues.MenuPersonalAgente MenuPersonalAgente;
-        
+
         /// <summary>
         /// Control MenuAgente.
         /// </summary>
@@ -38,7 +40,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::SisPer.Aplicativo.Menues.MenuAgente MenuAgente;
-        
+
         /// <summary>
         /// Control MenuJefe.
         /// </summary>
@@ -47,7 +49,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::SisPer.Aplicativo.Menues.MenuJefe MenuJefe;
-        
+
         /// <summary>
         /// Control div_destinatarios.
         /// </summary>
@@ -56,16 +58,16 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_destinatarios;
-        
+
         /// <summary>
-        /// Control tb_asunto.
+        /// Control ddl_asunto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tb_asunto;
-        
+        protected global::System.Web.UI.WebControls.DropDownList ddl_asunto;
+
         /// <summary>
         /// Control CuerpoMensaje.
         /// </summary>
@@ -74,7 +76,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::CKEditor.NET.CKEditorControl CuerpoMensaje;
-        
+
         /// <summary>
         /// Control btn_Todos.
         /// </summary>
@@ -83,7 +85,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btn_Todos;
-        
+
         /// <summary>
         /// Control gv_Agentes.
         /// </summary>
@@ -92,7 +94,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gv_Agentes;
-        
+
         /// <summary>
         /// Control gv_Areas.
         /// </summary>
@@ -101,7 +103,7 @@ namespace SisPer.Aplicativo {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gv_Areas;
-        
+
         /// <summary>
         /// Control btn_Enviar.
         /// </summary>

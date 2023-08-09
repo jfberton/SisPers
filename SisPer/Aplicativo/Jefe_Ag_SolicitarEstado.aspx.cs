@@ -172,7 +172,7 @@ namespace SisPer.Aplicativo
                 se.AgenteId1 = jefe.Id;
                 se.TipoEstadoAgenteId = tipoEstadoId;
                 se.FechaDesde = Convert.ToDateTime(tb_desde.Value);
-                se.FechaHasta = Convert.ToDateTime(tb_hasta.Value);
+                se.FechaHasta = hasta_row.Visible? Convert.ToDateTime(tb_hasta.Value) : Convert.ToDateTime(tb_desde.Value);
                 se.Estado = EstadoSolicitudDeEstado.Solicitado;
                 se.FechaHoraSolicitud = DateTime.Now;
                 if (p_DatosExtra.Visible)
@@ -367,9 +367,23 @@ namespace SisPer.Aplicativo
             lbl_Mensaje.Text = string.Empty;
 
 
+
+
             int tipoEstadoId = Convert.ToInt32(ddl_TipoMovimiento.SelectedValue);
             int id = Obtener_agente_a_solicitar().Id;
             TipoEstadoAgente tea = cxt.TiposEstadoAgente.FirstOrDefault(t => t.Id == tipoEstadoId);
+
+            if (tea.Estado.Contains("Enfermedad") ||
+                tea.Estado.Contains("Pap, mamografia") ||
+                tea.Estado.Contains("Donación de sangre") ||
+                tea.Estado.Contains("Fallecimiento Familiar"))
+            {
+                hasta_row.Visible = false;
+            }
+            else
+            { 
+                hasta_row.Visible = true;
+            }
 
             if (tea.Estado == "Enfermedad común" || tea.Estado == "Enfermedad familiar")
             {

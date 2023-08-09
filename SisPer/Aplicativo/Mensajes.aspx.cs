@@ -41,11 +41,13 @@ namespace SisPer.Aplicativo
                 {
                     MenuPersonalAgente.Visible = !(usuarioLogueado.Jefe || usuarioLogueado.JefeTemporal);
                     MenuPersonalJefe.Visible = (usuarioLogueado.Jefe || usuarioLogueado.JefeTemporal);
+                    btn_Todos.Visible = true;
                 }
                 else
                 {
                     MenuAgente.Visible = !(usuarioLogueado.Jefe || usuarioLogueado.JefeTemporal);
                     MenuJefe.Visible = (usuarioLogueado.Jefe || usuarioLogueado.JefeTemporal);
+                    btn_Todos.Visible = false;
                 }
 
                 CargarAgentes();
@@ -403,7 +405,11 @@ namespace SisPer.Aplicativo
             List<Agente> destinatarios = Session["Destinatarios"] as List<Agente>;
             List<Area> areasDestinatarias = Session["AreasDestino"] as List<Area>;
             bool todos = Convert.ToBoolean(Session["Todos"]);
-            if (((destinatarios != null && destinatarios.Count > 0) || (areasDestinatarias != null && areasDestinatarias.Count > 0) || todos) && tb_asunto.Text.Length > 0 && CuerpoMensaje.Text.Length > 0 )
+            if (((destinatarios != null && destinatarios.Count > 0) 
+                || (areasDestinatarias != null && areasDestinatarias.Count > 0) 
+                || todos) && 
+                ddl_asunto.SelectedItem.Text != "Seleccione el motivo del mensaje:" && 
+                CuerpoMensaje.Text.Length > 0 )
             {
 
                 using (var cxt = new Model1Container())
@@ -412,7 +418,7 @@ namespace SisPer.Aplicativo
                     Mensaje mensaje = new Mensaje();
                     Agente agenteLogueado = Session["UsuarioLogueado"] as Agente;
                     Agente agCxt = cxt.Agentes.First(a => a.Id == agenteLogueado.Id);
-                    mensaje.Asunto = tb_asunto.Text;
+                    mensaje.Asunto = ddl_asunto.SelectedItem.Text;
                     mensaje.Cuerpo = CuerpoMensaje.Text;
                     mensaje.Agente = agCxt;
                     mensaje.FechaEnvio = DateTime.Now;

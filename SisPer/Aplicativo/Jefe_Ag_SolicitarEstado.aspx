@@ -194,9 +194,9 @@
 
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr runat="server" id="hasta_row">
                                     <td>
-                                        <label for="tb_hasta">Hasta</label><asp:CustomValidator ID="VerificarHasta" runat="server" ErrorMessage="La fecha ingresada no es válida"
+                                        <asp:Label runat="server" ID="lbl_hasta" for="tb_hasta" >Hasta</asp:Label><asp:CustomValidator ID="VerificarHasta" runat="server" ErrorMessage="La fecha ingresada no es válida"
                                             Text="<img src='../Imagenes/exclamation.gif' title='La fecha ingresada no es válida' />"
                                             OnServerValidate="VerificarHasta_ServerValidate"></asp:CustomValidator>
                                         <asp:CustomValidator ID="VerificarHastaMayorIgualQueDesde" runat="server" ErrorMessage="La fecha hasta debe ser mayor o igual a la fecha desde."

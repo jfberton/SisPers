@@ -7,9 +7,6 @@
 <%@ Register Src="~/Aplicativo/Menues/MenuJefe.ascx" TagPrefix="uc1" TagName="MenuJefe" %>
 <%@ Register Src="~/Aplicativo/Menues/MenuPersonalAgente.ascx" TagPrefix="uc1" TagName="MenuPersonalAgente" %>
 
-
-
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderMenu" runat="server">
@@ -42,7 +39,23 @@
                     <span class="">Asunto</span>
                 </div>
                 <div class="col-md-10">
-                    <asp:TextBox runat="server" ID="tb_asunto" CssClass="form-control" />
+                    <%--<asp:TextBox runat="server" ID="tb_asunto" CssClass="form-control" />--%>
+                    <asp:DropDownList runat="server" ID="ddl_asunto" CssClass="form-control">
+                        <asp:ListItem Text="Seleccione el motivo del mensaje:" />
+                        <asp:ListItem Text="Solicitud de licencias" />
+                        <asp:ListItem Text="Solicitud de permisos" />
+                        <asp:ListItem Text="Solicitud de actualización de los estados/datos del sistema" />
+                        <asp:ListItem Text="Otras solicitudes" />
+                        <asp:ListItem Text="Comunicación al Dpto. Personal" />
+                        <asp:ListItem Text="Comunicación al jefe inmediato y al Dpto. Personal" />
+                        <asp:ListItem Text="Otras comunicaciones" />
+                        <asp:ListItem Text="Consulta de horas" />
+                        <asp:ListItem Text="Consulta de licencias ordinarias" />
+                        <asp:ListItem Text="Consulta de licencias médicas" />
+                        <asp:ListItem Text="Consulta sobre asignaciones familiares" />
+                        <asp:ListItem Text="Otras consultas" />
+                    </asp:DropDownList>
+
                     <br />
                 </div>
             </div>
@@ -58,7 +71,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <%--<button type="button" classs="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>--%>
                             <h4 class="modal-title" id="myModalLabel">Seleccione destinatarios</h4>
                             <asp:Button Text="Todos" ToolTip="Envia a todos los agentes" runat="server" ID="btn_Todos" OnClick="btn_Todos_Click" CssClass="btn btn-warning" />
                         </div>

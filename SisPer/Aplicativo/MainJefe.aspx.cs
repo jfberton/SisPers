@@ -438,11 +438,11 @@ namespace SisPer.Aplicativo
                 return;
             }
 
-            if (ag.Id == hv.AgenteId)
-            {
-                Controles.MessageBox.Show(this, "Usted no se puede aprobar los horarios vespertinos generados a si mismo.", Controles.MessageBox.Tipo_MessageBox.Info);
-                return;
-            }
+            //if (ag.Id == hv.AgenteId)
+            //{
+            //    Controles.MessageBox.Show(this, "Usted no se puede aprobar los horarios vespertinos generados a si mismo.", Controles.MessageBox.Tipo_MessageBox.Info);
+            //    return;
+            //}
 
             ModificarEstadoHV(id, EstadosHorarioVespertino.Aprobado);
             CargarHVS();
