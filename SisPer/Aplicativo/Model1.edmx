@@ -3437,6 +3437,7 @@
           <Member Name="Consultorio" Value="0" />
           <Member Name="Domicilio" Value="1" />
           <Member Name="Internacion" Value="2" />
+          <Member Name="Consultorio_a_su_regreso_de" Value="3" />
         </EnumType>
         <EntityType Name="HAAnteriorEliminadas">
           <Key>

@@ -30,7 +30,7 @@ namespace SisPer.Aplicativo
                 }
 
                 Cargar_datos_agente_a_solicitar();
-                
+
                 //Menues
                 if (ag.Perfil == PerfilUsuario.Personal)
                 {
@@ -126,15 +126,12 @@ namespace SisPer.Aplicativo
             else
             {
                 listado_movimientos_permitidos = (from tm in cxt.TiposEstadoAgente.Where(
-                                                                                            mh => mh.MarcaJefe && 
+                                                                                            mh => mh.MarcaJefe &&
                                                                                                     (
                                                                                                         mh.Estado.Contains("Enfermedad") ||
                                                                                                         mh.Estado.Contains("Pap, mamografia") ||
                                                                                                         mh.Estado.Contains("Donación de sangre") ||
-                                                                                                        mh.Estado.Contains("Licencia examen") ||
-                                                                                                        mh.Estado.Contains("Fallecimiento Familiar") ||
-                                                                                                        mh.Estado.Contains("Maternidad") ||
-                                                                                                        mh.Estado.Contains("Curso/Capacitacion") 
+                                                                                                        mh.Estado.Contains("Fallecimiento Familiar")
                                                                                                     )
                                                                                         )
                                                   select tm).ToList();
@@ -162,6 +159,7 @@ namespace SisPer.Aplicativo
                 SolicitudDeEstado se = new SolicitudDeEstado();
                 Agente agente = Obtener_agente_a_solicitar();
                 Agente ag = Session["UsuarioLogueado"] as Agente;
+                TipoMovimientoEnfermedad tipoMovimientoEnfermedad = (TipoMovimientoEnfermedad)Enum.Parse(typeof(TipoMovimientoEnfermedad), ddl_Encuadre.Text);
 
                 Agente jefe = Obtener_Jefe_que_solicita();
 
@@ -179,18 +177,28 @@ namespace SisPer.Aplicativo
                 se.FechaHoraSolicitud = DateTime.Now;
                 if (p_DatosExtra.Visible)
                 {
-                    if (ddl_TipoMovimiento.SelectedItem.Text == "Licencia Anual" 
-                        || ddl_TipoMovimiento.SelectedItem.Text == "Licencia Anual (Saldo)" 
+                    if (ddl_TipoMovimiento.SelectedItem.Text == "Licencia Anual"
+                        || ddl_TipoMovimiento.SelectedItem.Text == "Licencia Anual (Saldo)"
                         || ddl_TipoMovimiento.SelectedItem.Text == "Licencia Anual (Anticipo)")
                     {
                         se.TipoEnfermedad = Convert.ToInt32(ddl_Encuadre.Text);
                     }
                     else
                     {
-                        se.TipoEnfermedad = ddl_Encuadre.SelectedIndex;
+                        se.TipoEnfermedad = (int)tipoMovimientoEnfermedad;
                     }
                 }
-                se.Lugar = tb_sanatorio.Visible ? "Sanatorio " + tb_sanatorio.Text + " habitación " + tb_habitacion.Text : "";
+
+                if (tb_sanatorio.Visible || ddl_provincias.Visible)
+                {
+                    if (tipoMovimientoEnfermedad == TipoMovimientoEnfermedad.Consultorio_a_su_regreso_de)
+                        se.Lugar = "Provincia " + tb_sanatorio.Text;
+
+                    if (tipoMovimientoEnfermedad == TipoMovimientoEnfermedad.Internacion)
+                        se.Lugar = "Sanatorio " + tb_sanatorio.Text + " habitación " + tb_habitacion.Text;
+                }
+
+
                 se.Fam_NomyAp = tb_fam_nomyap.Visible ? tb_fam_nomyap.Text : "";
                 se.Fam_Parentesco = tb_fam_parentesco.Visible ? tb_fam_parentesco.Text : "";
 
@@ -383,6 +391,7 @@ namespace SisPer.Aplicativo
                     tb_fam_nomyap.Visible = true;
                     lbl_fam_parentesco.Visible = true;
                     tb_fam_parentesco.Visible = true;
+                    ddl_Encuadre.Items.Remove(ddl_Encuadre.Items.FindByValue("Consultorio"));
                 }
 
                 DatosInternacion();
@@ -428,6 +437,7 @@ namespace SisPer.Aplicativo
 
             int tipoEstadoId = Convert.ToInt32(ddl_TipoMovimiento.SelectedValue);
             TipoEstadoAgente tea = cxt.TiposEstadoAgente.FirstOrDefault(t => t.Id == tipoEstadoId);
+
             if (tea.Estado == "Enfermedad común" || tea.Estado == "Enfermedad familiar")
             {
                 DatosInternacion();
@@ -461,44 +471,134 @@ namespace SisPer.Aplicativo
         }
         protected void DatosInternacion()
         {
-            //el textoseleccionado puede ser años si es de licencia o no si es por enfermedad
+            string tipo_solicitud = ddl_TipoMovimiento.SelectedItem.Text;
             string textoSeleccionado = ddl_Encuadre.Text;
-            int year = 0;
-            if (!int.TryParse(textoSeleccionado, out year))
+
+            lbl_habitacion.Visible = false;
+            tb_habitacion.Visible = false;
+            tb_habitacion.Text = string.Empty;
+            lbl_Sanatorio.Visible = false;
+            tb_sanatorio.Visible = false;
+            tb_sanatorio.Text = string.Empty;
+            ddl_provincias.Visible = false;
+
+            TipoMovimientoEnfermedad tipoMovimientoEnfermedad = (TipoMovimientoEnfermedad)Enum.Parse(typeof(TipoMovimientoEnfermedad), ddl_Encuadre.Text);
+
+            if (tipo_solicitud.Contains("Enfermedad"))
             {
-                if ((TipoMovimientoEnfermedad)(ddl_Encuadre.SelectedIndex) == TipoMovimientoEnfermedad.Internacion)
+                if (tipoMovimientoEnfermedad == TipoMovimientoEnfermedad.Internacion)
                 {
                     lbl_habitacion.Visible = true;
                     tb_habitacion.Visible = true;
                     lbl_Sanatorio.Visible = true;
+                    lbl_Sanatorio.Text = "Sanatorio";
                     tb_sanatorio.Visible = true;
                 }
-                else
+
+                if (tipoMovimientoEnfermedad == TipoMovimientoEnfermedad.Consultorio_a_su_regreso_de)
                 {
-                    lbl_habitacion.Visible = false;
-                    tb_habitacion.Visible = false;
-                    tb_habitacion.Text = string.Empty;
-                    lbl_Sanatorio.Visible = false;
+                    lbl_Sanatorio.Visible = true;
+                    lbl_Sanatorio.Text = "Provincia";
+                    ddl_provincias.Items.Clear();
+                    ddl_provincias.Items.Add(new ListItem { Text = "Seleccione una provincia", Value = "0" });
+                    ddl_provincias.Items.Add(new ListItem { Text = "Buenos Aires", Value = "1" });
+                    ddl_provincias.Items.Add(new ListItem { Text = "Catamarca", Value = "2" });
+                    ddl_provincias.Items.Add(new ListItem { Text = "Chaco", Value = "3" });
+                    ddl_provincias.Items.Add(new ListItem { Text = "Chubut", Value = "4" });
+                    ddl_provincias.Items.Add(new ListItem { Text = "Córdoba", Value = "5" });
+                    ddl_provincias.Items.Add(new ListItem { Text = "Corrientes", Value = "6" });
+                    ddl_provincias.Items.Add(new ListItem { Text = "Entre Ríos", Value = "7" });
+                    ddl_provincias.Items.Add(new ListItem { Text = "Formosa", Value = "8" });
+                    ddl_provincias.Items.Add(new ListItem { Text = "Jujuy", Value = "9" });
+                    ddl_provincias.Items.Add(new ListItem { Text = "La Pampa", Value = "10" });
+                    ddl_provincias.Items.Add(new ListItem { Text = "La Rioja", Value = "11" });
+                    ddl_provincias.Items.Add(new ListItem { Text = "Mendoza", Value = "12" });
+                    ddl_provincias.Items.Add(new ListItem { Text = "Misiones", Value = "13" });
+                    ddl_provincias.Items.Add(new ListItem { Text = "Neuquén", Value = "14" });
+                    ddl_provincias.Items.Add(new ListItem { Text = "Río Negro", Value = "15" });
+                    ddl_provincias.Items.Add(new ListItem { Text = "Salta", Value = "16" });
+                    ddl_provincias.Items.Add(new ListItem { Text = "San Juan", Value = "17" });
+                    ddl_provincias.Items.Add(new ListItem { Text = "San Luis", Value = "18" });
+                    ddl_provincias.Items.Add(new ListItem { Text = "Santa Cruz", Value = "19" });
+                    ddl_provincias.Items.Add(new ListItem { Text = "Santa Fé", Value = "20" });
+                    ddl_provincias.Items.Add(new ListItem { Text = "Santiago del Estero", Value = "21" });
+                    ddl_provincias.Items.Add(new ListItem { Text = "Tierra del Fuego", Value = "22" });
+                    ddl_provincias.Items.Add(new ListItem { Text = "Tucumán", Value = "23" });
+                    ddl_provincias.Visible = true;
+
                     tb_sanatorio.Visible = false;
-                    tb_sanatorio.Text = string.Empty;
                 }
             }
         }
 
+        protected void ddl_provincias_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ddl_provincias.SelectedIndex != 0)
+            {
+                tb_sanatorio.Text = ddl_provincias.SelectedItem.Text;
+            }
+            else
+            {
+                tb_sanatorio.Text = string.Empty;
+            }
+
+        }
+
         protected void cv_sanatorio_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            args.IsValid =
-                (p_DatosExtra.Visible == false) ||
-                (p_DatosExtra.Visible == true && tb_sanatorio.Visible == false) ||
-                (p_DatosExtra.Visible == true && tb_sanatorio.Visible == true && tb_sanatorio.Text.Length > 0);
+            string tipo_solicitud = ddl_TipoMovimiento.SelectedItem.Text;
+            TipoMovimientoEnfermedad tipoMovimientoEnfermedad = (TipoMovimientoEnfermedad)Enum.Parse(typeof(TipoMovimientoEnfermedad), ddl_Encuadre.Text);
+
+            if (tipo_solicitud.Contains("Enfermedad"))
+            {
+                switch (tipoMovimientoEnfermedad)
+                {
+                    case TipoMovimientoEnfermedad.Consultorio:
+                        args.IsValid = true;
+                        break;
+                    case TipoMovimientoEnfermedad.Domicilio:
+                        args.IsValid = true;
+                        break;
+                    case TipoMovimientoEnfermedad.Internacion:
+                        cv_sanatorio.ErrorMessage = "Debe ingresar el sanatorio donde se encuentra internado.";
+                        cv_sanatorio.Text = "<img src='../Imagenes/exclamation.gif' title='Debe ingresar el sanatorio donde se encuentra internado.' />";
+                        args.IsValid = tb_sanatorio.Text.Length > 0;
+                        break;
+                    case TipoMovimientoEnfermedad.Consultorio_a_su_regreso_de:
+                        cv_sanatorio.ErrorMessage = "Debe seleccionar la provincia a la cual se dirije el agente para su tratamiento.";
+                        cv_sanatorio.Text = "<img src='../Imagenes/exclamation.gif' title='Debe seleccionar la provincia a la cual se dirije el agente para su tratamiento.' />";
+                        args.IsValid = tb_sanatorio.Text.Length > 0;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                args.IsValid = true;
+            }
         }
 
         protected void cv_habitacion_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            args.IsValid =
-               (p_DatosExtra.Visible == false) ||
-               (p_DatosExtra.Visible == true && tb_habitacion.Visible == false) ||
-               (p_DatosExtra.Visible == true && tb_habitacion.Visible == true && tb_habitacion.Text.Length > 0);
+            string tipo_solicitud = ddl_TipoMovimiento.SelectedItem.Text;
+            TipoMovimientoEnfermedad tipoMovimientoEnfermedad = (TipoMovimientoEnfermedad)Enum.Parse(typeof(TipoMovimientoEnfermedad), ddl_Encuadre.Text);
+
+            if (tipo_solicitud.Contains("Enfermedad"))
+            {
+                if (tipoMovimientoEnfermedad == TipoMovimientoEnfermedad.Internacion)
+                {
+                    args.IsValid = tb_habitacion.Text.Length > 0;
+                }
+                else
+                {
+                    args.IsValid = true;
+                }
+            }
+            else
+            {
+                args.IsValid = true;
+            }
         }
 
         protected void cv_fam_nomyap_ServerValidate(object source, ServerValidateEventArgs args)
@@ -693,12 +793,14 @@ namespace SisPer.Aplicativo
 
         protected void cv_domicilio_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            args.IsValid= tb_domicilio.Text.Length > 0;
+            args.IsValid = tb_domicilio.Text.Length > 0;
         }
 
         protected void cv_localidad_ServerValidate(object source, ServerValidateEventArgs args)
         {
             args.IsValid = tb_localidad.Text.Length > 0;
         }
+
+
     }
 }

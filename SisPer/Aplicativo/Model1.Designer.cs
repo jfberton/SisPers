@@ -30154,7 +30154,13 @@ namespace SisPer.Aplicativo
         /// No hay documentación de metadatos disponible.
         /// </summary>
         [EnumMemberAttribute()]
-        Internacion = 2
+        Internacion = 2,
+    
+        /// <summary>
+        /// No hay documentación de metadatos disponible.
+        /// </summary>
+        [EnumMemberAttribute()]
+        Consultorio_a_su_regreso_de = 3
     }
     
     /// <summary>
