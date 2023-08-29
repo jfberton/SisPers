@@ -46,7 +46,7 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <table class="table-condensed">
+                                    <table class="table-condensed" runat="server">
                                         <tr>
                                             <td colspan="2">
                                                 <label for="ddl_TipoMovimiento" style="font-weight: 700">Tipo</label>
@@ -57,7 +57,7 @@
 
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr id="tr_domicilio">
                                             <td colspan="2">
                                                
                                                 <asp:Label ID="lbl_domicilio" Text="Domicilio" runat="server" Style="font-weight: 700" />
@@ -66,7 +66,7 @@
                                                     OnServerValidate="cv_domicilio_ServerValidate"></asp:CustomValidator><asp:TextBox ID="tb_domicilio" CssClass="form-control" runat="server" />
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr id="tr_localidad">
                                             <td colspan="2">
                                                 
                                                 <asp:Label ID="lbl_localidad" Text="Localidad" runat="server" Style="font-weight: 700" />

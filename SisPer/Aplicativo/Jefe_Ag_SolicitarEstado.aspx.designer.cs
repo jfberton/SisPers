@@ -87,6 +87,15 @@ namespace SisPer.Aplicativo
         protected global::System.Web.UI.WebControls.DropDownList ddl_TipoMovimiento;
 
         /// <summary>
+        /// Control tr_domicilio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow tr_domicilio;
+
+        /// <summary>
         /// Control lbl_domicilio.
         /// </summary>
         /// <remarks>
@@ -112,6 +121,15 @@ namespace SisPer.Aplicativo
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tb_domicilio;
+
+        /// <summary>
+        /// Control tr_localidad.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow tr_localidad;
 
         /// <summary>
         /// Control lbl_localidad.

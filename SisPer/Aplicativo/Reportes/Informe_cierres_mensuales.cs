@@ -67,7 +67,7 @@ public class Informe_cierres_mensuales
                 Image membrete = new Image(ImageDataFactory.Create(HttpContext.Current.Server.MapPath("../Imagenes/membrete.png"))).SetAutoScale(true);
                 document.Add(membrete);
 
-                Paragraph fecha_hora_impresion = new Paragraph().Add(new Text(String.Format("fecha hora impresión {0}", DateTime.Now)).SetFontSize(7));
+                Paragraph fecha_hora_impresion = new Paragraph().Add(new Text(String.Format("Fecha hora impresión {0}", DateTime.Now)).SetFontSize(7));
                 document.Add(fecha_hora_impresion.SetTextAlignment(TextAlignment.RIGHT));
 
                 Table tableEncabezado = new Table(UnitValue.CreatePercentArray(new float[] { 15, 80, 15 })).UseAllAvailableWidth().SetFontSize(8).SetMarginBottom(5);

@@ -205,6 +205,7 @@
     <Content Include="Aplicativo\Model1.edmx.sql" />
     <Content Include="Aplicativo\Personal_Informe_AgentesPorArea.aspx" />
     <Content Include="Aplicativo\Personal_Informe_Bonificaciones.aspx" />
+    <Content Include="Aplicativo\Personal_Informe_Domicilios_Agente.aspx" />
     <Content Include="Aplicativo\Personal_Informe_InformeMovimientosAnuales.aspx" />
     <Content Include="Aplicativo\Personal_Informe_Cierres_Mensuales.aspx" />
     <Content Include="Aplicativo\Personal_Informe_SalidasVarias.aspx" />
@@ -1575,6 +1576,13 @@
     <Compile Include="Aplicativo\Personal_Informe_Bonificaciones.aspx.designer.cs">
       <DependentUpon>Personal_Informe_Bonificaciones.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Aplicativo\Personal_Informe_Domicilios_Agente.aspx.cs">
+      <DependentUpon>Personal_Informe_Domicilios_Agente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Aplicativo\Personal_Informe_Domicilios_Agente.aspx.designer.cs">
+      <DependentUpon>Personal_Informe_Domicilios_Agente.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Aplicativo\Personal_Informe_InformeMovimientosAnuales.aspx.cs">
       <DependentUpon>Personal_Informe_InformeMovimientosAnuales.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1697,6 +1705,7 @@
       <DependentUpon>HorariosVespertinos_DS.xsd</DependentUpon>
     </Compile>
     <Compile Include="Aplicativo\Reportes\Informe_art_50_rp.cs" />
+    <Compile Include="Aplicativo\Reportes\Informe_domicilios_agentes.cs" />
     <Compile Include="Aplicativo\Reportes\Informe_francos_compensatorios.cs" />
     <Compile Include="Aplicativo\Reportes\Informe_cambio_de_turno.cs" />
     <Compile Include="Aplicativo\Reportes\Informe_cierres_mensuales.cs" />

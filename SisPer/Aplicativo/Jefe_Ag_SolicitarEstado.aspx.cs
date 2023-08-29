@@ -159,12 +159,25 @@ namespace SisPer.Aplicativo
                 SolicitudDeEstado se = new SolicitudDeEstado();
                 Agente agente = Obtener_agente_a_solicitar();
                 Agente ag = Session["UsuarioLogueado"] as Agente;
-                TipoMovimientoEnfermedad tipoMovimientoEnfermedad = (TipoMovimientoEnfermedad)Enum.Parse(typeof(TipoMovimientoEnfermedad), ddl_Encuadre.Text);
+                TipoMovimientoEnfermedad tipoMovimientoEnfermedad = 0;
+
+                if (ddl_Encuadre.Visible)
+                {
+                    tipoMovimientoEnfermedad  = (TipoMovimientoEnfermedad)Enum.Parse(typeof(TipoMovimientoEnfermedad), ddl_Encuadre.Text);
+                }
 
                 Agente jefe = Obtener_Jefe_que_solicita();
 
-                agente.Legajo_datos_personales.Domicilio = tb_domicilio.Text;
-                agente.Legajo_datos_personales.Domicilio_localidad = tb_localidad.Text;
+                if (tr_localidad.Visible)
+                {
+                    using (var cxt = new Model1Container())
+                    {
+                        Agente agente_cxt = cxt.Agentes.Include("Legajo_datos_personales").FirstOrDefault(a => a.Id == agente.Id);
+                        agente_cxt.Legajo_datos_personales.Domicilio = tb_domicilio.Text;
+                        agente_cxt.Legajo_datos_personales.Domicilio_localidad = tb_localidad.Text;
+                        cxt.SaveChanges();
+                    }
+                }
 
                 int tipoEstadoId = Convert.ToInt32(ddl_TipoMovimiento.SelectedValue);
 
@@ -172,7 +185,7 @@ namespace SisPer.Aplicativo
                 se.AgenteId1 = jefe.Id;
                 se.TipoEstadoAgenteId = tipoEstadoId;
                 se.FechaDesde = Convert.ToDateTime(tb_desde.Value);
-                se.FechaHasta = hasta_row.Visible? Convert.ToDateTime(tb_hasta.Value) : Convert.ToDateTime(tb_desde.Value);
+                se.FechaHasta = hasta_row.Visible ? Convert.ToDateTime(tb_hasta.Value) : Convert.ToDateTime(tb_desde.Value);
                 se.Estado = EstadoSolicitudDeEstado.Solicitado;
                 se.FechaHoraSolicitud = DateTime.Now;
                 if (p_DatosExtra.Visible)
@@ -181,11 +194,11 @@ namespace SisPer.Aplicativo
                         || ddl_TipoMovimiento.SelectedItem.Text == "Licencia Anual (Saldo)"
                         || ddl_TipoMovimiento.SelectedItem.Text == "Licencia Anual (Anticipo)")
                     {
-                        se.TipoEnfermedad = Convert.ToInt32(ddl_Encuadre.Text);
+                        se.TipoEnfermedad = null;
                     }
                     else
                     {
-                        se.TipoEnfermedad = (int)tipoMovimientoEnfermedad;
+                        se.TipoEnfermedad = (int) tipoMovimientoEnfermedad;
                     }
                 }
 
@@ -366,9 +379,6 @@ namespace SisPer.Aplicativo
 
             lbl_Mensaje.Text = string.Empty;
 
-
-
-
             int tipoEstadoId = Convert.ToInt32(ddl_TipoMovimiento.SelectedValue);
             int id = Obtener_agente_a_solicitar().Id;
             TipoEstadoAgente tea = cxt.TiposEstadoAgente.FirstOrDefault(t => t.Id == tipoEstadoId);
@@ -378,10 +388,24 @@ namespace SisPer.Aplicativo
                 tea.Estado.Contains("Donación de sangre") ||
                 tea.Estado.Contains("Fallecimiento Familiar"))
             {
+                if(tea.Estado.Contains("Enfermedad"))
+                {
+                    tr_domicilio.Visible = true;
+                    tr_localidad.Visible = true;
+                }
+                else
+                {
+                    tr_domicilio.Visible = false;
+                    tr_localidad.Visible = false;
+                }
+
                 hasta_row.Visible = false;
             }
             else
-            { 
+            {
+                tr_domicilio.Visible = false;
+                tr_localidad.Visible = false;
+
                 hasta_row.Visible = true;
             }
 
@@ -798,7 +822,9 @@ namespace SisPer.Aplicativo
                 {
                     diasUsufructuados = ProcesosGlobales.ObtenerDiasUsufructuados(licencia);
                 }
-                valido = (licencia == null || diasUsufructuados == 0);
+                //es valido si la licencia del año anterior no es nula
+                //y si la cantidad de dias usufructuados es igual a la cantidad de dias otorgados es decir que no tiene saldo
+                valido = licencia != null && (licencia.DiasOtorgados - diasUsufructuados) == 0;
             }
 
             args.IsValid = valido;

@@ -20066,3 +20066,92 @@ STACKTRACE:    en System.Data.Objects.ObjectContext.VerifyContextForAddOrAttach(
 
 
 ******************************************************************
+ 
+
+******************************************************************
+
+DATE: 24/8/2023 10:40:49
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Debe especificar información válida para analizar la cadena.
+
+SOURCE: mscorlib
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Jefe_Ag_SolicitarEstado.aspx?Usr=543
+
+TARGETSITE: Void SetFailure(ParseFailureKind, System.String, System.Object)
+
+STACKTRACE:    en System.Enum.EnumResult.SetFailure(ParseFailureKind failure, String failureMessageID, Object failureMessageFormatArgument)
+   en System.Enum.TryParseEnum(Type enumType, String value, Boolean ignoreCase, EnumResult& parseResult)
+   en System.Enum.Parse(Type enumType, String value, Boolean ignoreCase)
+   en SisPer.Aplicativo.Jefe_Ag_SolicitarEstado.btn_Solicitar_Click(Object sender, EventArgs e) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Jefe_Ag_SolicitarEstado.aspx.cs:línea 162
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 24/8/2023 10:45:09
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Debe especificar información válida para analizar la cadena.
+
+SOURCE: mscorlib
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Jefe_Ag_SolicitarEstado.aspx?Usr=546
+
+TARGETSITE: Void SetFailure(ParseFailureKind, System.String, System.Object)
+
+STACKTRACE:    en System.Enum.EnumResult.SetFailure(ParseFailureKind failure, String failureMessageID, Object failureMessageFormatArgument)
+   en System.Enum.TryParseEnum(Type enumType, String value, Boolean ignoreCase, EnumResult& parseResult)
+   en System.Enum.Parse(Type enumType, String value, Boolean ignoreCase)
+   en SisPer.Aplicativo.Jefe_Ag_SolicitarEstado.btn_Solicitar_Click(Object sender, EventArgs e) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Jefe_Ag_SolicitarEstado.aspx.cs:línea 163
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 24/8/2023 12:50:34
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Referencia a objeto no establecida como instancia de un objeto.
+
+SOURCE: SisPer
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/Personal_Informe_Domicilios_Agente.aspx
+
+TARGETSITE: Void IncluirAgentes(SisPer.Aplicativo.Area)
+
+STACKTRACE:    en SisPer.Aplicativo.Personal_Informe_Domicilios_Agente.IncluirAgentes(Area area) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Informe_Domicilios_Agente.aspx.cs:línea 139
+   en SisPer.Aplicativo.Personal_Informe_Domicilios_Agente.Generar_informe_cierres_mensuales() en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Informe_Domicilios_Agente.aspx.cs:línea 197
+   en SisPer.Aplicativo.Personal_Informe_Domicilios_Agente.btn_Buscar_Click(Object sender, EventArgs e) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\Personal_Informe_Domicilios_Agente.aspx.cs:línea 99
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
