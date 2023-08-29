@@ -577,7 +577,8 @@ namespace SisPer.Aplicativo
             {
                 HorarioVespertino hvexiste = cxt.HorariosVespertinos.FirstOrDefault(
                                                     hhv => hhv.Dia == d &&
-                                                    hhv.AgenteId == ag.Id
+                                                    hhv.AgenteId == ag.Id && 
+                                                    (hhv.Estado == EstadosHorarioVespertino.Solicitado || hhv.Estado == EstadosHorarioVespertino.Aprobado)
                                                     );
                 ret = hvexiste != null;
             }
