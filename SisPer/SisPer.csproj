@@ -909,6 +909,7 @@
     <Content Include="Imagenes\page_white_gear.png" />
     <Content Include="Imagenes\pencil.png" />
     <Content Include="Imagenes\report_user.png" />
+    <Content Include="Imagenes\sello.jpg" />
     <Content Include="Imagenes\time_add.png" />
     <Content Include="Imagenes\user_add.png" />
     <Content Include="Imagenes\user_edit.png" />
@@ -1710,6 +1711,7 @@
     <Compile Include="Aplicativo\Reportes\Informe_cambio_de_turno.cs" />
     <Compile Include="Aplicativo\Reportes\Informe_cierres_mensuales.cs" />
     <Compile Include="Aplicativo\Reportes\Informe_remotos_autorizados.cs" />
+    <Compile Include="Aplicativo\Reportes\Informe_solicitud_medico.cs" />
     <Compile Include="Aplicativo\Reportes\ListadoAgentes_DS.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

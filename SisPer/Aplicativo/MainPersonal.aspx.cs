@@ -1,9 +1,14 @@
-﻿using System;
+﻿using SisPer.Aplicativo.Controles;
+using SisPer.Aplicativo.Reportes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Services.Description;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace SisPer.Aplicativo
 {
@@ -30,9 +35,10 @@ namespace SisPer.Aplicativo
                     MenuPersonalAgente1.Visible = !(ag.Jefe || ag.JefeTemporal);
                     CargarFrancos();
                     CargarHVS();
-                    CargarSolicitudes();
+                    CargarSolicitudesMedico();
+                    CargarOtrasSolicitudes();
                     CargarCambiosPendientes();
-                    
+
                     bool mostrarMensaje = Convert.ToBoolean(Session["MostrarMensageBienvenida"]);
                     Session["MostrarMensageBienvenida"] = false;
                     if (mostrarMensaje)
@@ -117,12 +123,12 @@ namespace SisPer.Aplicativo
         {
             Model1Container cxt = new Model1Container();
             var cambios = (from c in cxt.CambiosPendientes.Include("Agente")
-                          select new
-                          {
-                              Usr = c.Agente.Usr,
-                              Agente = c.Agente.ApellidoYNombre,
-                              Legajo = c.Agente.Legajo
-                          }).ToList();
+                           select new
+                           {
+                               Usr = c.Agente.Usr,
+                               Agente = c.Agente.ApellidoYNombre,
+                               Legajo = c.Agente.Legajo
+                           }).ToList();
             GridViewCambiosPendientes.DataSource = cambios;
             GridViewCambiosPendientes.DataBind();
         }
@@ -186,13 +192,14 @@ namespace SisPer.Aplicativo
             Response.Redirect("~/Aplicativo/Personal_AprobarCambiosDatosAgentes.aspx");
         }
 
-        protected void CargarSolicitudes(int legajo = 0)
+        protected void CargarSolicitudesMedico(int legajo = 0)
         {
             Model1Container cxt = new Model1Container();
 
             var solicitudes = (from se in cxt.SolicitudesDeEstado
                                where
                                    se.Estado == EstadoSolicitudDeEstado.Solicitado &&
+                                   se.TipoEstadoAgente.Estado.Contains("Enfermedad") &&
                                    (se.Agente.Legajo == legajo || legajo == 0)
                                select se).AsEnumerable().Select(x => new
                                {
@@ -210,14 +217,181 @@ namespace SisPer.Aplicativo
                                    Lugar = x.Lugar
                                }).ToList();
 
-            gv_EstadosSolicitados.DataSource = solicitudes.OrderBy(d => d.prioridadOrden).ThenByDescending(d => d.Fechahora).ToList();
-            gv_EstadosSolicitados.DataBind();
+            gv_MedicosSolicitados.DataSource = solicitudes.OrderBy(d => d.prioridadOrden).ThenByDescending(d => d.Fechahora).ToList();
+            gv_MedicosSolicitados.DataBind();
+        }
+
+        protected void CargarOtrasSolicitudes(int legajo = 0)
+        {
+            Model1Container cxt = new Model1Container();
+
+            var solicitudes = (from se in cxt.SolicitudesDeEstado
+                               where
+                                   se.Estado == EstadoSolicitudDeEstado.Solicitado &&
+                                   !se.TipoEstadoAgente.Estado.Contains("Enfermedad") &&
+                                   (se.Agente.Legajo == legajo || legajo == 0)
+                               select se).AsEnumerable().Select(x => new
+                               {
+                                   prioridadOrden = x.TipoEstadoAgente.OrdenPrioridad,
+                                   Id = x.Id,
+                                   Agente = x.Agente.ApellidoYNombre,
+                                   Legajo = x.Agente.Legajo,
+                                   Tipo = x.TipoEstadoAgente.Estado,
+                                   Desde = x.FechaDesde,
+                                   Hasta = x.FechaHasta,
+                                   Encuadre = ProcesosGlobales.ObtenerEncuadre(x),
+                                   Fechahora = x.FechaHoraSolicitud,
+                                   Familiar = x.Fam_NomyAp,
+                                   Parentesco = x.Fam_Parentesco,
+                                   Lugar = x.Lugar
+                               }).ToList();
+
+            gv_otras_solicitudes.DataSource = solicitudes.OrderBy(d => d.prioridadOrden).ThenByDescending(d => d.Fechahora).ToList();
+            gv_otras_solicitudes.DataBind();
+        }
+
+        protected void btn_Administrar_Click(object sender, ImageClickEventArgs e)
+        {
+            int id_solicitud = 0;
+            if (int.TryParse(((ImageButton)sender).CommandArgument, out id_solicitud))
+            {
+                administrar_solicitud_medico(id_solicitud);
+            }
+        }
+
+        private void administrar_solicitud_medico(int id_solicitud)
+        {
+            using (var cxt = new Model1Container())
+            {
+                SolicitudDeEstado se = cxt.SolicitudesDeEstado.FirstOrDefault(s => s.Id == id_solicitud);
+
+                if (se != null)
+                {
+                    lbl_pre_act_elect.Text = "E20-" + DateTime.Today.Year.ToString() + "-";
+                    lbl_agente.Text = "Legajo: " + se.Agente.Legajo + ". Apellido y nombre: " + se.Agente.ApellidoYNombre;
+                    lbl_ficha_medica.Text = se.Agente.Legajo_datos_laborales.FichaMedica;
+                    lbl_domicilio.Text = se.Agente.Legajo_datos_personales.Domicilio + " - " + se.Agente.Legajo_datos_personales.Domicilio_localidad;
+                    lbl_tipo.Text = se.TipoEstadoAgente.Estado;
+                    lbl_encuadre.Text = ProcesosGlobales.ObtenerEncuadre(se) + " " + se.Lugar;
+                    if (se.Fam_NomyAp != null)
+                    {
+                        lbl_familiar.Text = se.Fam_NomyAp + " - " + se.Fam_Parentesco;
+                        fila_familiar.Visible = true;
+                    }
+                    else
+                    {
+                        lbl_familiar.Text = "";
+                        fila_familiar.Visible = false;
+                    }
+                    lbl_fecha_desde.Text = se.FechaDesde.ToShortDateString();
+                    lbl_modal_solicitud_Id.Text = se.Id.ToString();
+                    lbl_modal_titulo.Text = "Detalle de solicitud de médico";
+
+
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "admin_solicitud_medico", "<script language=\"javascript\"  type=\"text/javascript\">$(document).ready(function() { $('#modal_solicitud_medico').modal('show')});</script>", false);
+                }
+            }
         }
 
         protected void gv_EstadosSolicitados_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            gv_EstadosSolicitados.PageIndex = e.NewPageIndex;
-            CargarSolicitudes();
+            gv_MedicosSolicitados.PageIndex = e.NewPageIndex;
+            CargarSolicitudesMedico();
+        }
+
+
+        protected void btn_filtrarSolicitudes_Click(object sender, EventArgs e)
+        {
+            int legajo = 0;
+            if (!int.TryParse(tb_LegajoBuscado.Value, out legajo))
+            {
+                if (tb_LegajoBuscado.Value != string.Empty)
+                {
+                    Controles.MessageBox.Show(this, "El legajo ingresado es inválido", Controles.MessageBox.Tipo_MessageBox.Warning);
+                }
+            }
+
+            CargarSolicitudesMedico(legajo);
+            tb_LegajoBuscado.Value = string.Empty;
+        }
+
+        protected void btn_imprimir_solicitud_medico_ServerClick(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(lbl_modal_solicitud_Id.Text);
+            if(tb_actuacion_electronica.Text != string.Empty)
+            {
+                Model1Container cxt = new Model1Container();
+                SolicitudDeEstado se = cxt.SolicitudesDeEstado.FirstOrDefault(s => s.Id == id);
+
+                Informe_solicitud_medico reporte = new Informe_solicitud_medico();
+                reporte.actuacion_electronica = "E20-" + DateTime.Today.Year.ToString() + "-" + tb_actuacion_electronica.Text + "-Ae";
+                reporte.solicitud = se;
+
+                byte[] bytes = reporte.Generar_informe();
+
+                if (bytes != null)
+                {
+                    Session["Bytes"] = bytes;
+
+                    string script = "<script type='text/javascript'>window.open('Reportes/ReportePDF.aspx');</script>";
+                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "VentanaPadre", script);
+                }
+                else
+                {
+                    Controles.MessageBox.Show(this, "Ocurrió un error al obtener los datos de la solicitud", Controles.MessageBox.Tipo_MessageBox.Info);
+                }
+            }
+        }
+
+        protected void btn_aprobar_solicitud_medico_ServerClick(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(lbl_modal_solicitud_Id.Text);
+
+            Model1Container cxt = new Model1Container();
+            SolicitudDeEstado se = cxt.SolicitudesDeEstado.FirstOrDefault(s => s.Id == id);
+            se.FechaHasta = Convert.ToDateTime(tb_fecha_hasta.Text);
+            cxt.SaveChanges();
+
+            if (se != null)
+            {
+                int year = 0;
+                if (se.TipoEstadoAgente.Estado == "Licencia Anual" || se.TipoEstadoAgente.Estado == "Licencia Anual (Saldo)" || se.TipoEstadoAgente.Estado == "Licencia Anual (Anticipo)")
+                {
+                    year = Convert.ToInt32(se.TipoEnfermedad);
+                }
+
+                for (DateTime dia = se.FechaDesde; dia <= se.FechaHasta; dia = dia.AddDays(1))
+                {
+                    ProcesosGlobales.AgendarEstadoDiaAgente(se.SolicitadoPor, se.Agente, dia, se.TipoEstadoAgente, year);
+                }
+
+                se.Estado = EstadoSolicitudDeEstado.Aprobado;
+                cxt.SaveChanges();
+            }
+
+            CargarSolicitudesMedico();
+        }
+
+        protected void btn_rechazar_solicitud_medico_ServerClick(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(lbl_modal_solicitud_Id.Text);
+
+            Model1Container cxt = new Model1Container();
+            SolicitudDeEstado se = cxt.SolicitudesDeEstado.FirstOrDefault(s => s.Id == id);
+
+            if (se != null)
+            {
+                se.Estado = EstadoSolicitudDeEstado.Rechazado;
+                cxt.SaveChanges();
+            }
+
+            CargarSolicitudesMedico();
+        }
+
+        protected void gv_otras_solicitudes_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gv_otras_solicitudes.PageIndex = e.NewPageIndex;
+            CargarOtrasSolicitudes();
         }
 
         protected void btn_Aprobar_Click(object sender, ImageClickEventArgs e)
@@ -244,7 +418,7 @@ namespace SisPer.Aplicativo
                 cxt.SaveChanges();
             }
 
-            CargarSolicitudes();
+            CargarOtrasSolicitudes();
         }
 
         protected void btn_Rechazar_Click(object sender, ImageClickEventArgs e)
@@ -260,14 +434,13 @@ namespace SisPer.Aplicativo
                 cxt.SaveChanges();
             }
 
-            CargarSolicitudes();
+            CargarOtrasSolicitudes();
         }
 
-
-        protected void btn_filtrarSolicitudes_Click(object sender, EventArgs e)
+        protected void btn_filtrarOtrasSolicitudes_Click(object sender, EventArgs e)
         {
             int legajo = 0;
-            if (!int.TryParse(tb_LegajoBuscado.Value, out legajo))
+            if (!int.TryParse(tb_legajo_otras_solicitudes.Value, out legajo))
             {
                 if (tb_LegajoBuscado.Value != string.Empty)
                 {
@@ -275,8 +448,8 @@ namespace SisPer.Aplicativo
                 }
             }
 
-            CargarSolicitudes(legajo);
-            tb_LegajoBuscado.Value = string.Empty;
+            CargarOtrasSolicitudes(legajo);
+            tb_legajo_otras_solicitudes.Value = string.Empty;
         }
     }
 }

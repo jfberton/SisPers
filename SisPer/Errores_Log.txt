@@ -20155,3 +20155,363 @@ STACKTRACE:    en SisPer.Aplicativo.Personal_Informe_Domicilios_Agente.IncluirAg
 
 
 ******************************************************************
+ 
+
+******************************************************************
+
+DATE: 29/8/2023 10:23:31
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: c:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\MainPersonal.aspx(265): error CS0123: Ninguna sobrecarga correspondiente a 'btn_Aprobar_Click' coincide con el 'System.EventHandler' delegado
+
+SOURCE: System.Web
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainPersonal.aspx
+
+TARGETSITE: System.CodeDom.Compiler.CompilerResults Compile()
+
+STACKTRACE:    en System.Web.Compilation.AssemblyBuilder.Compile()
+   en System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+   en System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   en System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   en System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   en System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(VirtualPath virtualPath, HttpContext context, Boolean allowCrossApp, Boolean throwIfNotFound)
+   en System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(VirtualPath virtualPath, Type requiredBaseType, HttpContext context, Boolean allowCrossApp)
+   en System.Web.UI.PageHandlerFactory.GetHandlerHelper(HttpContext context, String requestType, VirtualPath virtualPath, String physicalPath)
+   en System.Web.HttpApplication.MaterializeHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   en System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   en System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 29/8/2023 10:24:21
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: c:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\MainPersonal.aspx(265): error CS0123: Ninguna sobrecarga correspondiente a 'btn_Aprobar_Click' coincide con el 'System.EventHandler' delegado
+
+SOURCE: System.Web
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainPersonal.aspx
+
+TARGETSITE: System.CodeDom.Compiler.CompilerResults Compile()
+
+STACKTRACE:    en System.Web.Compilation.AssemblyBuilder.Compile()
+   en System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+   en System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   en System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   en System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   en System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(VirtualPath virtualPath, HttpContext context, Boolean allowCrossApp, Boolean throwIfNotFound)
+   en System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(VirtualPath virtualPath, Type requiredBaseType, HttpContext context, Boolean allowCrossApp)
+   en System.Web.UI.PageHandlerFactory.GetHandlerHelper(HttpContext context, String requestType, VirtualPath virtualPath, String physicalPath)
+   en System.Web.HttpApplication.MaterializeHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   en System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   en System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 29/8/2023 10:26:47
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: DataBinding: '<>f__AnonymousType60`12[[System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neu...' no contiene una propiedad con el nombre 'nombre_agente'.
+
+SOURCE: System.Web
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainPersonal.aspx
+
+TARGETSITE: System.Object GetPropertyValue(System.Object, System.String)
+
+STACKTRACE:    en System.Web.UI.DataBinder.GetPropertyValue(Object container, String propName)
+   en System.Web.UI.DataBinder.Eval(Object container, String[] expressionParts)
+   en ASP.aplicativo_mainpersonal_aspx.__DataBinding__control80(Object sender, EventArgs e) en c:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\MainPersonal.aspx:línea 185
+   en System.Web.UI.Control.OnDataBinding(EventArgs e)
+   en System.Web.UI.Control.DataBind(Boolean raiseOnDataBinding)
+   en System.Web.UI.Control.DataBindChildren()
+   en System.Web.UI.Control.DataBind(Boolean raiseOnDataBinding)
+   en System.Web.UI.Control.DataBindChildren()
+   en System.Web.UI.Control.DataBind(Boolean raiseOnDataBinding)
+   en System.Web.UI.WebControls.GridView.CreateRow(Int32 rowIndex, Int32 dataSourceIndex, DataControlRowType rowType, DataControlRowState rowState, Boolean dataBind, Object dataItem, DataControlField[] fields, TableRowCollection rows, PagedDataSource pagedDataSource)
+   en System.Web.UI.WebControls.GridView.CreateChildControls(IEnumerable dataSource, Boolean dataBinding)
+   en System.Web.UI.WebControls.CompositeDataBoundControl.PerformDataBinding(IEnumerable data)
+   en System.Web.UI.WebControls.GridView.PerformDataBinding(IEnumerable data)
+   en System.Web.UI.WebControls.DataBoundControl.OnDataSourceViewSelectCallback(IEnumerable data)
+   en SisPer.Aplicativo.MainPersonal.CargarSolicitudesMedico(Int32 legajo) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\MainPersonal.aspx.cs:línea 216
+   en SisPer.Aplicativo.MainPersonal.Page_Load(Object sender, EventArgs e) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\MainPersonal.aspx.cs:línea 35
+   en System.Web.UI.Control.OnLoad(EventArgs e)
+   en System.Web.UI.Control.LoadRecursive()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 29/8/2023 10:27:23
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: DataBinding: '<>f__AnonymousType60`12[[System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neu...' no contiene una propiedad con el nombre 'nombre_agente'.
+
+SOURCE: System.Web
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainPersonal.aspx
+
+TARGETSITE: System.Object GetPropertyValue(System.Object, System.String)
+
+STACKTRACE:    en System.Web.UI.DataBinder.GetPropertyValue(Object container, String propName)
+   en System.Web.UI.DataBinder.Eval(Object container, String[] expressionParts)
+   en ASP.aplicativo_mainpersonal_aspx.__DataBinding__control80(Object sender, EventArgs e) en c:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\MainPersonal.aspx:línea 185
+   en System.Web.UI.Control.OnDataBinding(EventArgs e)
+   en System.Web.UI.Control.DataBind(Boolean raiseOnDataBinding)
+   en System.Web.UI.Control.DataBindChildren()
+   en System.Web.UI.Control.DataBind(Boolean raiseOnDataBinding)
+   en System.Web.UI.Control.DataBindChildren()
+   en System.Web.UI.Control.DataBind(Boolean raiseOnDataBinding)
+   en System.Web.UI.WebControls.GridView.CreateRow(Int32 rowIndex, Int32 dataSourceIndex, DataControlRowType rowType, DataControlRowState rowState, Boolean dataBind, Object dataItem, DataControlField[] fields, TableRowCollection rows, PagedDataSource pagedDataSource)
+   en System.Web.UI.WebControls.GridView.CreateChildControls(IEnumerable dataSource, Boolean dataBinding)
+   en System.Web.UI.WebControls.CompositeDataBoundControl.PerformDataBinding(IEnumerable data)
+   en System.Web.UI.WebControls.GridView.PerformDataBinding(IEnumerable data)
+   en System.Web.UI.WebControls.DataBoundControl.OnDataSourceViewSelectCallback(IEnumerable data)
+   en SisPer.Aplicativo.MainPersonal.CargarSolicitudesMedico(Int32 legajo) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\MainPersonal.aspx.cs:línea 216
+   en SisPer.Aplicativo.MainPersonal.Page_Load(Object sender, EventArgs e) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\MainPersonal.aspx.cs:línea 35
+   en System.Web.UI.Control.OnLoad(EventArgs e)
+   en System.Web.UI.Control.LoadRecursive()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 29/8/2023 10:33:44
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: No se puede convertir un objeto de tipo 'System.Web.UI.HtmlControls.HtmlButton' al tipo 'System.Web.UI.WebControls.ImageButton'.
+
+SOURCE: SisPer
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainPersonal.aspx
+
+TARGETSITE: Void btn_aprobar_solicitud_medico_ServerClick(System.Object, System.EventArgs)
+
+STACKTRACE:    en SisPer.Aplicativo.MainPersonal.btn_aprobar_solicitud_medico_ServerClick(Object sender, EventArgs e) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\MainPersonal.aspx.cs:línea 289
+   en System.Web.UI.HtmlControls.HtmlButton.OnServerClick(EventArgs e)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 29/8/2023 10:35:00
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: No se puede convertir un objeto de tipo 'System.Web.UI.HtmlControls.HtmlButton' al tipo 'System.Web.UI.WebControls.Button'.
+
+SOURCE: SisPer
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainPersonal.aspx
+
+TARGETSITE: Void btn_aprobar_solicitud_medico_ServerClick(System.Object, System.EventArgs)
+
+STACKTRACE:    en SisPer.Aplicativo.MainPersonal.btn_aprobar_solicitud_medico_ServerClick(Object sender, EventArgs e) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\MainPersonal.aspx.cs:línea 289
+   en System.Web.UI.HtmlControls.HtmlButton.OnServerClick(EventArgs e)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 29/8/2023 10:46:08
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: La cadena de entrada no tiene el formato correcto.
+
+SOURCE: mscorlib
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainPersonal.aspx
+
+TARGETSITE: Void StringToNumber(System.String, System.Globalization.NumberStyles, NumberBuffer ByRef, System.Globalization.NumberFormatInfo, Boolean)
+
+STACKTRACE:    en System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   en System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   en System.Convert.ToInt32(String value)
+   en SisPer.Aplicativo.MainPersonal.btn_aprobar_solicitud_medico_ServerClick(Object sender, EventArgs e) en C:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\MainPersonal.aspx.cs:línea 290
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 30/8/2023 10:35:26
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: c:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\MainPersonal.aspx(224): error CS1012: Demasiados caracteres en literal de carácter
+
+SOURCE: System.Web
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainPersonal.aspx
+
+TARGETSITE: System.CodeDom.Compiler.CompilerResults Compile()
+
+STACKTRACE:    en System.Web.Compilation.AssemblyBuilder.Compile()
+   en System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+   en System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   en System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   en System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   en System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(VirtualPath virtualPath, HttpContext context, Boolean allowCrossApp, Boolean throwIfNotFound)
+   en System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(VirtualPath virtualPath, Type requiredBaseType, HttpContext context, Boolean allowCrossApp)
+   en System.Web.UI.PageHandlerFactory.GetHandlerHelper(HttpContext context, String requestType, VirtualPath virtualPath, String physicalPath)
+   en System.Web.HttpApplication.MaterializeHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   en System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   en System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 30/8/2023 10:36:52
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: c:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\MainPersonal.aspx(224): error CS1012: Demasiados caracteres en literal de carácter
+
+SOURCE: System.Web
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainPersonal.aspx
+
+TARGETSITE: System.CodeDom.Compiler.CompilerResults Compile()
+
+STACKTRACE:    en System.Web.Compilation.AssemblyBuilder.Compile()
+   en System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+   en System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   en System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   en System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   en System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(VirtualPath virtualPath, HttpContext context, Boolean allowCrossApp, Boolean throwIfNotFound)
+   en System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(VirtualPath virtualPath, Type requiredBaseType, HttpContext context, Boolean allowCrossApp)
+   en System.Web.UI.PageHandlerFactory.GetHandlerHelper(HttpContext context, String requestType, VirtualPath virtualPath, String physicalPath)
+   en System.Web.HttpApplication.MaterializeHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   en System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   en System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 30/8/2023 10:38:04
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: c:\Users\berton\Documents\Desarrollo\ATP\antes del 2020\SisPer\SisPer\Aplicativo\MainPersonal.aspx(224): error CS1012: Demasiados caracteres en literal de carácter
+
+SOURCE: System.Web
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainPersonal.aspx
+
+TARGETSITE: System.CodeDom.Compiler.CompilerResults Compile()
+
+STACKTRACE:    en System.Web.Compilation.AssemblyBuilder.Compile()
+   en System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+   en System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   en System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   en System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   en System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(VirtualPath virtualPath, HttpContext context, Boolean allowCrossApp, Boolean throwIfNotFound)
+   en System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(VirtualPath virtualPath, Type requiredBaseType, HttpContext context, Boolean allowCrossApp)
+   en System.Web.UI.PageHandlerFactory.GetHandlerHelper(HttpContext context, String requestType, VirtualPath virtualPath, String physicalPath)
+   en System.Web.HttpApplication.MaterializeHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   en System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   en System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
+
+******************************************************************
+ 
+
+******************************************************************
+
+DATE: 30/8/2023 12:08:48
+
+AGENTE: Bertoncini, José Federico
+
+MESSAGE: Tiempo de espera de la operación de espera agotado
+
+SOURCE: 
+
+INSTANCE: 
+
+DATA: System.Collections.ListDictionaryInternal
+
+URL: http://localhost:5678/Aplicativo/MainPersonal.aspx
+
+TARGETSITE: 
+
+STACKTRACE: 
+
+
+******************************************************************
