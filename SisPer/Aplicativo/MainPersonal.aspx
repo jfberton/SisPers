@@ -289,15 +289,13 @@
                                         <table class="table-condensed">
                                             <tr>
                                                 <td>
-                                                    <strong>Fecha desde
-                                                    </strong>
+                                                    <strong>Fecha desde</strong>
                                                 </td>
                                                 <td>
-                                                    <asp:Label Text="" ID="lbl_fecha_desde" runat="server" />
+                                                    <asp:Label runat="server" ID="lbl_fecha_desde" Enabled="false" />
                                                 </td>
                                                 <td>
-                                                    <strong>Fecha hasta
-                                                    </strong>
+                                                    <strong>Fecha hasta</strong>
                                                 </td>
                                                 <td>
                                                     <asp:TextBox runat="server" ID="tb_fecha_hasta" />
@@ -404,18 +402,29 @@
             var tbFechaHasta = document.getElementById('<%= tb_fecha_hasta.ClientID %>');
             btnAprobarSolicitudMedico.disabled = tbFechaHasta.value === "";
 
-            
+
             tbActuacionElectronica.addEventListener("input", function () {
                 btnImprimirSolicitudMedico.disabled = tbActuacionElectronica.value === "";
             });
 
             tbFechaHasta.addEventListener("input", function () {
-                btnAprobarSolicitudMedico.disabled = tbFechaHasta.value === "";
+                // Obtenemos la fecha del label
+                var fecha_desde = $("#<%=lbl_fecha_desde.ClientID %>");
+
+                // Convertimos la fecha del label a un objeto Date
+                var fecha_desde_objeto = new Date(fecha_desde.text());
+
+                // Obtenemos la fecha del textbox
+                var fecha_hasta = $("#<%= tb_fecha_hasta.ClientID %>");
+
+                // Convertimos la fecha del textbox a un objeto Date
+                var fecha_hasta_objeto = new Date(fecha_hasta.val());
+
+                // Validamos que la fecha del textbox sea del tipo fecha
+                btnAprobarSolicitudMedico.disabled = !(fecha_hasta_objeto instanceof Date && fecha_hasta_objeto >= fecha_desde_objeto);
             });
 
-
         });
-
     </script>
 
 </asp:Content>

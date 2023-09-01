@@ -340,6 +340,8 @@ namespace SisPer.Aplicativo
                 {
                     Controles.MessageBox.Show(this, "Ocurrió un error al obtener los datos de la solicitud", Controles.MessageBox.Tipo_MessageBox.Info);
                 }
+
+                tb_actuacion_electronica.Text = string.Empty;
             }
         }
 
