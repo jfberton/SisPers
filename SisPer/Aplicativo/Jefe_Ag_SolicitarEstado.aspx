@@ -53,22 +53,33 @@
                                                 <asp:CustomValidator ID="cv_tipoMovimiento" runat="server" ErrorMessage="Este movimiento puede ser informado únicamente hasta las 08:00hs de día a solicitar."
                                                     Text="<img src='../Imagenes/exclamation.gif' title='Este movimiento puede ser informado únicamente hasta las 08:00hs de día a solicitar.' />"
                                                     OnServerValidate="cv_tipoMovimiento_ServerValidate"></asp:CustomValidator><asp:DropDownList ID="ddl_TipoMovimiento" CssClass="form-control" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddl_TipoMovimiento_SelectedIndexChanged">
-                                                </asp:DropDownList>
-
+                                                    </asp:DropDownList>
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <td>
+                                                <asp:DropDownList runat="server" ID="ddl_Encuadre" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddl_Encuadre_SelectedIndexChanged">
+                                                </asp:DropDownList>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="2">
+                                                <asp:Label ID="lbl_domicilio_localidad" Text="Datos domicilio para enfermedad" runat="server" Style="text-decoration: underline" />
+                                            </td>
+                                        </tr>
+
                                         <tr id="tr_domicilio">
                                             <td colspan="2">
-                                               
                                                 <asp:Label ID="lbl_domicilio" Text="Domicilio" runat="server" Style="font-weight: 700" />
-                                                 <asp:CustomValidator ID="cv_domicilio" runat="server" ErrorMessage="Debe consignar el de domicilio del agente para poder continuar."
+                                                <asp:CustomValidator ID="cv_domicilio" runat="server" ErrorMessage="Debe consignar el de domicilio del agente para poder continuar."
                                                     Text="<img src='../Imagenes/exclamation.gif' title='Debe consignar el de domicilio del agente para poder continuar.' />"
                                                     OnServerValidate="cv_domicilio_ServerValidate"></asp:CustomValidator><asp:TextBox ID="tb_domicilio" CssClass="form-control" runat="server" />
                                             </td>
                                         </tr>
                                         <tr id="tr_localidad">
                                             <td colspan="2">
-                                                
+
                                                 <asp:Label ID="lbl_localidad" Text="Localidad" runat="server" Style="font-weight: 700" />
                                                 <asp:CustomValidator ID="cv_localidad" runat="server" ErrorMessage="Debe consignar la localidad del agente para poder continuar."
                                                     Text="<img src='../Imagenes/exclamation.gif' title='Debe consignar la localidad del agente para poder continuar.' />"
@@ -77,79 +88,58 @@
                                         </tr>
                                         <tr>
                                             <td colspan="2">
-                                                <asp:Panel runat="server" ID="p_DatosExtra" Visible="false">
-                                                    <asp:Label ID="lbl_DatosExtra" Text="Datos extra" runat="server" Style="font-weight: 700" />
-                                                    <br />
-                                                    <table>
-                                                        <tr>
-                                                            <tb colspan="2">
-                                                                <asp:Label ID="lbl_encuadre" Text="Encuadre" runat="server" Style="text-decoration: underline" />
-                                                            </tb>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>&nbsp;</td>
-                                                            <td>
-                                                                <asp:DropDownList runat="server" ID="ddl_Encuadre" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddl_Encuadre_SelectedIndexChanged">
-                                                                </asp:DropDownList>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                    <table>
-                                                        <tr>
-                                                            <td colspan="2">
-                                                                <asp:Label ID="lbl_familiar" Text="Datos familiar" runat="server" Style="text-decoration: underline" />
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <%--familiar--%>
-                                                            <td>&nbsp;</td>
-                                                            <td>
-                                                                <asp:CustomValidator ID="cv_fam_nomyap" runat="server" ErrorMessage="Debe ingresar el nombre y apellido del familiar."
-                                                                    Text="<img src='../Imagenes/exclamation.gif' title='Debe ingresar el nombre y apellido del familiar.' />"
-                                                                    OnServerValidate="cv_fam_nomyap_ServerValidate"></asp:CustomValidator>
-                                                                <asp:Label ID="lbl_fam_nomyAp" Text="Nombre y apellido" runat="server" />
-                                                                <asp:TextBox runat="server" ID="tb_fam_nomyap" CssClass="form-control" />
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <%--Parentesco--%>
-                                                            <td>&nbsp;</td>
-                                                            <td>
-                                                                <asp:CustomValidator ID="cv_fam_parentesco" runat="server" ErrorMessage="Debe ingresar el parentesco del familiar."
-                                                                    Text="<img src='../Imagenes/exclamation.gif' title='Debe ingresar el parentesco del familiar.' />"
-                                                                    OnServerValidate="cv_fam_parentesco_ServerValidate"></asp:CustomValidator>
-                                                                <asp:Label ID="lbl_fam_parentesco" Text="Parentesco" runat="server" />
-                                                                <asp:TextBox runat="server" ID="tb_fam_parentesco" CssClass="form-control" />
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>&nbsp;</td>
-                                                            <tb>
-                                                                <asp:CustomValidator ID="cv_sanatorio" runat="server" ErrorMessage="Debe ingresar el sanatorio donde se encuentra internado."
-                                                                    Text="<img src='../Imagenes/exclamation.gif' title='Debe ingresar el sanatorio donde se encuentra internado.' />"
-                                                                    OnServerValidate="cv_sanatorio_ServerValidate">
-                                                                </asp:CustomValidator>
-                                                                <asp:Label Text="Sanatorio" ID="lbl_Sanatorio" runat="server" />
-                                                                <asp:TextBox runat="server" ID="tb_sanatorio" CssClass="form-control" />
-                                                                <asp:DropDownList runat="server" ID="ddl_provincias" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddl_provincias_SelectedIndexChanged" Visible="false">
-                                                                </asp:DropDownList>
-                                                            </tb>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>&nbsp;</td>
-                                                            <tb>
-                                                                <asp:CustomValidator ID="cv_habitacion" runat="server" ErrorMessage="Debe ingresar la habitación donde se encuentra internado."
-                                                                    Text="<img src='../Imagenes/exclamation.gif' title='Debe ingresar el sanatorio donde se encuentra internado.' />"
-                                                                    OnServerValidate="cv_habitacion_ServerValidate">
-                                                                </asp:CustomValidator>
-                                                                <asp:Label ID="lbl_habitacion" Text="Habitación" runat="server" />
-                                                                <asp:TextBox runat="server" ID="tb_habitacion" CssClass="form-control" />
-                                                            </tb>
-                                                        </tr>
-
-                                                    </table>
-                                                </asp:Panel>
+                                                <asp:Label ID="lbl_familiar" Text="Datos familiar" runat="server" Style="text-decoration: underline" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <%--familiar--%>
+                                            <td colspan="2">
+                                                <asp:Label ID="lbl_fam_nomyAp" Text="Nombre y apellido" runat="server" Style="font-weight: 700" />
+                                                <asp:CustomValidator ID="cv_fam_nomyap" runat="server" ErrorMessage="Debe ingresar el nombre y apellido del familiar."
+                                                    Text="<img src='../Imagenes/exclamation.gif' title='Debe ingresar el nombre y apellido del familiar.' />"
+                                                    OnServerValidate="cv_fam_nomyap_ServerValidate"></asp:CustomValidator>
+                                                <asp:TextBox ID="tb_fam_nomyap" CssClass="form-control" runat="server" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <%--Parentesco--%>
+                                            <td colspan="2">
+                                                <asp:Label ID="lbl_fam_parentesco" Text="Parentesco" runat="server" Style="font-weight: 700" />
+                                                <asp:CustomValidator ID="cv_fam_parentesco" runat="server" ErrorMessage="Debe ingresar el parentesco del familiar."
+                                                    Text="<img src='../Imagenes/exclamation.gif' title='Debe ingresar el parentesco del familiar.' />"
+                                                    OnServerValidate="cv_fam_parentesco_ServerValidate"></asp:CustomValidator>
+                                                <asp:TextBox runat="server" ID="tb_fam_parentesco" CssClass="form-control" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <asp:Label ID="lbl_internacion" Text="Datos internación" runat="server" Style="text-decoration: underline" />
+                                            </td>
+                                        </tr>
+                                         <tr>
+                                            <td colspan="2">
+                                                <asp:Label ID="lbl_internacion_en_provincia" Text="Datos atención en otra provincia" runat="server" Style="text-decoration: underline" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <asp:Label Text="Sanatorio" ID="lbl_Sanatorio" runat="server" Style="font-weight: 700" /><asp:CustomValidator ID="cv_sanatorio" runat="server" ErrorMessage="Debe ingresar el sanatorio donde se encuentra internado."
+                                                    Text="<img src='../Imagenes/exclamation.gif' title='Debe ingresar el sanatorio donde se encuentra internado.' />"
+                                                    OnServerValidate="cv_sanatorio_ServerValidate">
+                                                </asp:CustomValidator>
+                                                <asp:TextBox runat="server" ID="tb_sanatorio" CssClass="form-control" />
+                                                <asp:DropDownList runat="server" ID="ddl_provincias" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddl_provincias_SelectedIndexChanged" Visible="false">
+                                                </asp:DropDownList>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <asp:Label ID="lbl_habitacion" Text="Habitación" runat="server" Style="font-weight: 700" />
+                                                <asp:CustomValidator ID="cv_habitacion" runat="server" ErrorMessage="Debe ingresar la habitación donde se encuentra internado."
+                                                    Text="<img src='../Imagenes/exclamation.gif' title='Debe ingresar el sanatorio donde se encuentra internado.' />"
+                                                    OnServerValidate="cv_habitacion_ServerValidate">
+                                                </asp:CustomValidator>
+                                                <asp:TextBox runat="server" ID="tb_habitacion" CssClass="form-control" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -159,7 +149,6 @@
                                                 </p>
                                             </td>
                                         </tr>
-
                                     </table>
                                 </div>
                             </div>
@@ -173,7 +162,7 @@
                         </div>
                         <div class="panel-body">
                             <table class="table-condensed">
-                                <tr>
+                                <tr runat="server" id="desde_row">
                                     <td>
                                         <label for="tb_desde">Desde</label><asp:CustomValidator ID="VerificarDesde" runat="server" ErrorMessage="La fecha ingresada no es válida"
                                             Text="<img src='../Imagenes/exclamation.gif' title='La fecha ingresada no es válida' />"
@@ -196,7 +185,7 @@
                                 </tr>
                                 <tr runat="server" id="hasta_row">
                                     <td>
-                                        <asp:Label runat="server" ID="lbl_hasta" for="tb_hasta" >Hasta</asp:Label><asp:CustomValidator ID="VerificarHasta" runat="server" ErrorMessage="La fecha ingresada no es válida"
+                                        <asp:Label runat="server" ID="lbl_hasta" for="tb_hasta">Hasta</asp:Label><asp:CustomValidator ID="VerificarHasta" runat="server" ErrorMessage="La fecha ingresada no es válida"
                                             Text="<img src='../Imagenes/exclamation.gif' title='La fecha ingresada no es válida' />"
                                             OnServerValidate="VerificarHasta_ServerValidate"></asp:CustomValidator>
                                         <asp:CustomValidator ID="VerificarHastaMayorIgualQueDesde" runat="server" ErrorMessage="La fecha hasta debe ser mayor o igual a la fecha desde."
@@ -219,7 +208,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <asp:Button Text="Solicitar" runat="server" CssClass="btn btn-primary" ID="btn_Solicitar" OnClick="btn_Solicitar_Click" />
+                                        <asp:Button Text="Solicitar" runat="server" CssClass="btn btn-primary" ID="btn_Solicitar" OnClick="btn_Solicitar_Click" OnClientClick="javascript:if (!confirm('¿Desea enviar esta solicitud?')) return false;" />
                                         <asp:CustomValidator ID="cv_VerificarDiasDisponiblesLicencia" runat="server" ErrorMessage="El agente no puede tomarse mas dias de licencia en el año informado."
                                             Text="<img src='../Imagenes/exclamation.gif' title='El agente no puede tomarse mas dias de licencia en el año informado.' />"
                                             OnServerValidate="cv_VerificarDiasDisponiblesLicencia_ServerValidate"></asp:CustomValidator>

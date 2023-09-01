@@ -137,10 +137,20 @@ namespace SisPer.Aplicativo
                                                   select tm).ToList();
             }
 
-            ddl_TipoMovimiento.DataSource = listado_movimientos_permitidos;
-            ddl_TipoMovimiento.DataTextField = "Estado";
-            ddl_TipoMovimiento.DataValueField = "Id";
-            ddl_TipoMovimiento.DataBind();
+            ddl_TipoMovimiento.Items.Clear();
+
+            ListItem li = new ListItem();
+            li.Text = "Seleccione un movimiento";
+            li.Value = "0";
+            ddl_TipoMovimiento.Items.Add(li);
+
+            foreach (TipoEstadoAgente item in listado_movimientos_permitidos)
+            {
+                ListItem li2 = new ListItem();
+                li2.Text = item.Estado;
+                li2.Value = item.Id.ToString();
+                ddl_TipoMovimiento.Items.Add(li2);
+            }
 
             Analizar_Solicitar_Datos_Movimiento();
         }
@@ -163,7 +173,7 @@ namespace SisPer.Aplicativo
 
                 if (ddl_Encuadre.Visible)
                 {
-                    tipoMovimientoEnfermedad  = (TipoMovimientoEnfermedad)Enum.Parse(typeof(TipoMovimientoEnfermedad), ddl_Encuadre.Text);
+                    tipoMovimientoEnfermedad = (TipoMovimientoEnfermedad)Enum.Parse(typeof(TipoMovimientoEnfermedad), ddl_Encuadre.Text);
                 }
 
                 Agente jefe = Obtener_Jefe_que_solicita();
@@ -188,7 +198,7 @@ namespace SisPer.Aplicativo
                 se.FechaHasta = hasta_row.Visible ? Convert.ToDateTime(tb_hasta.Value) : Convert.ToDateTime(tb_desde.Value);
                 se.Estado = EstadoSolicitudDeEstado.Solicitado;
                 se.FechaHoraSolicitud = DateTime.Now;
-                if (p_DatosExtra.Visible)
+                if (ddl_Encuadre.Visible)
                 {
                     if (ddl_TipoMovimiento.SelectedItem.Text == "Licencia Anual"
                         || ddl_TipoMovimiento.SelectedItem.Text == "Licencia Anual (Saldo)"
@@ -198,7 +208,7 @@ namespace SisPer.Aplicativo
                     }
                     else
                     {
-                        se.TipoEnfermedad = (int) tipoMovimientoEnfermedad;
+                        se.TipoEnfermedad = (int)tipoMovimientoEnfermedad;
                     }
                 }
 
@@ -259,6 +269,10 @@ namespace SisPer.Aplicativo
 
                 cxt.SaveChanges();
 
+                MessageBox.Show(this, "La solicitud se generó correctamente.", MessageBox.Tipo_MessageBox.Success);
+
+
+                CargarTiposMovimientos();
                 CargarGrillaMovimientosSolicitados();
             }
         }
@@ -363,8 +377,14 @@ namespace SisPer.Aplicativo
 
         private void Analizar_Solicitar_Datos_Movimiento()
         {
-            p_DatosExtra.Visible = false;
+
+            ddl_Encuadre.Visible = false;
             ddl_Encuadre.Items.Clear();
+
+            lbl_internacion_en_provincia.Visible = false;
+            lbl_internacion.Visible = false;
+            lbl_domicilio_localidad.Visible = false;
+
 
             lbl_habitacion.Visible = false;
             tb_habitacion.Visible = false;
@@ -377,95 +397,109 @@ namespace SisPer.Aplicativo
             lbl_fam_parentesco.Visible = false;
             tb_fam_parentesco.Visible = false;
 
+            tr_domicilio.Visible = false;
+            tr_localidad.Visible = false;
+
+            desde_row.Visible = false;
+            hasta_row.Visible = false;
+
             lbl_Mensaje.Text = string.Empty;
 
             int tipoEstadoId = Convert.ToInt32(ddl_TipoMovimiento.SelectedValue);
-            int id = Obtener_agente_a_solicitar().Id;
-            TipoEstadoAgente tea = cxt.TiposEstadoAgente.FirstOrDefault(t => t.Id == tipoEstadoId);
 
-            if (tea.Estado.Contains("Enfermedad") ||
-                tea.Estado.Contains("Pap, mamografia") ||
-                tea.Estado.Contains("Donación de sangre") ||
-                tea.Estado.Contains("Fallecimiento Familiar"))
+            if (tipoEstadoId != 0)
             {
-                if(tea.Estado.Contains("Enfermedad"))
+                desde_row.Visible = true;
+
+                int id = Obtener_agente_a_solicitar().Id;
+                TipoEstadoAgente tea = cxt.TiposEstadoAgente.FirstOrDefault(t => t.Id == tipoEstadoId);
+
+                if (tea.Estado.Contains("Enfermedad") ||
+                    tea.Estado.Contains("Pap, mamografia") ||
+                    tea.Estado.Contains("Donación de sangre") ||
+                    tea.Estado.Contains("Fallecimiento Familiar"))
                 {
-                    tr_domicilio.Visible = true;
-                    tr_localidad.Visible = true;
+                    if (tea.Estado.Contains("Enfermedad"))
+                    {
+                        lbl_domicilio_localidad.Visible = true;
+                        tr_domicilio.Visible = true;
+                        tr_localidad.Visible = true;
+                    }
+                    else
+                    {
+                        lbl_domicilio_localidad.Visible = false;
+                        tr_domicilio.Visible = false;
+                        tr_localidad.Visible = false;
+                    }
+
+                    hasta_row.Visible = false;
                 }
                 else
                 {
                     tr_domicilio.Visible = false;
                     tr_localidad.Visible = false;
+
+                    hasta_row.Visible = true;
                 }
 
-                hasta_row.Visible = false;
-            }
-            else
-            {
-                tr_domicilio.Visible = false;
-                tr_localidad.Visible = false;
-
-                hasta_row.Visible = true;
-            }
-
-            if (tea.Estado == "Enfermedad común" || tea.Estado == "Enfermedad familiar")
-            {
-                int diasEnfermo = cxt.Agentes.First(a => a.Id == id).
-                                        EstadosPorDiaAgente.Where(eda => eda.Dia.Year == DateTime.Today.Year &&
-                                                                (eda.TipoEstado.Estado == "Enfermedad común" ||
-                                                                eda.TipoEstado.Estado == "Enfermedad familiar")).Count();
-                lbl_Mensaje.Text = "<b>El agente ya lleva tomado " + diasEnfermo.ToString() + " días de licencia entre \"Enfermedad común\" y \"Enfermedad familiar\".</b>\rRecuerde que tiene 20 días al año más 20 días con descuento de Fondo estímulo";
-
-                var tiposMovimientoEnfermedad = Enum.GetValues(typeof(TipoMovimientoEnfermedad));
-                ddl_Encuadre.DataSource = tiposMovimientoEnfermedad;
-                ddl_Encuadre.DataBind();
-                p_DatosExtra.Visible = true;
-
-                if (tea.Estado == "Enfermedad familiar")
+                if (tea.Estado == "Enfermedad común" || tea.Estado == "Enfermedad familiar")
                 {
-                    lbl_familiar.Visible = true;
-                    lbl_fam_nomyAp.Visible = true;
-                    tb_fam_nomyap.Visible = true;
-                    lbl_fam_parentesco.Visible = true;
-                    tb_fam_parentesco.Visible = true;
-                    ddl_Encuadre.Items.Remove(ddl_Encuadre.Items.FindByValue("Consultorio"));
-                }
+                    int diasEnfermo = cxt.Agentes.First(a => a.Id == id).
+                                            EstadosPorDiaAgente.Where(eda => eda.Dia.Year == DateTime.Today.Year &&
+                                                                    (eda.TipoEstado.Estado == "Enfermedad común" ||
+                                                                    eda.TipoEstado.Estado == "Enfermedad familiar")).Count();
+                    lbl_Mensaje.Text = "<b>El agente ya lleva tomado " + diasEnfermo.ToString() + " días de licencia entre \"Enfermedad común\" y \"Enfermedad familiar\".</b>\rRecuerde que tiene 20 días al año más 20 días con descuento de Fondo estímulo";
 
-                DatosInternacion();
-            }
+                    var tiposMovimientoEnfermedad = Enum.GetValues(typeof(TipoMovimientoEnfermedad));
+                    ddl_Encuadre.DataSource = tiposMovimientoEnfermedad;
+                    ddl_Encuadre.DataBind();
+                    ddl_Encuadre.Visible = true;
 
-            if (tea.Estado == "Licencia Anual" || tea.Estado == "Licencia Anual (Saldo)" || tea.Estado == "Licencia Anual (Anticipo)")
-            {
-                ddl_Encuadre.Items.Add(new ListItem { Text = (DateTime.Today.Year - 2).ToString() });
-                ddl_Encuadre.Items.Add(new ListItem { Text = (DateTime.Today.Year - 1).ToString() });
-                ddl_Encuadre.Items.Add(new ListItem { Text = DateTime.Today.Year.ToString() });
-                ddl_Encuadre.DataBind();
-
-                int year = Convert.ToInt32(ddl_Encuadre.Text);
-                TipoLicencia tli = cxt.TiposDeLicencia.First(tl => tl.Tipo == "Licencia anual");
-                LicenciaAgente licencia = cxt.Agentes.First(a => a.Id == id).Licencias.FirstOrDefault(l => l.Anio == year && l.Tipo.Id == tli.Id);
-
-                if (licencia == null)
-                {
-                    licencia = new LicenciaAgente()
+                    if (tea.Estado == "Enfermedad familiar")
                     {
-                        AgenteId = id,
-                        Anio = year,
-                        DiasOtorgados = ProcesosGlobales.ObtenerDiasLicenciaAnualAgente(cxt.Agentes.First(a => a.Id == id), year),
-                        DiasUsufructuadosIniciales = 0,
-                        TipoLicenciaId = tli.Id
-                    };
+                        lbl_familiar.Visible = true;
+                        lbl_fam_nomyAp.Visible = true;
+                        tb_fam_nomyap.Visible = true;
+                        lbl_fam_parentesco.Visible = true;
+                        tb_fam_parentesco.Visible = true;
+                        ddl_Encuadre.Items.Remove(ddl_Encuadre.Items.FindByValue("Consultorio"));
+                    }
 
-                    cxt.LicenciasAgentes.AddObject(licencia);
-                    cxt.SaveChanges();
+                    DatosInternacion();
                 }
 
-                int diasUsufructuados = ProcesosGlobales.ObtenerDiasUsufructuados(licencia);
-                lbl_Mensaje.Text = "<b>El agente ya lleva tomado " + diasUsufructuados.ToString() + " días de licencia anual del " + ddl_Encuadre.Text + " de los " + licencia.DiasOtorgados.ToString() + " días otorgados. Quedan " + (licencia.DiasOtorgados - diasUsufructuados).ToString() + " días disponibles</b>";
+                if (tea.Estado == "Licencia Anual" || tea.Estado == "Licencia Anual (Saldo)" || tea.Estado == "Licencia Anual (Anticipo)")
+                {
+                    ddl_Encuadre.Items.Add(new ListItem { Text = (DateTime.Today.Year - 2).ToString() });
+                    ddl_Encuadre.Items.Add(new ListItem { Text = (DateTime.Today.Year - 1).ToString() });
+                    ddl_Encuadre.Items.Add(new ListItem { Text = DateTime.Today.Year.ToString() });
+                    ddl_Encuadre.DataBind();
+
+                    int year = Convert.ToInt32(ddl_Encuadre.Text);
+                    TipoLicencia tli = cxt.TiposDeLicencia.First(tl => tl.Tipo == "Licencia anual");
+                    LicenciaAgente licencia = cxt.Agentes.First(a => a.Id == id).Licencias.FirstOrDefault(l => l.Anio == year && l.Tipo.Id == tli.Id);
+
+                    if (licencia == null)
+                    {
+                        licencia = new LicenciaAgente()
+                        {
+                            AgenteId = id,
+                            Anio = year,
+                            DiasOtorgados = ProcesosGlobales.ObtenerDiasLicenciaAnualAgente(cxt.Agentes.First(a => a.Id == id), year),
+                            DiasUsufructuadosIniciales = 0,
+                            TipoLicenciaId = tli.Id
+                        };
+
+                        cxt.LicenciasAgentes.AddObject(licencia);
+                        cxt.SaveChanges();
+                    }
+
+                    int diasUsufructuados = ProcesosGlobales.ObtenerDiasUsufructuados(licencia);
+                    lbl_Mensaje.Text = "<b>El agente ya lleva tomado " + diasUsufructuados.ToString() + " días de licencia anual del " + ddl_Encuadre.Text + " de los " + licencia.DiasOtorgados.ToString() + " días otorgados. Quedan " + (licencia.DiasOtorgados - diasUsufructuados).ToString() + " días disponibles</b>";
 
 
-                p_DatosExtra.Visible = true;
+                    ddl_Encuadre.Visible = true;
+                }
             }
         }
 
@@ -512,6 +546,8 @@ namespace SisPer.Aplicativo
             string tipo_solicitud = ddl_TipoMovimiento.SelectedItem.Text;
             string textoSeleccionado = ddl_Encuadre.Text;
 
+            lbl_internacion.Visible = false;
+            lbl_internacion_en_provincia.Visible = false;
             lbl_habitacion.Visible = false;
             tb_habitacion.Visible = false;
             tb_habitacion.Text = string.Empty;
@@ -526,6 +562,7 @@ namespace SisPer.Aplicativo
             {
                 if (tipoMovimientoEnfermedad == TipoMovimientoEnfermedad.Internacion)
                 {
+                    lbl_internacion.Visible = true;
                     lbl_habitacion.Visible = true;
                     tb_habitacion.Visible = true;
                     lbl_Sanatorio.Visible = true;
@@ -535,6 +572,7 @@ namespace SisPer.Aplicativo
 
                 if (tipoMovimientoEnfermedad == TipoMovimientoEnfermedad.Consultorio_a_su_regreso_de)
                 {
+                    lbl_internacion_en_provincia.Visible = true;
                     lbl_Sanatorio.Visible = true;
                     lbl_Sanatorio.Text = "Provincia";
                     ddl_provincias.Items.Clear();
@@ -584,80 +622,97 @@ namespace SisPer.Aplicativo
 
         protected void cv_sanatorio_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            string tipo_solicitud = ddl_TipoMovimiento.SelectedItem.Text;
-            TipoMovimientoEnfermedad tipoMovimientoEnfermedad = (TipoMovimientoEnfermedad)Enum.Parse(typeof(TipoMovimientoEnfermedad), ddl_Encuadre.Text);
-
-            if (tipo_solicitud.Contains("Enfermedad"))
+            if (ddl_TipoMovimiento.SelectedItem.Value != "0")
             {
-                switch (tipoMovimientoEnfermedad)
+                string tipo_solicitud = ddl_TipoMovimiento.SelectedItem.Text;
+                TipoMovimientoEnfermedad tipoMovimientoEnfermedad = (TipoMovimientoEnfermedad)Enum.Parse(typeof(TipoMovimientoEnfermedad), ddl_Encuadre.Text);
+
+                if (tipo_solicitud.Contains("Enfermedad"))
                 {
-                    case TipoMovimientoEnfermedad.Consultorio:
-                        args.IsValid = true;
-                        break;
-                    case TipoMovimientoEnfermedad.Domicilio:
-                        args.IsValid = true;
-                        break;
-                    case TipoMovimientoEnfermedad.Internacion:
-                        cv_sanatorio.ErrorMessage = "Debe ingresar el sanatorio donde se encuentra internado.";
-                        cv_sanatorio.Text = "<img src='../Imagenes/exclamation.gif' title='Debe ingresar el sanatorio donde se encuentra internado.' />";
-                        args.IsValid = tb_sanatorio.Text.Length > 0;
-                        break;
-                    case TipoMovimientoEnfermedad.Consultorio_a_su_regreso_de:
-                        cv_sanatorio.ErrorMessage = "Debe seleccionar la provincia a la cual se dirije el agente para su tratamiento.";
-                        cv_sanatorio.Text = "<img src='../Imagenes/exclamation.gif' title='Debe seleccionar la provincia a la cual se dirije el agente para su tratamiento.' />";
-                        args.IsValid = tb_sanatorio.Text.Length > 0;
-                        break;
-                    default:
-                        break;
-                }
-            }
-            else
-            {
-                args.IsValid = true;
-            }
-        }
-
-        protected void cv_habitacion_ServerValidate(object source, ServerValidateEventArgs args)
-        {
-            string tipo_solicitud = ddl_TipoMovimiento.SelectedItem.Text;
-            TipoMovimientoEnfermedad tipoMovimientoEnfermedad = (TipoMovimientoEnfermedad)Enum.Parse(typeof(TipoMovimientoEnfermedad), ddl_Encuadre.Text);
-
-            if (tipo_solicitud.Contains("Enfermedad"))
-            {
-                if (tipoMovimientoEnfermedad == TipoMovimientoEnfermedad.Internacion)
-                {
-                    args.IsValid = tb_habitacion.Text.Length > 0;
+                    switch (tipoMovimientoEnfermedad)
+                    {
+                        case TipoMovimientoEnfermedad.Consultorio:
+                            args.IsValid = true;
+                            break;
+                        case TipoMovimientoEnfermedad.Domicilio:
+                            args.IsValid = true;
+                            break;
+                        case TipoMovimientoEnfermedad.Internacion:
+                            cv_sanatorio.ErrorMessage = "Debe ingresar el sanatorio donde se encuentra internado.";
+                            cv_sanatorio.Text = "<img src='../Imagenes/exclamation.gif' title='Debe ingresar el sanatorio donde se encuentra internado.' />";
+                            args.IsValid = tb_sanatorio.Text.Length > 0;
+                            break;
+                        case TipoMovimientoEnfermedad.Consultorio_a_su_regreso_de:
+                            cv_sanatorio.ErrorMessage = "Debe seleccionar la provincia a la cual se dirije el agente para su tratamiento.";
+                            cv_sanatorio.Text = "<img src='../Imagenes/exclamation.gif' title='Debe seleccionar la provincia a la cual se dirije el agente para su tratamiento.' />";
+                            args.IsValid = tb_sanatorio.Text.Length > 0;
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 else
                 {
                     args.IsValid = true;
                 }
             }
-            else
+            else { args.IsValid = true; }
+        }
+
+        protected void cv_habitacion_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            if (ddl_TipoMovimiento.SelectedItem.Value != "0")
             {
-                args.IsValid = true;
+                string tipo_solicitud = ddl_TipoMovimiento.SelectedItem.Text;
+                TipoMovimientoEnfermedad tipoMovimientoEnfermedad = (TipoMovimientoEnfermedad)Enum.Parse(typeof(TipoMovimientoEnfermedad), ddl_Encuadre.Text);
+
+                if (tipo_solicitud.Contains("Enfermedad"))
+                {
+                    if (tipoMovimientoEnfermedad == TipoMovimientoEnfermedad.Internacion)
+                    {
+                        args.IsValid = tb_habitacion.Text.Length > 0;
+                    }
+                    else
+                    {
+                        args.IsValid = true;
+                    }
+                }
+                else
+                {
+                    args.IsValid = true;
+                }
             }
+            else { args.IsValid = true;  }
         }
 
         protected void cv_fam_nomyap_ServerValidate(object source, ServerValidateEventArgs args)
         {
             args.IsValid =
-               (p_DatosExtra.Visible == false) ||
-               (p_DatosExtra.Visible == true && tb_fam_nomyap.Visible == false) ||
-               (p_DatosExtra.Visible == true && tb_fam_nomyap.Visible == true && tb_fam_nomyap.Text.Length > 0);
+               (ddl_Encuadre.Visible == false) ||
+               (ddl_Encuadre.Visible == true && tb_fam_nomyap.Visible == false) ||
+               (ddl_Encuadre.Visible == true && tb_fam_nomyap.Visible == true && tb_fam_nomyap.Text.Length > 0);
         }
 
         protected void cv_fam_parentesco_ServerValidate(object source, ServerValidateEventArgs args)
         {
             args.IsValid =
-               (p_DatosExtra.Visible == false) ||
-               (p_DatosExtra.Visible == true && tb_fam_parentesco.Visible == false) ||
-               (p_DatosExtra.Visible == true && tb_fam_parentesco.Visible == true && tb_fam_parentesco.Text.Length > 0);
+               (ddl_Encuadre.Visible == false) ||
+               (ddl_Encuadre.Visible == true && tb_fam_parentesco.Visible == false) ||
+               (ddl_Encuadre.Visible == true && tb_fam_parentesco.Visible == true && tb_fam_parentesco.Text.Length > 0);
         }
 
         protected void cv_tipoMovimiento_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            args.IsValid = true;
+            bool valid = true;
+
+            if (ddl_TipoMovimiento.SelectedItem.Value == "0")
+            {
+                valid = false;
+                cv_tipoMovimiento.ErrorMessage = "Debe seleccionar un tipo de movimiento.";
+                cv_tipoMovimiento.Text = "<img src='../Imagenes/exclamation.gif' title='Debe seleccionar un tipo de movimiento.' />";
+            }
+
+            args.IsValid = valid;
         }
 
         protected void cv_VerificarDiasDisponiblesLicencia_ServerValidate(object source, ServerValidateEventArgs args)
@@ -798,37 +853,40 @@ namespace SisPer.Aplicativo
         {
             bool valido = true;
 
-            //aca controlar licencia anticipo, si tiene saldo licencia año anterior no puede tomar licencia anticipo
-            int tipoEstadoId = Convert.ToInt32(ddl_TipoMovimiento.SelectedValue);
-            TipoEstadoAgente tea = cxt.TiposEstadoAgente.FirstOrDefault(t => t.Id == tipoEstadoId);
-            string textoSeleccionado = ddl_Encuadre.Text;
-            int year = 0;
-            Agente agente = Obtener_agente_a_solicitar();
-            int id = agente.Id;
-            DateTime desde = Convert.ToDateTime(tb_desde.Value);
-            DateTime hasta = Convert.ToDateTime(tb_hasta.Value);
-            int diasSolicitados = Convert.ToInt32((hasta - desde).TotalDays + 1);
-            TipoLicencia tli = new TipoLicencia();
-            LicenciaAgente licencia = new LicenciaAgente();
-            int diasUsufructuados = 0;
-
-            if (tea.Estado == "Licencia Anual (Anticipo)")
+            if (ddl_TipoMovimiento.SelectedItem.Value != "0")
             {
-                year = Convert.ToInt32(ddl_Encuadre.Text) - 1;
+                //aca controlar licencia anticipo, si tiene saldo licencia año anterior no puede tomar licencia anticipo
+                int tipoEstadoId = Convert.ToInt32(ddl_TipoMovimiento.SelectedValue);
+                TipoEstadoAgente tea = cxt.TiposEstadoAgente.FirstOrDefault(t => t.Id == tipoEstadoId);
+                string textoSeleccionado = ddl_Encuadre.Text;
+                int year = 0;
+                Agente agente = Obtener_agente_a_solicitar();
+                int id = agente.Id;
+                DateTime desde = Convert.ToDateTime(tb_desde.Value);
+                DateTime hasta = Convert.ToDateTime(tb_hasta.Value);
+                int diasSolicitados = Convert.ToInt32((hasta - desde).TotalDays + 1);
+                TipoLicencia tli = new TipoLicencia();
+                LicenciaAgente licencia = new LicenciaAgente();
+                int diasUsufructuados = 0;
 
-                tli = cxt.TiposDeLicencia.First(tl => tl.Tipo == "Licencia anual");
-                licencia = agente.Licencias.FirstOrDefault(l => l.Anio == year && l.Tipo.Id == tli.Id);
-                if (licencia != null)
+                if (tea.Estado == "Licencia Anual (Anticipo)")
                 {
-                    diasUsufructuados = ProcesosGlobales.ObtenerDiasUsufructuados(licencia);
+                    year = Convert.ToInt32(ddl_Encuadre.Text) - 1;
+
+                    tli = cxt.TiposDeLicencia.First(tl => tl.Tipo == "Licencia anual");
+                    licencia = agente.Licencias.FirstOrDefault(l => l.Anio == year && l.Tipo.Id == tli.Id);
+                    if (licencia != null)
+                    {
+                        diasUsufructuados = ProcesosGlobales.ObtenerDiasUsufructuados(licencia);
+                    }
+                    //es valido si la licencia del año anterior no es nula
+                    //y si la cantidad de dias usufructuados es igual a la cantidad de dias otorgados es decir que no tiene saldo
+                    valido = licencia != null && (licencia.DiasOtorgados - diasUsufructuados) == 0;
                 }
-                //es valido si la licencia del año anterior no es nula
-                //y si la cantidad de dias usufructuados es igual a la cantidad de dias otorgados es decir que no tiene saldo
-                valido = licencia != null && (licencia.DiasOtorgados - diasUsufructuados) == 0;
+
+                args.IsValid = valido;
             }
-
-            args.IsValid = valido;
-
+            else { args.IsValid = true; }
         }
 
         protected void cv_domicilio_ServerValidate(object source, ServerValidateEventArgs args)

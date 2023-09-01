@@ -36,8 +36,10 @@ namespace SisPer.Aplicativo
 
                 Model1Container cxt = new Model1Container();
                 Session["CXT"] = cxt;
+
                 Agente ag = cxt.Agentes.FirstOrDefault(a => a.Id == id);
                 Session["Agente"] = ag;
+
                 Agente usuarioLogueado = Session["UsuarioLogueado"] as Agente;
 
                 if (usuarioLogueado.Perfil == PerfilUsuario.Personal)
@@ -121,8 +123,6 @@ namespace SisPer.Aplicativo
             Ddl_TipoSalida.DataValueField = "Key";
             Ddl_TipoSalida.DataBind();
         }
-
-
 
         #region Salidas
 
@@ -446,10 +446,10 @@ namespace SisPer.Aplicativo
             Agente ag = Session["Agente"] as Agente;
             Model1Container cxt = new Model1Container();
             var hvs = cxt.HorariosVespertinos.Where(
-                                        hv => hv.AgenteId == ag.Id && 
+                                        hv => hv.AgenteId == ag.Id &&
                                         (
-                                            (hv.Dia.Month == DateTime.Today.Month && hv.Dia.Year == DateTime.Today.Year) 
-                                            || hv.Estado == EstadosHorarioVespertino.Solicitado 
+                                            (hv.Dia.Month == DateTime.Today.Month && hv.Dia.Year == DateTime.Today.Year)
+                                            || hv.Estado == EstadosHorarioVespertino.Solicitado
                                             || hv.Estado == EstadosHorarioVespertino.Aprobado)
                                         ).ToList();
             var items = (from hv in hvs
@@ -577,7 +577,7 @@ namespace SisPer.Aplicativo
             {
                 HorarioVespertino hvexiste = cxt.HorariosVespertinos.FirstOrDefault(
                                                     hhv => hhv.Dia == d &&
-                                                    hhv.AgenteId == ag.Id && 
+                                                    hhv.AgenteId == ag.Id &&
                                                     (hhv.Estado == EstadosHorarioVespertino.Solicitado || hhv.Estado == EstadosHorarioVespertino.Aprobado)
                                                     );
                 ret = hvexiste != null;
@@ -592,7 +592,7 @@ namespace SisPer.Aplicativo
 
             using (var cxt = new Model1Container())
             {
-                HorarioVespertino hv = cxt.HorariosVespertinos.First(x=>x.Id == id_hv);
+                HorarioVespertino hv = cxt.HorariosVespertinos.First(x => x.Id == id_hv);
 
                 if (hv.Estado == EstadosHorarioVespertino.Aprobado)
                 {
@@ -603,7 +603,7 @@ namespace SisPer.Aplicativo
 
             }
             MessageBox.Show(this, "Puede administrar únicamente horarios vespertinos con estado Aprobado.-", MessageBox.Tipo_MessageBox.Danger);
-            
+
         }
 
         #endregion
@@ -1132,37 +1132,37 @@ namespace SisPer.Aplicativo
                     cxt.ResumenesDiarios.AddObject(rd);
                     cxt.SaveChanges();
                 }
-                
-                rd.HEntrada = hora_Entrada;
-
-                Marcacion marcacion = new Marcacion()
-                {
-                    Hora = hora_Entrada,
-                    Manual = true,
-                    Anulada = false,
-                    ResumenDiarioId = rd.Id
-                };
-                
-                cxt.Marcaciones.AddObject(marcacion);
 
                 EntradaSalida e_s = agCxt.EntradasSalidas.FirstOrDefault(io => io.Fecha == Calendar1.SelectedDate);
 
+                //No tiene que tener ninguna entrada/salida para ese día
                 if (e_s == null)
                 {
                     e_s = new EntradaSalida();
                     e_s.Fecha = Calendar1.SelectedDate;
-                    e_s.Entrada = "00:00";
+                    e_s.Entrada = hora_Entrada;
                     e_s.Salida = "00:00";
+                    e_s.AgenteId = ag.Id;
+                    e_s.AgenteId1 = ag.Id;
+                    e_s.Enviado = true;
+                    e_s.CerradoPersonal = true;
+
                     cxt.EntradasSalidas.AddObject(e_s);
+
+                    rd.HEntrada = hora_Entrada;
+
+                    Marcacion marcacion = new Marcacion()
+                    {
+                        Hora = hora_Entrada,
+                        Manual = true,
+                        Anulada = false,
+                        ResumenDiarioId = rd.Id
+                    };
+
+                    cxt.Marcaciones.AddObject(marcacion);
+
+                    cxt.SaveChanges();
                 }
-
-                e_s.Entrada = hora_Entrada;
-                e_s.AgenteId = ag.Id;
-                e_s.AgenteId1 = ag.Id;
-                e_s.Enviado = true;
-                e_s.CerradoPersonal = true;
-
-                cxt.SaveChanges();
 
                 btn_registrar_entrada_laboral.Visible = false;
                 lbl_hora_entrada_manual_registrada.Visible = true;
@@ -1194,35 +1194,47 @@ namespace SisPer.Aplicativo
                 {
                     string hora_Entrada = e_s.Entrada;
                     string Hora_Salida = DateTime.Now.ToString("HH:mm");
+                    string lapso = HorasString.RestarHoras(hora_Entrada, Hora_Salida);
 
-                    ResumenDiario rd = agCxt.ObtenerResumenDiario(Calendar1.SelectedDate);
-                    rd.HSalida = Hora_Salida;
-
-                    Marcacion marcacion = new Marcacion()
+                    if (HorasString.AMayorQueB("01:00", lapso))
                     {
-                        Hora = Hora_Salida,
-                        Manual = true,
-                        Anulada = false,
-                        ResumenDiarioId = rd.Id
-                    };
+                        MessageBox.Show(this, "Debe pasar al menos una hora entre la marcacion de entrada y la salida!", MessageBox.Tipo_MessageBox.Danger);
+                    }
+                    else
+                    {
 
-                    cxt.Marcaciones.AddObject(marcacion);
+                        if (e_s.Salida == "00:00")
+                        {
+                            ResumenDiario rd = agCxt.ObtenerResumenDiario(Calendar1.SelectedDate);
+                            rd.HSalida = Hora_Salida;
 
-                    e_s.Fecha = Calendar1.SelectedDate;
-                    e_s.Entrada = hora_Entrada;
-                    e_s.Salida = Hora_Salida;
-                    e_s.AgenteId = ag.Id;
-                    e_s.AgenteId1 = ag.Id;
-                    e_s.Enviado = true;
-                    e_s.CerradoPersonal = true;
+                            Marcacion marcacion = new Marcacion()
+                            {
+                                Hora = Hora_Salida,
+                                Manual = true,
+                                Anulada = false,
+                                ResumenDiarioId = rd.Id
+                            };
 
-                    cxt.SaveChanges();
+                            cxt.Marcaciones.AddObject(marcacion);
 
-                    btn_registrar_salida_laboral.Visible = false;
-                    lbl_hora_salida_manual_registrada.Visible = true;
-                    lbl_hora_salida_manual_registrada.Text = e_s.Salida;
+                            e_s.Fecha = Calendar1.SelectedDate;
+                            e_s.Entrada = hora_Entrada;
+                            e_s.Salida = Hora_Salida;
+                            e_s.AgenteId = ag.Id;
+                            e_s.AgenteId1 = ag.Id;
+                            e_s.Enviado = true;
+                            e_s.CerradoPersonal = true;
 
-                    Session["Agente"] = cxt.Agentes.FirstOrDefault(a => a.Id == ag.Id);
+                            cxt.SaveChanges();
+
+                            btn_registrar_salida_laboral.Visible = false;
+                            lbl_hora_salida_manual_registrada.Visible = true;
+                            lbl_hora_salida_manual_registrada.Text = e_s.Salida;
+
+                            Session["Agente"] = cxt.Agentes.FirstOrDefault(a => a.Id == ag.Id);
+                        }
+                    }
                 }
             }
             else

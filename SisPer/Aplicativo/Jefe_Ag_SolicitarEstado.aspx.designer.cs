@@ -87,6 +87,24 @@ namespace SisPer.Aplicativo
         protected global::System.Web.UI.WebControls.DropDownList ddl_TipoMovimiento;
 
         /// <summary>
+        /// Control ddl_Encuadre.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_Encuadre;
+
+        /// <summary>
+        /// Control lbl_domicilio_localidad.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_domicilio_localidad;
+
+        /// <summary>
         /// Control tr_domicilio.
         /// </summary>
         /// <remarks>
@@ -159,42 +177,6 @@ namespace SisPer.Aplicativo
         protected global::System.Web.UI.WebControls.TextBox tb_localidad;
 
         /// <summary>
-        /// Control p_DatosExtra.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel p_DatosExtra;
-
-        /// <summary>
-        /// Control lbl_DatosExtra.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_DatosExtra;
-
-        /// <summary>
-        /// Control lbl_encuadre.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_encuadre;
-
-        /// <summary>
-        /// Control ddl_Encuadre.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl_Encuadre;
-
-        /// <summary>
         /// Control lbl_familiar.
         /// </summary>
         /// <remarks>
@@ -202,15 +184,6 @@ namespace SisPer.Aplicativo
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_familiar;
-
-        /// <summary>
-        /// Control cv_fam_nomyap.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator cv_fam_nomyap;
 
         /// <summary>
         /// Control lbl_fam_nomyAp.
@@ -222,6 +195,15 @@ namespace SisPer.Aplicativo
         protected global::System.Web.UI.WebControls.Label lbl_fam_nomyAp;
 
         /// <summary>
+        /// Control cv_fam_nomyap.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cv_fam_nomyap;
+
+        /// <summary>
         /// Control tb_fam_nomyap.
         /// </summary>
         /// <remarks>
@@ -229,15 +211,6 @@ namespace SisPer.Aplicativo
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tb_fam_nomyap;
-
-        /// <summary>
-        /// Control cv_fam_parentesco.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator cv_fam_parentesco;
 
         /// <summary>
         /// Control lbl_fam_parentesco.
@@ -249,6 +222,15 @@ namespace SisPer.Aplicativo
         protected global::System.Web.UI.WebControls.Label lbl_fam_parentesco;
 
         /// <summary>
+        /// Control cv_fam_parentesco.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cv_fam_parentesco;
+
+        /// <summary>
         /// Control tb_fam_parentesco.
         /// </summary>
         /// <remarks>
@@ -258,13 +240,22 @@ namespace SisPer.Aplicativo
         protected global::System.Web.UI.WebControls.TextBox tb_fam_parentesco;
 
         /// <summary>
-        /// Control cv_sanatorio.
+        /// Control lbl_internacion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator cv_sanatorio;
+        protected global::System.Web.UI.WebControls.Label lbl_internacion;
+
+        /// <summary>
+        /// Control lbl_internacion_en_provincia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_internacion_en_provincia;
 
         /// <summary>
         /// Control lbl_Sanatorio.
@@ -274,6 +265,15 @@ namespace SisPer.Aplicativo
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_Sanatorio;
+
+        /// <summary>
+        /// Control cv_sanatorio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cv_sanatorio;
 
         /// <summary>
         /// Control tb_sanatorio.
@@ -294,15 +294,6 @@ namespace SisPer.Aplicativo
         protected global::System.Web.UI.WebControls.DropDownList ddl_provincias;
 
         /// <summary>
-        /// Control cv_habitacion.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator cv_habitacion;
-
-        /// <summary>
         /// Control lbl_habitacion.
         /// </summary>
         /// <remarks>
@@ -310,6 +301,15 @@ namespace SisPer.Aplicativo
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_habitacion;
+
+        /// <summary>
+        /// Control cv_habitacion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cv_habitacion;
 
         /// <summary>
         /// Control tb_habitacion.
@@ -328,6 +328,15 @@ namespace SisPer.Aplicativo
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_Mensaje;
+
+        /// <summary>
+        /// Control desde_row.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow desde_row;
 
         /// <summary>
         /// Control VerificarDesde.
