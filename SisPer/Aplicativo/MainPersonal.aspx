@@ -178,6 +178,7 @@
                             <asp:BoundField DataField="Fechahora" HeaderText="Solicitado el" ReadOnly="true" SortExpression="Fechahora" DataFormatString="{0:g}" NullDisplayText=" - " />
                             <asp:BoundField DataField="Legajo" HeaderText="Legajo" ReadOnly="true" SortExpression="Legajo" />
                             <asp:BoundField DataField="Agente" HeaderText="Agente" ReadOnly="true" SortExpression="Agente" />
+                            <asp:BoundField DataField="DNI" HeaderText="DNI" ReadOnly="true" SortExpression="DNI" />
                             <asp:BoundField DataField="Tipo" HeaderText="Tipo" ReadOnly="true" SortExpression="Tipo" />
                             <asp:BoundField DataField="Encuadre" HeaderText="Encuadre" ReadOnly="true" SortExpression="Encuadre" NullDisplayText=" - " />
                             <asp:TemplateField HeaderText="Ver" ItemStyle-HorizontalAlign="Center">
@@ -412,17 +413,50 @@
                 var fecha_desde = $("#<%=lbl_fecha_desde.ClientID %>");
 
                 // Convertimos la fecha del label a un objeto Date
-                var fecha_desde_objeto = new Date(fecha_desde.text());
+                var fecha_desde_objeto = moment(fecha_desde.text(), "DD/MM/YYYY").toDate();
 
                 // Obtenemos la fecha del textbox
                 var fecha_hasta = $("#<%= tb_fecha_hasta.ClientID %>");
 
                 // Convertimos la fecha del textbox a un objeto Date
-                var fecha_hasta_objeto = new Date(fecha_hasta.val());
+                var fecha_hasta_objeto = moment(fecha_hasta.val(), "DD/MM/YYYY").toDate();
 
                 // Validamos que la fecha del textbox sea del tipo fecha
                 btnAprobarSolicitudMedico.disabled = !(fecha_hasta_objeto instanceof Date && fecha_hasta_objeto >= fecha_desde_objeto);
             });
+
+            // Función para manejar el cambio en la clase del div
+            function handleClassChange(mutationsList, observer) {
+                for (let mutation of mutationsList) {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                        const div = document.getElementById('modal_solicitud_medico');
+                        if (div.classList.contains('in')) {
+                            // El div se ha mostrado
+                            console.log('El div se ha mostrado');
+                            // Realiza las acciones que desees
+
+                            var tb_fecha_hasta = $("#<%= tb_fecha_hasta.ClientID %>");
+                            tb_fecha_hasta.val('')
+
+                            var tb_actuacion_electronica = $("#<%= tb_actuacion_electronica.ClientID %>");
+                            tb_actuacion_electronica.val('')
+                            tb_actuacion_electronica.focus();
+
+                        } else {
+                            // El div se ha ocultado, aquí puedes realizar las acciones que desees
+                            console.log('El div se ha ocultado');
+                            // Limpia los controles o realiza otras acciones
+                            // Ejemplo: div.classList.remove('in');
+                        }
+                    }
+                }
+            }
+
+            // Observa el div para detectar cambios en su clase
+            const targetDiv = document.getElementById('modal_solicitud_medico');
+            const observer = new MutationObserver(handleClassChange);
+            const config = { attributes: true };
+            observer.observe(targetDiv, config);
 
         });
     </script>

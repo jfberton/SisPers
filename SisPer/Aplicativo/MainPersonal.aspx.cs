@@ -207,6 +207,7 @@ namespace SisPer.Aplicativo
                                    Id = x.Id,
                                    Agente = x.Agente.ApellidoYNombre,
                                    Legajo = x.Agente.Legajo,
+                                   DNI = x.Agente.Legajo_datos_personales.DNI,
                                    Tipo = x.TipoEstadoAgente.Estado,
                                    Desde = x.FechaDesde,
                                    Hasta = x.FechaHasta,

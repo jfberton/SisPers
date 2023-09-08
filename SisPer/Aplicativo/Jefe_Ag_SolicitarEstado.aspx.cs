@@ -140,7 +140,7 @@ namespace SisPer.Aplicativo
             ddl_TipoMovimiento.Items.Clear();
 
             ListItem li = new ListItem();
-            li.Text = "Seleccione un movimiento";
+            li.Text = "Seleccione el tipo de licencia a solicitar";
             li.Value = "0";
             ddl_TipoMovimiento.Items.Add(li);
 
@@ -625,30 +625,37 @@ namespace SisPer.Aplicativo
             if (ddl_TipoMovimiento.SelectedItem.Value != "0")
             {
                 string tipo_solicitud = ddl_TipoMovimiento.SelectedItem.Text;
-                TipoMovimientoEnfermedad tipoMovimientoEnfermedad = (TipoMovimientoEnfermedad)Enum.Parse(typeof(TipoMovimientoEnfermedad), ddl_Encuadre.Text);
-
                 if (tipo_solicitud.Contains("Enfermedad"))
                 {
-                    switch (tipoMovimientoEnfermedad)
+                    TipoMovimientoEnfermedad tipoMovimientoEnfermedad = (TipoMovimientoEnfermedad)Enum.Parse(typeof(TipoMovimientoEnfermedad), ddl_Encuadre.Text);
+
+                    if (tipo_solicitud.Contains("Enfermedad"))
                     {
-                        case TipoMovimientoEnfermedad.Consultorio:
-                            args.IsValid = true;
-                            break;
-                        case TipoMovimientoEnfermedad.Domicilio:
-                            args.IsValid = true;
-                            break;
-                        case TipoMovimientoEnfermedad.Internacion:
-                            cv_sanatorio.ErrorMessage = "Debe ingresar el sanatorio donde se encuentra internado.";
-                            cv_sanatorio.Text = "<img src='../Imagenes/exclamation.gif' title='Debe ingresar el sanatorio donde se encuentra internado.' />";
-                            args.IsValid = tb_sanatorio.Text.Length > 0;
-                            break;
-                        case TipoMovimientoEnfermedad.Consultorio_a_su_regreso_de:
-                            cv_sanatorio.ErrorMessage = "Debe seleccionar la provincia a la cual se dirije el agente para su tratamiento.";
-                            cv_sanatorio.Text = "<img src='../Imagenes/exclamation.gif' title='Debe seleccionar la provincia a la cual se dirije el agente para su tratamiento.' />";
-                            args.IsValid = tb_sanatorio.Text.Length > 0;
-                            break;
-                        default:
-                            break;
+                        switch (tipoMovimientoEnfermedad)
+                        {
+                            case TipoMovimientoEnfermedad.Consultorio:
+                                args.IsValid = true;
+                                break;
+                            case TipoMovimientoEnfermedad.Domicilio:
+                                args.IsValid = true;
+                                break;
+                            case TipoMovimientoEnfermedad.Internacion:
+                                cv_sanatorio.ErrorMessage = "Debe ingresar el sanatorio donde se encuentra internado.";
+                                cv_sanatorio.Text = "<img src='../Imagenes/exclamation.gif' title='Debe ingresar el sanatorio donde se encuentra internado.' />";
+                                args.IsValid = tb_sanatorio.Text.Length > 0;
+                                break;
+                            case TipoMovimientoEnfermedad.Consultorio_a_su_regreso_de:
+                                cv_sanatorio.ErrorMessage = "Debe seleccionar la provincia a la cual se dirije el agente para su tratamiento.";
+                                cv_sanatorio.Text = "<img src='../Imagenes/exclamation.gif' title='Debe seleccionar la provincia a la cual se dirije el agente para su tratamiento.' />";
+                                args.IsValid = tb_sanatorio.Text.Length > 0;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        args.IsValid = true;
                     }
                 }
                 else
@@ -664,13 +671,20 @@ namespace SisPer.Aplicativo
             if (ddl_TipoMovimiento.SelectedItem.Value != "0")
             {
                 string tipo_solicitud = ddl_TipoMovimiento.SelectedItem.Text;
-                TipoMovimientoEnfermedad tipoMovimientoEnfermedad = (TipoMovimientoEnfermedad)Enum.Parse(typeof(TipoMovimientoEnfermedad), ddl_Encuadre.Text);
-
                 if (tipo_solicitud.Contains("Enfermedad"))
                 {
-                    if (tipoMovimientoEnfermedad == TipoMovimientoEnfermedad.Internacion)
+                    TipoMovimientoEnfermedad tipoMovimientoEnfermedad = (TipoMovimientoEnfermedad)Enum.Parse(typeof(TipoMovimientoEnfermedad), ddl_Encuadre.Text);
+
+                    if (tipo_solicitud.Contains("Enfermedad"))
                     {
-                        args.IsValid = tb_habitacion.Text.Length > 0;
+                        if (tipoMovimientoEnfermedad == TipoMovimientoEnfermedad.Internacion)
+                        {
+                            args.IsValid = tb_habitacion.Text.Length > 0;
+                        }
+                        else
+                        {
+                            args.IsValid = true;
+                        }
                     }
                     else
                     {
