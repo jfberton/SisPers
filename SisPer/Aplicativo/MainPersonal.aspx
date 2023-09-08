@@ -435,12 +435,18 @@
                             console.log('El div se ha mostrado');
                             // Realiza las acciones que desees
 
-                            var tb_fecha_hasta = $("#<%= tb_fecha_hasta.ClientID %>");
-                            tb_fecha_hasta.val('')
+                            var btnImprimirSolicitudMedico = document.getElementById('<%= btn_imprimir_solicitud_medico.ClientID %>');
+                            var tbActuacionElectronica = document.getElementById('<%= tb_actuacion_electronica.ClientID %>');
+                            var btnAprobarSolicitudMedico = document.getElementById('<%= btn_aprobar_solicitud_medico.ClientID %>');
+                            var tbFechaHasta = document.getElementById('<%= tb_fecha_hasta.ClientID %>');
 
-                            var tb_actuacion_electronica = $("#<%= tb_actuacion_electronica.ClientID %>");
-                            tb_actuacion_electronica.val('')
-                            tb_actuacion_electronica.focus();
+                            tbActuacionElectronica.value = '';
+                            tbFechaHasta.value = '';
+
+                           btnImprimirSolicitudMedico.disabled = true;
+                            btnAprobarSolicitudMedico.disabled = true;
+
+                            tbActuacionElectronica.focus();
 
                         } else {
                             // El div se ha ocultado, aquí puedes realizar las acciones que desees
