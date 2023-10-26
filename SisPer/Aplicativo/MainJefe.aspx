@@ -155,7 +155,8 @@
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Horarios vespertinos pendientes de aprobación<br /><span class="small">Si se solicitó en día donde el agente marca manual, el HV deberá ser cerrado por usted una vez aprobado.</span></h3>
+                    <h3 class="panel-title">Horarios vespertinos pendientes de aprobación<br />
+                        <span class="small">Si se solicitó en día donde el agente marca manual, el HV deberá ser cerrado por usted una vez aprobado.</span></h3>
                 </div>
                 <div class="panel-body">
                     <asp:GridView ID="GridViewHVPendientesAprobar" runat="server" EmptyDataText="No existen registros para mostrar." ForeColor="#717171"
@@ -195,7 +196,9 @@
         <div class="col-md-6">
             <div class="panel panel-default" runat="server">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Horarios Vespertinos aprobados por cerrar <br /><span class="small">Aprobados por usted en día donde el agente realizó marcaciones manuales.</span></h3>
+                    <h3 class="panel-title">Horarios Vespertinos aprobados por cerrar
+                        <br />
+                        <span class="small">Aprobados por usted en día donde el agente realizó marcaciones manuales.</span></h3>
                 </div>
                 <div class="panel-body">
                     <asp:GridView ID="GridViewHVPorCerrar" runat="server" EmptyDataText="No existen registros para mostrar." ForeColor="#717171"
@@ -287,6 +290,175 @@
             </div>
         </div>
     </div>
+
+    <%--Solicitudes pendientes de aprobación--%>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <h4 class="panel-title">Gestionar medicos pendientes de aprobación</h4>
+                        </div>
+                        <div class="col-md-4">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    <div class="input-group">
+                                        <input type="text" style="padding: 10px;" runat="server" id="tb_LegajoBuscado" class="form-control" placeholder="Legajo">
+                                        <span class="input-group-btn">
+                                            <button type="button" runat="server" onserverclick="btn_filtrarSolicitudes_Click" class="btn btn-primary">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <asp:GridView ID="gv_MedicosSolicitados" runat="server" EmptyDataText="No existen registros para mostrar." ForeColor="#717171"
+                        AutoGenerateColumns="False" GridLines="None" AllowPaging="true"
+                        OnPageIndexChanging="gv_Estados_medico_Solicitados_PageIndexChanging"
+                        CssClass="mGrid table-condensed" PagerStyle-CssClass="pgr" AlternatingRowStyle-CssClass="alt">
+                        <Columns>
+                            <asp:BoundField DataField="Fechahora" HeaderText="Solicitado el" ReadOnly="true" SortExpression="Fechahora" DataFormatString="{0:g}" NullDisplayText=" - " />
+                            <asp:BoundField DataField="Legajo" HeaderText="Legajo" ReadOnly="true" SortExpression="Legajo" />
+                            <asp:BoundField DataField="Agente" HeaderText="Agente" ReadOnly="true" SortExpression="Agente" />
+                            <asp:BoundField DataField="DNI" HeaderText="DNI" ReadOnly="true" SortExpression="DNI" />
+                            <asp:BoundField DataField="Tipo" HeaderText="Tipo" ReadOnly="true" SortExpression="Tipo" />
+                            <asp:BoundField DataField="Encuadre" HeaderText="Encuadre" ReadOnly="true" SortExpression="Encuadre" NullDisplayText=" - " />
+                            <asp:TemplateField HeaderText="Ver" ItemStyle-HorizontalAlign="Center">
+                                <ItemTemplate>
+                                    <asp:ImageButton ID="btn_Administrar_medico" runat="server" CommandArgument='<%#Eval("Id")%>'
+                                        ImageUrl="~/Imagenes/user_go.png"
+                                        OnClick="btn_Administrar_medico_Click" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <div class="modal fade" id="modal_solicitud_medico" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div runat="server" id="Div1" class="modal-content panel-primary">
+                <div class="modal-header panel-heading">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title" id="myModalLabel">
+                        <asp:Label Text="" ID="lbl_modal_solicitud_Id" runat="server" Visible="false" />
+                        <asp:Label Text="" ID="Label2" runat="server" />
+
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table-condensed">
+                                <tr style="width: 100%">
+                                    <td>
+                                        <strong>Ingrese actuación electrónica</strong>
+                                    </td>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <asp:Label ID="lbl_pre_act_elect" runat="server" /></td>
+                                                <td>
+                                                    <asp:TextBox runat="server" ID="tb_actuacion_electronica" /></td>
+                                                <td>-Ae</td>
+                                            </tr>
+                                        </table>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table-condensed">
+                                <tr style="width: 100%">
+                                    <td>
+                                        <strong>Ficha médica</strong>
+                                    </td>
+                                    <td>
+                                        <asp:Label Text="" ID="lbl_ficha_medica" runat="server" />
+                                    </td>
+                                </tr>
+                                <tr style="width: 100%">
+                                    <td>
+                                        <strong>Agente</strong>
+                                    </td>
+                                    <td>
+                                        <asp:Label Text="" ID="lbl_agente" runat="server" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>Domicilio</strong>
+                                    </td>
+                                    <td>
+                                        <asp:Label Text="" ID="lbl_domicilio" runat="server" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>Tipo</strong>
+                                    </td>
+                                    <td>
+                                        <asp:Label Text="" ID="lbl_tipo" runat="server" />
+                                    </td>
+                                </tr>
+                                <tr runat="server" id="fila_familiar">
+                                    <td>
+                                        <strong>Familiar</strong>
+                                    </td>
+                                    <td>
+                                        <asp:Label Text="" ID="lbl_familiar" runat="server" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>Encuadre</strong>
+                                    </td>
+                                    <td>
+                                        <asp:Label Text="" ID="lbl_encuadre" runat="server" />
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2">
+                                        <table class="table-condensed">
+                                            <tr>
+                                                <td>
+                                                    <strong>Fecha desde</strong>
+                                                </td>
+                                                <td>
+                                                    <asp:Label runat="server" ID="lbl_fecha_desde" Enabled="false" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4">
+                            <asp:Button Text="Imprimir" class="btn btn-default" Style="width: 100%" runat="server" ID="btn_imprimir_solicitud_medico" OnClick="btn_imprimir_solicitud_medico_ServerClick" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </asp:Content>
 
 <asp:Content runat="server" ContentPlaceHolderID="contentScripts">
@@ -349,5 +521,64 @@
                 return false;
             }
         }
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            // Enable the button `btn_imprimir_solicitud_medico` only when the field `tb_actuacion_electronica` has text.
+            var btnImprimirSolicitudMedico = document.getElementById('<%= btn_imprimir_solicitud_medico.ClientID %>');
+            var tbActuacionElectronica = document.getElementById('<%= tb_actuacion_electronica.ClientID %>');
+            btnImprimirSolicitudMedico.disabled = tbActuacionElectronica.value === "";
+
+            
+            tbActuacionElectronica.addEventListener("input", function () {
+                btnImprimirSolicitudMedico.disabled = tbActuacionElectronica.value === "";
+            });
+
+            tbFechaHasta.addEventListener("input", function () {
+                // Obtenemos la fecha del label
+                var fecha_desde = $("#<%=lbl_fecha_desde.ClientID %>");
+
+            // Convertimos la fecha del label a un objeto Date
+            var fecha_desde_objeto = moment(fecha_desde.text(), "DD/MM/YYYY").toDate();
+
+        });
+
+            // Función para manejar el cambio en la clase del div
+            function handleClassChange(mutationsList, observer) {
+                for (let mutation of mutationsList) {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                        const div = document.getElementById('modal_solicitud_medico');
+                        if (div.classList.contains('in')) {
+                            // El div se ha mostrado
+                            console.log('El div se ha mostrado');
+                            // Realiza las acciones que desees
+
+                            var btnImprimirSolicitudMedico = document.getElementById('<%= btn_imprimir_solicitud_medico.ClientID %>');
+                            var tbActuacionElectronica = document.getElementById('<%= tb_actuacion_electronica.ClientID %>');
+
+                            tbActuacionElectronica.value = '';
+                           
+                            btnImprimirSolicitudMedico.disabled = true;
+
+                            tbActuacionElectronica.focus();
+
+                        } else {
+                            // El div se ha ocultado, aquí puedes realizar las acciones que desees
+                            console.log('El div se ha ocultado');
+                            // Limpia los controles o realiza otras acciones
+                            // Ejemplo: div.classList.remove('in');
+                        }
+                    }
+                }
+            }
+
+            // Observa el div para detectar cambios en su clase
+            const targetDiv = document.getElementById('modal_solicitud_medico');
+            const observer = new MutationObserver(handleClassChange);
+            const config = { attributes: true };
+            observer.observe(targetDiv, config);
+
+        });
     </script>
 </asp:Content>

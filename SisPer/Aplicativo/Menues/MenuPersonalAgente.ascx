@@ -105,6 +105,7 @@
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="../Aplicativo/MainAgente.aspx">Pantalla Agente</a></li>
+                                <li><a href="../aplicativo/Jefe_Ag_SolicitarEstado.aspx">Solicitud de estado</a></li>
                                 <li><a href="../Aplicativo/Ag_Detalle.aspx">Mis Horas</a></li>
                                 <li><a href="../Aplicativo/ag_dias_mes.aspx">Detalle mensual</a></li>
                             </ul>

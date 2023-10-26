@@ -61,6 +61,7 @@ namespace SisPer.Aplicativo
                     CargarHVS();
                     CargarFrancos();
                     CargarSolicitudes();
+                    CargarSolicitudesMedico();
                     CargarHVPorCerrar();
                 }
 
@@ -352,6 +353,164 @@ namespace SisPer.Aplicativo
             gv_EstadosSolicitados.DataSource = solicitudes;
             gv_EstadosSolicitados.DataBind();
         }
+
+        #region solicitudes de medico
+        protected void CargarSolicitudesMedico()
+        {
+            Model1Container cxt = new Model1Container();
+            Agente ag = Session["Agente"] as Agente;
+            List<Agente> agentes_subordinados = ag.ObtenerAgentesSubordinadosCascada();
+            
+            List<item_medico> items = new List<item_medico>();
+
+            foreach (Agente agente in agentes_subordinados)
+            {
+                var solicitudes = (from se in cxt.SolicitudesDeEstado
+                                   where
+                                       se.Estado == EstadoSolicitudDeEstado.Solicitado &&
+                                       se.TipoEstadoAgente.Estado.Contains("Enfermedad") &&
+                                       (se.Agente.Legajo == agente.Legajo)
+                                   select se).AsEnumerable().Select(x => new item_medico()
+                                   {
+                                       prioridadOrden = x.TipoEstadoAgente.OrdenPrioridad,
+                                       Id = x.Id,
+                                       Agente = x.Agente.ApellidoYNombre,
+                                       Legajo = x.Agente.Legajo,
+                                       DNI = x.Agente.Legajo_datos_personales.DNI,
+                                       Tipo = x.TipoEstadoAgente.Estado,
+                                       Desde = x.FechaDesde,
+                                       Hasta = x.FechaHasta,
+                                       Encuadre = ProcesosGlobales.ObtenerEncuadre(x),
+                                       Fechahora = x.FechaHoraSolicitud,
+                                       Familiar = x.Fam_NomyAp,
+                                       Parentesco = x.Fam_Parentesco,
+                                       Lugar = x.Lugar
+                                   }).ToList();
+
+                foreach (var item in solicitudes)
+                {
+                    items.Add(item);
+                }
+            }
+
+
+            gv_MedicosSolicitados.DataSource = items.OrderBy(d => d.prioridadOrden).ThenByDescending(d => d.Fechahora).ToList();
+            gv_MedicosSolicitados.DataBind();
+        }
+
+        struct item_medico 
+        {
+            public int? prioridadOrden { get; set; }
+            public int Id { get; set; }
+            public string Agente { get; set; }
+            public int Legajo { get; set; }
+            public string DNI { get; set; }
+            public string Tipo { get; set; }
+            public DateTime Desde { get; set; }
+            public DateTime Hasta { get; set; }
+            public string Encuadre { get; set; }
+            public DateTime? Fechahora { get; set; }
+            public string Familiar { get; set; }
+            public string Parentesco { get; set; }
+            public string Lugar { get; set; }
+
+        }
+
+        protected void btn_Administrar_medico_Click(object sender, ImageClickEventArgs e)
+        {
+            int id_solicitud = 0;
+            if (int.TryParse(((ImageButton)sender).CommandArgument, out id_solicitud))
+            {
+                administrar_solicitud_medico(id_solicitud);
+            }
+        }
+
+        private void administrar_solicitud_medico(int id_solicitud)
+        {
+            using (var cxt = new Model1Container())
+            {
+                SolicitudDeEstado se = cxt.SolicitudesDeEstado.FirstOrDefault(s => s.Id == id_solicitud);
+
+                if (se != null)
+                {
+                    lbl_pre_act_elect.Text = "E20-" + DateTime.Today.Year.ToString() + "-";
+                    lbl_agente.Text = "Legajo: " + se.Agente.Legajo + ". Apellido y nombre: " + se.Agente.ApellidoYNombre;
+                    lbl_ficha_medica.Text = se.Agente.Legajo_datos_laborales.FichaMedica;
+                    lbl_domicilio.Text = se.Agente.Legajo_datos_personales.Domicilio + " - " + se.Agente.Legajo_datos_personales.Domicilio_localidad;
+                    lbl_tipo.Text = se.TipoEstadoAgente.Estado;
+                    lbl_encuadre.Text = ProcesosGlobales.ObtenerEncuadre(se) + " " + se.Lugar;
+                    if (se.Fam_NomyAp != null)
+                    {
+                        lbl_familiar.Text = se.Fam_NomyAp + " - " + se.Fam_Parentesco;
+                        fila_familiar.Visible = true;
+                    }
+                    else
+                    {
+                        lbl_familiar.Text = "";
+                        fila_familiar.Visible = false;
+                    }
+                    lbl_fecha_desde.Text = se.FechaDesde.ToShortDateString();
+                    lbl_modal_solicitud_Id.Text = se.Id.ToString();
+                    lbl_modal_titulo.Text = "Detalle de solicitud de médico";
+
+
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "admin_solicitud_medico", "<script language=\"javascript\"  type=\"text/javascript\">$(document).ready(function() { $('#modal_solicitud_medico').modal('show')});</script>", false);
+                }
+            }
+        }
+
+        protected void gv_Estados_medico_Solicitados_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gv_MedicosSolicitados.PageIndex = e.NewPageIndex;
+            CargarSolicitudesMedico();
+        }
+
+        protected void btn_filtrarSolicitudes_Click(object sender, EventArgs e)
+        {
+            int legajo = 0;
+            if (!int.TryParse(tb_LegajoBuscado.Value, out legajo))
+            {
+                if (tb_LegajoBuscado.Value != string.Empty)
+                {
+                    Controles.MessageBox.Show(this, "El legajo ingresado es inválido", Controles.MessageBox.Tipo_MessageBox.Warning);
+                }
+            }
+
+            CargarSolicitudesMedico();
+            tb_LegajoBuscado.Value = string.Empty;
+        }
+
+        protected void btn_imprimir_solicitud_medico_ServerClick(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(lbl_modal_solicitud_Id.Text);
+            if (tb_actuacion_electronica.Text != string.Empty)
+            {
+                Model1Container cxt = new Model1Container();
+                SolicitudDeEstado se = cxt.SolicitudesDeEstado.FirstOrDefault(s => s.Id == id);
+
+                Informe_solicitud_medico reporte = new Informe_solicitud_medico();
+                reporte.actuacion_electronica = "E20-" + DateTime.Today.Year.ToString() + "-" + tb_actuacion_electronica.Text + "-Ae";
+                reporte.solicitud = se;
+
+                byte[] bytes = reporte.Generar_informe();
+
+                if (bytes != null)
+                {
+                    Session["Bytes"] = bytes;
+
+                    string script = "<script type='text/javascript'>window.open('Reportes/ReportePDF.aspx');</script>";
+                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "VentanaPadre", script);
+                }
+                else
+                {
+                    Controles.MessageBox.Show(this, "Ocurrió un error al obtener los datos de la solicitud", Controles.MessageBox.Tipo_MessageBox.Info);
+                }
+
+                tb_actuacion_electronica.Text = string.Empty;
+            }
+        }
+
+        #endregion
 
         private void CargarHVS()
         {
