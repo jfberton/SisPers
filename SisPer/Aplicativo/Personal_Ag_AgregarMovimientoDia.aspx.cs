@@ -288,13 +288,13 @@ namespace SisPer.Aplicativo
                     DateTime hasta = Convert.ToDateTime(tb_hasta.Value);
                     DateTime mes_desde = new DateTime(desde.Year, desde.Month, 1);
                     DateTime mes_hasta = new DateTime(hasta.Year, hasta.Month, 1);
+                    int id_ag = DatosAgente1.Agente.Id;
 
                     while (mes_desde <= mes_hasta)
                     {
+                        CierreMensual cierre_mensual_agente = cxt.CierreMensual.FirstOrDefault(cm => cm.Anio == mes_desde.Year && cm.Mes == mes_desde.Month && cm.AgenteId == id_ag);
                         ret = ret
-                            && (
-                                cxt.CierreMensual.FirstOrDefault(cm => cm.Anio == mes_desde.Year && cm.Mes == mes_desde.Month) == null ||
-                                cxt.CierreMensual.FirstOrDefault(cm => cm.Anio == mes_desde.Year && cm.Mes == mes_desde.Month).Tiene_que_modificar == false);
+                            && (cierre_mensual_agente== null || cierre_mensual_agente.Tiene_que_modificar);
 
                         mes_desde = mes_desde.AddMonths(1);
                     }

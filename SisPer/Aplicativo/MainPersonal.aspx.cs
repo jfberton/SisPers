@@ -245,9 +245,9 @@ namespace SisPer.Aplicativo
                                    Familiar = x.Fam_NomyAp,
                                    Parentesco = x.Fam_Parentesco,
                                    Lugar = x.Lugar
-                               }).ToList();
+                               }).OrderBy(d => d.prioridadOrden).ThenByDescending(d => d.Fechahora).ToList();
 
-            gv_otras_solicitudes.DataSource = solicitudes.OrderBy(d => d.prioridadOrden).ThenByDescending(d => d.Fechahora).ToList();
+            gv_otras_solicitudes.DataSource = solicitudes;
             gv_otras_solicitudes.DataBind();
         }
 

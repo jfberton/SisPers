@@ -204,7 +204,7 @@ namespace SisPer.Aplicativo
                         || ddl_TipoMovimiento.SelectedItem.Text == "Licencia Anual (Saldo)"
                         || ddl_TipoMovimiento.SelectedItem.Text == "Licencia Anual (Anticipo)")
                     {
-                        se.TipoEnfermedad = null;
+                        se.TipoEnfermedad = (int)tipoMovimientoEnfermedad;
                     }
                     else
                     {
