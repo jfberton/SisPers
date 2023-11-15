@@ -3,10 +3,14 @@ using SisPer.Aplicativo.Controles;
 using SisPer.Aplicativo.Reportes;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.Remoting.Messaging;
+using System.Security.Cryptography;
 using System.Web;
+using System.Web.Services.Description;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
@@ -367,54 +371,36 @@ namespace SisPer.Aplicativo
                     }
                 }
 
-                Session["DS_SALIDAS"] = ret;
-
                 ///Configuro el reporte
-                ///
-                RenderReportSalidas();
-            }
-        }
-
-        private void RenderReportSalidas()
-        {
-            ReportViewer viewer = new ReportViewer();
-            viewer.ProcessingMode = ProcessingMode.Local;
-            viewer.LocalReport.EnableExternalImages = true;
-            viewer.LocalReport.ReportPath = Server.MapPath("~/Aplicativo/Reportes/ListadoSalidas_Generico_r.rdlc");
-            Reportes.ListadoSalidas_DS ds = ((Reportes.ListadoSalidas_DS)Session["DS_SALIDAS"]);
-
-            if (ds.Salidas.Rows.Count > 0)
-            {
-                ReportDataSource general = new ReportDataSource("General", ds.General.Rows);
-
-                viewer.LocalReport.DataSources.Add(general);
-
-                viewer.LocalReport.SubreportProcessing += LocalReportSalidas_SubreportProcessing;
-
-                Microsoft.Reporting.WebForms.Warning[] warnings = null;
-                string[] streamids = null;
-                string mimeType = null;
-                string encoding = null;
-                string extension = null;
-                string deviceInfo = null;
                 byte[] bytes = null;
 
-                deviceInfo = "<DeviceInfo><SimplePageHeaders>True</SimplePageHeaders></DeviceInfo>";
+                if (ret.General.Count > 0)
+                {
+                    Agente usuarioLogueado = Session["UsuarioLogueado"] as Agente;
+                    Datos_informe_desde_hasta<ListadoSalidas_DS> data = new Datos_informe_desde_hasta<ListadoSalidas_DS>();
+                    data.datos = ret;
+                    data.desde = desde;
+                    data.hasta = hasta;
+                    Informe_salidas_diarias reporte = new Informe_salidas_diarias(data, usuarioLogueado);
+                    bytes = reporte.Generar_informe();
+                    RegistrarImpresionReporteSalidas();
+                }
 
-                //Render the report
-                RegistrarImpresionReporteSalidas();
-                bytes = viewer.LocalReport.Render("PDF", deviceInfo, out  mimeType, out encoding, out extension, out streamids, out warnings);
-                Session["Bytes"] = bytes;
+                if (bytes != null)
+                {
+                    Session["Bytes"] = bytes;
 
-                string script = "<script type='text/javascript'>window.open('Reportes/ReportePDF.aspx');</script>";
-                Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "VentanaPadre", script);
-            }
-            else
-            {
-                Controles.MessageBox.Show(this, "La búsqueda realizada no arrojó resultados", Controles.MessageBox.Tipo_MessageBox.Info);
+                    string script = "<script type='text/javascript'>window.open('Reportes/ReportePDF.aspx');</script>";
+                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "VentanaPadre", script);
+                }
+                else
+                {
+                    Controles.MessageBox.Show(this, "La búsqueda realizada no arrojó resultados", Controles.MessageBox.Tipo_MessageBox.Info);
+                }
             }
         }
 
+       
         private void RegistrarImpresionReporteSalidas()
         {
             Agente usuarioLogueado = Session["UsuarioLogueado"] as Agente;
@@ -422,13 +408,6 @@ namespace SisPer.Aplicativo
             string nombreMaquina = Request.UserHostName;
 
             ProcesosGlobales.RegistrarImpresion(usuarioLogueado, "SALIDAS DIARIAS", DateTime.Now, nombreMaquina, localIP);
-        }
-
-        private void LocalReportSalidas_SubreportProcessing(object sender, SubreportProcessingEventArgs e)
-        {
-            Reportes.ListadoSalidas_DS ds = ((Reportes.ListadoSalidas_DS)Session["DS_SALIDAS"]);
-
-            e.DataSources.Add(new ReportDataSource("Detalle_DS", ds.Salidas.Rows));
         }
 
         #endregion
@@ -542,46 +521,23 @@ namespace SisPer.Aplicativo
                 }
             }
 
-            Session["DS_HorariosVespertinos"] = ret;
-
             ///Configuro el reporte
-            ///
-            RenderReportHorariosVespertinos();
-        }
+            byte[] bytes = null;
 
-        private void RenderReportHorariosVespertinos()
-        {
-            ReportViewer viewer = new ReportViewer();
-            viewer.ProcessingMode = ProcessingMode.Local;
-            viewer.LocalReport.EnableExternalImages = true;
-            viewer.LocalReport.ReportPath = Server.MapPath("~/Aplicativo/Reportes/HorariosVespertinos_Generico_r.rdlc");
-            Reportes.HorariosVespertinos_DS ds = ((Reportes.HorariosVespertinos_DS)Session["DS_HorariosVespertinos"]);
-
-            if (ds.Detalle.Rows.Count > 0)
+            if (ret.General.Count > 0)
             {
-                ReportDataSource general = new ReportDataSource("General", ds.General.Rows);
-
-                viewer.LocalReport.DataSources.Add(general);
-
-                viewer.LocalReport.SubreportProcessing += LocalReportHorariosVespertinos_SubreportProcessing;
-
-                Microsoft.Reporting.WebForms.Warning[] warnings = null;
-                string[] streamids = null;
-                string mimeType = null;
-                string encoding = null;
-                string extension = null;
-                string deviceInfo = null;
-                byte[] bytes = null;
-
-                deviceInfo = "<DeviceInfo><SimplePageHeaders>True</SimplePageHeaders></DeviceInfo>";
-
-                //Render the report
-
+                Agente usuarioLogueado = Session["UsuarioLogueado"] as Agente;
+                Datos_informe_desde_hasta<HorariosVespertinos_DS> data = new Datos_informe_desde_hasta<HorariosVespertinos_DS>();
+                data.datos = ret;
+                data.desde = desde;
+                data.hasta = hasta;
+                Informe_horarios_vespertinos reporte = new Informe_horarios_vespertinos(data, usuarioLogueado);
+                bytes = reporte.Generar_informe();
                 RegistrarImpresionReporte();
+            }
 
-                bytes = viewer.LocalReport.Render("PDF", deviceInfo, out  mimeType, out encoding, out extension, out streamids, out warnings);
-
-
+            if (bytes != null)
+            {
                 Session["Bytes"] = bytes;
 
                 string script = "<script type='text/javascript'>window.open('Reportes/ReportePDF.aspx');</script>";
@@ -601,14 +557,7 @@ namespace SisPer.Aplicativo
 
             ProcesosGlobales.RegistrarImpresion(usuarioLogueado, "HORARIOS VESPERTINOS", DateTime.Now, nombreMaquina, localIP);
         }
-
-        private void LocalReportHorariosVespertinos_SubreportProcessing(object sender, SubreportProcessingEventArgs e)
-        {
-            Reportes.HorariosVespertinos_DS ds = ((Reportes.HorariosVespertinos_DS)Session["DS_HorariosVespertinos"]);
-
-            e.DataSources.Add(new ReportDataSource("Detalle", ds.Detalle.Rows));
-        }
-
+      
         #endregion
 
         #region Informe Tardanza
@@ -772,8 +721,34 @@ namespace SisPer.Aplicativo
                 Session["DS_TARDANZA"] = ds;
 
                 ///Configuro el reporte
+                ///RenderReportTardanzas();
                 ///
-                RenderReportTardanzas();
+                byte[] bytes = null;
+
+                if (ds.Agente.Count > 0)
+                {
+                    Agente usuarioLogueado = Session["UsuarioLogueado"] as Agente;
+                    Datos_informe_desde_hasta<TardanzasMes_DS> data = new Datos_informe_desde_hasta<TardanzasMes_DS>();
+                    data.datos = ds;
+                    data.desde = desde;
+                    data.hasta = hasta;
+                    Informe_tardanzas reporte = new Informe_tardanzas(data, usuarioLogueado);
+                    bytes = reporte.Generar_informe();
+                }
+
+                if (bytes != null)
+                {
+                    RegistrarImpresionReporteTardanza();
+                    Session["Bytes"] = bytes;
+
+                    string script = "<script type='text/javascript'>window.open('Reportes/ReportePDF.aspx');</script>";
+                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "VentanaPadre", script);
+                }
+                else
+                {
+                    Controles.MessageBox.Show(this, "La búsqueda realizada no arrojó resultados", Controles.MessageBox.Tipo_MessageBox.Info);
+                }
+                
             }
         }
 
@@ -886,20 +861,34 @@ namespace SisPer.Aplicativo
                 agentesBuscados = Session["AgentesInforme"] as List<Agente>;
             }
 
+            byte[] bytes = null;
 
             if (agentesBuscados.Count > 0 && desde != null)
             {
+                Agente usuarioLogueado = Session["UsuarioLogueado"] as Agente;
+                Datos_informe_desde_hasta<Datos_informe_fichadas_mensuales> data = new Datos_informe_desde_hasta<Datos_informe_fichadas_mensuales>();
+                data.datos = new Datos_informe_fichadas_mensuales() { Agentes = agentesBuscados, Mes = desde.Month, Anio = desde.Year };
+                data.desde = new DateTime(desde.Year, desde.Month, 1);
+                data.hasta = data.desde.AddMonths(1).AddDays(-1);
+
+
+                ReporteMensualFichadasHoras reporte = new ReporteMensualFichadasHoras(data, usuarioLogueado);
+                bytes = reporte.Generar_informe();
+            }
+
+            if (bytes != null)
+            {
+                Session["Bytes"] = bytes;
                 RegistrarImpresionReporteFichadasMensuales();
-
-                ReporteMensualFichadasHoras rp = new ReporteMensualFichadasHoras(agentesBuscados, desde.Month, desde.Year);
-
-                byte[] pdf = rp.GenerarPDFAsistenciaMensual();
-                Session["Bytes"] = pdf;
 
                 string script = "<script type='text/javascript'>window.open('Reportes/ReportePDF.aspx');</script>";
                 Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "VentanaPadre", script);
             }
-            
+            else
+            {
+                Controles.MessageBox.Show(this, "La búsqueda realizada no arrojó resultados", Controles.MessageBox.Tipo_MessageBox.Info);
+            }
+
         }
 
         private void RegistrarImpresionReporteFichadasMensuales()
@@ -957,7 +946,7 @@ namespace SisPer.Aplicativo
                     if (ag != null)
                     {
                         agentesBuscados.Add(ag);
-                        agentesInforme = "EL AGENTE " + ag.ApellidoYNombre;
+                        agentesInforme = "Del agente " + ag.ApellidoYNombre;
                     }
                 }
                 else
@@ -965,7 +954,7 @@ namespace SisPer.Aplicativo
                     area = Ddl_Areas.AreaSeleccionado;
                     IncluirAgentes(area);
                     agentesBuscados = Session["AgentesInforme"] as List<Agente>;
-                    agentesInforme = "LOS AGENTES DEL AREA " + area.Nombre + (chk_Dependencias.Checked ? " INCLUYENDO DEPENDENCIAS" : "");
+                    agentesInforme = "Agentes de " + area.Nombre + (chk_Dependencias.Checked ? " (incluyendo dependencias)" : "");
                 }
 
                 ///Armo el dataset
@@ -1028,51 +1017,31 @@ namespace SisPer.Aplicativo
                 Session["ds_ausentes"] = ds;
 
                 ///Configuro el reporte
-                RenderReportListadoAusentes();
-            }
-        }
-
-        private void RenderReportListadoAusentes()
-        {
-            ReportViewer viewer = new ReportViewer();
-            viewer.ProcessingMode = ProcessingMode.Local;
-            viewer.LocalReport.EnableExternalImages = true;
-            viewer.LocalReport.ReportPath = Server.MapPath("~/Aplicativo/Reportes/listado_ausentes_r.rdlc");
-            listado_ausentes_ds ds = ((listado_ausentes_ds)Session["ds_ausentes"]);
-
-            if (ds.Detalle.Rows.Count > 0)
-            {
-                ReportDataSource encabezado = new ReportDataSource("encabezado", ds.Encabezado.Rows);
-                ReportDataSource detalle = new ReportDataSource("detalle", ds.Detalle.Rows);
-
-                viewer.LocalReport.DataSources.Add(encabezado);
-                viewer.LocalReport.DataSources.Add(detalle);
-
-                Microsoft.Reporting.WebForms.Warning[] warnings = null;
-                string[] streamids = null;
-                string mimeType = null;
-                string encoding = null;
-                string extension = null;
-                string deviceInfo = null;
                 byte[] bytes = null;
 
-                deviceInfo = "<DeviceInfo><SimplePageHeaders>True</SimplePageHeaders></DeviceInfo>";
+                if (ds.Encabezado.Count > 0)
+                {
+                    Agente usuarioLogueado = Session["UsuarioLogueado"] as Agente;
+                    Datos_informe_desde_hasta<listado_ausentes_ds> data = new Datos_informe_desde_hasta<listado_ausentes_ds>();
+                    data.datos = ds;
+                    data.desde = desde;
+                    data.hasta = hasta;
+                    Informe_ausentes reporte = new Informe_ausentes(data, usuarioLogueado);
+                    bytes = reporte.Generar_informe();
+                    RegistrarImpresionReporteAusencias();
+                }
 
-                //Render the report
+                if (bytes != null)
+                {
+                    Session["Bytes"] = bytes;
 
-                RegistrarImpresionReporteAusencias();
-
-                bytes = viewer.LocalReport.Render("PDF", deviceInfo, out  mimeType, out encoding, out extension, out streamids, out warnings);
-
-
-                Session["Bytes"] = bytes;
-
-                string script = "<script type='text/javascript'>window.open('Reportes/ReportePDF.aspx');</script>";
-                Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "VentanaPadre", script);
-            }
-            else
-            {
-                Controles.MessageBox.Show(this, "La búsqueda realizada no arrojó resultados", Controles.MessageBox.Tipo_MessageBox.Info);
+                    string script = "<script type='text/javascript'>window.open('Reportes/ReportePDF.aspx');</script>";
+                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "VentanaPadre", script);
+                }
+                else
+                {
+                    Controles.MessageBox.Show(this, "La búsqueda realizada no arrojó resultados", Controles.MessageBox.Tipo_MessageBox.Info);
+                }
             }
         }
 
@@ -1086,8 +1055,6 @@ namespace SisPer.Aplicativo
         }
 
         #endregion
-
-      
 
         #region Informe de solicitudes de art 50 inc 4 (ex art 51)
 
@@ -1212,7 +1179,13 @@ namespace SisPer.Aplicativo
 
                 if (ret.General.Count > 0)
                 {
-                    Informe_art_50_rp reporte = new Informe_art_50_rp(ret, desde, hasta);
+                    Agente usuarioLogueado = Session["UsuarioLogueado"] as Agente;
+                    Datos_informe_desde_hasta<ListadoSalidas_DS> datos = new Datos_informe_desde_hasta<ListadoSalidas_DS>();
+                    datos.datos = ret;
+                    datos.desde = desde;
+                    datos.hasta = hasta;
+
+                    Informe_art_50_rp reporte = new Informe_art_50_rp(datos, usuarioLogueado);
                     bytes = reporte.Generar_informe();
                 }
 
@@ -1356,7 +1329,12 @@ namespace SisPer.Aplicativo
 
                 if (ret.General.Count > 0)
                 {
-                    Informe_francos_compensatorios reporte = new Informe_francos_compensatorios(ret, desde, hasta);
+                    Agente usuarioLogueado = Session["UsuarioLogueado"] as Agente;
+                    Datos_informe_desde_hasta<ListadoSalidas_DS> data = new Datos_informe_desde_hasta<ListadoSalidas_DS>();
+                    data.datos = ret;
+                    data.desde = desde;
+                    data.hasta = hasta;
+                    Informe_francos_compensatorios reporte = new Informe_francos_compensatorios(data, usuarioLogueado);
                     bytes = reporte.Generar_informe();
                 }
 
@@ -1496,7 +1474,12 @@ namespace SisPer.Aplicativo
 
                 if (ret.General.Count > 0)
                 {
-                    Informe_remotos_autorizados reporte = new Informe_remotos_autorizados(ret, desde, hasta);
+                    Agente usuarioLogueado = Session["UsuarioLogueado"] as Agente;
+                    Datos_informe_desde_hasta<ListadoSalidas_DS> data = new Datos_informe_desde_hasta<ListadoSalidas_DS>();
+                    data.datos = ret;
+                    data.desde = desde;
+                    data.hasta = hasta;
+                    Informe_remotos_autorizados reporte = new Informe_remotos_autorizados(data, usuarioLogueado);
                     bytes = reporte.Generar_informe();
                 }
 
@@ -1638,7 +1621,13 @@ namespace SisPer.Aplicativo
 
                 if (ret.General.Count > 0)
                 {
-                    Informe_cambio_de_turno reporte = new Informe_cambio_de_turno(ret, desde, hasta);
+                    Agente usuarioLogueado = Session["UsuarioLogueado"] as Agente;
+                    Datos_informe_desde_hasta<ListadoSalidas_DS> data = new Datos_informe_desde_hasta<ListadoSalidas_DS>();
+                    data.datos = ret;
+                    data.desde = desde;
+                    data.hasta = hasta;
+
+                    Informe_cambio_de_turno reporte = new Informe_cambio_de_turno(data, usuarioLogueado);
                     bytes = reporte.Generar_informe();
                 }
 

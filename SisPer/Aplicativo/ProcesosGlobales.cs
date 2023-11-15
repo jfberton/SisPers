@@ -1168,24 +1168,22 @@ namespace SisPer.Aplicativo
             {
                 using (var cxt = new Model1Container())
                 {
-
-
-
-
                     //al crear/obtenr me aseguro que se procesen las marcaciones
                     Agente agenteLegajo = cxt.Agentes.FirstOrDefault(aa => aa.Legajo == pruebaLegajo && aa.FechaBaja == null);
                     if (agenteLegajo != null)
                     {
-
-                        ResumenDiario rd = cxt.sp_obtener_resumen_diario_agente_fecha(agenteLegajo.Id, fecha.ToShortDateString()).First();
-                        foreach (Marcacion marcacion in rd.Marcaciones)
+                        ResumenDiario rd = cxt.sp_obtener_resumen_diario_agente_fecha(agenteLegajo.Id, fecha.ToShortDateString()).FirstOrDefault();
+                        if (rd != null)
                         {
-                            DS_Marcaciones.MarcacionRow dr = ret.Marcacion.NewMarcacionRow();
-                            dr.Legajo = legajo;
-                            dr.Fecha = fecha;
-                            dr.Hora = marcacion.Hora;
-                            dr.MarcaManual = marcacion.Manual;
-                            ret.Marcacion.Rows.Add(dr);
+                            foreach (Marcacion marcacion in rd.Marcaciones)
+                            {
+                                DS_Marcaciones.MarcacionRow dr = ret.Marcacion.NewMarcacionRow();
+                                dr.Legajo = legajo;
+                                dr.Fecha = fecha;
+                                dr.Hora = marcacion.Hora;
+                                dr.MarcaManual = marcacion.Manual;
+                                ret.Marcacion.Rows.Add(dr);
+                            }
                         }
                     }
                 }
@@ -1240,7 +1238,7 @@ namespace SisPer.Aplicativo
         public static DS_Marcaciones ObtenerMarcaciones(DateTime fechaDesde, DateTime fechaHasta, string legajo)
         {
             Eliminar_Marcaciones_No_hay_registro();
-            
+
             DS_Marcaciones ret = new DS_Marcaciones();
             int pruebaLegajo = 0;
             if (int.TryParse(legajo.ToString(), out pruebaLegajo))
@@ -1249,7 +1247,7 @@ namespace SisPer.Aplicativo
 
                 using (var cxt = new Model1Container())
                 {
-                    
+
 
 
                     //obtengo todos los agentes activos o con fecha baja posterior a la fecha buscada para obtener sus fichadas

@@ -27,7 +27,7 @@ namespace SisPer.Aplicativo
 
                 if (!a.Contains("-") && !b.Contains("-"))
                 {
-                    totalHoras = SumarHorasString(new string[2] { A, B });
+                    totalHoras = SumarHoras(new string[2] { A, B });
                 }
                 else
                 {
@@ -46,7 +46,7 @@ namespace SisPer.Aplicativo
                         {
                             if (a.Contains("-") && b.Contains("-"))
                             {
-                                totalHoras = "-" + SumarHorasString(new string[2] { A, B });
+                                totalHoras = "-" + SumarHoras(new string[2] { A, B });
                             }
                         }
                     }
@@ -126,99 +126,29 @@ namespace SisPer.Aplicativo
 
         public static string SumarHoras(string[] horas)
         {
-            TimeSpan total = TimeSpan.Zero;
+            int total = 0;
 
             foreach (string hora in horas)
             {
-                if (TimeSpan.TryParse(hora, out TimeSpan tiempo))
+                bool negativo = hora.Contains("-");
+                if (hora != "")
                 {
-                    total = total.Add(tiempo);
+                    int hora_a_minutos = 0;
+
+                    string[] h = hora.Replace("-", "").Split(':');
+
+                    hora_a_minutos =(Convert.ToInt16(h[0]) * 60) + Convert.ToInt16(h[1]);
+
+                    total = negativo ? total - hora_a_minutos : total + hora_a_minutos;
                 }
             }
 
-            string resultado = $"{(int)total.TotalHours:00}:{total.Minutes:00}";
-            return resultado.Replace(":-", ":");
-        }
+            int horas_total = total / 60;
+            int minutos_total = total % 60;
 
-        public static string SumarHoras(List<string> hora)
-        {
-            string totalHoras = "00:00";
+            string resultado = $"{horas_total:000;-000}:{minutos_total:00;00}";
 
-            // A   B tengo que quitar siempre antes de cada operación el signo de la hora
-            //----------------------------
-            // + y + = SUMO   A + B
-            // + y - = RESTO  A - B
-            // - y + = RESTO  B - A
-            // - y - = SUMO   A + B y agrego signo negativo al final
-
-            foreach (string item in hora)
-            {
-                string a = item;
-                string b = totalHoras;
-
-                string A = a.Replace("-", "");
-                string B = b.Replace("-", "");
-
-                if (!a.Contains("-") && !b.Contains("-"))
-                {
-                    totalHoras = SumarHorasString(new string[2] { A, B });
-                }
-                else
-                {
-                    if (!a.Contains("-") && b.Contains("-"))
-                    {
-                        totalHoras = RestarHoras(A, B);
-                    }
-                    else
-                    {
-
-                        if (a.Contains("-") && !b.Contains("-"))
-                        {
-                            totalHoras = RestarHoras(B, A);
-                        }
-                        else
-                        {
-                            if (a.Contains("-") && b.Contains("-"))
-                            {
-                                totalHoras = "-" + SumarHorasString(new string[2] { A, B });
-                            }
-                        }
-                    }
-                }
-            }
-
-            return totalHoras;
-
-        }
-
-        private static string SumarHorasString(string[] hora)
-        {
-            int horas = 0;
-            int min = 0;
-            foreach (string h in hora)
-            {
-                if (h != "")
-                {
-                    string[] hhmm = h.Split(':');
-                    if (hhmm[1].Trim().Length > 0)
-                    {
-                        min += Convert.ToInt32(hhmm[1].Trim());
-                        while (min >= 60)
-                        {
-                            horas += 1;
-                            min -= 60;
-                        }
-                    }
-
-                    if (hhmm[0].Trim().Length > 0)
-                    {
-                        horas += Convert.ToInt32(hhmm[0].Trim());
-                    }
-                }
-            }
-            string ret = FormatearHorasString(horas.ToString() + ":" + min.ToString());
-
-            return ret;
+            return resultado;
         }
 
         /// <summary>

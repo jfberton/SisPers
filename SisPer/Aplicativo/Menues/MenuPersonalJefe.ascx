@@ -57,8 +57,8 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                 <li><a href="../Aplicativo/Jefe_Ag_AutorizaRemoto.aspx" >Autorizar remoto</a></li>
-                                <li><a href="../Aplicativo/Jefe_Ag_AutorizaTurno.aspx" >Autorizar Turno</a></li>
+                                <li><a href="../Aplicativo/Jefe_Ag_AutorizaRemoto.aspx">Autorizar remoto</a></li>
+                                <li><a href="../Aplicativo/Jefe_Ag_AutorizaTurno.aspx">Autorizar Turno</a></li>
                                 <li class="divider"></li>
                                 <li><a href="../Aplicativo/Personal_Huellas.aspx">Marcaciones</a></li>
                                 <li><a href="../Aplicativo/Personal_Cerrar_EntradaSalida.aspx">Marcaciones manuales</a></li>
@@ -77,6 +77,7 @@
                                 <li class="divider"></li>
                                 <li><a href="../Aplicativo/Personal_Informe_AgentesPorArea.aspx">Listado de Agentes</a></li>
                                 <li><a href="../Aplicativo/Personal_Informe_Bonificaciones.aspx">Bonificaciones</a></li>
+                                <li><a href="../Aplicativo/Personal_Informe_ajustes_manuales.aspx">Ajustes de hora realizados</a></li>
                                 <li><a href="../Aplicativo/Personal_Informe_SalidasVarias.aspx">Movimientos varios</a></li>
                                 <li><a href="../Aplicativo/Personal_Informe_Domicilios_Agente.aspx">Informes domicilios</a></li>
                                 <li><a href="../Aplicativo/Personal_Informe_Cierres_Mensuales.aspx">Informes cierres mensuales</a></li>
@@ -103,7 +104,7 @@
                                     <span class="badge" runat="server" id="solicitudes_subadministracion">
                                         <small>
                                             <asp:Label Text="" ID="lbl_solicitudes_subadministracion" runat="server" /></small></span>
-                                    </a></li>
+                                </a></li>
                             </ul>
                         </li>
                         <li class="dropdown">

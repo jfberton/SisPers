@@ -140,7 +140,7 @@ namespace SisPer.Aplicativo
                                                                                                       select
                                                                                                             mh.Horas).ToList();
 
-                    string totalHorasDescontadas = HorasString.SumarHoras(horasDEscontadasDeBonificacionesPorMovimientosCuandoNoFueFlexible);
+                    string totalHorasDescontadas = HorasString.SumarHoras(horasDEscontadasDeBonificacionesPorMovimientosCuandoNoFueFlexible.ToArray());
                     //actualizo las horas a cumplir por bonificacion despues de descontar las realizadas por movimientos.
                     horasBonificacion = HorasString.RestarHoras(horasBonificacion, totalHorasDescontadas);
 

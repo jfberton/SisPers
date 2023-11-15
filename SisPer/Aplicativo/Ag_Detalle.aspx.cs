@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Drawing;
 using Microsoft.Reporting.WebForms;
 using SisPer.Aplicativo.Reportes;
+using System.Security.Cryptography;
 
 namespace SisPer.Aplicativo
 {
@@ -415,8 +416,8 @@ namespace SisPer.Aplicativo
                     horasNegativasMes.Add(item.Horas);
                 }
 
-                string horasPositivas = HorasString.SumarHoras(horasPositivasMes);
-                string horasNegativas = HorasString.SumarHoras(horasNegativasMes);
+                string horasPositivas = HorasString.SumarHoras(horasPositivasMes.ToArray());
+                string horasNegativas = HorasString.SumarHoras(horasNegativasMes.ToArray());
 
                 string horastotalesMes = HorasString.RestarHoras(horasPositivas, horasNegativas);
 
@@ -475,26 +476,29 @@ namespace SisPer.Aplicativo
                     lbl_cierre_tardanzas.Text = ObtenerTardanzasMes();
                     lbl_cierre_acumulado_mes.Text = horastotalesMes;
 
-                    if (cierre.Modificaciones.Count() > 1)
-                    {
-                        div_modificaciones.Visible = true;
-                        var modificaciones = (from mm in cierre.Modificaciones
-                                              select new
-                                              {
-                                                  fecha = mm.Fecha,
-                                                  horas_anio_anterior = mm.HoraAnioAnterior,
-                                                  horas_anio_actual = mm.HoraAnioActual,
-                                                  horas_mes = mm.HorasMes,
-                                                  agente = mm.Agente.ApellidoYNombre
-                                              }).ToList();
+                    //dejo de mostrar las modificaciones
+                    div_modificaciones.Visible = false;
 
-                        gv_modificaciones.DataSource = modificaciones;
-                        gv_modificaciones.DataBind();
-                    }
-                    else
-                    {
-                        div_modificaciones.Visible = false;
-                    }
+                    //if (cierre.Modificaciones.Count() > 1)
+                    //{
+                    //    div_modificaciones.Visible = true;
+                    //    var modificaciones = (from mm in cierre.Modificaciones
+                    //                          select new
+                    //                          {
+                    //                              fecha = mm.Fecha,
+                    //                              horas_anio_anterior = mm.HoraAnioAnterior,
+                    //                              horas_anio_actual = mm.HoraAnioActual,
+                    //                              horas_mes = mm.HorasMes,
+                    //                              agente = mm.Agente.ApellidoYNombre
+                    //                          }).ToList();
+
+                    //    gv_modificaciones.DataSource = modificaciones;
+                    //    gv_modificaciones.DataBind();
+                    //}
+                    //else
+                    //{
+                    //    div_modificaciones.Visible = false;
+                    //}
                 }
                 else
                 {
@@ -530,7 +534,7 @@ namespace SisPer.Aplicativo
                     horasTardanzasMes.Add(item.Horas);
                 }
 
-                return HorasString.SumarHoras(horasTardanzasMes);
+                return HorasString.SumarHoras(horasTardanzasMes.ToArray());
             }
         }
 
@@ -616,17 +620,47 @@ namespace SisPer.Aplicativo
 
         protected void ImprirPlanilla_Click(object sender, EventArgs e)
         {
+
             Agente ag = DatosAgente1.Agente;
             List<Agente> agentes = new List<Agente>();
             agentes.Add(ag);
-            ReporteMensualFichadasHoras rp = new ReporteMensualFichadasHoras(agentes, Calendar1.SelectedDate.Month, Calendar1.SelectedDate.Year);
 
-            byte[] pdf = rp.GenerarPDFAsistenciaMensual();
-            Session["Bytes"] = pdf;
+            byte[] bytes = null;
 
-            string script = "<script type='text/javascript'>window.open('Reportes/ReportePDF.aspx');</script>";
-            Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "VentanaPadre", script);
+            if (agentes.Count > 0)
+            {
+                Agente usuarioLogueado = Session["UsuarioLogueado"] as Agente;
+                Datos_informe_desde_hasta<Datos_informe_fichadas_mensuales> data = new Datos_informe_desde_hasta<Datos_informe_fichadas_mensuales>();
+                data.datos = new Datos_informe_fichadas_mensuales() { Agentes = agentes, Mes = Calendar1.SelectedDate.Month, Anio = Calendar1.SelectedDate.Year };
+                data.desde = new DateTime(Calendar1.SelectedDate.Year, Calendar1.SelectedDate.Month, 1);
+                data.hasta = data.desde.AddMonths(1).AddDays(-1);
 
+
+                ReporteMensualFichadasHoras reporte = new ReporteMensualFichadasHoras(data, usuarioLogueado);
+                bytes = reporte.Generar_informe();
+            }
+
+            if (bytes != null)
+            {
+                Session["Bytes"] = bytes;
+                RegistrarImpresionReporteFichadasMensuales();
+
+                string script = "<script type='text/javascript'>window.open('Reportes/ReportePDF.aspx');</script>";
+                Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "VentanaPadre", script);
+            }
+            else
+            {
+                Controles.MessageBox.Show(this, "La búsqueda realizada no arrojó resultados", Controles.MessageBox.Tipo_MessageBox.Info);
+            }
+        }
+
+        private void RegistrarImpresionReporteFichadasMensuales()
+        {
+            Agente usuarioLogueado = Session["UsuarioLogueado"] as Agente;
+            string localIP = Request.UserHostAddress;
+            string nombreMaquina = Request.UserHostName;
+
+            ProcesosGlobales.RegistrarImpresion(usuarioLogueado, "REPORTE FICHADAS MENSUALES", DateTime.Now, nombreMaquina, localIP);
         }
     }
 }

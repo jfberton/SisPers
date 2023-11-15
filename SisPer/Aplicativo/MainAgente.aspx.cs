@@ -1194,7 +1194,7 @@ namespace SisPer.Aplicativo
                 {
                     string hora_Entrada = e_s.Entrada;
                     string Hora_Salida = DateTime.Now.ToString("HH:mm");
-                    string lapso = HorasString.RestarHoras(hora_Entrada, Hora_Salida);
+                    string lapso = HorasString.RestarHoras(Hora_Salida, hora_Entrada);
 
                     if (HorasString.AMayorQueB("01:00", lapso))
                     {

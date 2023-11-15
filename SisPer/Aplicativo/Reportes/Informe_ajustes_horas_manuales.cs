@@ -13,37 +13,43 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Security.Cryptography;
+using SisPer.Aplicativo.Reportes;
+using SisPer.Aplicativo;
 
-namespace SisPer.Aplicativo.Reportes
+namespace SisPer
 {
-    public class Informe_art_50_rp: Informe_Personal<Datos_informe_desde_hasta<ListadoSalidas_DS>>
+    public class Informe_ajustas_horas_manuales : Informe_Personal<Datos_informe_desde_hasta<Ajustes_manuales_horas_DS>>
     {
-        public Informe_art_50_rp(Datos_informe_desde_hasta<ListadoSalidas_DS> datos, Agente ag_informe) : base(datos, ag_informe, "SOLICITUDES ART 50 INC 4")
+        public Informe_ajustas_horas_manuales(Datos_informe_desde_hasta<Ajustes_manuales_horas_DS> datos, Agente ag_informe) : base(datos, ag_informe, "AJUSTES DE HORAS")
         {
         }
 
-        protected override stream_informe Generar_cuerpo_informe(Datos_informe_desde_hasta<ListadoSalidas_DS> datos, stream_informe informe)
+        protected override stream_informe Generar_cuerpo_informe(Datos_informe_desde_hasta<Ajustes_manuales_horas_DS> datos, stream_informe informe)
         {
             Document document = informe.document;
 
-            foreach (ListadoSalidas_DS.GeneralRow dr in datos.datos.General)
+            foreach (Ajustes_manuales_horas_DS.GeneralRow dr in datos.datos.General)
             {
-                Paragraph desde_hasta = new Paragraph(String.Format("Art. 50 inc. 4 de agentes de {2}, desde el {0} al {1}", datos.desde.ToShortDateString(), datos.hasta.ToShortDateString(), dr.Sector))
+                Paragraph desde_hasta = new Paragraph(String.Format("Ajustes realizados por: {0} - Mes: {1} de {2}", dr.AgentePersonal, dr.Mes, dr.Año))
                    .SetTextAlignment(TextAlignment.LEFT);
 
-
                 #region datos generales
-                Table tabla_detalle = new Table(UnitValue.CreatePercentArray(new float[] { 20, 80, 20, 40 })).UseAllAvailableWidth().SetFontSize(10).SetKeepTogether(true);
+                Table tabla_detalle = new Table(UnitValue.CreatePercentArray(new float[] { 20, 60, 20, 20, 20, 40 })).UseAllAvailableWidth().SetFontSize(10).SetKeepTogether(true).SetMarginBottom(15);
 
                 #region Encabezado tabla detalle
-                
-                Cell cell = new Cell(1, 4).Add(desde_hasta).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+
+                Cell cell = new Cell(1, 6).Add(desde_hasta).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                 tabla_detalle.AddCell(cell);
+
                 cell = new Cell(1, 1).Add(new Paragraph("LEGAJO")).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY).SetTextAlignment(TextAlignment.CENTER);
                 tabla_detalle.AddCell(cell);
                 cell = new Cell(1, 1).Add(new Paragraph("AGENTE")).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY).SetTextAlignment(TextAlignment.CENTER);
                 tabla_detalle.AddCell(cell);
                 cell = new Cell(1, 1).Add(new Paragraph("FECHA")).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY).SetTextAlignment(TextAlignment.CENTER);
+                tabla_detalle.AddCell(cell);
+                cell = new Cell(1, 1).Add(new Paragraph("TIPO")).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY).SetTextAlignment(TextAlignment.CENTER);
+                tabla_detalle.AddCell(cell);
+                cell = new Cell(1, 1).Add(new Paragraph("HORAS")).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY).SetTextAlignment(TextAlignment.CENTER);
                 tabla_detalle.AddCell(cell);
                 cell = new Cell(1, 1).Add(new Paragraph("MOTIVO")).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY).SetTextAlignment(TextAlignment.CENTER);
                 tabla_detalle.AddCell(cell);
@@ -52,7 +58,7 @@ namespace SisPer.Aplicativo.Reportes
 
                 #region Carga de valores detalle
                 ///Recorro los valores asociados al area y voy cargando en la tabla
-                foreach (ListadoSalidas_DS.SalidasRow item in datos.datos.Salidas.Where(ss => ss.Sector == dr.Sector))
+                foreach (Ajustes_manuales_horas_DS.DetalleRow item in datos.datos.Detalle.Where(ss => ss.AgentePersonal == dr.AgentePersonal))
                 {
                     cell = new Cell(1, 1).Add(new Paragraph(item.Legajo));
                     tabla_detalle.AddCell(cell);
@@ -60,7 +66,11 @@ namespace SisPer.Aplicativo.Reportes
                     tabla_detalle.AddCell(cell);
                     cell = new Cell(1, 1).Add(new Paragraph(item.Fecha));
                     tabla_detalle.AddCell(cell);
-                    cell = new Cell(1, 1).Add(new Paragraph(item.Destino));
+                    cell = new Cell(1, 1).Add(new Paragraph(item.Tipo));
+                    tabla_detalle.AddCell(cell);
+                    cell = new Cell(1, 1).Add(new Paragraph(item.Horas));
+                    tabla_detalle.AddCell(cell);
+                    cell = new Cell(1, 1).Add(new Paragraph(item.Motivo));
                     tabla_detalle.AddCell(cell);
                 }
 

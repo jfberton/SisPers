@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SisPer</RootNamespace>
     <AssemblyName>SisPer</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -204,6 +204,7 @@
     <Content Include="Aplicativo\Menues\MenuJefe.ascx" />
     <Content Include="Aplicativo\Model1.edmx.sql" />
     <Content Include="Aplicativo\Personal_Informe_AgentesPorArea.aspx" />
+    <Content Include="Aplicativo\Personal_Informe_ajustes_manuales.aspx" />
     <Content Include="Aplicativo\Personal_Informe_Bonificaciones.aspx" />
     <Content Include="Aplicativo\Personal_Informe_Domicilios_Agente.aspx" />
     <Content Include="Aplicativo\Personal_Informe_InformeMovimientosAnuales.aspx" />
@@ -1570,6 +1571,13 @@
     <Compile Include="Aplicativo\Personal_Informe_AgentesPorArea.aspx.designer.cs">
       <DependentUpon>Personal_Informe_AgentesPorArea.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Aplicativo\Personal_Informe_ajustes_manuales.aspx.cs">
+      <DependentUpon>Personal_Informe_ajustes_manuales.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Aplicativo\Personal_Informe_ajustes_manuales.aspx.designer.cs">
+      <DependentUpon>Personal_Informe_ajustes_manuales.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Aplicativo\Personal_Informe_Bonificaciones.aspx.cs">
       <DependentUpon>Personal_Informe_Bonificaciones.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1662,6 +1670,11 @@
     <Compile Include="Aplicativo\Reportes\AgentesPorAreaUC.ascx.designer.cs">
       <DependentUpon>AgentesPorAreaUC.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Aplicativo\Reportes\Ajustes_manuales_horas_DS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Ajustes_manuales_horas_DS.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Aplicativo\Reportes\Calendario.aspx.cs">
       <DependentUpon>Calendario.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1705,13 +1718,19 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HorariosVespertinos_DS.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Aplicativo\Reportes\Informe_ajustes_horas_manuales.cs" />
     <Compile Include="Aplicativo\Reportes\Informe_art_50_rp.cs" />
+    <Compile Include="Aplicativo\Reportes\Informe_ausentes.cs" />
     <Compile Include="Aplicativo\Reportes\Informe_domicilios_agentes.cs" />
     <Compile Include="Aplicativo\Reportes\Informe_francos_compensatorios.cs" />
     <Compile Include="Aplicativo\Reportes\Informe_cambio_de_turno.cs" />
     <Compile Include="Aplicativo\Reportes\Informe_cierres_mensuales.cs" />
+    <Compile Include="Aplicativo\Reportes\Informe_horarios_vespertinos.cs" />
+    <Compile Include="Aplicativo\Reportes\Informe_listado_agentes.cs" />
+    <Compile Include="Aplicativo\Reportes\Informe_Personal.cs" />
     <Compile Include="Aplicativo\Reportes\Informe_remotos_autorizados.cs" />
     <Compile Include="Aplicativo\Reportes\Informe_solicitud_medico.cs" />
+    <Compile Include="Aplicativo\Reportes\Informe_tardanzas.cs" />
     <Compile Include="Aplicativo\Reportes\ListadoAgentes_DS.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1877,6 +1896,7 @@
       <DependentUpon>Personal_Huellas.aspx</DependentUpon>
     </Compile>
     <Compile Include="GridViewExportUtil.cs" />
+    <Compile Include="Informe_salidas_diarias.cs" />
     <Compile Include="Legislacion.aspx.cs">
       <DependentUpon>Legislacion.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1930,6 +1950,17 @@
     </None>
     <Content Include="Aplicativo\DS_Marcaciones.xss">
       <DependentUpon>DS_Marcaciones.xsd</DependentUpon>
+    </Content>
+    <Content Include="Aplicativo\Reportes\Ajustes_manuales_horas_DS.xsc">
+      <DependentUpon>Ajustes_manuales_horas_DS.xsd</DependentUpon>
+    </Content>
+    <None Include="Aplicativo\Reportes\Ajustes_manuales_horas_DS.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Ajustes_manuales_horas_DS.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Aplicativo\Reportes\Ajustes_manuales_horas_DS.xss">
+      <DependentUpon>Ajustes_manuales_horas_DS.xsd</DependentUpon>
     </Content>
     <None Include="Aplicativo\Reportes\Calendario_ds.xsd">
       <SubType>Designer</SubType>

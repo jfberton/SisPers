@@ -203,7 +203,8 @@ namespace SisPer.Aplicativo
 
                 if (agentesBuscados.Count > 0)
                 {
-                    Informe_domicilios_agentes reporte = new Informe_domicilios_agentes(agentesBuscados);
+                    Agente usuarioLogueado = Session["UsuarioLogueado"] as Agente;
+                    Informe_domicilios_agentes reporte = new Informe_domicilios_agentes(agentesBuscados, usuarioLogueado);
                     bytes = reporte.Generar_informe();
                 }
 

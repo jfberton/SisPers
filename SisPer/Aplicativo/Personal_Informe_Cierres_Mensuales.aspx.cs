@@ -278,7 +278,8 @@ namespace SisPer.Aplicativo
 
                 if (datos_informe.Count > 0)
                 {
-                    Informe_cierres_mensuales reporte = new Informe_cierres_mensuales(datos_informe);
+                    Agente usuarioLogueado = Session["UsuarioLogueado"] as Agente;
+                    Informe_cierres_mensuales reporte = new Informe_cierres_mensuales(datos_informe, usuarioLogueado);
                     bytes = reporte.Generar_informe();
                 }
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Reporting.WebForms;
+using SisPer.Aplicativo.Controles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,38 +59,67 @@ namespace SisPer.Aplicativo.Reportes
 
         private void RenderReport()
         {
-            ReportViewer viewer = new ReportViewer();
-            viewer.ProcessingMode = ProcessingMode.Local;
-            viewer.LocalReport.EnableExternalImages = true;
-            viewer.LocalReport.ReportPath = Server.MapPath("~/Aplicativo/Reportes/ListadoAgentesUO_rp.rdlc");
-            
-            GenerarDS();
+            #region anterior
+            //ReportViewer viewer = new ReportViewer();
+            //viewer.ProcessingMode = ProcessingMode.Local;
+            //viewer.LocalReport.EnableExternalImages = true;
+            //viewer.LocalReport.ReportPath = Server.MapPath("~/Aplicativo/Reportes/ListadoAgentesUO_rp.rdlc");
 
-            Reportes.ListadoAgentes_DS ds = Session["DS"] as Reportes.ListadoAgentes_DS;
+            //GenerarDS();
 
-            ReportDataSource areas = new ReportDataSource("Areas", ds.Area.Rows);
+            //Reportes.ListadoAgentes_DS ds = Session["DS"] as Reportes.ListadoAgentes_DS;
 
-            viewer.LocalReport.DataSources.Add(areas);
+            //ReportDataSource areas = new ReportDataSource("Areas", ds.Area.Rows);
 
-            viewer.LocalReport.SubreportProcessing += LocalReport_SubreportProcessing;
+            //viewer.LocalReport.DataSources.Add(areas);
 
-            Microsoft.Reporting.WebForms.Warning[] warnings = null;
-            string[] streamids = null;
-            string mimeType = null;
-            string encoding = null;
-            string extension = null;
-            string deviceInfo = null;
+            //viewer.LocalReport.SubreportProcessing += LocalReport_SubreportProcessing;
+
+            //Microsoft.Reporting.WebForms.Warning[] warnings = null;
+            //string[] streamids = null;
+            //string mimeType = null;
+            //string encoding = null;
+            //string extension = null;
+            //string deviceInfo = null;
+            //byte[] bytes = null;
+
+            //deviceInfo = "<DeviceInfo><SimplePageHeaders>True</SimplePageHeaders></DeviceInfo>";
+
+            ////Render the report
+            //RegistrarImpresionReporte();
+            //bytes = viewer.LocalReport.Render("PDF", deviceInfo, out  mimeType, out encoding, out extension, out streamids, out warnings);
+            //Session["Bytes"] = bytes;
+
+            //string script = "<script type='text/javascript'>window.open('Reportes/ReportePDF.aspx');</script>";
+            //Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "VentanaPadre", script);
+            #endregion
+
+            #region Actual
             byte[] bytes = null;
 
-            deviceInfo = "<DeviceInfo><SimplePageHeaders>True</SimplePageHeaders></DeviceInfo>";
+            GenerarDS();
 
-            //Render the report
-            RegistrarImpresionReporte();
-            bytes = viewer.LocalReport.Render("PDF", deviceInfo, out  mimeType, out encoding, out extension, out streamids, out warnings);
-            Session["Bytes"] = bytes;
+            ListadoAgentes_DS ds = Session["DS"] as Reportes.ListadoAgentes_DS;
 
-            string script = "<script type='text/javascript'>window.open('Reportes/ReportePDF.aspx');</script>";
-            Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "VentanaPadre", script);
+            if (ds.Area.Count > 0)
+            {
+                Agente usuarioLogueado = Session["UsuarioLogueado"] as Agente;
+                Informe_listado_agentes reporte = new Informe_listado_agentes(ds, usuarioLogueado);
+                bytes = reporte.Generar_informe();
+            }
+
+            if (bytes != null)
+            {
+                Session["Bytes"] = bytes;
+
+                string script = "<script type='text/javascript'>window.open('Reportes/ReportePDF.aspx');</script>";
+                Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "VentanaPadre", script);
+            }
+            else
+            {
+                Controles.MessageBox.Show(this.Page, "La búsqueda realizada no arrojó resultados", Controles.MessageBox.Tipo_MessageBox.Info);
+            }
+            #endregion
         }
 
         private void RegistrarImpresionReporte()

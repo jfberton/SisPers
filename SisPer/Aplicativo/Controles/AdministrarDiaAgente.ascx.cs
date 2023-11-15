@@ -529,7 +529,7 @@ namespace SisPer.Aplicativo.Controles
             Page.Validate("Marcacion");
             if (Page.IsValid)
             {
-
+                Agente ag = Session["UsuarioLogueado"] as Agente;
                 ResumenDiario rd = ResumenDiarioBuscado;
                 using (Model1Container cxt = new Model1Container())
                 {
@@ -538,15 +538,14 @@ namespace SisPer.Aplicativo.Controles
                     {
                         Hora = tb_Horas.Text,
                         Manual = true,
-                        Anulada = false
+                        Anulada = false,
+                        AgenteId = ag.Id
                     });
                     cxt.SaveChanges();
                     ResumenDiarioBuscado = rdiario;
 
                     CargarValores();
                 }
-
-
             }
         }
 
@@ -618,6 +617,8 @@ namespace SisPer.Aplicativo.Controles
 
         protected void btn_AnularActivar_Click(object sender, ImageClickEventArgs e)
         {
+            Agente ag = Session["UsuarioLogueado"] as Agente;
+
             ImageButton boton = ((ImageButton)sender);
 
             int idMarcacion = Convert.ToInt32(boton.CommandArgument);
@@ -629,6 +630,7 @@ namespace SisPer.Aplicativo.Controles
             if (marc != null && !ObtenerDiaProcesado().Cerrado)
             {
                 marc.Anulada = !marc.Anulada;
+                marc.AgenteId = ag.Id;
 
                 cxt.SaveChanges();
                 //Actualizo las marcaciones de la variable de sesion para poder 

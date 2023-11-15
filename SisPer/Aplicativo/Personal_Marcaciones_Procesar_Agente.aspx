@@ -137,6 +137,11 @@
                         </div>
                     </div>
                     <div class="col-md-8">
+
+                        <uc1:AdministrarDiaAgente runat="server" ID="AdministrarDiaAgente" ReadOnly="false" OnAbrioElDia="AdministrarDiaAgente_AbrioElDia" OnCerroElDia="AdministrarDiaAgente_CerroElDia" OnPrecionoVolver="AdministrarDiaAgente_PrecionoVolver" />
+                        <asp:Button Text="Acumular totales mensuales a los totales anuales" Visible="false" ID="btn_acumularTotales" CssClass="btn btn-lg btn-default" OnClick="btn_acumularTotales_Click" runat="server" />
+                        <asp:Button Text="Cerrar mes" Visible="false" ID="btn_cerrar_mes" CssClass="btn btn-lg btn-default" OnClick="btn_cerrar_mes_Click" runat="server" />
+
                         <div runat="server" id="div_datos_cierre_mes">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
@@ -175,7 +180,7 @@
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <asp:GridView ID="gv_modificaciones" runat="server" ForeColor="#717171"
-                                                                EmptyDataText="Sin registros" AutoGenerateColumns="False" GridLines="None" AllowPaging="false" 
+                                                                EmptyDataText="Sin registros" AutoGenerateColumns="False" GridLines="None" AllowPaging="false"
                                                                 CssClass="mGrid table-condensed" AlternatingRowStyle-CssClass="alt">
                                                                 <Columns>
                                                                     <asp:BoundField DataField="fecha" HeaderText="Fecha" ReadOnly="true" DataFormatString="{0:d}" />
@@ -193,9 +198,7 @@
                                 </div>
                             </div>
                         </div>
-                        <uc1:AdministrarDiaAgente runat="server" ID="AdministrarDiaAgente" ReadOnly="false" OnAbrioElDia="AdministrarDiaAgente_AbrioElDia" OnCerroElDia="AdministrarDiaAgente_CerroElDia" OnPrecionoVolver="AdministrarDiaAgente_PrecionoVolver" />
-                        <asp:Button Text="Acumular totales mensuales a los totales anuales" Visible="false" ID="btn_acumularTotales" CssClass="btn btn-lg btn-default" OnClick="btn_acumularTotales_Click" runat="server" />
-                        <asp:Button Text="Cerrar mes" Visible="false" ID="btn_cerrar_mes" CssClass="btn btn-lg btn-default" OnClick="btn_cerrar_mes_Click" runat="server" />
+
                         <h3>
                             <asp:Label Text="El total acumulado del mes ya fué totalizado con el total anual del agente." ID="lbl_acumulado" runat="server" /></h3>
                     </div>

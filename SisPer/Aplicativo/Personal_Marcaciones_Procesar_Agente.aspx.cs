@@ -114,7 +114,7 @@ namespace SisPer.Aplicativo
                                                                                                           select
                                                                                                                 mh.Horas).ToList();
 
-                        string totalHorasDescontadas = HorasString.SumarHoras(horasDEscontadasDeBonificacionesPorMovimientosCuandoNoFueFlexible);
+                        string totalHorasDescontadas = HorasString.SumarHoras(horasDEscontadasDeBonificacionesPorMovimientosCuandoNoFueFlexible.ToArray());
                         //actualizo las horas a cumplir por bonificacion despues de descontar las realizadas por movimientos.
                         horasBonificacion = HorasString.RestarHoras(horasBonificacion, totalHorasDescontadas);
                         
@@ -201,25 +201,28 @@ namespace SisPer.Aplicativo
                                 lbl_cierre_horas_anio_actual.Text = cierre_mensual.HorasAnioActual;
                                 lbl_cierre_horas_anio_anterior.Text = cierre_mensual.HorasAnioAnterior;
 
-                                if (cierre_mensual.Modificaciones.Count() > 1)
-                                {
-                                    div_modificaciones.Visible = true;
-                                    var modificaciones = (from mm in cierre_mensual.Modificaciones
-                                                          select new
-                                                          {
-                                                              fecha = mm.Fecha,
-                                                              horas_anio_anterior = mm.HoraAnioAnterior,
-                                                              horas_anio_actual = mm.HoraAnioActual,
-                                                              agente = mm.Agente.ApellidoYNombre
-                                                          }).ToList();
+                                //dejo de mostrar las modificaciones
+                                div_modificaciones.Visible = false;
 
-                                    gv_modificaciones.DataSource = modificaciones;
-                                    gv_modificaciones.DataBind();
-                                }
-                                else
-                                {
-                                    div_modificaciones.Visible = false;
-                                }
+                                //if (cierre_mensual.Modificaciones.Count() > 1)
+                                //{
+                                //    div_modificaciones.Visible = true;
+                                //    var modificaciones = (from mm in cierre_mensual.Modificaciones
+                                //                          select new
+                                //                          {
+                                //                              fecha = mm.Fecha,
+                                //                              horas_anio_anterior = mm.HoraAnioAnterior,
+                                //                              horas_anio_actual = mm.HoraAnioActual,
+                                //                              agente = mm.Agente.ApellidoYNombre
+                                //                          }).ToList();
+
+                                //    gv_modificaciones.DataSource = modificaciones;
+                                //    gv_modificaciones.DataBind();
+                                //}
+                                //else
+                                //{
+                                //    div_modificaciones.Visible = false;
+                                //}
 
                                 div_datos_cierre_mes.Visible = true;
 
