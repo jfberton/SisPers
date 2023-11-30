@@ -699,68 +699,71 @@ namespace SisPer.Aplicativo
 
                 Model1Container cxt = new Model1Container();
                 HorarioVespertino hv = cxt.HorariosVespertinos.FirstOrDefault(hvs => hvs.Id == id);
-                hv.HoraInicio = h_inicio;
-                hv.HoraFin = h_fin;
-                cxt.SaveChanges();
-                ProcesosGlobales.ModificarEstadoHV(id, EstadosHorarioVespertino.Terminado, Session["UsuarioLogueado"] as Agente);
-                TipoMovimientoHora tmh = cxt.TiposMovimientosHora.First(tmhs => tmhs.Tipo == "Horario Vespertino");
-                ProcesosGlobales.AgendarMovimientoHoraEnResumenDiario(hv.Dia, hv.Agente, Session["UsuarioLogueado"] as Agente, HorasString.RestarHoras(hv.HoraFin, hv.HoraInicio), tmh, hv.Motivo);
-                //ListadoAgentesParaGrilla.ActualizarPropiedad(hv.AgenteId, ListadoAgentesParaGrilla.PropiedadPorActualizar.HoraBonificacion, "");
-                cxt = new Model1Container();
-                Agente ag = cxt.Agentes.First(a => a.Id == hv.AgenteId);
-                ResumenDiario rd = ag.ObtenerResumenDiario(hv.Dia);
-                if (rd != null)
+                if (hv.Estado != EstadosHorarioVespertino.Terminado)
                 {
-                    Model1Container cxt1 = new Model1Container();
-                    ResumenDiario rdCxt = cxt1.ResumenesDiarios.First(r => r.Id == rd.Id);
-
-                    rdCxt.HVEnt = hv.HoraInicio;
-                    rdCxt.HVSal = hv.HoraFin;
-                    rdCxt.Marcaciones.Add(new Marcacion() { Manual = true, Hora = hv.HoraInicio, Anulada = false });
-                    rdCxt.Marcaciones.Add(new Marcacion() { Manual = true, Hora = hv.HoraFin, Anulada = false });
-
+                    hv.HoraInicio = h_inicio;
+                    hv.HoraFin = h_fin;
                     cxt.SaveChanges();
-                }
-                else
-                {
-                    rd = new ResumenDiario();
-
-                    rd.AgenteId = ag.Id;
-                    rd.Dia = hv.Dia;
-                    rd.HEntrada = "000:00";
-                    rd.HSalida = "000:00";
-                    rd.HVEnt = hv.HoraInicio;
-                    rd.HVSal = hv.HoraFin;
-                    rd.Horas = "000:00";
-                    rd.Inconsistente = false;
-                    rd.MarcoTardanza = false;
-                    rd.MarcoProlongJornada = false;
-                    rd.ObservacionInconsistente = "";
-
-                    rd.Marcaciones.Add(new Marcacion() { Manual = true, Hora = hv.HoraInicio, Anulada = false });
-                    rd.Marcaciones.Add(new Marcacion() { Manual = true, Hora = hv.HoraFin, Anulada = false });
-
-                    cxt.ResumenesDiarios.AddObject(rd);
-                }
-
-                cxt.SaveChanges();
-
-                Agente usuariologueado = Session["UsuarioLogueado"] as Agente;
-                if (usuariologueado.Perfil == PerfilUsuario.Personal)
-                {
-                    Response.Redirect("~/Aplicativo/MainPersonal.aspx");
-                }
-                else
-                {
-                    if (!(usuariologueado.Jefe || usuariologueado.JefeTemporal))
+                    ProcesosGlobales.ModificarEstadoHV(id, EstadosHorarioVespertino.Terminado, Session["UsuarioLogueado"] as Agente);
+                    TipoMovimientoHora tmh = cxt.TiposMovimientosHora.First(tmhs => tmhs.Tipo == "Horario Vespertino");
+                    ProcesosGlobales.AgendarMovimientoHoraEnResumenDiario(hv.Dia, hv.Agente, Session["UsuarioLogueado"] as Agente, HorasString.RestarHoras(hv.HoraFin, hv.HoraInicio), tmh, hv.Motivo);
+                    //ListadoAgentesParaGrilla.ActualizarPropiedad(hv.AgenteId, ListadoAgentesParaGrilla.PropiedadPorActualizar.HoraBonificacion, "");
+                    cxt = new Model1Container();
+                    Agente ag = cxt.Agentes.First(a => a.Id == hv.AgenteId);
+                    ResumenDiario rd = ag.ObtenerResumenDiario(hv.Dia);
+                    if (rd != null)
                     {
-                        Response.Redirect("~/Aplicativo/MainAgente.aspx");
+                        Model1Container cxt1 = new Model1Container();
+                        ResumenDiario rdCxt = cxt1.ResumenesDiarios.First(r => r.Id == rd.Id);
+
+                        rdCxt.HVEnt = hv.HoraInicio;
+                        rdCxt.HVSal = hv.HoraFin;
+                        rdCxt.Marcaciones.Add(new Marcacion() { Manual = true, Hora = hv.HoraInicio, Anulada = false });
+                        rdCxt.Marcaciones.Add(new Marcacion() { Manual = true, Hora = hv.HoraFin, Anulada = false });
+
+                        cxt.SaveChanges();
                     }
                     else
                     {
-                        Response.Redirect("~/Aplicativo/MainJefe.aspx");
+                        rd = new ResumenDiario();
+
+                        rd.AgenteId = ag.Id;
+                        rd.Dia = hv.Dia;
+                        rd.HEntrada = "000:00";
+                        rd.HSalida = "000:00";
+                        rd.HVEnt = hv.HoraInicio;
+                        rd.HVSal = hv.HoraFin;
+                        rd.Horas = "000:00";
+                        rd.Inconsistente = false;
+                        rd.MarcoTardanza = false;
+                        rd.MarcoProlongJornada = false;
+                        rd.ObservacionInconsistente = "";
+
+                        rd.Marcaciones.Add(new Marcacion() { Manual = true, Hora = hv.HoraInicio, Anulada = false });
+                        rd.Marcaciones.Add(new Marcacion() { Manual = true, Hora = hv.HoraFin, Anulada = false });
+
+                        cxt.ResumenesDiarios.AddObject(rd);
                     }
 
+                    cxt.SaveChanges();
+
+                    Agente usuariologueado = Session["UsuarioLogueado"] as Agente;
+                    if (usuariologueado.Perfil == PerfilUsuario.Personal)
+                    {
+                        Response.Redirect("~/Aplicativo/MainPersonal.aspx");
+                    }
+                    else
+                    {
+                        if (!(usuariologueado.Jefe || usuariologueado.JefeTemporal))
+                        {
+                            Response.Redirect("~/Aplicativo/MainAgente.aspx");
+                        }
+                        else
+                        {
+                            Response.Redirect("~/Aplicativo/MainJefe.aspx");
+                        }
+
+                    }
                 }
             }
         }
